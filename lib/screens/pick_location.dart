@@ -1,16 +1,18 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 import 'package:handee/handee_colors.dart';
 import 'package:handee/widgets/button.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class PickLocation extends StatefulWidget {
   const PickLocation({Key? key}) : super(key: key);
 
   final recentAdresses = const [
     '1 Church Road, London, E3 5GP',
-    '27 Church Street, Wolverhampton, WV7 9KO',
-    '94 Queens Road, Enfield, London, EN10 8KT',
-    '12 The Crescent, Hereford, HR56 0IO',
+    // '27 Church Street, Wolverhampton, WV7 9KO',
+    // '94 Queens Road, Enfield, London, EN10 8KT',
+    // '12 The Crescent, Hereford, HR56 0IO''1 Church Road, London, E3 5GP',
   ];
 
   @override
@@ -19,6 +21,18 @@ class PickLocation extends StatefulWidget {
 
 class _PickLocationState extends State<PickLocation> {
   final _searchFocus = FocusNode();
+  Size? _size;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _size ??= MediaQuery.of(context).size;
+  }
 
   @override
   void dispose() {
@@ -36,7 +50,8 @@ class _PickLocationState extends State<PickLocation> {
           children: [
             GoogleMap(
               initialCameraPosition: CameraPosition(
-                target: LatLng(0, 0),
+                target: LatLng(6.518, 3.378),
+                zoom: 15,
               ),
             ),
             AnimatedOpacity(
@@ -49,12 +64,6 @@ class _PickLocationState extends State<PickLocation> {
                 width: double.infinity,
               ),
             ),
-            // if (_searchFocus.hasFocus)
-            //   Container(
-            //     color: HandeeColors.white,
-            //     height: double.infinity,
-            //     width: double.infinity,
-            //   ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
               child: Column(
@@ -101,7 +110,7 @@ class _PickLocationState extends State<PickLocation> {
                               height: 40,
                               child: GestureDetector(
                                 behavior: HitTestBehavior.opaque,
-                                onTap: () {
+                                onTap: () async {
                                   _searchFocus.requestFocus();
                                   Future.delayed(Duration(milliseconds: 300))
                                       .then((value) {
@@ -110,9 +119,6 @@ class _PickLocationState extends State<PickLocation> {
                                 },
                                 child: IgnorePointer(
                                   child: TextField(
-                                    // onTap: () => setState(() {
-                                    //   _searchFocus.r
-                                    // }),
                                     onSubmitted: (_) {
                                       Future.delayed(
                                               Duration(milliseconds: 100))
@@ -144,45 +150,56 @@ class _PickLocationState extends State<PickLocation> {
                         curve: Curves.decelerate,
                         opacity: _searchFocus.hasFocus ? 1.0 : 0.0,
                         child: Container(
+                          margin: EdgeInsets.only(bottom: 10),
                           alignment: Alignment.center,
                           width: double.infinity,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
                             color: HandeeColors.lightBlue,
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                // Container(height: 10,color: Colors.red,),
-                                for (int i = 0;
-                                    i < widget.recentAdresses.length;
-                                    ++i)
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        const Icon(
-                                          Icons.location_on_outlined,
-                                          color: HandeeColors.blue,
-                                          size: 18,
-                                        ),
-                                        const SizedBox(width: 12),
-                                        Expanded(
-                                          child: Text(
-                                            widget.recentAdresses[i],
-                                            //softWrap: true,
-                                            style: const TextStyle(
-                                                color: HandeeColors.blue),
-                                          ),
-                                        ),
-                                        const SizedBox(width: 20),
-                                      ],
-                                    ),
-                                  ),
-                              ],
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(
+                                minHeight: 100, maxHeight: _size!.height - 220),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: FutureBuilder(
+                                  future: null,
+                                  builder: (context, snapshot) => false
+                                      ? ListView.builder(
+                                          shrinkWrap: true,
+                                          itemCount:
+                                              widget.recentAdresses.length,
+                                          itemBuilder: (ctx, i) {
+                                            return Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  const Icon(
+                                                    Icons.location_on_outlined,
+                                                    color: HandeeColors.blue,
+                                                    size: 18,
+                                                  ),
+                                                  const SizedBox(width: 12),
+                                                  Expanded(
+                                                    child: Text(
+                                                      widget.recentAdresses[i],
+                                                      style: const TextStyle(
+                                                          color: HandeeColors
+                                                              .blue),
+                                                    ),
+                                                  ),
+                                                  const SizedBox(width: 20),
+                                                ],
+                                              ),
+                                            );
+                                          },
+                                        )
+                                      : Padding(
+                                        padding: const EdgeInsets.all(30.0),
+                                        child: CircularProgressIndicator(),
+                                      )),
                             ),
                           ),
                         ),
