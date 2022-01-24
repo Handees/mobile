@@ -163,43 +163,42 @@ class _PickLocationState extends State<PickLocation> {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: FutureBuilder(
-                                  future: null,
-                                  builder: (context, snapshot) => false
-                                      ? ListView.builder(
-                                          shrinkWrap: true,
-                                          itemCount:
-                                              widget.recentAdresses.length,
-                                          itemBuilder: (ctx, i) {
-                                            return Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  const Icon(
-                                                    Icons.location_on_outlined,
-                                                    color: HandeeColors.blue,
-                                                    size: 18,
+                                future: null,
+                                builder: (context, snapshot) => false
+                                    ? ListView.builder(
+                                        shrinkWrap: true,
+                                        itemCount: widget.recentAdresses.length,
+                                        itemBuilder: (ctx, i) {
+                                          return Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                const Icon(
+                                                  Icons.location_on_outlined,
+                                                  color: HandeeColors.blue,
+                                                  size: 18,
+                                                ),
+                                                const SizedBox(width: 12),
+                                                Expanded(
+                                                  child: Text(
+                                                    widget.recentAdresses[i],
+                                                    style: const TextStyle(
+                                                        color:
+                                                            HandeeColors.blue),
                                                   ),
-                                                  const SizedBox(width: 12),
-                                                  Expanded(
-                                                    child: Text(
-                                                      widget.recentAdresses[i],
-                                                      style: const TextStyle(
-                                                          color: HandeeColors
-                                                              .blue),
-                                                    ),
-                                                  ),
-                                                  const SizedBox(width: 20),
-                                                ],
-                                              ),
-                                            );
-                                          },
-                                        )
-                                      : Padding(
+                                                ),
+                                                const SizedBox(width: 20),
+                                              ],
+                                            ),
+                                          );
+                                        },
+                                      )
+                                    : Padding(
                                         padding: const EdgeInsets.all(30.0),
                                         child: CircularProgressIndicator(),
-                                      )),
+                                      ),
+                              ),
                             ),
                           ),
                         ),
