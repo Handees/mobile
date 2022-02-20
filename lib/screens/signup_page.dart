@@ -1,9 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:handee/handee_colors.dart';
 import 'package:handee/screens/signin_page.dart';
-import 'package:handee/widgets/auth_screen/auth_checkbox.dart';
 import 'package:handee/widgets/auth_screen/auth_textfield.dart';
 import 'package:handee/icons/handee_icons.dart';
 
@@ -30,7 +28,7 @@ class SignupPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   SizedBox(height: 0.04 * size.height),
-                  Align(
+                  const Align(
                     alignment: Alignment.centerLeft,
                     child: SizedBox(
                       width: 200,
@@ -47,18 +45,18 @@ class SignupPage extends StatelessWidget {
                     height: 0.09 * size.height,
                   ),
                   AuthTextField(labelText: 'Name'),
-                  SizedBox(height: 25),
+                  const SizedBox(height: 25),
                   AuthTextField(labelText: 'Phone or email'),
-                  SizedBox(height: 25),
+                  const SizedBox(height: 25),
                   AuthTextField(
                     labelText: 'Password',
-                    icon: PeakIconButton(
+                    icon: const PeakIconButton(
                       HandeeIcons.eye_tracking_off,
                       HandeeIcons.eye_tracking_on,
                     ),
                   ),
                   SizedBox(height: 0.07 * size.height),
-                  Text(
+                  const Text(
                     'Sign up with',
                     style: TextStyle(
                       color: HandeeColors.alteWhite,
@@ -67,19 +65,19 @@ class SignupPage extends StatelessWidget {
                   SizedBox(height: 0.04 * size.height),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
+                    children: const [
                       Icon(
-                        HandeeIcons.facebook_icon,
+                        HandeeIcons.facebook,
                         color: HandeeColors.white,
                         size: 46,
                       ),
                       Icon(
-                        HandeeIcons.google_icon,
+                        HandeeIcons.google,
                         color: HandeeColors.white,
                         size: 46,
                       ),
                       Icon(
-                        HandeeIcons.twitter_icon,
+                        HandeeIcons.twitter,
                         color: HandeeColors.white,
                         size: 46,
                       ),
@@ -89,15 +87,16 @@ class SignupPage extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
+                      const Text(
                         'Have an account? ',
                         style: TextStyle(
                           color: HandeeColors.alteWhite,
                         ),
                       ),
                       GestureDetector(
-                        onTap: () => Navigator.of(context).pushReplacementNamed(SigninPage.routeName),
-                        child: Text(
+                        onTap: () => Navigator.of(context)
+                            .pushReplacementNamed(SigninPage.routeName),
+                        child: const Text(
                           'Sign in',
                           style: TextStyle(
                             color: HandeeColors.white,
@@ -111,7 +110,7 @@ class SignupPage extends StatelessWidget {
                     alignment: Alignment.center,
                     height: 58,
                     width: double.infinity,
-                    child: Text(
+                    child: const Text(
                       'Sign up',
                       style: TextStyle(
                         fontWeight: FontWeight.w500,

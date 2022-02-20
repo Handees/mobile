@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:handee/handee_colors.dart';
+import 'package:handee/icons/handee_icons.dart';
 import 'package:handee/screens/top_rated.dart';
 
 class TopRatedCard extends StatelessWidget {
@@ -19,10 +20,9 @@ class TopRatedCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         //if (FocusManager.instance.primaryFocus != null) {
-          FocusManager.instance.primaryFocus?.unfocus();
-          Future.delayed(Duration(milliseconds: 100)).then((value) =>
-              Navigator.of(context).pushNamed(TopRatedScreen.routeName)
-          );
+        FocusManager.instance.primaryFocus?.unfocus();
+        Future.delayed(const Duration(milliseconds: 100)).then((value) =>
+            Navigator.of(context).pushNamed(TopRatedScreen.routeName));
         // }else {
         //   Navigator.of(context).pushNamed(TopRatedScreen.routeName);
         // }
@@ -30,7 +30,7 @@ class TopRatedCard extends StatelessWidget {
       child: Container(
         width: 170,
         height: 220,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.white,
           boxShadow: [
             BoxShadow(color: HandeeColors.shadowBlack, blurRadius: 4),
@@ -50,7 +50,7 @@ class TopRatedCard extends StatelessWidget {
               //   child: Image.asset(name),
               // ),
             ),
-            Container(
+            SizedBox(
               width: 170,
               height: 100,
               child: Padding(
@@ -62,7 +62,7 @@ class TopRatedCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
+                    SizedBox(
                       width: 110,
                       height: 30,
                       child: Text(name),
@@ -74,13 +74,13 @@ class TopRatedCard extends StatelessWidget {
                         Row(
                           children: [
                             Text(rating.toString()),
-                            Icon(
-                              Icons.star,
+                            const Icon(
+                              HandeeIcons.star_filled,
                               size: 12,
                             ),
                           ],
                         ),
-                        Icon(
+                        const Icon(
                           Icons.arrow_forward_sharp,
                           size: 15,
                         )

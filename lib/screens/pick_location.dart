@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -48,7 +47,7 @@ class _PickLocationState extends State<PickLocation> {
         resizeToAvoidBottomInset: false,
         body: Stack(
           children: [
-            GoogleMap(
+            const GoogleMap(
               initialCameraPosition: CameraPosition(
                 target: LatLng(6.518, 3.378),
                 zoom: 15,
@@ -112,7 +111,8 @@ class _PickLocationState extends State<PickLocation> {
                                 behavior: HitTestBehavior.opaque,
                                 onTap: () async {
                                   _searchFocus.requestFocus();
-                                  Future.delayed(Duration(milliseconds: 300))
+                                  Future.delayed(
+                                          const Duration(milliseconds: 300))
                                       .then((value) {
                                     setState(() {});
                                   });
@@ -121,7 +121,7 @@ class _PickLocationState extends State<PickLocation> {
                                   child: TextField(
                                     onSubmitted: (_) {
                                       Future.delayed(
-                                              Duration(milliseconds: 100))
+                                              const Duration(milliseconds: 100))
                                           .then((value) {
                                         setState(() {});
                                       });
@@ -150,7 +150,7 @@ class _PickLocationState extends State<PickLocation> {
                         curve: Curves.decelerate,
                         opacity: _searchFocus.hasFocus ? 1.0 : 0.0,
                         child: Container(
-                          margin: EdgeInsets.only(bottom: 10),
+                          margin: const EdgeInsets.only(bottom: 10),
                           alignment: Alignment.center,
                           width: double.infinity,
                           decoration: BoxDecoration(
@@ -194,8 +194,8 @@ class _PickLocationState extends State<PickLocation> {
                                           );
                                         },
                                       )
-                                    : Padding(
-                                        padding: const EdgeInsets.all(30.0),
+                                    : const Padding(
+                                        padding: EdgeInsets.all(30.0),
                                         child: CircularProgressIndicator(),
                                       ),
                               ),

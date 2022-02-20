@@ -11,10 +11,9 @@ class BookingsPage extends StatelessWidget {
     double _height = MediaQuery.of(context).size.height -
         MediaQuery.of(context).padding.vertical -
         kBottomNavigationBarHeight;
-        //-80;
-    return
-      SafeArea(child:
-      Stack(
+    //-80;
+    return SafeArea(
+      child: Stack(
         children: [
           Align(
             alignment: Alignment.bottomCenter,
@@ -23,13 +22,12 @@ class BookingsPage extends StatelessWidget {
               child: ListView.builder(
                 itemCount: 10,
                 itemBuilder: (ctx, index) {
-                  return BookingWidget();
+                  return const BookingWidget();
                   // return Notification();
                 },
               ),
             ),
           ),
-
           Container(
             width: double.infinity,
             height: 65,

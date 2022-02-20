@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -60,7 +59,7 @@ class _BookingOverlayState extends State<BookingOverlay> {
       initialDate: DateTime.now(),
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(
-        Duration(days: 100),
+        const Duration(days: 100),
       ),
     );
 
@@ -120,7 +119,7 @@ class _BookingOverlayState extends State<BookingOverlay> {
                             controller: _dateController,
                             focusNode: _dateNode,
                             fieldName: 'Date',
-                            suffixIcon: Icon(
+                            suffixIcon: const Icon(
                               Icons.calendar_today_outlined,
                               color: HandeeColors.blue,
                               size: 20,
@@ -149,7 +148,7 @@ class _BookingOverlayState extends State<BookingOverlay> {
                             fieldName: 'Time',
                             keyboardType: TextInputType.datetime,
                             controller: _timeController,
-                            suffixIcon: Icon(
+                            suffixIcon: const Icon(
                               Icons.access_time,
                               color: HandeeColors.blue,
                               size: 20,
@@ -171,11 +170,11 @@ class _BookingOverlayState extends State<BookingOverlay> {
                 behavior: HitTestBehavior.opaque,
                 onTap: () {
                   FocusManager.instance.primaryFocus?.unfocus();
-                  Future.delayed(Duration(milliseconds: 100)).then(
+                  Future.delayed(const Duration(milliseconds: 100)).then(
                     (value) => Navigator.of(context).push(
                       MaterialPageRoute(
                         fullscreenDialog: true,
-                        builder: (_) => PickLocation(),
+                        builder: (_) => const PickLocation(),
                       ),
                     ),
                   );
@@ -238,7 +237,7 @@ class _BookingOverlayState extends State<BookingOverlay> {
                       padding: EdgeInsets.only(left: 8.0),
                       child: Text(
                         'Save as default',
-                        style: const TextStyle(fontWeight: FontWeight.w600),
+                        style: TextStyle(fontWeight: FontWeight.w600),
                       ),
                     ),
                     Padding(
@@ -308,7 +307,7 @@ class _BookingDetailsFieldState extends State<BookingDetailsField> {
   }
 
   void _handleFocusChange() {
-    if (widget.focusNode!.hasFocus != _focused && this.mounted) {
+    if (widget.focusNode!.hasFocus != _focused && mounted) {
       setState(() {
         _focused = widget.focusNode!.hasFocus;
       });
@@ -378,9 +377,11 @@ class _BookingDetailsFieldState extends State<BookingDetailsField> {
 
 class BookingCheckbox extends FormField<bool> {
   BookingCheckbox({
+    Key? key,
     FormFieldSetter<bool>? onSaved,
     bool initialValue = false,
   }) : super(
+          key: key,
           onSaved: onSaved,
           initialValue: initialValue,
           builder: (FormFieldState<bool> state) {

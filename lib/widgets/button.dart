@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:handee/handee_colors.dart';
-import 'package:handee/widgets/top_rated_screen/booking_overlay.dart';
 
 class HandeeButton extends StatelessWidget {
   const HandeeButton({

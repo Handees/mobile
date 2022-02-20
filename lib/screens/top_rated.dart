@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'package:handee/icons/handee_icons.dart';
 import 'package:handee/handee_colors.dart';
 import 'package:handee/widgets/button.dart';
 import 'package:handee/widgets/top_rated_screen/booking_overlay.dart';
@@ -11,6 +11,7 @@ class TopRatedScreen extends StatelessWidget {
   static const routeName = '/top-rated';
 
   final name = 'Gnomelander gardening services';
+  final cost = '10.0';
   final imagesPath = const [
     'assets/images/sample.png',
     'assets/images/sample.png',
@@ -53,10 +54,18 @@ class TopRatedScreen extends StatelessWidget {
               children: [
                 ImagePageView(images),
                 const SizedBox(
-                  height: 50,
+                  height: 10,
+                ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: const Icon(Icons.bookmark_border),
+                ),
+                const SizedBox(
+                  height: 20,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Align(
                       alignment: Alignment.centerLeft,
@@ -68,7 +77,25 @@ class TopRatedScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const Icon(Icons.bookmark_border),
+                    //Text('data'),
+                    RichText(
+                      text: TextSpan(
+                        text: '\u20A6${cost}',
+                        style: TextStyle(
+                            color: HandeeColors.black,
+                            fontSize: 24,
+                            fontWeight: FontWeight.w400),
+                        children: [
+                          TextSpan(
+                            text: ' / hr',
+                            style: TextStyle(
+                                color: HandeeColors.black,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 8),
@@ -96,7 +123,7 @@ class TopRatedScreen extends StatelessWidget {
                             textScaleFactor: 1.5,
                           ),
                           const Icon(
-                            Icons.star,
+                            HandeeIcons.star_filled,
                             size: 17,
                           ),
                         ],
@@ -173,7 +200,7 @@ class TopRatedScreen extends StatelessWidget {
                         return Padding(
                           padding: EdgeInsets.only(
                               bottom: MediaQuery.of(context).viewInsets.bottom),
-                          child: BookingOverlay(),
+                          child: const BookingOverlay(),
                         );
                       },
                     );

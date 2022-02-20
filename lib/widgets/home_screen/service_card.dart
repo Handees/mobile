@@ -19,7 +19,7 @@ class ServiceCard extends StatelessWidget {
       decoration: BoxDecoration(
           image:
               DecorationImage(image: AssetImage(imagePath), fit: BoxFit.cover),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(color: HandeeColors.shadowBlack, blurRadius: 4),
           ],
           borderRadius: BorderRadius.circular(5)),
@@ -43,7 +43,7 @@ class ServiceCard extends StatelessWidget {
               Text(
                 title,
                 textScaleFactor: 0.9,
-                style: TextStyle(
+                style: const TextStyle(
                   color: HandeeColors.white,
                   fontWeight: FontWeight.w700,
                 ),
@@ -51,7 +51,7 @@ class ServiceCard extends StatelessWidget {
               Text(
                 subtitle,
                 textScaleFactor: 0.75,
-                style: TextStyle(
+                style: const TextStyle(
                   color: HandeeColors.white,
                   fontWeight: FontWeight.w700,
                 ),

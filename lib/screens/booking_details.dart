@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:handee/BookingStatus.dart';
+import 'package:handee/booking_status.dart';
 
 import 'package:handee/handee_colors.dart';
 import 'package:handee/icons/handee_icons.dart';
@@ -8,7 +7,7 @@ import 'package:handee/widgets/button.dart';
 import 'package:handee/widgets/home_screen/booking.dart';
 
 class BookingDetailsScreen extends StatefulWidget {
-  BookingDetailsScreen({Key? key}) : super(key: key);
+  const BookingDetailsScreen({Key? key}) : super(key: key);
 
   static const routeName = '/booking-details';
 
@@ -74,7 +73,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                                     ),
                                   ),
                                   BookingStatusWidget(
-                                      status: BookingStatus.Completed),
+                                      status: BookingStatus.completed),
                                 ],
                               ),
                               const SizedBox(height: 15),
@@ -149,20 +148,23 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                           margin: const EdgeInsets.symmetric(vertical: 0.75),
                           color: HandeeColors.grey161,
                         ),
-                        SizedBox(height: 25),
-                        Text(
+                        const SizedBox(height: 25),
+                        const Text(
                           'Rate your service',
                           textScaleFactor: 0.95,
                         ),
-                        SizedBox(height: 25),
-                        if(ratingError)
-                          Text('Rating can\'t be empty', style: TextStyle(
-                            color: Colors.red,
-                          ),),
-                        Ratings(
-                            key: _ratingsKey,
+                        const SizedBox(height: 25),
+                        if (ratingError)
+                          const Text(
+                            'Rating can\'t be empty',
+                            style: TextStyle(
+                              color: Colors.red,
                             ),
-                        SizedBox(height: 40),
+                          ),
+                        Ratings(
+                          key: _ratingsKey,
+                        ),
+                        const SizedBox(height: 40),
                         TextField(
                           controller: textController,
                           keyboardType: TextInputType.multiline,
@@ -170,17 +172,17 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                           decoration: InputDecoration(
                             focusedBorder: OutlineInputBorder(
                               borderSide:
-                                  BorderSide(color: HandeeColors.grey161),
+                                  const BorderSide(color: HandeeColors.grey161),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             border: OutlineInputBorder(
                               borderSide:
-                                  BorderSide(color: HandeeColors.grey161),
+                                  const BorderSide(color: HandeeColors.grey161),
                               borderRadius: BorderRadius.circular(8),
                             ),
                           ),
                         ),
-                        SizedBox(height: 25),
+                        const SizedBox(height: 25),
                         HandeeButton(
                             text: 'Submit',
                             onTap: () {
@@ -291,11 +293,10 @@ class _RatingsState extends State<Ratings> {
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       height: 30,
       width: double.infinity,
-      margin: EdgeInsets.symmetric(horizontal: 50),
+      margin: const EdgeInsets.symmetric(horizontal: 50),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -306,7 +307,11 @@ class _RatingsState extends State<Ratings> {
                   rating = i;
                 });
               },
-              child: Icon(Icons.star, size: 33, color: widget.color,),
+              child: Icon(
+                HandeeIcons.star_filled,
+                size: 33,
+                color: widget.color,
+              ),
             ),
           for (int i = 0; i < 5 - rating; ++i)
             GestureDetector(
@@ -315,7 +320,11 @@ class _RatingsState extends State<Ratings> {
                   rating = i + rating + 1;
                 });
               },
-              child: Icon(Icons.star_outline, size: 33, color: widget.color,),
+              child: Icon(
+                HandeeIcons.star_outlined,
+                size: 33,
+                color: widget.color,
+              ),
             ),
         ],
       ),

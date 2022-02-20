@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:handee/BookingStatus.dart';
+import 'package:handee/booking_status.dart';
 import 'package:handee/handee_colors.dart';
 import 'package:handee/screens/booking_details.dart';
 
 class BookingWidget extends StatelessWidget {
-  BookingWidget({Key? key}) : super(key: key);
+  const BookingWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +28,7 @@ class BookingWidget extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                      children: const [
                         Text(
                           'Gnomelander gardening service',
                           textScaleFactor: 1,
@@ -42,8 +41,8 @@ class BookingWidget extends StatelessWidget {
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      BookingStatusWidget(status: BookingStatus.Confirmed),
+                    children: const [
+                      BookingStatusWidget(status: BookingStatus.confirmed),
                       SizedBox(height: 10),
                       Text('4th Jan 2022'),
                     ],
@@ -75,19 +74,19 @@ class BookingStatusWidget extends StatelessWidget {
     final String text;
 
     switch (status) {
-      case BookingStatus.Confirmed:
+      case BookingStatus.confirmed:
         color = HandeeColors.blue;
         text = 'Confirmed';
         break;
-      case BookingStatus.Ongoing:
+      case BookingStatus.ongoing:
         color = HandeeColors.green;
         text = 'Ongoing';
         break;
-      case BookingStatus.Completed:
+      case BookingStatus.completed:
         color = HandeeColors.black22;
         text = 'Completed';
         break;
-      case BookingStatus.Cancelled:
+      case BookingStatus.cancelled:
         color = HandeeColors.grey196;
         text = 'Cancelled';
         break;
@@ -104,9 +103,7 @@ class BookingStatusWidget extends StatelessWidget {
       child: Text(
         text,
         textScaleFactor: 0.8,
-        style: TextStyle(
-          color: HandeeColors.white
-        ),
+        style: TextStyle(color: HandeeColors.white),
       ),
     );
   }

@@ -18,9 +18,9 @@ class TopCategories extends StatelessWidget {
       'House Keeping',
     ]);
 
-    categories.Sort();
+    categories.sort();
 
-    return Container(
+    return SizedBox(
       width: double.infinity,
       height: 100,
       child: Column(
@@ -37,9 +37,7 @@ class TopCategories extends StatelessWidget {
                   color: color,
                   child: Text(
                     categories.items[5],
-                    style: const TextStyle(
-                      color: HandeeColors.blue
-                    ),
+                    style: const TextStyle(color: HandeeColors.blue),
                   ),
                 ),
               ),
@@ -53,11 +51,8 @@ class TopCategories extends StatelessWidget {
                   color: color,
                   child: Text(
                     categories.items[3],
-                    style: const TextStyle(
-                        color: HandeeColors.blue
-                    ),
+                    style: const TextStyle(color: HandeeColors.blue),
                   ),
-
                 ),
               ),
               const SizedBox(width: 10),
@@ -70,11 +65,8 @@ class TopCategories extends StatelessWidget {
                   color: color,
                   child: Text(
                     categories.items[1],
-                    style: const TextStyle(
-                        color: HandeeColors.blue
-                    ),
+                    style: const TextStyle(color: HandeeColors.blue),
                   ),
-
                 ),
               ),
             ],
@@ -92,11 +84,8 @@ class TopCategories extends StatelessWidget {
                   color: color,
                   child: Text(
                     categories.items[2],
-                    style: const TextStyle(
-                        color: HandeeColors.blue
-                    ),
+                    style: const TextStyle(color: HandeeColors.blue),
                   ),
-
                 ),
               ),
               const SizedBox(width: 10),
@@ -109,11 +98,8 @@ class TopCategories extends StatelessWidget {
                   color: color,
                   child: Text(
                     categories.items[0],
-                    style: const TextStyle(
-                        color: HandeeColors.blue
-                    ),
+                    style: const TextStyle(color: HandeeColors.blue),
                   ),
-
                 ),
               ),
               const SizedBox(width: 10),
@@ -126,11 +112,8 @@ class TopCategories extends StatelessWidget {
                   color: color,
                   child: Text(
                     categories.items[4],
-                    style: const TextStyle(
-                        color: HandeeColors.blue
-                    ),
+                    style: const TextStyle(color: HandeeColors.blue),
                   ),
-
                 ),
               ),
             ],
@@ -146,7 +129,7 @@ class Categories {
 
   List<String> items;
 
-  List<String> Sort() {
+  List<String> sort() {
     items.sort((a, b) => a.length.compareTo(b.length));
     print(items);
     return items;

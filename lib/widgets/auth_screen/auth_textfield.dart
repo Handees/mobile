@@ -3,6 +3,7 @@ import 'package:handee/handee_colors.dart';
 
 class AuthTextField extends FormField<String> {
   AuthTextField({
+    Key? key,
     required String labelText,
     Widget? icon,
     TextEditingController? controller,
@@ -13,6 +14,7 @@ class AuthTextField extends FormField<String> {
     bool obscureText = false,
     // Function()? onEditingComplete,
   }) : super(
+          key: key,
           onSaved: onSaved,
           validator: validator,
           initialValue: initialValue,
@@ -32,17 +34,17 @@ class AuthTextField extends FormField<String> {
                   controller: controller,
                   obscureText: obscureText,
                   cursorColor: HandeeColors.white,
-                  style: TextStyle(color: HandeeColors.white),
+                  style: const TextStyle(color: HandeeColors.white),
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     labelText: labelText,
-                    labelStyle: TextStyle(color: HandeeColors.white),
+                    labelStyle: const TextStyle(color: HandeeColors.white),
                     suffixIcon: icon,
                   ),
                 ),
               ),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(
+                borderRadius: const BorderRadius.all(
                   Radius.circular(5),
                 ),
                 //color: Color.fromRGBO(196, 196, 196, 0.15),
@@ -86,7 +88,7 @@ class _PeakIconButtonState extends State<PeakIconButton> {
             )
           : Icon(
               widget.initialIcon,
-              color: Color.fromRGBO(89, 89, 89, 1),
+              color: const Color.fromRGBO(89, 89, 89, 1),
             ),
     );
   }

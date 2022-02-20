@@ -12,7 +12,7 @@ class CategoriesPage extends StatelessWidget {
     return SingleChildScrollView(
       child: Center(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 25),
+          padding: const EdgeInsets.symmetric(horizontal: 25),
           //widthFactor: 0.85,
           child: Column(
             children: [
@@ -24,13 +24,26 @@ class CategoriesPage extends StatelessWidget {
                   color: HandeeColors.grey237,
                   borderRadius: BorderRadius.circular(5),
                 ),
-                child: const FractionallySizedBox(
+                child: FractionallySizedBox(
                   widthFactor: 0.8,
                   child: Center(
                     child: TextField(
+                      textAlign: TextAlign.center,
                       decoration: InputDecoration(
+                        label: Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                Icons.search,
+                                color: HandeeColors.grey141,
+                              ),
+                              const Text('Search'),
+                              const SizedBox(width: 10),
+                            ],
+                          ),
+                        ),
                         border: InputBorder.none,
-                        hintText: 'Search',
                       ),
                       cursorColor: HandeeColors.grey161,
                     ),
@@ -38,19 +51,19 @@ class CategoriesPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 40),
-              Categories(),
+              const Categories(),
               const SizedBox(height: 40),
-              Categories(),
+              const Categories(),
               const SizedBox(height: 40),
-              Categories(),
+              const Categories(),
               const SizedBox(height: 40),
-              Categories(),
+              const Categories(),
               const SizedBox(height: 40),
-              Categories(),
+              const Categories(),
               const SizedBox(height: 40),
-              Categories(),
+              const Categories(),
               const SizedBox(height: 40),
-              Categories(),
+              const Categories(),
             ],
           ),
         ),
@@ -64,46 +77,44 @@ class Categories extends StatelessWidget {
 
   final String name = 'Laundry';
   final Icon icon = const Icon(
-    HandeeIcons.washing_machine,
+    HandeeIcons.laundry,
     size: 20,
   );
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                name,
-                textScaleFactor: 1.1,
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                ),
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(
+              name,
+              textScaleFactor: 1.1,
+              style: const TextStyle(
+                fontWeight: FontWeight.w600,
               ),
-              SizedBox(width: 5),
-              icon,
-            ],
-          ),
-          const SizedBox(height: 20),
-          SizedBox(
-            height: 150,
-            child: ListView.builder(
-              itemCount: 15,
-              scrollDirection: Axis.horizontal,
-              clipBehavior: Clip.none,
-              itemBuilder: (ctx, index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: ServiceCard(),
-                );
-              },
             ),
+            const SizedBox(width: 5),
+            icon,
+          ],
+        ),
+        const SizedBox(height: 20),
+        SizedBox(
+          height: 150,
+          child: ListView.builder(
+            itemCount: 15,
+            scrollDirection: Axis.horizontal,
+            clipBehavior: Clip.none,
+            itemBuilder: (ctx, index) {
+              return const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                child: ServiceCard(),
+              );
+            },
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

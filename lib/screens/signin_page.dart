@@ -31,7 +31,7 @@ class SigninPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     SizedBox(height: 0.04 * size.height),
-                    Text(
+                    const Text(
                       'Welcome back!',
                       textScaleFactor: 2,
                       style: TextStyle(
@@ -44,16 +44,16 @@ class SigninPage extends StatelessWidget {
                     AuthTextField(
                       labelText: 'Name',
                     ),
-                    SizedBox(height: 25),
+                    const SizedBox(height: 25),
                     AuthTextField(
                       labelText: 'Password',
-                      icon: PeakIconButton(
+                      icon: const PeakIconButton(
                         HandeeIcons.eye_tracking_off,
                         HandeeIcons.eye_tracking_on,
                       ),
                     ),
                     SizedBox(height: 0.07 * size.height),
-                    Text(
+                    const Text(
                       'Sign in with',
                       style: TextStyle(
                         color: HandeeColors.alteWhite,
@@ -62,19 +62,19 @@ class SigninPage extends StatelessWidget {
                     SizedBox(height: 0.04 * size.height),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
+                      children: const [
                         Icon(
-                          HandeeIcons.facebook_icon,
+                          HandeeIcons.facebook,
                           color: HandeeColors.white,
                           size: 46,
                         ),
                         Icon(
-                          HandeeIcons.google_icon,
+                          HandeeIcons.google,
                           color: HandeeColors.white,
                           size: 46,
                         ),
                         Icon(
-                          HandeeIcons.twitter_icon,
+                          HandeeIcons.twitter,
                           color: HandeeColors.white,
                           size: 46,
                         ),
@@ -84,7 +84,7 @@ class SigninPage extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
+                        const Text(
                           'Don\'t have an account? ',
                           style: TextStyle(
                             color: HandeeColors.alteWhite,
@@ -93,7 +93,7 @@ class SigninPage extends StatelessWidget {
                         GestureDetector(
                           onTap: () => Navigator.of(context)
                               .pushReplacementNamed(SignupPage.routeName),
-                          child: Text(
+                          child: const Text(
                             'Sign up',
                             style: TextStyle(
                               color: HandeeColors.white,
@@ -107,7 +107,7 @@ class SigninPage extends StatelessWidget {
                       alignment: Alignment.center,
                       height: 58,
                       width: double.infinity,
-                      child: Text(
+                      child: const Text(
                         'Sign in',
                         style: TextStyle(
                           fontWeight: FontWeight.w500,

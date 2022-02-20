@@ -14,7 +14,7 @@ class HomePage extends StatelessWidget {
       child: Center(
         child: Padding(
           //widthFactor: 0.85,
-          padding: EdgeInsets.symmetric(horizontal: 25),
+          padding: const EdgeInsets.symmetric(horizontal: 25),
           child: Column(
             children: [
               const SizedBox(height: 35),
@@ -108,8 +108,8 @@ class HomePage extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   clipBehavior: Clip.none,
                   itemBuilder: (ctx, index) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                    return const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
                       child: TopRatedCard(),
                     );
                   },
