@@ -95,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
           items: const [
             BottomNavigationBarItem(
               icon: Icon(
-                Icons.home_outlined,
+                HandeeIcons.home,
               ),
               label: 'Home',
             ),

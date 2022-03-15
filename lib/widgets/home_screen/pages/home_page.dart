@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:handee/handee_colors.dart';
 import 'package:handee/widgets/home_screen/top_rated_card.dart';
+import 'package:handee/widgets/home_screen/top_searched.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key, required this.username}) : super(key: key);
@@ -64,12 +65,12 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              Container(
-                height: 100,
-                width: double.infinity,
-                color: Colors.blueAccent,
-              ),
-              // TopCategories(),
+              // Container(
+              //   height: 100,
+              //   width: double.infinity,
+              //   color: Colors.blueAccent,
+              // ),
+              TopSearched(),
               const SizedBox(height: 50),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

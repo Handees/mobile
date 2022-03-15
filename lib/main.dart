@@ -9,12 +9,14 @@ import 'package:handee/screens/signin_page.dart';
 import 'package:handee/screens/signup_page.dart';
 import 'package:handee/screens/top_rated.dart';
 
-void main() {
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    statusBarColor: HandeeColors.white,
-  ));
-  runApp(const MyApp());
-}
+// void main() {
+//   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+//     statusBarColor: HandeeColors.white,
+//   ));
+//   runApp(const MyApp());
+// }
+
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);

@@ -11,7 +11,7 @@ class TopRatedScreen extends StatelessWidget {
   static const routeName = '/top-rated';
 
   final name = 'Gnomelander gardening services';
-  final cost = '10.0';
+  final cost = '10';
   final imagesPath = const [
     'assets/images/sample.png',
     'assets/images/sample.png',
