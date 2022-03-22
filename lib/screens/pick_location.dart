@@ -47,20 +47,18 @@ class _PickLocationState extends State<PickLocation> {
         resizeToAvoidBottomInset: false,
         body: Stack(
           children: [
-            const GoogleMap(
-              initialCameraPosition: CameraPosition(
-                target: LatLng(6.518, 3.378),
-                zoom: 15,
-              ),
-            ),
-            AnimatedOpacity(
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.decelerate,
-              opacity: _searchFocus.hasFocus ? 1.0 : 0.0,
-              child: Container(
-                color: HandeeColors.white,
-                height: double.infinity,
-                width: double.infinity,
+            MapWidget(),
+            IgnorePointer(
+              ignoring: !_searchFocus.hasFocus,
+              child: AnimatedOpacity(
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.decelerate,
+                opacity: _searchFocus.hasFocus ? 1.0 : 0.0,
+                child: Container(
+                  color: HandeeColors.white,
+                  height: double.infinity,
+                  width: double.infinity,
+                ),
               ),
             ),
             Padding(
@@ -107,37 +105,20 @@ class _PickLocationState extends State<PickLocation> {
                                 borderRadius: BorderRadius.circular(5),
                               ),
                               height: 40,
-                              child: GestureDetector(
-                                behavior: HitTestBehavior.opaque,
-                                onTap: () async {
-                                  _searchFocus.requestFocus();
-                                  Future.delayed(
-                                          const Duration(milliseconds: 300))
-                                      .then((value) {
-                                    setState(() {});
-                                  });
+                              child: TextField(
+                                onSubmitted: (_) {
+                                  setState(() {});
                                 },
-                                child: IgnorePointer(
-                                  child: TextField(
-                                    onSubmitted: (_) {
-                                      Future.delayed(
-                                              const Duration(milliseconds: 100))
-                                          .then((value) {
-                                        setState(() {});
-                                      });
-                                    },
-                                    autofocus: false,
-                                    focusNode: _searchFocus,
-                                    decoration: const InputDecoration(
-                                      contentPadding: EdgeInsets.all(8),
-                                      prefixIcon: Icon(
-                                        Icons.search,
-                                        color: HandeeColors.grey89,
-                                        size: 20,
-                                      ),
-                                      border: InputBorder.none,
-                                    ),
+                                autofocus: false,
+                                focusNode: _searchFocus,
+                                decoration: const InputDecoration(
+                                  contentPadding: EdgeInsets.all(8),
+                                  prefixIcon: Icon(
+                                    Icons.search,
+                                    color: HandeeColors.grey89,
+                                    size: 20,
                                   ),
+                                  border: InputBorder.none,
                                 ),
                               ),
                             ),
@@ -212,6 +193,34 @@ class _PickLocationState extends State<PickLocation> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class MapWidget extends StatefulWidget {
+  const MapWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<MapWidget> createState() => _MapWidgetState();
+}
+
+class _MapWidgetState extends State<MapWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return const GoogleMap(
+      initialCameraPosition: CameraPosition(
+        target: LatLng(6.518, 3.378),
+        zoom: 15,
+      ),
+      compassEnabled: false,
+      buildingsEnabled: false,
+      //liteModeEnabled: true,
+      // scrollGesturesEnabled: true,
+      // tiltGesturesEnabled: true,
+      // rotateGesturesEnabled: true,
+      // zoomGesturesEnabled: true,
     );
   }
 }

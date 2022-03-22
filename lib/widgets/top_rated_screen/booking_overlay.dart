@@ -170,12 +170,11 @@ class _BookingOverlayState extends State<BookingOverlay> {
                 behavior: HitTestBehavior.opaque,
                 onTap: () {
                   FocusManager.instance.primaryFocus?.unfocus();
-                  Future.delayed(const Duration(milliseconds: 100)).then(
-                    (value) => Navigator.of(context).push(
-                      MaterialPageRoute(
-                        fullscreenDialog: true,
-                        builder: (_) => const PickLocation(),
-                      ),
+                  // async Future.delayed(const Duration(milliseconds: 0));
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      fullscreenDialog: true,
+                      builder: (_) => const PickLocation(),
                     ),
                   );
                 },
