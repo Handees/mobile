@@ -234,9 +234,9 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
               left: 12,
               top: 10,
               child: GestureDetector(
-                onTap: () async {
-                  FocusManager.instance.primaryFocus?.unfocus();
-                  await Future.delayed(Duration(milliseconds: 100));
+                onTap: ()  {
+                  // FocusManager.instance.primaryFocus?.unfocus();
+                  // await Future.delayed(Duration(milliseconds: 100));
                   Navigator.of(context).pop();
                 },
                 child: Container(

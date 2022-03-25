@@ -2,10 +2,12 @@ import 'dart:convert';
 
 import 'package:http/http.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:geocoding/geocoding.dart';
 
 const kMapsApiKey = 'AIzaSyA3NoblRziyftfiaqUmF5X1BYURfknrzV0';
 
-class PlaceService {
+class PlacesService {
+  /// Get Predictions based on the specified input
   Future<List<String>> getPredictions(String input) async {
     final request = Uri.https(
       'maps.googleapis.com',
@@ -24,6 +26,7 @@ class PlaceService {
 
     final json = jsonDecode(response.body);
 
+    //return list of prediction results
     final result = (json['predictions'] as List)
         .map<String>((e) => e['description'])
         .toList();
@@ -74,18 +77,13 @@ class PlaceService {
     // continue accessing the position of the device.
     return await Geolocator.getCurrentPosition();
   }
-}
 
-//For getting suggestions
-// final request = Uri.https(
-//       'maps.googleapis.com',
-//       '/maps/api/place/autocomplete/json',
-//       {
-//         'input' : input,//"$input",
-//         'types' : 'address',
-//         //'language' : lang,
-//         //'components': 'country:ch',
-//         'key':apiKey,
-//         'sessionToken': sessionToken,
-//       },
-//     );
+  Future<String> getAddress(Position position) async {
+    final res = await GeocodingPlatform.instance
+        .placemarkFromCoordinates(position.latitude, position.longitude);
+    print(res);
+    final address = res[0].street;
+
+    return address!;
+  }
+}

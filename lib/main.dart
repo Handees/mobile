@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:handee/handee_colors.dart';
 import 'package:handee/screens/booking_details.dart';
 
 import 'package:handee/screens/home_screen.dart';
@@ -60,6 +58,7 @@ class MyApp extends StatelessWidget {
         //     builder: (_) => ServicePage(),
         //   );
         // }
+        return null;
       },
     );
   }
