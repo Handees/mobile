@@ -14,7 +14,7 @@ class HandeeButton extends StatelessWidget {
   final Color color;
   final Color textColor;
   final void Function() onTap;
-  final text;
+  final String text;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class HandeeButton extends StatelessWidget {
           child: Text(
             text,
             textScaleFactor: 1,
-            style: TextStyle(
+            style: const TextStyle(
               color: HandeeColors.white,
               fontWeight: FontWeight.w600,
             ),

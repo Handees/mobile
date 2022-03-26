@@ -76,9 +76,7 @@ class _PeakIconButtonState extends State<PeakIconButton> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        setState(() {
-          print(_peaking);
-        });
+        setState(() {});
         _peaking = !_peaking;
       },
       child: _peaking

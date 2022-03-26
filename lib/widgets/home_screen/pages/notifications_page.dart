@@ -57,7 +57,7 @@ class _NotificationsPageState extends State<NotificationsPage>
             ),
             SizedBox(
               height: _height,
-              child: TabBarView(
+              child: const TabBarView(
                 children: [
                   _AllTab(),
                   _ReminderTab(),
@@ -91,18 +91,18 @@ class _AllTab extends StatelessWidget {
                   agentName: 'The Heat Cleaners');
             case 2:
               return NotificationWidget(
-                  leading: CircleAvatar(
+                  leading: const CircleAvatar(
                     backgroundColor: Color.fromRGBO(255, 220, 220, 1),
                     child: Icon(
                       HandeeIcons.alert_triangle,
                       color: HandeeColors.red,
                     ),
                   ),
-                  message: Text('New device login. Is this you?'));
+                  message: const Text('New device login. Is this you?'));
             case 3:
               return NotificationWidget(
                   message: RichText(
-                text: TextSpan(
+                text: const TextSpan(
                   children: [
                     TextSpan(
                       text: 'Welcome to ',
@@ -121,7 +121,7 @@ class _AllTab extends StatelessWidget {
                 textScaleFactor: 0.9,
               ));
             default:
-              return Text('Never getting here');
+              return const Text('Never getting here');
           }
           // return Notification();
         },

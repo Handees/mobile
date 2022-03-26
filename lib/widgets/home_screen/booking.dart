@@ -53,7 +53,7 @@ class BookingWidget extends StatelessWidget {
             Container(
               height: 0.5,
               width: double.infinity,
-              margin: EdgeInsets.symmetric(vertical: 0.75),
+              margin: const EdgeInsets.symmetric(vertical: 0.75),
               color: HandeeColors.grey161,
             ),
           ],
@@ -103,7 +103,7 @@ class BookingStatusWidget extends StatelessWidget {
       child: Text(
         text,
         textScaleFactor: 0.8,
-        style: TextStyle(color: HandeeColors.white),
+        style: const TextStyle(color: HandeeColors.white),
       ),
     );
   }

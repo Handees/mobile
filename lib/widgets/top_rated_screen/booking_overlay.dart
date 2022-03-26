@@ -22,6 +22,7 @@ class _BookingOverlayState extends State<BookingOverlay> {
   final _contactNode = FocusNode();
   final _dateController = TextEditingController();
   final _timeController = TextEditingController();
+  final _addressController = TextEditingController();
 
   @override
   void dispose() {
@@ -32,6 +33,7 @@ class _BookingOverlayState extends State<BookingOverlay> {
     _contactNode.dispose();
     _dateController.dispose();
     _timeController.dispose();
+    _addressController.dispose();
 
     super.dispose();
   }
@@ -168,20 +170,22 @@ class _BookingOverlayState extends State<BookingOverlay> {
               const SizedBox(height: 17),
               GestureDetector(
                 behavior: HitTestBehavior.opaque,
-                onTap: () {
+                onTap: () async {
                   FocusManager.instance.primaryFocus?.unfocus();
                   // async Future.delayed(const Duration(milliseconds: 0));
-                  Navigator.of(context).push(
+                  final res = await Navigator.of(context).push<String>(
                     MaterialPageRoute(
                       fullscreenDialog: true,
                       builder: (_) => const PickLocation(),
                     ),
                   );
+                  _addressController.text = res ?? "";
                 },
                 child: IgnorePointer(
                   child: BookingDetailsField(
                     fieldName: 'Address',
                     focusNode: _addressNode,
+                    controller: _addressController,
                     nextFocus: _nameNode,
                     onSaved: (value) {
                       //TODO: implement onSaved

@@ -56,9 +56,9 @@ class TopRatedScreen extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                Align(
+                const Align(
                   alignment: Alignment.centerRight,
-                  child: const Icon(Icons.bookmark_border),
+                  child: Icon(Icons.bookmark_border),
                 ),
                 const SizedBox(
                   height: 20,
@@ -80,12 +80,12 @@ class TopRatedScreen extends StatelessWidget {
                     //Text('data'),
                     RichText(
                       text: TextSpan(
-                        text: '\u20A6${cost}',
-                        style: TextStyle(
+                        text: '\u20A6$cost',
+                        style: const TextStyle(
                             color: HandeeColors.black,
                             fontSize: 24,
                             fontWeight: FontWeight.w400),
-                        children: [
+                        children: const [
                           TextSpan(
                             text: ' / hr',
                             style: TextStyle(

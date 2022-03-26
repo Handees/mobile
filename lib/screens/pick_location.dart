@@ -28,8 +28,14 @@ class _PickLocationState extends State<PickLocation> {
   Future<List<String>>? _suggestionsFuture;
   final _searchController = TextEditingController();
   Position? _position;
-
   late GoogleMapController _mapController;
+
+  // MarkerId _userMarkerId = MarkerId("user");
+  // late Marker _userMarker;
+
+  Set<Marker> markers = <Marker>{};
+
+  final _placeService = PlacesService();
 
   @override
   void initState() {
@@ -38,9 +44,21 @@ class _PickLocationState extends State<PickLocation> {
   }
 
   Future<void> _getPosition() async {
-    _position = await PlaceService.determinePosition();
-    //_searchController.text = await PlaceService.getAddress(_position!);
+    _position = await _placeService.determinePosition();
+    _addMarker('user', LatLng(_position!.latitude, _position!.longitude));
     setState(() {});
+  }
+
+  void _addMarker(String markerId, LatLng location) async {
+    //final t = await BitmapDescriptor.fromAssetImage(ImageConfiguration.empty, 'assets/images/untitled.png');
+    if (markers.isNotEmpty) {
+      markers.removeWhere((element) => element.markerId.value == 'user');
+    }
+    markers.add(Marker(
+      markerId: MarkerId(markerId),
+      position: location,
+      //icon: t,
+    ));
   }
 
   @override
@@ -57,7 +75,62 @@ class _PickLocationState extends State<PickLocation> {
   }
 
   Future<void> _getSuggestions(String value) async {
-    _suggestionsFuture = PlaceService.getPredictions(value);
+    _suggestionsFuture = _placeService.getPredictions(value);
+  }
+
+  Future<void> _animateToAddress(String value) async {
+    var position = await _placeService.getCoordinates(value);
+    _mapController.animateCamera(
+        CameraUpdate.newLatLng(LatLng(position.latitude, position.longitude)));
+  }
+
+  Widget buildSuggestions(List<String> suggestions) {
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: suggestions.length, //_recentAdresses.length,
+      itemBuilder: (ctx, i) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12),
+          child: GestureDetector(
+            onTap: () {
+              setState(() {
+                FocusManager.instance.primaryFocus?.unfocus();
+                _searchController.text = suggestions[i];
+                _animateToAddress(suggestions[i]);
+              });
+            },
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(
+                  HandeeIcons.map_pin,
+                  color: HandeeColors.blue,
+                  size: 18,
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    suggestions[i],
+                    style: const TextStyle(color: HandeeColors.blue),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                GestureDetector(
+                  onTap: () {
+                    _searchController.text = suggestions[i];
+                  },
+                  child: const Icon(
+                    Icons.location_on_outlined,
+                    color: HandeeColors.blue,
+                    size: 18,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -69,13 +142,14 @@ class _PickLocationState extends State<PickLocation> {
         body: Stack(
           children: [
             _position == null
-                ? CircularProgressIndicator()
+                ? const Center(child: CircularProgressIndicator())
                 : GoogleMap(
+                    markers: markers,
                     initialCameraPosition: CameraPosition(
                       target: LatLng(_position!.latitude, _position!.longitude),
                       zoom: 15,
                     ),
-                    myLocationEnabled: true,
+                    myLocationEnabled: false,
                     myLocationButtonEnabled: false,
                     mapToolbarEnabled: false,
                     compassEnabled: false,
@@ -89,17 +163,16 @@ class _PickLocationState extends State<PickLocation> {
               child: FloatingActionButton(
                 backgroundColor: HandeeColors.backgroundDark,
                 foregroundColor: Colors.white,
-                child: Icon(Icons.location_searching),
+                child: const Icon(Icons.location_searching),
                 onPressed: () async {
-                  var res = await PlaceService.determinePosition();
-                  print(res);
+                  var res = await _placeService.determinePosition();
                   _mapController.animateCamera(
                     CameraUpdate.newLatLng(
                       LatLng(res.latitude, res.longitude),
                     ),
                   );
                   _searchController.text =
-                      await PlaceService.getAddress(_position!);
+                      await _placeService.getAddress(_position!);
                 },
               ),
             ),
@@ -163,8 +236,8 @@ class _PickLocationState extends State<PickLocation> {
                               child: TextField(
                                 controller: _searchController,
                                 onSubmitted: (value) {
-                                  //setState(() {});
                                   _getSuggestions(value);
+                                  _animateToAddress(value);
                                 },
                                 onChanged: (value) {
                                   setState(() {
@@ -211,13 +284,8 @@ class _PickLocationState extends State<PickLocation> {
                                       builder: (context, snapshot) {
                                         return snapshot.connectionState ==
                                                 ConnectionState.done
-                                            ? SuggestionsWidget(
+                                            ? buildSuggestions(
                                                 snapshot.data!,
-                                                searchController:
-                                                    _searchController,
-                                                onTap: () {
-                                                  setState(() {});
-                                                },
                                               )
                                             : const Padding(
                                                 padding: EdgeInsets.all(30.0),
@@ -226,15 +294,8 @@ class _PickLocationState extends State<PickLocation> {
                                               );
                                       },
                                     )
-                                  : SuggestionsWidget(
+                                  : buildSuggestions(
                                       _recentAdresses,
-                                      searchController: _searchController,
-                                      onTap: () {
-                                        setState(() {
-                                          _getSuggestions(
-                                              _searchController.text);
-                                        });
-                                      },
                                     ),
                             ),
                           ),
@@ -242,63 +303,17 @@ class _PickLocationState extends State<PickLocation> {
                       ),
                     ],
                   ),
-                  HandeeButton(text: 'Done', onTap: () {}),
+                  HandeeButton(
+                      text: 'Done',
+                      onTap: () {
+                        Navigator.of(context).pop(_searchController.text);
+                      }),
                 ],
               ),
             ),
           ],
         ),
       ),
-    );
-  }
-}
-
-class SuggestionsWidget extends StatelessWidget {
-  const SuggestionsWidget(
-    this.suggestions, {
-    Key? key,
-    this.searchController,
-    this.onTap,
-  }) : super(key: key);
-
-  final List<String> suggestions;
-  final TextEditingController? searchController;
-  final void Function()? onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: suggestions.length, //_recentAdresses.length,
-      itemBuilder: (ctx, i) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Icon(
-                Icons.location_on_outlined,
-                color: HandeeColors.blue,
-                size: 18,
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: GestureDetector(
-                  onTap: () {
-                    this.searchController?.text = suggestions[i];
-                    onTap!();
-                  },
-                  child: Text(
-                    suggestions[i],
-                    style: const TextStyle(color: HandeeColors.blue),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 20),
-            ],
-          ),
-        );
-      },
     );
   }
 }

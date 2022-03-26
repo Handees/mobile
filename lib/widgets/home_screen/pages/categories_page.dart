@@ -33,13 +33,13 @@ class CategoriesPage extends StatelessWidget {
                         label: Center(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Icon(
+                            children: const [
+                              Icon(
                                 Icons.search,
                                 color: HandeeColors.grey141,
                               ),
-                              const Text('Search'),
-                              const SizedBox(width: 10),
+                              Text('Search'),
+                              SizedBox(width: 10),
                             ],
                           ),
                         ),

@@ -18,7 +18,7 @@ class NotificationWidget extends StatelessWidget {
     required String agentName,
   }) : super(key: key) {
     _color = HandeeColors.lightBlue;
-    leading = CircleAvatar(
+    leading = const CircleAvatar(
       backgroundColor: Colors.transparent,
       child: Icon(
         HandeeIcons.delivery_truck,
@@ -30,9 +30,9 @@ class NotificationWidget extends StatelessWidget {
         children: [
           TextSpan(
             text: agentName,
-            style: TextStyle(color: HandeeColors.blue),
+            style: const TextStyle(color: HandeeColors.blue),
           ),
-          TextSpan(
+          const TextSpan(
             text: ' are on their way to you!',
             style: TextStyle(color: HandeeColors.black),
           ),
@@ -47,7 +47,7 @@ class NotificationWidget extends StatelessWidget {
     required String agentName,
   }) : super(key: key) {
     _color = HandeeColors.lightBlue;
-    leading = CircleAvatar(
+    leading = const CircleAvatar(
       backgroundColor: Colors.transparent,
       child: Icon(
         HandeeIcons.clock,
@@ -57,15 +57,15 @@ class NotificationWidget extends StatelessWidget {
     message = RichText(
       text: TextSpan(
         children: [
-          TextSpan(
+          const TextSpan(
             text: 'Your schedule service with ',
             style: TextStyle(color: HandeeColors.black),
           ),
           TextSpan(
             text: agentName,
-            style: TextStyle(color: HandeeColors.blue),
+            style: const TextStyle(color: HandeeColors.blue),
           ),
-          TextSpan(
+          const TextSpan(
             text: ' is tomorrow',
             style: TextStyle(color: HandeeColors.black),
           ),
@@ -75,7 +75,7 @@ class NotificationWidget extends StatelessWidget {
     );
   }
 
-  var message;
+  Widget? message;
   Widget? leading;
   Color _color = Colors.transparent;
 
@@ -91,7 +91,7 @@ class NotificationWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                padding: EdgeInsets.only(left: 25),
+                padding: const EdgeInsets.only(left: 25),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: leading,
