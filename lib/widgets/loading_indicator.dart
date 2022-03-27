@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 class CircleFadeOutLoader extends StatefulWidget {
@@ -76,6 +78,55 @@ class _CircleFadeOutLoaderState extends State<CircleFadeOutLoader>
             ),
         ],
       ),
+    );
+  }
+}
+
+class TextLoader extends StatefulWidget {
+  const TextLoader({Key? key}) : super(key: key);
+
+  @override
+  State<TextLoader> createState() => _TextLoaderState();
+}
+
+class _TextLoaderState extends State<TextLoader> {
+  var textRange = <String>[
+    'Confirming',
+    'Confirming.',
+    'Confirming..',
+    'Confirming...',
+  ];
+  late String currentText;
+  int _index = 0;
+
+  Duration duration = new Duration(seconds: 1);
+  late Timer _timer;
+
+  void update(Timer t) {
+    setState(() {
+      currentText = textRange[_index++];
+      if (_index == textRange.length) _index = 0;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(duration, update);
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      currentText,
+      textScaleFactor: 2,
+      style: TextStyle(fontWeight: FontWeight.w500),
     );
   }
 }

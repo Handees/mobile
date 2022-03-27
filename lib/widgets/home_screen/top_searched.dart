@@ -65,6 +65,7 @@ class SearchItem extends StatelessWidget {
     return Expanded(
       flex: name.length,
       child: InkWell(
+        splashColor: Colors.transparent,
         onTap: () => print('Launch ${name}'),
         child: Container(
           alignment: Alignment.center,

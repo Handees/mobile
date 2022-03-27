@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:handee/handee_colors.dart';
 import 'package:handee/screens/pick_location.dart';
 import 'package:handee/widgets/button.dart';
+import 'package:handee/widgets/loading_indicator.dart';
 
 class BookingOverlay extends StatefulWidget {
   const BookingOverlay({Key? key}) : super(key: key);
@@ -45,7 +46,7 @@ class _BookingOverlayState extends State<BookingOverlay> {
     setState(() {
       _isSubmitting = true;
     });
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     Navigator.of(context).pop();
   }
 
@@ -92,183 +93,205 @@ class _BookingOverlayState extends State<BookingOverlay> {
       child: FractionallySizedBox(
         widthFactor: 0.85,
         alignment: Alignment.center,
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(height: 8),
-              Container(
-                width: 50,
-                height: 6,
-                decoration: BoxDecoration(
-                  color: HandeeColors.grey196,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              const SizedBox(height: 25),
-              const Text(
-                'Booking Details',
-                textScaleFactor: 1.5,
-                style: TextStyle(fontWeight: FontWeight.w600),
-              ),
-              const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: FractionallySizedBox(
-                      alignment: Alignment.centerLeft,
-                      widthFactor: 0.9,
-                      child: GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        child: IgnorePointer(
-                          child: BookingDetailsField(
-                            keyboardType: TextInputType.datetime,
-                            controller: _dateController,
-                            focusNode: _dateNode,
-                            fieldName: 'Date',
-                            suffixIcon: const Icon(
-                              Icons.calendar_today_outlined,
-                              color: HandeeColors.blue,
-                              size: 20,
-                            ),
-                            nextFocus: _timeNode,
-                            onSaved: (value) {
-                              //TODO: implement onSaved
-                              print(value);
-                            },
-                          ),
-                        ),
-                        onTap: setDate,
-                      ),
-                    ),
+        child: true //_isSubmitting
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: const [
+                  SizedBox(
+                    child: TextLoader(),
+                    width: 165,
                   ),
-                  Expanded(
-                    child: FractionallySizedBox(
-                      alignment: Alignment.centerRight,
-                      widthFactor: 0.9,
-                      child: GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        child: IgnorePointer(
-                          child: BookingDetailsField(
-                            focusNode: _timeNode,
-                            nextFocus: _addressNode,
-                            fieldName: 'Time',
-                            keyboardType: TextInputType.datetime,
-                            controller: _timeController,
-                            suffixIcon: const Icon(
-                              Icons.access_time,
-                              color: HandeeColors.blue,
-                              size: 20,
-                            ),
-                            onSaved: (value) {
-                              //TODO: implement onSaved
-                              print(value);
-                            },
-                          ),
-                        ),
-                        onTap: setTime,
+                  SizedBox(height: 5),
+                  Text(
+                    'Please contact your service provider for further enquiries',
+                  ),
+                  // SizedBox(height: 15),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 50),
+                    child: SizedBox(
+                      height: 250,
+                      child: CircleFadeOutLoader(
+                        color: HandeeColors.blue,
                       ),
                     ),
                   ),
                 ],
-              ),
-              const SizedBox(height: 17),
-              GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: () async {
-                  FocusManager.instance.primaryFocus?.unfocus();
-                  // async Future.delayed(const Duration(milliseconds: 0));
-                  final res = await Navigator.of(context).push<String>(
-                    MaterialPageRoute(
-                      fullscreenDialog: true,
-                      builder: (_) => const PickLocation(),
-                    ),
-                  );
-                  _addressController.text = res ?? "";
-                },
-                child: IgnorePointer(
-                  child: BookingDetailsField(
-                    fieldName: 'Address',
-                    focusNode: _addressNode,
-                    controller: _addressController,
-                    nextFocus: _nameNode,
-                    onSaved: (value) {
-                      //TODO: implement onSaved
-                      print(value);
-                    },
-                  ),
-                ),
-              ),
-              const SizedBox(height: 17),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: FractionallySizedBox(
-                      alignment: Alignment.centerLeft,
-                      widthFactor: 0.9,
-                      child: BookingDetailsField(
-                        fieldName: 'Name',
-                        focusNode: _nameNode,
-                        nextFocus: _contactNode,
-                        onSaved: (value) {
-                          //TODO: implement onSaved
-                          print(value);
-                        },
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: FractionallySizedBox(
-                      alignment: Alignment.centerRight,
-                      widthFactor: 0.9,
-                      child: BookingDetailsField(
-                        fieldName: 'Contact',
-                        focusNode: _contactNode,
-                        onSaved: (value) {
-                          //TODO: implement onSaved
-                          print(value);
-                        },
-                        onFieldSubmitted: (_) => submit(),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 15),
-              SizedBox(
-                height: 40,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              )
+            : Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.only(left: 8.0),
-                      child: Text(
-                        'Save as default',
-                        style: TextStyle(fontWeight: FontWeight.w600),
+                    const SizedBox(height: 8),
+                    Container(
+                      width: 50,
+                      height: 6,
+                      decoration: BoxDecoration(
+                        color: HandeeColors.grey196,
+                        borderRadius: BorderRadius.circular(8),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: BookingCheckbox(
-                        onSaved: (value) {
-                          //TODO: implement onSaved
-                          print(value);
-                        },
+                    const SizedBox(height: 25),
+                    const Text(
+                      'Booking Details',
+                      textScaleFactor: 1.5,
+                      style: TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: FractionallySizedBox(
+                            alignment: Alignment.centerLeft,
+                            widthFactor: 0.9,
+                            child: GestureDetector(
+                              behavior: HitTestBehavior.opaque,
+                              child: IgnorePointer(
+                                child: BookingDetailsField(
+                                  keyboardType: TextInputType.datetime,
+                                  controller: _dateController,
+                                  focusNode: _dateNode,
+                                  fieldName: 'Date',
+                                  suffixIcon: const Icon(
+                                    Icons.calendar_today_outlined,
+                                    color: HandeeColors.blue,
+                                    size: 20,
+                                  ),
+                                  nextFocus: _timeNode,
+                                  onSaved: (value) {
+                                    //TODO: implement onSaved
+                                    print(value);
+                                  },
+                                ),
+                              ),
+                              onTap: setDate,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: FractionallySizedBox(
+                            alignment: Alignment.centerRight,
+                            widthFactor: 0.9,
+                            child: GestureDetector(
+                              behavior: HitTestBehavior.opaque,
+                              child: IgnorePointer(
+                                child: BookingDetailsField(
+                                  focusNode: _timeNode,
+                                  nextFocus: _addressNode,
+                                  fieldName: 'Time',
+                                  keyboardType: TextInputType.datetime,
+                                  controller: _timeController,
+                                  suffixIcon: const Icon(
+                                    Icons.access_time,
+                                    color: HandeeColors.blue,
+                                    size: 20,
+                                  ),
+                                  onSaved: (value) {
+                                    //TODO: implement onSaved
+                                    print(value);
+                                  },
+                                ),
+                              ),
+                              onTap: setTime,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 17),
+                    GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: () async {
+                        FocusManager.instance.primaryFocus?.unfocus();
+                        // async Future.delayed(const Duration(milliseconds: 0));
+                        final res = await Navigator.of(context).push<String>(
+                          MaterialPageRoute(
+                            fullscreenDialog: true,
+                            builder: (_) => const PickLocation(),
+                          ),
+                        );
+                        _addressController.text = res ?? "";
+                      },
+                      child: IgnorePointer(
+                        child: BookingDetailsField(
+                          fieldName: 'Address',
+                          focusNode: _addressNode,
+                          controller: _addressController,
+                          nextFocus: _nameNode,
+                          onSaved: (value) {
+                            //TODO: implement onSaved
+                            print(value);
+                          },
+                        ),
                       ),
                     ),
+                    const SizedBox(height: 17),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: FractionallySizedBox(
+                            alignment: Alignment.centerLeft,
+                            widthFactor: 0.9,
+                            child: BookingDetailsField(
+                              fieldName: 'Name',
+                              focusNode: _nameNode,
+                              nextFocus: _contactNode,
+                              onSaved: (value) {
+                                //TODO: implement onSaved
+                                print(value);
+                              },
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: FractionallySizedBox(
+                            alignment: Alignment.centerRight,
+                            widthFactor: 0.9,
+                            child: BookingDetailsField(
+                              fieldName: 'Contact',
+                              focusNode: _contactNode,
+                              onSaved: (value) {
+                                //TODO: implement onSaved
+                                print(value);
+                              },
+                              onFieldSubmitted: (_) => submit(),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 15),
+                    SizedBox(
+                      height: 40,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(left: 8.0),
+                            child: Text(
+                              'Save as default',
+                              style: TextStyle(fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: BookingCheckbox(
+                              onSaved: (value) {
+                                //TODO: implement onSaved
+                                print(value);
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    if (isKeyboardOpen)
+                      HandeeButton(text: 'BOOK THIS SERVICE', onTap: submit),
                   ],
                 ),
               ),
-              if (isKeyboardOpen)
-                _isSubmitting
-                    ? HandeeLoader()
-                    : HandeeButton(text: 'BOOK THIS SERVICE', onTap: submit),
-            ],
-          ),
-        ),
       ),
     );
   }
