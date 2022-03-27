@@ -7,6 +7,7 @@ import 'package:handee/handee_colors.dart';
 import 'package:handee/icons/handee_icons.dart';
 import 'package:handee/places_service.dart';
 import 'package:handee/widgets/button.dart';
+import 'package:handee/widgets/loading_indicator.dart';
 
 class PickLocation extends StatefulWidget {
   const PickLocation({Key? key}) : super(key: key);
@@ -142,7 +143,12 @@ class _PickLocationState extends State<PickLocation> {
         body: Stack(
           children: [
             _position == null
-                ? const Center(child: CircularProgressIndicator())
+                ? const Center(
+                    child: CircleFadeOutLoader(
+                      color: HandeeColors.blue,
+                      duration: Duration(seconds: 2),
+                    ),
+                  )
                 : GoogleMap(
                     markers: markers,
                     initialCameraPosition: CameraPosition(
