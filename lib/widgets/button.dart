@@ -40,3 +40,30 @@ class HandeeButton extends StatelessWidget {
     );
   }
 }
+
+class HandeeLoader extends StatelessWidget {
+  const HandeeLoader({
+    Key? key,
+    this.backgroundColor = HandeeColors.backgroundDark,
+    this.foregroundColor = HandeeColors.white,
+  }) : super(key: key);
+
+  final Color backgroundColor;
+  final Color foregroundColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: backgroundColor,
+      borderRadius: BorderRadius.circular(5),
+      child: Container(
+        alignment: Alignment.center,
+        width: double.infinity,
+        height: 50,
+        child: CircularProgressIndicator(
+          color: foregroundColor,
+        ),
+      ),
+    );
+  }
+}

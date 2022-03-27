@@ -15,6 +15,8 @@ class BookingOverlay extends StatefulWidget {
 class _BookingOverlayState extends State<BookingOverlay> {
   final _formKey = GlobalKey<FormState>();
 
+  bool _isSubmitting = false;
+
   final _dateNode = FocusNode();
   final _timeNode = FocusNode();
   final _addressNode = FocusNode();
@@ -38,8 +40,13 @@ class _BookingOverlayState extends State<BookingOverlay> {
     super.dispose();
   }
 
-  void submit() {
+  Future<void> submit() async {
     _formKey.currentState?.save();
+    setState(() {
+      _isSubmitting = true;
+    });
+    await Future.delayed(Duration(seconds: 1));
+    Navigator.of(context).pop();
   }
 
   Future<TimeOfDay?> setTime() async {
@@ -256,7 +263,9 @@ class _BookingOverlayState extends State<BookingOverlay> {
                 ),
               ),
               if (isKeyboardOpen)
-                HandeeButton(text: 'BOOK THIS SERVICE', onTap: submit),
+                _isSubmitting
+                    ? HandeeLoader()
+                    : HandeeButton(text: 'BOOK THIS SERVICE', onTap: submit),
             ],
           ),
         ),
