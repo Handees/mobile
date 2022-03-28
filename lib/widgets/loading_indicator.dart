@@ -8,7 +8,7 @@ class CircleFadeOutLoader extends StatefulWidget {
     this.color = Colors.black,
     this.count = 3,
     this.size = 100,
-    this.duration = const Duration(seconds: 1),
+    this.duration = const Duration(seconds: 2),
   }) : super(key: key);
 
   final Color color;
@@ -112,6 +112,7 @@ class _TextLoaderState extends State<TextLoader> {
   @override
   void initState() {
     super.initState();
+    currentText = textRange[0];
     _timer = Timer.periodic(duration, update);
   }
 

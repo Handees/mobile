@@ -146,7 +146,6 @@ class _PickLocationState extends State<PickLocation> {
                 ? const Center(
                     child: CircleFadeOutLoader(
                       color: HandeeColors.blue,
-                      duration: Duration(seconds: 2),
                     ),
                   )
                 : GoogleMap(

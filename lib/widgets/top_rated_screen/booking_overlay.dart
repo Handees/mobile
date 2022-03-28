@@ -2,9 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:handee/handee_colors.dart';
+import 'package:handee/icons/handee_icons.dart';
 import 'package:handee/screens/pick_location.dart';
 import 'package:handee/widgets/button.dart';
 import 'package:handee/widgets/loading_indicator.dart';
+
+enum Status {
+  filling,
+  submitting,
+  submitted,
+  failed,
+}
 
 class BookingOverlay extends StatefulWidget {
   const BookingOverlay({Key? key}) : super(key: key);
@@ -16,7 +24,7 @@ class BookingOverlay extends StatefulWidget {
 class _BookingOverlayState extends State<BookingOverlay> {
   final _formKey = GlobalKey<FormState>();
 
-  bool _isSubmitting = false;
+  Status status = Status.filling;
 
   final _dateNode = FocusNode();
   final _timeNode = FocusNode();
@@ -44,10 +52,12 @@ class _BookingOverlayState extends State<BookingOverlay> {
   Future<void> submit() async {
     _formKey.currentState?.save();
     setState(() {
-      _isSubmitting = true;
+      status = Status.submitting;
     });
     await Future.delayed(const Duration(seconds: 1));
-    Navigator.of(context).pop();
+    setState(() {
+      status = Status.failed;
+    });
   }
 
   Future<TimeOfDay?> setTime() async {
@@ -88,19 +98,28 @@ class _BookingOverlayState extends State<BookingOverlay> {
   Widget build(BuildContext context) {
     bool isKeyboardOpen = 40 > MediaQuery.of(context).viewInsets.bottom;
     return SizedBox(
-      height: isKeyboardOpen ? 450 : 410,
+      height: isKeyboardOpen ? 410 : 370,
       width: double.infinity,
       child: FractionallySizedBox(
         widthFactor: 0.85,
         alignment: Alignment.center,
-        child: true //_isSubmitting
-            ? Column(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              margin: EdgeInsets.only(top: 8),
+              width: 50,
+              height: 6,
+              decoration: BoxDecoration(
+                color: HandeeColors.grey196,
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+            if (status == Status.submitting)
+              Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: const [
-                  SizedBox(
-                    child: TextLoader(),
-                    width: 165,
-                  ),
+                  TextLoader(),
                   SizedBox(height: 5),
                   Text(
                     'Please contact your service provider for further enquiries',
@@ -116,28 +135,21 @@ class _BookingOverlayState extends State<BookingOverlay> {
                     ),
                   ),
                 ],
-              )
-            : Form(
+              ),
+            if (status == Status.filling)
+              Form(
                 key: _formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const SizedBox(height: 8),
-                    Container(
-                      width: 50,
-                      height: 6,
-                      decoration: BoxDecoration(
-                        color: HandeeColors.grey196,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
                     const SizedBox(height: 25),
                     const Text(
                       'Booking Details',
                       textScaleFactor: 1.5,
                       style: TextStyle(fontWeight: FontWeight.w600),
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 15),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -262,7 +274,7 @@ class _BookingOverlayState extends State<BookingOverlay> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 15),
+                    const SizedBox(height: 10),
                     SizedBox(
                       height: 40,
                       child: Row(
@@ -288,10 +300,105 @@ class _BookingOverlayState extends State<BookingOverlay> {
                       ),
                     ),
                     if (isKeyboardOpen)
-                      HandeeButton(text: 'BOOK THIS SERVICE', onTap: submit),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 17),
+                        child: HandeeButton(
+                            text: 'BOOK THIS SERVICE', onTap: submit),
+                      ),
                   ],
                 ),
               ),
+            if (status == Status.submitted)
+              Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  //Spacer(),
+                  Text(
+                    'Booked',
+                    textScaleFactor: 2,
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500, color: HandeeColors.green),
+                  ),
+                  SizedBox(height: 25),
+                  Text(
+                    'Your service has been booked successfully.'
+                    'your service provider will contact you shortly',
+                    textScaleFactor: 0.9,
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 35),
+                  CircleAvatar(
+                    backgroundColor: HandeeColors.green.withOpacity(0.1),
+                    radius: 65,
+                    child: Icon(
+                      HandeeIcons.check_circle,
+                      size: 70,
+                      color: HandeeColors.green,
+                    ),
+                  ),
+                  SizedBox(height: 40),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 17),
+                    child: HandeeButton(
+                        text: 'Done',
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        }),
+                  ),
+                ],
+              ),
+            if (status == Status.failed)
+              Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Container(
+                    alignment: Alignment.center,
+                    height: 170,
+                    width: double.infinity,
+                    child: Stack(
+                      alignment: AlignmentDirectional.center,
+                      children: [
+                        Center(
+                          child: Icon(
+                            HandeeIcons.triangle,
+                            size: 70,
+                            color: HandeeColors.red.withOpacity(0.1),
+                          ),
+                        ),
+                        Center(
+                          child: Icon(
+                            HandeeIcons.alert_triangle,
+                            size: 60,
+                            color: HandeeColors.red,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  SizedBox(
+                    width: 160,
+                    child: Text(
+                      'Something went wrong, please try again',
+                      textScaleFactor: 0.9,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  SizedBox(height: 80),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 17),
+                    child: HandeeButton(
+                        text: 'Try again',
+                        onTap: () {
+                          setState(() {
+                            submit();
+                          });
+                        }),
+                  ),
+                ],
+              ),
+          ],
+        ),
       ),
     );
   }
@@ -301,7 +408,7 @@ class BookingDetailsField extends StatefulWidget {
   const BookingDetailsField({
     Key? key,
     this.width = double.infinity,
-    this.height = 45,
+    this.height = 35,
     required this.fieldName,
     this.suffixIcon,
     this.focusNode,
@@ -370,39 +477,51 @@ class _BookingDetailsFieldState extends State<BookingDetailsField> {
             ),
           ),
           const SizedBox(height: 5),
-          TextFormField(
-            focusNode: widget.focusNode,
-            style: const TextStyle(
-              height: 1.7,
-            ),
-            onSaved: widget.onSaved,
-            validator: widget.validator,
-            onFieldSubmitted: widget.onFieldSubmitted ?? (_) => _changeFocus(),
-            inputFormatters: widget.formatters,
-            keyboardType: widget.keyboardType,
-            controller: widget.controller,
-            decoration: InputDecoration(
-              fillColor: _focused ? HandeeColors.white : HandeeColors.lightBlue,
-              filled: true,
-              contentPadding: const EdgeInsets.all(8),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: const BorderSide(
-                  color: HandeeColors.blue,
-                  width: 1,
+          Stack(
+            alignment: AlignmentDirectional.centerStart,
+            children: [
+              TextFormField(
+                focusNode: widget.focusNode,
+                style: const TextStyle(
+                  height: 1.7,
+                ),
+                onSaved: widget.onSaved,
+                validator: widget.validator,
+                onFieldSubmitted:
+                    widget.onFieldSubmitted ?? (_) => _changeFocus(),
+                inputFormatters: widget.formatters,
+                keyboardType: widget.keyboardType,
+                controller: widget.controller,
+                decoration: InputDecoration(
+                  isDense: true,
+                  fillColor:
+                      _focused ? HandeeColors.white : HandeeColors.lightBlue,
+                  filled: true,
+                  contentPadding: const EdgeInsets.all(10),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: const BorderSide(
+                      color: HandeeColors.blue,
+                      width: 1,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: const BorderSide(
+                      color: HandeeColors.lightBlue,
+                      width: 10,
+                    ),
+                  ),
+                  focusColor: HandeeColors.blue,
+                  labelStyle: const TextStyle(color: Colors.green),
                 ),
               ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: const BorderSide(
-                  color: HandeeColors.lightBlue,
-                  width: 10,
+              if (widget.suffixIcon != null)
+                Positioned(
+                  right: 10,
+                  child: widget.suffixIcon!,
                 ),
-              ),
-              focusColor: HandeeColors.blue,
-              labelStyle: const TextStyle(color: Colors.green),
-              suffixIcon: widget.suffixIcon,
-            ),
+            ],
           ),
         ],
       ),
