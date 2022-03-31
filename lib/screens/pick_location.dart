@@ -56,19 +56,42 @@ class _PickLocationState extends State<PickLocation>
         showDialog(
             context: context,
             builder: (ctx) {
-              return Center(
-                child: GestureDetector(
-                  onTap: () async {
-                    await _placeService.geolocatorInstance
-                        .openLocationSettings();
-                    Navigator.of(ctx).pop(_position);
-                  },
-                  child: Container(
-                    height: 100,
-                    width: 300,
-                    color: Colors.green,
+              return AlertDialog(
+                //backgroundColor: Colors.white,
+                title: Text('Turn on Location Services'),
+                //content: Text('Accept'),
+                actions: [
+                  TextButton(
+                    onPressed: () async {
+                      await _placeService.geolocatorInstance
+                          .openLocationSettings();
+                      Navigator.of(ctx).pop();
+                    },
+                    child: Text('Sure'),
                   ),
-                ),
+                  TextButton(
+                    onPressed: () async {
+                      showDialog(
+                        context: context,
+                        builder: (_) => AlertDialog(
+                          title: Text(
+                              'This service cannot work without location services'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                Navigator.of(context).pop();
+                                Navigator.of(context).pop();
+                              },
+                              child: Text('Okay'),
+                            )
+                          ],
+                        ),
+                      );
+                    },
+                    child: Text('At all boss'),
+                  ),
+                ],
               );
             });
       });
@@ -200,6 +223,7 @@ class _PickLocationState extends State<PickLocation>
                       target: LatLng(_position!.latitude, _position!.longitude),
                       zoom: 15,
                     ),
+                    zoomControlsEnabled: false,
                     myLocationEnabled: false,
                     myLocationButtonEnabled: false,
                     mapToolbarEnabled: false,
