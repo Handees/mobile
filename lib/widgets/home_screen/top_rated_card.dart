@@ -38,17 +38,20 @@ class TopRatedCard extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Container(
-              //color: Colors.red,
-              width: 170,
-              height: 120,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(imagePath), fit: BoxFit.cover),
+            Hero(
+              tag: 'test', //Find suitable tag
+              child: Container(
+                //color: Colors.red,
+                width: 170,
+                height: 120,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage(imagePath), fit: BoxFit.cover),
+                ),
+                // child: FittedBox(
+                //   child: Image.asset(name),
+                // ),
               ),
-              // child: FittedBox(
-              //   child: Image.asset(name),
-              // ),
             ),
             SizedBox(
               width: 170,

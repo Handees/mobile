@@ -9,6 +9,9 @@ const kMapsApiKey = 'AIzaSyA3NoblRziyftfiaqUmF5X1BYURfknrzV0';
 
 class PlacesService {
   final sessionToken = const Uuid().v4();
+  final geolocatorInstance = GeolocatorPlatform.instance;
+  final geocodingInstance = GeocodingPlatform.instance;
+  bool serviceEnabled = false;
 
   /// Get Predictions based on the specified input
   Future<List<String>> getPredictions(String input) async {
@@ -45,7 +48,7 @@ class PlacesService {
     LocationPermission permission;
 
     // Test if location services are enabled.
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    serviceEnabled = await geolocatorInstance.isLocationServiceEnabled();
     if (!serviceEnabled) {
       // Location services are not enabled don't continue
       // accessing the position and request users of the
@@ -53,9 +56,9 @@ class PlacesService {
       return Future.error('Location services are disabled.');
     }
 
-    permission = await Geolocator.checkPermission();
+    permission = await geolocatorInstance.checkPermission();
     if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
+      permission = await geolocatorInstance.requestPermission();
       if (permission == LocationPermission.denied) {
         // Permissions are denied, next time you could try
         // requesting permissions again (this is also where
@@ -74,19 +77,19 @@ class PlacesService {
 
     // When we reach here, permissions are granted and we can
     // continue accessing the position of the device.
-    return await Geolocator.getCurrentPosition();
+    return await geolocatorInstance.getCurrentPosition();
   }
 
   Future<String> getAddress(Position position) async {
-    final res = await GeocodingPlatform.instance
-        .placemarkFromCoordinates(position.latitude, position.longitude);
+    final res = await geocodingInstance.placemarkFromCoordinates(
+        position.latitude, position.longitude);
     final address = res[0].street;
 
     return address!;
   }
 
   Future<Location> getCoordinates(String address) async {
-    final res = await GeocodingPlatform.instance.locationFromAddress(address);
+    final res = await geocodingInstance.locationFromAddress(address);
 
     return res[0];
   }

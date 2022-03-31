@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:handee/handee_colors.dart';
@@ -15,7 +16,8 @@ class PickLocation extends StatefulWidget {
   State<PickLocation> createState() => _PickLocationState();
 }
 
-class _PickLocationState extends State<PickLocation> {
+class _PickLocationState extends State<PickLocation>
+    with WidgetsBindingObserver {
   final _searchFocus = FocusNode();
   Size? _size;
 
@@ -37,15 +39,47 @@ class _PickLocationState extends State<PickLocation> {
   Set<Marker> markers = <Marker>{};
 
   final _placeService = PlacesService();
+  bool _serviceEnabled = false;
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance?.addObserver(this);
+    print('position');
     _getPosition();
   }
 
   Future<void> _getPosition() async {
-    _position = await _placeService.determinePosition();
+    final future =
+        _placeService.determinePosition().onError((error, stackTrace) {
+      WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+        showDialog(
+            context: context,
+            builder: (ctx) {
+              return Center(
+                child: GestureDetector(
+                  onTap: () async {
+                    await _placeService.geolocatorInstance
+                        .openLocationSettings();
+                    Navigator.of(ctx).pop(_position);
+                  },
+                  child: Container(
+                    height: 100,
+                    width: 300,
+                    color: Colors.green,
+                  ),
+                ),
+              );
+            });
+      });
+
+      return _placeService.determinePosition();
+    });
+
+    _position = await future;
+    //if (!_placeService.serviceEnabled) {
+
+    //}
     _addMarker('user', LatLng(_position!.latitude, _position!.longitude));
     setState(() {});
   }
@@ -65,13 +99,25 @@ class _PickLocationState extends State<PickLocation> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+
     _size ??= MediaQuery.of(context).size;
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    print('State ${state}');
+    super.didChangeAppLifecycleState(state);
+    print('State ${state}');
+    if (state == AppLifecycleState.resumed) {
+      _getPosition();
+    }
   }
 
   @override
   void dispose() {
     _searchFocus.dispose();
     _searchController.dispose();
+    WidgetsBinding.instance?.removeObserver(this);
     super.dispose();
   }
 

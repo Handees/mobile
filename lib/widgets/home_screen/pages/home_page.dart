@@ -105,7 +105,7 @@ class HomePage extends StatelessWidget {
                 //width: 400,
                 height: 220,
                 child: ListView.builder(
-                  itemCount: 15,
+                  itemCount: 1,
                   scrollDirection: Axis.horizontal,
                   clipBehavior: Clip.none,
                   itemBuilder: (ctx, index) {

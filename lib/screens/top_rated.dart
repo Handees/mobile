@@ -265,16 +265,19 @@ class _ImagePageViewState extends State<ImagePageView> {
       children: [
         SizedBox(
           height: 300,
-          child: PageView.builder(
-            itemCount: widget.images.length,
-            onPageChanged: (index) {
-              setState(() {
-                _index = index;
-              });
-            },
-            itemBuilder: (ctx, index) {
-              return widget.images[index];
-            },
+          child: Hero(
+            tag: 'test', //Find suitable tag
+            child: PageView.builder(
+              itemCount: widget.images.length,
+              onPageChanged: (index) {
+                setState(() {
+                  _index = index;
+                });
+              },
+              itemBuilder: (ctx, index) {
+                return widget.images[index];
+              },
+            ),
           ),
         ),
         Row(
