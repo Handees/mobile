@@ -6,11 +6,16 @@ import 'package:handee/widgets/auth_screen/auth_checkbox.dart';
 import 'package:handee/widgets/auth_screen/auth_textfield.dart';
 import 'package:handee/icons/handee_icons.dart';
 
-class SigninPage extends StatelessWidget {
-  SigninPage({Key? key}) : super(key: key);
+class SigninPage extends StatefulWidget {
+  const SigninPage({Key? key}) : super(key: key);
 
   static const routeName = '/signin-page';
 
+  @override
+  State<SigninPage> createState() => _SigninPageState();
+}
+
+class _SigninPageState extends State<SigninPage> {
   bool _showPassword = false;
 
   @override
@@ -36,6 +41,7 @@ class SigninPage extends StatelessWidget {
                       textScaleFactor: 2,
                       style: TextStyle(
                         color: HandeeColors.white,
+
                       ),
                     ),
                     SizedBox(
@@ -43,13 +49,23 @@ class SigninPage extends StatelessWidget {
                     ),
                     AuthTextField(
                       labelText: 'Name',
+
                     ),
                     const SizedBox(height: 25),
                     AuthTextField(
                       labelText: 'Password',
-                      icon: const PeakIconButton(
-                        HandeeIcons.eye_tracking_off,
-                        HandeeIcons.eye_tracking_on,
+                      icon: GestureDetector(
+                        child: Icon(
+                          _showPassword
+                              ? HandeeIcons.eye_tracking_on
+                              : HandeeIcons.eye_tracking_off,
+                          color: _showPassword ? HandeeColors.grey237 : HandeeColors.grey89,
+                        ),
+                        onTap: () {
+                          setState(() {
+                            _showPassword = !_showPassword;
+                          });
+                        },
                       ),
                     ),
                     SizedBox(height: 0.07 * size.height),
@@ -119,7 +135,7 @@ class SigninPage extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
-                      height: 0.00010 * (size.height * size.height),
+                      height: 40,
                     )
                   ],
                 ),

@@ -5,7 +5,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:uuid/uuid.dart';
 
-const kMapsApiKey = 'AIzaSyA3NoblRziyftfiaqUmF5X1BYURfknrzV0';
+  const kMapsApiKey = 'AIzaSyA3NoblRziyftfiaqUmF5X1BYURfknrzV0';
 
 class PlacesService {
   final sessionToken = const Uuid().v4();

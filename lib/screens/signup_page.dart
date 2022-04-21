@@ -5,11 +5,16 @@ import 'package:handee/screens/signin_page.dart';
 import 'package:handee/widgets/auth_screen/auth_textfield.dart';
 import 'package:handee/icons/handee_icons.dart';
 
-class SignupPage extends StatelessWidget {
-  SignupPage({Key? key}) : super(key: key);
+class SignupPage extends StatefulWidget {
+  const SignupPage({Key? key}) : super(key: key);
 
   static const routeName = '/signup-page';
 
+  @override
+  State<SignupPage> createState() => _SignupPageState();
+}
+
+class _SignupPageState extends State<SignupPage> {
   bool _showPassword = false;
 
   @override
@@ -49,12 +54,22 @@ class SignupPage extends StatelessWidget {
                   AuthTextField(labelText: 'Phone or email'),
                   const SizedBox(height: 25),
                   AuthTextField(
-                    labelText: 'Password',
-                    icon: const PeakIconButton(
-                      HandeeIcons.eye_tracking_off,
-                      HandeeIcons.eye_tracking_on,
-                    ),
-                  ),
+                      labelText: 'Password',
+                      icon: GestureDetector(
+                        child: Icon(
+                          _showPassword
+                              ? HandeeIcons.eye_tracking_on
+                              : HandeeIcons.eye_tracking_off,
+                          color: _showPassword
+                              ? HandeeColors.grey237
+                              : HandeeColors.grey89,
+                        ),
+                        onTap: () {
+                          setState(() {
+                            _showPassword = !_showPassword;
+                          });
+                        },
+                      )),
                   SizedBox(height: 0.07 * size.height),
                   const Text(
                     'Sign up with',
@@ -121,8 +136,14 @@ class SignupPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(5),
                     ),
                   ),
+                  SizedBox(height: 10,),
                   SizedBox(
-                    height: 0.00010 * (size.height * size.height),
+                    height: 30,
+                    child: Text(
+                      'By clicking Sign up, you agree to our User Agreement and Privacy Policy',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: HandeeColors.grey161),
+                    ),
                   )
                 ],
               ),

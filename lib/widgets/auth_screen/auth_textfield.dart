@@ -57,37 +57,3 @@ class AuthTextField extends FormField<String> {
           },
         );
 }
-
-class PeakIconButton extends StatefulWidget {
-  const PeakIconButton(this.initialIcon, this.alternateIcon, {Key? key})
-      : super(key: key);
-
-  final IconData initialIcon;
-  final IconData alternateIcon;
-
-  @override
-  _PeakIconButtonState createState() => _PeakIconButtonState();
-}
-
-class _PeakIconButtonState extends State<PeakIconButton> {
-  bool _peaking = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        setState(() {});
-        _peaking = !_peaking;
-      },
-      child: _peaking
-          ? Icon(
-              widget.alternateIcon,
-              color: HandeeColors.white,
-            )
-          : Icon(
-              widget.initialIcon,
-              color: const Color.fromRGBO(89, 89, 89, 1),
-            ),
-    );
-  }
-}
