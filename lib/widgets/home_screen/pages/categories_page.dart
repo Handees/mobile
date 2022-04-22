@@ -90,10 +90,7 @@ class Categories extends StatelessWidget {
           children: [
             Text(
               name,
-              textScaleFactor: 1.1,
-              style: const TextStyle(
-                fontWeight: FontWeight.w600,
-              ),
+              style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(width: 5),
             icon,

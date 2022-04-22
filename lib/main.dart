@@ -24,9 +24,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      home: //const HomeScreen(),
-          const LandingPage(),
-      theme: ThemeData(),
+      home: const HomeScreen(),
+      // const LandingPage(),
+      theme: ThemeData(
+        textTheme: Theme.of(context).textTheme.copyWith(
+              titleMedium: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 18,
+              ),
+            ),
+      ),
       onGenerateRoute: (settings) {
         if (settings.name == SigninPage.routeName) {
           return MaterialPageRoute(

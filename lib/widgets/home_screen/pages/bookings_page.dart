@@ -41,13 +41,11 @@ class BookingsPage extends StatelessWidget {
                 )
               ],
             ),
-            child: const Padding(
+            child: Padding(
               padding: EdgeInsets.only(bottom: 25.0),
               child: Text(
                 'Booking History',
-                textScaleFactor: 1.1,
-                style: TextStyle(
-                    color: HandeeColors.black, fontWeight: FontWeight.w500),
+                style: Theme.of(context).textTheme.titleLarge,
               ),
             ),
           ),

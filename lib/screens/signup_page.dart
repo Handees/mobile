@@ -40,16 +40,16 @@ class _SignupPageState extends State<SignupPage> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     SizedBox(height: 0.04 * size.height),
-                    const Align(
+                    Align(
                       alignment: Alignment.centerLeft,
                       child: SizedBox(
                         width: 200,
                         child: Text(
                           'Let\'s get you signed up!',
-                          textScaleFactor: 2,
-                          style: TextStyle(
-                            color: HandeeColors.white,
-                          ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineLarge
+                              ?.copyWith(color: HandeeColors.white),
                         ),
                       ),
                     ),

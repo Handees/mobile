@@ -20,13 +20,9 @@ class ProfilePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 35),
-            const Center(
-              child: Text(
-                'Account',
-                textScaleFactor: 1.1,
-                style: TextStyle(
-                    color: HandeeColors.black, fontWeight: FontWeight.w500),
-              ),
+            Center(
+              child: Text('Account',
+                  style: Theme.of(context).textTheme.titleLarge),
             ),
             const SizedBox(height: 25),
             Center(

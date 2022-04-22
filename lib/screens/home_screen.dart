@@ -78,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
           : null,
       drawer: const Drawer(),
       backgroundColor: HandeeColors.white,
-      body: pages[_index],
+      body: SafeArea(child: pages[_index]),
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(
           boxShadow: [

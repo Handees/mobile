@@ -22,13 +22,8 @@ class HomePage extends StatelessWidget {
               Container(
                 //margin: EdgeInsets.symmetric(horizontal: 30),
                 alignment: Alignment.centerLeft,
-                child: Text(
-                  'Hi\n$username',
-                  textScaleFactor: 1.5,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
+                child: Text('Hi\n$username',
+                    style: Theme.of(context).textTheme.headlineMedium),
               ),
               const SizedBox(height: 35),
               Container(
@@ -56,12 +51,9 @@ class HomePage extends StatelessWidget {
               Container(
                 //margin: EdgeInsets.symmetric(horizontal: 30),
                 alignment: Alignment.centerLeft,
-                child: const Text(
+                child: Text(
                   'Top searched',
-                  textScaleFactor: 1.1,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
               ),
               const SizedBox(height: 20),
@@ -75,12 +67,9 @@ class HomePage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
+                  Text(
                     'Top rated',
-                    textScaleFactor: 1.1,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                   Row(
                     children: const [

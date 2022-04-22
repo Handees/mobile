@@ -29,11 +29,9 @@ class HandeeButton extends StatelessWidget {
           height: 50,
           child: Text(
             text,
-            textScaleFactor: 1,
-            style: TextStyle(
-              color: textColor,
-              fontWeight: FontWeight.w600,
-            ),
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  color: textColor,
+                ),
           ),
         ),
       ),

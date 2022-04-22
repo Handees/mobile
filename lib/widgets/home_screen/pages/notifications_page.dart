@@ -13,20 +13,19 @@ class NotificationsPage extends StatefulWidget {
 
 //enum NotificationType { delivery, schedule, emergency, misc }
 
-class _NotificationsPageState extends State<NotificationsPage>
-    with TickerProviderStateMixin {
-  double _height = 0;
+class _NotificationsPageState extends State<NotificationsPage> {
+  // double _height = 0;
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (_height == 0) {
-      _height = MediaQuery.of(context).size.height -
-          MediaQuery.of(context).padding.vertical -
-          kBottomNavigationBarHeight -
-          kTextTabBarHeight;
-    }
-  }
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+  //   if (_height == 0) {
+  //     _height = MediaQuery.of(context).size.height -
+  //         MediaQuery.of(context).padding.vertical -
+  //         kBottomNavigationBarHeight -
+  //         kTextTabBarHeight;
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +33,8 @@ class _NotificationsPageState extends State<NotificationsPage>
       child: DefaultTabController(
         length: 2,
         child: Column(
-          children: [
-            const TabBar(
+          children: const [
+            TabBar(
               unselectedLabelColor: HandeeColors.black,
               labelColor: HandeeColors.black,
               indicatorSize: TabBarIndicatorSize.label,
@@ -55,9 +54,8 @@ class _NotificationsPageState extends State<NotificationsPage>
                 ),
               ],
             ),
-            SizedBox(
-              height: _height,
-              child: const TabBarView(
+            Expanded(
+              child: TabBarView(
                 children: [
                   _AllTab(),
                   _ReminderTab(),
@@ -85,41 +83,25 @@ class _AllTab extends StatelessWidget {
           switch (index) {
             case 0:
               return NotificationWidget.delivery(
-                  agentName: 'The Heat Cleaners');
+                agentName: 'The Heat Cleaners',
+              );
             case 1:
               return NotificationWidget.schedule(
-                  agentName: 'The Heat Cleaners');
+                agentName: 'The Heat Cleaners',
+              );
             case 2:
               return NotificationWidget(
-                  leading: const CircleAvatar(
-                    backgroundColor: Color.fromRGBO(255, 220, 220, 1),
-                    child: Icon(
-                      HandeeIcons.alert_triangle,
-                      color: HandeeColors.red,
-                    ),
+                leading: const CircleAvatar(
+                  backgroundColor: Color.fromRGBO(255, 220, 220, 1),
+                  child: Icon(
+                    HandeeIcons.alert_triangle,
+                    color: HandeeColors.red,
                   ),
-                  message: const Text('New device login. Is this you?'));
-            case 3:
-              return NotificationWidget(
-                  message: RichText(
-                text: const TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'Welcome to ',
-                      style: TextStyle(color: HandeeColors.blue),
-                    ),
-                    TextSpan(
-                      text: 'Handee',
-                      style: TextStyle(color: HandeeColors.blue),
-                    ),
-                    TextSpan(
-                      text: ' Barbara.',
-                      style: TextStyle(color: HandeeColors.black),
-                    ),
-                  ],
                 ),
-                textScaleFactor: 0.9,
-              ));
+                message: 'New device login. Is this you?',
+              );
+            case 3:
+              return NotificationWidget.welcome();
             default:
               return const Text('Never getting here');
           }

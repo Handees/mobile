@@ -35,9 +35,9 @@ class TopRatedScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'Top Rated',
-          style: TextStyle(fontWeight: FontWeight.w600),
+          style: Theme.of(context).textTheme.titleLarge,
         ),
         centerTitle: true,
         backgroundColor: HandeeColors.white,
@@ -73,7 +73,7 @@ class TopRatedScreen extends StatelessWidget {
                         width: 180,
                         child: Text(
                           name,
-                          textScaleFactor: 1.5,
+                          style: Theme.of(context).textTheme.headlineSmall,
                         ),
                       ),
                     ),
@@ -105,7 +105,6 @@ class TopRatedScreen extends StatelessWidget {
                     width: 270,
                     child: Text(
                       description,
-                      //textScaleFactor: 1.5,
                     ),
                   ),
                 ),
@@ -120,7 +119,7 @@ class TopRatedScreen extends StatelessWidget {
                         children: [
                           Text(
                             rating.toString(),
-                            textScaleFactor: 1.5,
+                            style: Theme.of(context).textTheme.headlineSmall,
                           ),
                           const Icon(
                             HandeeIcons.star_filled,
@@ -132,15 +131,15 @@ class TopRatedScreen extends StatelessWidget {
                         color: HandeeColors.black,
                       ),
                       Row(
-                        children: const [
+                        children: [
                           Text(
                             '47',
-                            textScaleFactor: 1.5,
+                            style: Theme.of(context).textTheme.headlineSmall,
                           ),
                           SizedBox(width: 4),
                           Text(
                             'Reviews',
-                            textScaleFactor: 0.8,
+                            style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ],
                       ),
@@ -148,15 +147,15 @@ class TopRatedScreen extends StatelessWidget {
                         color: HandeeColors.black,
                       ),
                       Row(
-                        children: const [
+                        children: [
                           Text(
                             '72',
-                            textScaleFactor: 1.5,
+                            style: Theme.of(context).textTheme.headlineSmall,
                           ),
                           SizedBox(width: 4),
                           Text(
                             'Jobs\nCompleted',
-                            textScaleFactor: 0.8,
+                            style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ],
                       ),

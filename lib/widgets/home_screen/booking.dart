@@ -28,12 +28,9 @@ class BookingWidget extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        Text(
-                          'Gnomelander gardening service',
-                          textScaleFactor: 1,
-                          style: TextStyle(fontWeight: FontWeight.w500),
-                        ),
+                      children: [
+                        Text('Gnomelander gardening service',
+                            style: Theme.of(context).textTheme.titleMedium),
                         SizedBox(height: 4),
                         Text('4th Jan 2022'),
                       ],
@@ -102,8 +99,9 @@ class BookingStatusWidget extends StatelessWidget {
       ),
       child: Text(
         text,
-        textScaleFactor: 0.8,
-        style: const TextStyle(color: HandeeColors.white),
+        style: Theme.of(context).textTheme.labelMedium?.copyWith(
+              color: HandeeColors.white,
+            ),
       ),
     );
   }
