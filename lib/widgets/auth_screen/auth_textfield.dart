@@ -35,6 +35,7 @@ class AuthTextField extends FormField<String> {
                   obscureText: obscureText,
                   cursorColor: HandeeColors.white,
                   style: const TextStyle(color: HandeeColors.white),
+
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     labelText: labelText,

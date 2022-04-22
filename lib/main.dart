@@ -1,11 +1,14 @@
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:handee/screens/booking_details.dart';
 
-import 'package:handee/screens/home_screen.dart';
+import 'package:handee/screens/main_screen.dart';
 import 'package:handee/screens/landing_page.dart';
-import 'package:handee/screens/signin_page.dart';
-import 'package:handee/screens/signup_page.dart';
-import 'package:handee/screens/top_rated.dart';
+import 'package:handee/screens/auth_page.dart';
+import 'package:handee/screens/top_rated_screen.dart';
 
 // void main() {
 //   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -14,7 +17,11 @@ import 'package:handee/screens/top_rated.dart';
 //   runApp(const MyApp());
 // }
 
-void main() => runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -24,8 +31,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      home: const HomeScreen(),
-      // const LandingPage(),
+      home:  StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (_, snapshot) {
+          if(snapshot.hasData) {
+            log(snapshot.data.toString());
+          }
+          return snapshot.hasData ? MainScreen() : LandingPage();
+        },
+      ),
       theme: ThemeData(
         textTheme: Theme.of(context).textTheme.copyWith(
               titleMedium: TextStyle(

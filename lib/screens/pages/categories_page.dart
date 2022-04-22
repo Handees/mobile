@@ -12,11 +12,10 @@ class CategoriesPage extends StatelessWidget {
     return SingleChildScrollView(
       child: Center(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25),
+          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
           //widthFactor: 0.85,
           child: Column(
             children: [
-              const SizedBox(height: 80),
               Container(
                 width: double.infinity,
                 height: 55,

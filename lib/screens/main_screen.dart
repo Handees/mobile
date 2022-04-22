@@ -1,21 +1,22 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:handee/handee_colors.dart';
 import 'package:handee/icons/handee_icons.dart';
-import 'package:handee/widgets/home_screen/pages/bookings_page.dart';
-import 'package:handee/widgets/home_screen/pages/categories_page.dart';
-import 'package:handee/widgets/home_screen/pages/notifications_page.dart';
-import 'package:handee/widgets/home_screen/pages/home_page.dart';
-import 'package:handee/widgets/home_screen/pages/profile_page.dart';
+import 'package:handee/screens/pages/bookings_page.dart';
+import 'package:handee/screens/pages/categories_page.dart';
+import 'package:handee/screens/pages/notifications_page.dart';
+import 'package:handee/screens/pages/home_page.dart';
+import 'package:handee/screens/pages/profile_page.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class MainScreen extends StatefulWidget {
+  const MainScreen({Key? key}) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<MainScreen> createState() => _MainScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _MainScreenState extends State<MainScreen> {
   final username = 'Barbara';
 
   final pages = <Widget>[];
@@ -40,25 +41,13 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: _index == 0
           ? AppBar(
               backgroundColor: HandeeColors.white,
-              leading: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Builder(
-                  builder: (context) => IconButton(
-                    icon: const Icon(
-                      Icons.menu,
-                      color: HandeeColors.textDark,
-                    ),
-                    onPressed: () {
-                      Scaffold.of(context).openDrawer();
-                    },
-                  ),
-                ),
-              ),
               actions: [
                 Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        FirebaseAuth.instance.signOut();
+                      },
                       // icon: CircleAvatar(
                       //   backgroundColor: HandeeColors.grey196,
                       //   child: Icon(
@@ -76,7 +65,6 @@ class _HomeScreenState extends State<HomeScreen> {
               elevation: 0,
             )
           : null,
-      drawer: const Drawer(),
       backgroundColor: HandeeColors.white,
       body: SafeArea(child: pages[_index]),
       bottomNavigationBar: Container(

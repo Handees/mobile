@@ -11,22 +11,7 @@ class NotificationsPage extends StatefulWidget {
   State<NotificationsPage> createState() => _NotificationsPageState();
 }
 
-//enum NotificationType { delivery, schedule, emergency, misc }
-
 class _NotificationsPageState extends State<NotificationsPage> {
-  // double _height = 0;
-
-  // @override
-  // void didChangeDependencies() {
-  //   super.didChangeDependencies();
-  //   if (_height == 0) {
-  //     _height = MediaQuery.of(context).size.height -
-  //         MediaQuery.of(context).padding.vertical -
-  //         kBottomNavigationBarHeight -
-  //         kTextTabBarHeight;
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -74,7 +59,7 @@ class _AllTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       height: 500,
       child: ListView.builder(

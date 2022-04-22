@@ -7,14 +7,17 @@ class HandeeButton extends StatelessWidget {
     Key? key,
     this.color = HandeeColors.backgroundDark,
     this.textColor = HandeeColors.white,
-    required this.text,
+    this.text,
     required this.onTap,
   }) : super(key: key);
 
   final Color color;
   final Color textColor;
   final void Function() onTap;
-  final String text;
+
+  /// Display text for the button. Leaving this field uninitialized or set to null
+  /// defaults to a CircularProgressIndicator being displayed.
+  final String? text;
 
   @override
   Widget build(BuildContext context) {
@@ -27,39 +30,16 @@ class HandeeButton extends StatelessWidget {
           alignment: Alignment.center,
           width: double.infinity,
           height: 50,
-          child: Text(
-            text,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+          child: text == null
+              ? CircularProgressIndicator(
                   color: textColor,
+                )
+              : Text(
+                  text!,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: textColor,
+                      ),
                 ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class HandeeLoader extends StatelessWidget {
-  const HandeeLoader({
-    Key? key,
-    this.backgroundColor = HandeeColors.backgroundDark,
-    this.foregroundColor = HandeeColors.white,
-  }) : super(key: key);
-
-  final Color backgroundColor;
-  final Color foregroundColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: backgroundColor,
-      borderRadius: BorderRadius.circular(5),
-      child: Container(
-        alignment: Alignment.center,
-        width: double.infinity,
-        height: 50,
-        child: CircularProgressIndicator(
-          color: foregroundColor,
         ),
       ),
     );

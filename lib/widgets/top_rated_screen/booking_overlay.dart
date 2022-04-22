@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 
 import 'package:handee/handee_colors.dart';
 import 'package:handee/icons/handee_icons.dart';
-import 'package:handee/screens/pick_location.dart';
+import 'package:handee/screens/pick_location_screen.dart';
 import 'package:handee/widgets/button.dart';
 import 'package:handee/widgets/loading_indicator.dart';
 
@@ -220,7 +220,7 @@ class _BookingOverlayState extends State<BookingOverlay> {
                         final res = await Navigator.of(context).push<String>(
                           MaterialPageRoute(
                             fullscreenDialog: true,
-                            builder: (_) => const PickLocation(),
+                            builder: (_) => const PickLocationScreen(),
                           ),
                         );
                         _addressController.text = res ?? "";

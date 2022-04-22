@@ -10,13 +10,13 @@ import 'package:handee/places_service.dart';
 import 'package:handee/widgets/button.dart';
 import 'package:handee/widgets/loading_indicator.dart';
 
-class PickLocation extends StatefulWidget {
-  const PickLocation({Key? key}) : super(key: key);
+class PickLocationScreen extends StatefulWidget {
+  const PickLocationScreen({Key? key}) : super(key: key);
   @override
-  State<PickLocation> createState() => _PickLocationState();
+  State<PickLocationScreen> createState() => _PickLocationScreenState();
 }
 
-class _PickLocationState extends State<PickLocation>
+class _PickLocationScreenState extends State<PickLocationScreen>
     with WidgetsBindingObserver {
   final _searchFocus = FocusNode();
   Size? _size;

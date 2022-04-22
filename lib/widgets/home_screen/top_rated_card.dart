@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:handee/handee_colors.dart';
 import 'package:handee/icons/handee_icons.dart';
-import 'package:handee/screens/top_rated.dart';
+import 'package:handee/screens/top_rated_screen.dart';
 
 class TopRatedCard extends StatelessWidget {
   const TopRatedCard({
