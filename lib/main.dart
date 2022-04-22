@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       home: //const HomeScreen(),
-        const LandingPage(),
+          const LandingPage(),
       theme: ThemeData(),
       onGenerateRoute: (settings) {
         if (settings.name == SigninPage.routeName) {

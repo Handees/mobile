@@ -30,8 +30,8 @@ class HandeeButton extends StatelessWidget {
           child: Text(
             text,
             textScaleFactor: 1,
-            style: const TextStyle(
-              color: HandeeColors.white,
+            style: TextStyle(
+              color: textColor,
               fontWeight: FontWeight.w600,
             ),
           ),
