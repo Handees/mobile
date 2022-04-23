@@ -31,13 +31,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      home:  StreamBuilder<User?>(
+      home: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (_, snapshot) {
-          if(snapshot.hasData) {
-            log(snapshot.data.toString());
+          log("Snapshot: " + snapshot.toString());
+          if (snapshot.hasData) {
+            log("Snapshot Data: " + snapshot.data.toString());
+            return MainScreen();
           }
-          return snapshot.hasData ? MainScreen() : LandingPage();
+          return LandingPage();
         },
       ),
       theme: ThemeData(

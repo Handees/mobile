@@ -19,8 +19,10 @@ class SigninPage extends StatefulWidget {
 
 class _SigninPageState extends State<SigninPage> with InputValidationMixin {
   bool _showPassword = false;
-
+  bool _isLoading = false;
   final _formGlobalKey = GlobalKey<FormState>();
+
+  final Map<String, String> _details = {};
 
   @override
   Widget build(BuildContext context) {
@@ -53,9 +55,18 @@ class _SigninPageState extends State<SigninPage> with InputValidationMixin {
                         height: 0.1 * size.height,
                       ),
                       AuthTextField(
-                        labelText: 'Name',
+                        labelText: 'Email',
                         onSaved: (value) {
                           log('Name: $value');
+                          _details['email'] = value!;
+                        },
+                        validator: (value) {
+                          if (value != null) {
+                            return isEmailValid(value) || isNumberValid(value)
+                                ? null
+                                : 'Invalid';
+                          }
+                          return 'Invalid';
                         },
                       ),
                       const SizedBox(height: 25),
@@ -63,6 +74,7 @@ class _SigninPageState extends State<SigninPage> with InputValidationMixin {
                         labelText: 'Password',
                         onSaved: (value) {
                           log('Password: $value');
+                          _details['password'] = value!;
                         },
                         validator: (value) {
                           if (value != null) {
@@ -146,9 +158,7 @@ class _SigninPageState extends State<SigninPage> with InputValidationMixin {
                         color: HandeeColors.white,
                         textColor: Colors.black,
                       ),
-                      SizedBox(
-                        height: 40,
-                      )
+                      SizedBox(height: 40)
                     ],
                   ),
                 ),
@@ -160,9 +170,44 @@ class _SigninPageState extends State<SigninPage> with InputValidationMixin {
     );
   }
 
-  void submitForm() {
-    _formGlobalKey.currentState?.validate();
+  void submitForm() async {
+    if (!_formGlobalKey.currentState!.validate()) return;
+
     _formGlobalKey.currentState?.save();
+
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _details['email']!,
+        password: _details['password']!,
+      );
+    } on FirebaseAuthException catch (e) {
+      String message = 'An error occured';
+      if (e.code == 'user-not-found') {
+        message = 'No user found for that email.';
+      } else if (e.code == 'wrong-password') {
+        message = 'Wrong password provided for that user.';
+      } else {
+        message = e.toString();
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(message),
+          backgroundColor: Colors.red,
+        ),
+      );
+    } catch (e) {
+      log("Auth Execption: " + e.toString());
+      rethrow;
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
   }
 }
 
@@ -180,7 +225,7 @@ class _SignupPageState extends State<SignupPage> with InputValidationMixin {
   bool _isLoading = false;
 
   final _formGlobalKey = GlobalKey<FormState>();
-  Map<String, String> _details = {};
+  final Map<String, String> _details = {};
 
   @override
   Widget build(BuildContext context) {
@@ -369,9 +414,7 @@ class _SignupPageState extends State<SignupPage> with InputValidationMixin {
       setState(() {
         _isLoading = true;
       });
-      print(_isLoading);
-      log(_details['email'].toString() + "--" + _details['password'].toString());
-      final credential =  true
+      final credential = true
           ? await FirebaseAuth.instance.createUserWithEmailAndPassword(
               email: _details['email']!,
               password: _details['password']!,
@@ -383,6 +426,8 @@ class _SignupPageState extends State<SignupPage> with InputValidationMixin {
         message = 'The password provided is too weak.';
       } else if (e.code == 'email-already-in-use') {
         message = 'The account already exists for that email.';
+      } else {
+        message = e.toString();
       }
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -391,9 +436,9 @@ class _SignupPageState extends State<SignupPage> with InputValidationMixin {
         ),
       );
     } catch (e) {
-      log("Try ca " + e.toString());
+      log("Auth Execption: " + e.toString());
     } finally {
-      if(mounted) {
+      if (mounted) {
         setState(() {
           _isLoading = false;
         });
