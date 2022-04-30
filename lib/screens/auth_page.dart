@@ -151,7 +151,7 @@ class _SigninPageState extends State<SigninPage> with InputValidationMixin {
                       ),
                       SizedBox(height: 0.05 * size.height),
                       HandeeButton(
-                        text: 'Sign in',
+                        text: _isLoading ? null : 'Sign in',
                         onTap: () {
                           submitForm();
                         },
@@ -174,6 +174,8 @@ class _SigninPageState extends State<SigninPage> with InputValidationMixin {
     if (!_formGlobalKey.currentState!.validate()) return;
 
     _formGlobalKey.currentState?.save();
+
+    print("We here");
 
     try {
       setState(() {
@@ -202,9 +204,11 @@ class _SigninPageState extends State<SigninPage> with InputValidationMixin {
       log("Auth Execption: " + e.toString());
       rethrow;
     } finally {
+      print("Submitting");
       if (mounted) {
         setState(() {
           _isLoading = false;
+          log("Is done");
         });
       }
     }

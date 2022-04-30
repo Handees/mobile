@@ -14,8 +14,7 @@ class LandingPage extends StatelessWidget {
         child: FractionallySizedBox(
           widthFactor: 0.5,
           child: GestureDetector(
-            onTap: () => Navigator.of(context)
-                .pushReplacementNamed(SigninPage.routeName),
+            onTap: () => Navigator.of(context).pushNamed(SigninPage.routeName),
             child: Image.asset('assets/images/handee_logo.png'),
           ),
         ),

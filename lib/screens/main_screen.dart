@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 import 'package:handee/handee_colors.dart';
 import 'package:handee/icons/handee_icons.dart';
@@ -37,6 +38,10 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SchedulerBinding.instance?.addPostFrameCallback((_) {
+      if (Navigator.of(context).canPop()) Navigator.of(context).pop();
+    });
+
     return Scaffold(
       appBar: _index == 0
           ? AppBar(
@@ -45,21 +50,15 @@ class _MainScreenState extends State<MainScreen> {
                 Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: IconButton(
-                      onPressed: () {
-                        FirebaseAuth.instance.signOut();
-                      },
-                      // icon: CircleAvatar(
-                      //   backgroundColor: HandeeColors.grey196,
-                      //   child: Icon(
-                      //     Icons.person,
-                      //     color: HandeeColors.white,
-                      //   ),
-                      // ),
-                      icon: const Icon(
-                        Icons.account_circle,
-                        color: HandeeColors.grey196,
-                        size: 30,
-                      )),
+                    onPressed: () {
+                      FirebaseAuth.instance.signOut();
+                    },
+                    icon: const Icon(
+                      Icons.account_circle,
+                      color: HandeeColors.grey196,
+                      size: 30,
+                    ),
+                  ),
                 )
               ],
               elevation: 0,
