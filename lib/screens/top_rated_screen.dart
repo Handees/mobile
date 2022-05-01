@@ -34,182 +34,195 @@ class TopRatedScreen extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Top Rated',
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
-        centerTitle: true,
-        backgroundColor: HandeeColors.white,
-        foregroundColor: HandeeColors.textDark,
-        elevation: 0,
-      ),
       backgroundColor: HandeeColors.white,
-      body: SingleChildScrollView(
-        child: Center(
-          child: FractionallySizedBox(
-            widthFactor: 0.85,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                ImagePageView(images),
-                const SizedBox(
-                  height: 10,
-                ),
-                const Align(
-                  alignment: Alignment.centerRight,
-                  child: Icon(Icons.bookmark_border),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: SizedBox(
-                        width: 180,
-                        child: Text(
-                          name,
-                          style: Theme.of(context).textTheme.headlineSmall,
+      body: CustomScrollView(
+        primary: false,
+        slivers: [
+          SliverAppBar(
+            title: Text(
+              'Top Rated',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            centerTitle: true,
+            backgroundColor: HandeeColors.white,
+            foregroundColor: HandeeColors.textDark,
+            elevation: 0,
+            floating: true,
+          ),
+          SliverPadding(
+            padding: EdgeInsets.symmetric(horizontal: 25),
+            sliver: SliverList(
+              delegate: SliverChildListDelegate(
+                [
+                  ImagePageView(images),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Align(
+                    alignment: Alignment.centerRight,
+                    child: Icon(Icons.bookmark_border),
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: SizedBox(
+                          width: 180,
+                          child: Text(
+                            name,
+                            style: Theme.of(context).textTheme.headlineSmall,
+                          ),
                         ),
                       ),
-                    ),
-                    //Text('data'),
-                    RichText(
-                      text: TextSpan(
-                        text: '\u20A6$cost',
-                        style: const TextStyle(
-                            color: HandeeColors.black,
-                            fontSize: 24,
-                            fontWeight: FontWeight.w400),
-                        children: const [
-                          TextSpan(
-                            text: ' / hr',
-                            style: TextStyle(
-                                color: HandeeColors.black,
-                                fontSize: 15,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: SizedBox(
-                    width: 270,
-                    child: Text(
-                      description,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 55),
-                SizedBox(
-                  height: 50,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      //SizedBox(width: 10),
-                      Row(
-                        children: [
-                          Text(
-                            rating.toString(),
-                            style: Theme.of(context).textTheme.headlineSmall,
-                          ),
-                          const Icon(
-                            HandeeIcons.star_filled,
-                            size: 17,
-                          ),
-                        ],
-                      ),
-                      const VerticalDivider(
-                        color: HandeeColors.black,
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            '47',
-                            style: Theme.of(context).textTheme.headlineSmall,
-                          ),
-                          SizedBox(width: 4),
-                          Text(
-                            'Reviews',
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                        ],
-                      ),
-                      const VerticalDivider(
-                        color: HandeeColors.black,
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            '72',
-                            style: Theme.of(context).textTheme.headlineSmall,
-                          ),
-                          SizedBox(width: 4),
-                          Text(
-                            'Jobs\nCompleted',
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                        ],
+                      //Text('data'),
+                      RichText(
+                        text: TextSpan(
+                          text: '\u20A6$cost',
+                          style: const TextStyle(
+                              color: HandeeColors.black,
+                              fontSize: 24,
+                              fontWeight: FontWeight.w400),
+                          children: const [
+                            TextSpan(
+                              text: ' / hr',
+                              style: TextStyle(
+                                  color: HandeeColors.black,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
-                ),
-                const SizedBox(
-                  height: 35,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: const [
-                    CircleAvatar(
-                      backgroundColor: HandeeColors.transparent,
-                      foregroundColor: HandeeColors.blue,
-                      child: Icon(Icons.phone),
-                      radius: 25,
+                  const SizedBox(height: 8),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: SizedBox(
+                      width: 270,
+                      child: Text(
+                        description,
+                      ),
                     ),
-                    CircleAvatar(
-                      backgroundColor: HandeeColors.transparent,
-                      foregroundColor: HandeeColors.blue,
-                      child: Icon(Icons.mail_outline),
-                      radius: 25,
-                    ),
-                    CircleAvatar(
-                      backgroundColor: HandeeColors.transparent,
-                      foregroundColor: HandeeColors.blue,
-                      child: Icon(Icons.location_on_outlined),
-                      radius: 25,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 35),
-                HandeeButton(
-                  text: 'BOOK THIS SERVICE',
-                  onTap: () {
-                    showModalBottomSheet(
-                      isScrollControlled: true,
-                      context: context,
-                      builder: (ctx) {
-                        return Padding(
-                          padding: EdgeInsets.only(
-                              bottom: MediaQuery.of(context).viewInsets.bottom),
-                          child: const BookingOverlay(),
-                        );
-                      },
-                    );
-                  },
-                ),
-                const SizedBox(height: 30),
-              ],
+                  ),
+                  SizedBox(height: 25)
+                ],
+              ),
             ),
           ),
-        ),
+          SliverPadding(
+            padding: EdgeInsets.symmetric(horizontal: 25),
+            sliver: SliverFillRemaining(
+              hasScrollBody: false,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  SizedBox(
+                    height: 50,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        //SizedBox(width: 10),
+                        Row(
+                          children: [
+                            Text(
+                              rating.toString(),
+                              style: Theme.of(context).textTheme.headlineSmall,
+                            ),
+                            const Icon(
+                              HandeeIcons.star_filled,
+                              size: 17,
+                            ),
+                          ],
+                        ),
+                        const VerticalDivider(
+                          color: HandeeColors.black,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              '47',
+                              style: Theme.of(context).textTheme.headlineSmall,
+                            ),
+                            SizedBox(width: 4),
+                            Text(
+                              'Reviews',
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                          ],
+                        ),
+                        const VerticalDivider(
+                          color: HandeeColors.black,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              '72',
+                              style: Theme.of(context).textTheme.headlineSmall,
+                            ),
+                            SizedBox(width: 4),
+                            Text(
+                              'Jobs\nCompleted',
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 35,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: const [
+                      CircleAvatar(
+                        backgroundColor: HandeeColors.transparent,
+                        foregroundColor: HandeeColors.blue,
+                        child: Icon(Icons.phone),
+                        radius: 25,
+                      ),
+                      CircleAvatar(
+                        backgroundColor: HandeeColors.transparent,
+                        foregroundColor: HandeeColors.blue,
+                        child: Icon(Icons.mail_outline),
+                        radius: 25,
+                      ),
+                      CircleAvatar(
+                        backgroundColor: HandeeColors.transparent,
+                        foregroundColor: HandeeColors.blue,
+                        child: Icon(Icons.location_on_outlined),
+                        radius: 25,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 35),
+                  HandeeButton(
+                    text: 'BOOK THIS SERVICE',
+                    onTap: () {
+                      showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (ctx) {
+                          return Padding(
+                            padding: EdgeInsets.only(
+                                bottom:
+                                    MediaQuery.of(context).viewInsets.bottom),
+                            child: const BookingOverlay(),
+                          );
+                        },
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 30),
+                ],
+              ),
+            ),
+          )
+        ],
       ),
     );
   }
