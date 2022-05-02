@@ -36,7 +36,7 @@ class TopRatedScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: HandeeColors.white,
       body: CustomScrollView(
-        primary: false,
+        physics: BouncingScrollPhysics(),
         slivers: [
           SliverAppBar(
             title: Text(
@@ -280,6 +280,7 @@ class _ImagePageViewState extends State<ImagePageView> {
           child: Hero(
             tag: 'test', //Find suitable tag
             child: PageView.builder(
+              physics: BouncingScrollPhysics(),
               itemCount: widget.images.length,
               onPageChanged: (index) {
                 setState(() {

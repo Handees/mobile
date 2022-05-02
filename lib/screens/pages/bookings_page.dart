@@ -13,42 +13,50 @@ class BookingsPage extends StatelessWidget {
         kBottomNavigationBarHeight;
     //-80;
     return SafeArea(
-      child: Stack(
-        children: [
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: SizedBox(
-              height: _height,
-              child: ListView.builder(
-                itemCount: 10,
-                itemBuilder: (ctx, index) {
-                  return const BookingWidget();
-                  // return Notification();
-                },
-              ),
+      child: CustomScrollView(
+        physics: BouncingScrollPhysics(),
+        slivers: [
+          SliverAppBar(
+            title: Text(
+              'Booking History',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            pinned: true,
+            centerTitle: true,
+            backgroundColor: HandeeColors.white,
+            shadowColor: Colors.black,
+            // toolbarHeight: 60,
+          ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (ctx, index) {
+                return const BookingWidget();
+                // return Notification();
+              },
+              childCount: 10,
             ),
           ),
-          Container(
-            width: double.infinity,
-            height: 65,
-            alignment: Alignment.bottomCenter,
-            decoration: const BoxDecoration(
-              color: HandeeColors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: HandeeColors.shadowBlack,
-                  blurRadius: 10,
-                )
-              ],
-            ),
-            child: Padding(
-              padding: EdgeInsets.only(bottom: 25.0),
-              child: Text(
-                'Booking History',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-            ),
-          ),
+          // Container(
+          //   width: double.infinity,
+          //   height: 65,
+          //   alignment: Alignment.bottomCenter,
+          //   decoration: const BoxDecoration(
+          //     color: HandeeColors.white,
+          //     boxShadow: [
+          //       BoxShadow(
+          //         color: HandeeColors.shadowBlack,
+          //         blurRadius: 10,
+          //       )
+          //     ],
+          //   ),
+          //   child: Padding(
+          //     padding: EdgeInsets.only(bottom: 25.0),
+          //     child: Text(
+          //       'Booking History',
+          //       style: Theme.of(context).textTheme.titleLarge,
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

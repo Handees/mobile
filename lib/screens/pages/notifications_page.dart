@@ -63,16 +63,19 @@ class _AllTab extends StatelessWidget {
       width: double.infinity,
       height: 500,
       child: ListView.builder(
+        physics: BouncingScrollPhysics(),
         itemCount: 4,
         itemBuilder: (ctx, index) {
           switch (index) {
             case 0:
               return NotificationWidget.delivery(
                 agentName: 'The Heat Cleaners',
+                style: Theme.of(context).textTheme.bodySmall,
               );
             case 1:
               return NotificationWidget.schedule(
                 agentName: 'The Heat Cleaners',
+                style: Theme.of(context).textTheme.bodySmall,
               );
             case 2:
               return NotificationWidget(
@@ -86,7 +89,9 @@ class _AllTab extends StatelessWidget {
                 message: 'New device login. Is this you?',
               );
             case 3:
-              return NotificationWidget.welcome();
+              return NotificationWidget.welcome(
+                style: Theme.of(context).textTheme.bodySmall,
+              );
             default:
               return const Text('Never getting here');
           }

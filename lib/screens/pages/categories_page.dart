@@ -10,6 +10,7 @@ class CategoriesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      physics: BouncingScrollPhysics(),
       child: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
