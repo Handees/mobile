@@ -26,6 +26,7 @@ class _PickLocationScreenState extends State<PickLocationScreen>
     '27 Church Street, Wolverhampton, WV7 9KO',
     '94 Queens Road, Enfield, London, EN10 8KT',
     '12 The Crescent, Hereford, HR56 0IO' '1 Church Road, London, E3 5GP',
+    'Onosa'
   ];
 
   Future<List<String>>? _suggestionsFuture;
@@ -40,6 +41,7 @@ class _PickLocationScreenState extends State<PickLocationScreen>
 
   final _placeService = PlacesService();
   bool _serviceEnabled = false;
+  String searchCache = "";
 
   @override
   void initState() {
@@ -160,7 +162,7 @@ class _PickLocationScreenState extends State<PickLocationScreen>
       itemCount: suggestions.length, //_recentAdresses.length,
       itemBuilder: (ctx, i) {
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12),
+          padding: const EdgeInsets.only(left: 8.0),
           child: GestureDetector(
             onTap: () {
               setState(() {
@@ -188,11 +190,20 @@ class _PickLocationScreenState extends State<PickLocationScreen>
                 GestureDetector(
                   onTap: () {
                     _searchController.text = suggestions[i];
+                    _searchController.selection = TextSelection.collapsed(
+                      offset: _searchController.text.length,
+                    );
+                    setState(() {
+                      _getSuggestions(_searchController.text);
+                    });
                   },
-                  child: const Icon(
-                    Icons.location_on_outlined,
-                    color: HandeeColors.blue,
-                    size: 18,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                    child: const Icon(
+                      Icons.edit,
+                      color: HandeeColors.blue,
+                      size: 18,
+                    ),
                   ),
                 ),
               ],
@@ -315,18 +326,29 @@ class _PickLocationScreenState extends State<PickLocationScreen>
                                   _animateToAddress(value);
                                 },
                                 onChanged: (value) {
-                                  setState(() {
-                                    _getSuggestions(value);
-                                  });
+                                  if (searchCache != value) {
+                                    setState(() {
+                                      _getSuggestions(value);
+                                    });
+                                    searchCache = value;
+                                  }
                                 },
                                 autofocus: false,
                                 focusNode: _searchFocus,
-                                decoration: const InputDecoration(
+                                decoration: InputDecoration(
                                   contentPadding: EdgeInsets.all(8),
                                   prefixIcon: Icon(
                                     Icons.search,
                                     color: HandeeColors.grey89,
                                     size: 20,
+                                  ),
+                                  suffixIcon: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        _searchController.clear();
+                                      });
+                                    },
+                                    child: Icon(Icons.cancel),
                                   ),
                                   border: InputBorder.none,
                                 ),
@@ -350,7 +372,7 @@ class _PickLocationScreenState extends State<PickLocationScreen>
                           ),
                           child: ConstrainedBox(
                             constraints: BoxConstraints(
-                                minHeight: 100, maxHeight: _size!.height - 220),
+                                minHeight: 70, maxHeight: _size!.height - 220),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: _searchController.text.isNotEmpty

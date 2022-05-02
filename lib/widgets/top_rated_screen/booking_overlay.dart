@@ -149,7 +149,7 @@ class _BookingOverlayState extends State<BookingOverlay> {
                       textScaleFactor: 1.5,
                       style: TextStyle(fontWeight: FontWeight.w600),
                     ),
-                    const SizedBox(height: 15),
+                    const SizedBox(height: 17),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -211,7 +211,7 @@ class _BookingOverlayState extends State<BookingOverlay> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 17),
+                    const SizedBox(height: 15),
                     GestureDetector(
                       behavior: HitTestBehavior.opaque,
                       onTap: () async {
@@ -483,7 +483,7 @@ class _BookingDetailsFieldState extends State<BookingDetailsField> {
               TextFormField(
                 focusNode: widget.focusNode,
                 style: const TextStyle(
-                  height: 1.7,
+                  height: 1.5,
                 ),
                 onSaved: widget.onSaved,
                 validator: widget.validator,
