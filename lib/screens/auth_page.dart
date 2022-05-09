@@ -1,12 +1,16 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:handee/handee_colors.dart';
 import 'package:handee/widgets/auth_screen/auth_textfield.dart';
 import 'package:handee/icons/handee_icons.dart';
 import 'package:handee/widgets/button.dart';
+
+import '../services/auth_service.dart';
 
 class SigninPage extends StatefulWidget {
   const SigninPage({Key? key}) : super(key: key);
@@ -57,7 +61,6 @@ class _SigninPageState extends State<SigninPage> with InputValidationMixin {
                       AuthTextField(
                         labelText: 'Email',
                         onSaved: (value) {
-                          log('Name: $value');
                           _details['email'] = value!;
                         },
                         validator: (value) {
@@ -73,7 +76,6 @@ class _SigninPageState extends State<SigninPage> with InputValidationMixin {
                       AuthTextField(
                         labelText: 'Password',
                         onSaved: (value) {
-                          log('Password: $value');
                           _details['password'] = value!;
                         },
                         validator: (value) {
@@ -158,7 +160,7 @@ class _SigninPageState extends State<SigninPage> with InputValidationMixin {
                         color: HandeeColors.white,
                         textColor: Colors.black,
                       ),
-                      SizedBox(height: 40)
+                      const SizedBox(height: 40)
                     ],
                   ),
                 ),
@@ -171,11 +173,11 @@ class _SigninPageState extends State<SigninPage> with InputValidationMixin {
   }
 
   void submitForm() async {
+    if (_formGlobalKey.currentState == null) throw Exception('Form key null');
+
     if (!_formGlobalKey.currentState!.validate()) return;
 
     _formGlobalKey.currentState?.save();
-
-    print("We here");
 
     try {
       setState(() {
@@ -184,7 +186,7 @@ class _SigninPageState extends State<SigninPage> with InputValidationMixin {
       final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: _details['email']!,
         password: _details['password']!,
-      );
+      ); // TODO: sign in with phone
     } on FirebaseAuthException catch (e) {
       String message = 'An error occured';
       if (e.code == 'user-not-found') {
@@ -204,11 +206,9 @@ class _SigninPageState extends State<SigninPage> with InputValidationMixin {
       log("Auth Execption: " + e.toString());
       rethrow;
     } finally {
-      print("Submitting");
       if (mounted) {
         setState(() {
           _isLoading = false;
-          log("Is done");
         });
       }
     }
@@ -388,10 +388,10 @@ class _SignupPageState extends State<SignupPage> with InputValidationMixin {
                       color: HandeeColors.white,
                       textColor: Colors.black,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                       child: Text(
                         'By clicking Sign up, you agree to our User Agreement and Privacy Policy',
@@ -418,12 +418,24 @@ class _SignupPageState extends State<SignupPage> with InputValidationMixin {
       setState(() {
         _isLoading = true;
       });
-      final credential = true
+      final credential = _details.containsKey('email')
           ? await FirebaseAuth.instance.createUserWithEmailAndPassword(
               email: _details['email']!,
               password: _details['password']!,
             )
-          : null; //TODO: Create phone sign-in;
+          : null;
+      // await FirebaseAuth.instance.verifyPhoneNumber(
+      //     phoneNumber: _details['phone']!,
+      //     verificationCompleted: (_) {},
+      //     verificationFailed: (_) {},
+      //     codeSent: codeSent,
+      //     codeAutoRetrievalTimeout: codeAutoRetrievalTimeout,
+      //   ); //TODO: Create phone sign-in;
+
+      final result = await postDetails(credential!, _details);
+
+      log("stat ${result.statusCode}");
+      log("body ${result.body}");
     } on FirebaseAuthException catch (e) {
       String message = 'An error occured';
       if (e.code == 'weak-password') {
