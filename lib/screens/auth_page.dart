@@ -432,7 +432,8 @@ class _SignupPageState extends State<SignupPage> with InputValidationMixin {
       //     codeAutoRetrievalTimeout: codeAutoRetrievalTimeout,
       //   ); //TODO: Create phone sign-in;
 
-      final result = await postDetails(credential!, _details);
+      final result =
+          await AuthService.instance.postUserDetails(credential!, _details);
 
       log("stat ${result.statusCode}");
       log("body ${result.body}");

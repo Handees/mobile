@@ -6,7 +6,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:handee/handee_colors.dart';
 import 'package:handee/icons/handee_icons.dart';
-import 'package:handee/places_service.dart';
+import 'package:handee/services/places_service.dart';
 import 'package:handee/widgets/button.dart';
 import 'package:handee/widgets/loading_indicator.dart';
 
