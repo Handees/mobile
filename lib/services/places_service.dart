@@ -5,9 +5,13 @@ import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:uuid/uuid.dart';
 
-  const kMapsApiKey = 'AIzaSyA3NoblRziyftfiaqUmF5X1BYURfknrzV0';
+const kMapsApiKey = 'AIzaSyA3NoblRziyftfiaqUmF5X1BYURfknrzV0';
 
 class PlacesService {
+  PlacesService._();
+  static final PlacesService _instance = PlacesService._();
+  static PlacesService get instance => _instance;
+
   final sessionToken = const Uuid().v4();
   final geolocatorInstance = GeolocatorPlatform.instance;
   final geocodingInstance = GeocodingPlatform.instance;

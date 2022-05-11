@@ -1,11 +1,12 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:handee/handee_colors.dart';
 import 'package:handee/icons/handee_icons.dart';
+import 'package:handee/map_style.dart';
 import 'package:handee/services/places_service.dart';
 import 'package:handee/widgets/button.dart';
 import 'package:handee/widgets/loading_indicator.dart';
@@ -31,7 +32,7 @@ class _PickLocationScreenState extends State<PickLocationScreen>
 
   Future<List<String>>? _suggestionsFuture;
   final _searchController = TextEditingController();
-  Position? _position;
+  Position? _initialPosition;
   late GoogleMapController _mapController;
 
   // MarkerId _userMarkerId = MarkerId("user");
@@ -39,86 +40,14 @@ class _PickLocationScreenState extends State<PickLocationScreen>
 
   Set<Marker> markers = <Marker>{};
 
-  final _placeService = PlacesService();
-  bool _serviceEnabled = false;
+  final _placeService = PlacesService.instance;
   String searchCache = "";
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance?.addObserver(this);
-    print('position');
-    _getPosition();
-  }
-
-  Future<void> _getPosition() async {
-    final future =
-        _placeService.determinePosition().onError((error, stackTrace) {
-      WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-        showDialog(
-            context: context,
-            builder: (ctx) {
-              return AlertDialog(
-                //backgroundColor: Colors.white,
-                title: Text('Turn on Location Services'),
-                //content: Text('Accept'),
-                actions: [
-                  TextButton(
-                    onPressed: () async {
-                      await _placeService.geolocatorInstance
-                          .openLocationSettings();
-                      Navigator.of(ctx).pop();
-                    },
-                    child: Text('Sure'),
-                  ),
-                  TextButton(
-                    onPressed: () async {
-                      showDialog(
-                        context: context,
-                        builder: (_) => AlertDialog(
-                          title: Text(
-                              'This service cannot work without location services'),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                                Navigator.of(context).pop();
-                                Navigator.of(context).pop();
-                              },
-                              child: Text('Okay'),
-                            )
-                          ],
-                        ),
-                      );
-                    },
-                    child: Text('At all boss'),
-                  ),
-                ],
-              );
-            });
-      });
-
-      return _placeService.determinePosition();
-    });
-
-    _position = await future;
-    //if (!_placeService.serviceEnabled) {
-
-    //}
-    _addMarker('user', LatLng(_position!.latitude, _position!.longitude));
-    setState(() {});
-  }
-
-  void _addMarker(String markerId, LatLng location) async {
-    //final t = await BitmapDescriptor.fromAssetImage(ImageConfiguration.empty, 'assets/images/untitled.png');
-    if (markers.isNotEmpty) {
-      markers.removeWhere((element) => element.markerId.value == 'user');
-    }
-    markers.add(Marker(
-      markerId: MarkerId(markerId),
-      position: location,
-      //icon: t,
-    ));
+    _getUserLocation();
   }
 
   @override
@@ -130,11 +59,9 @@ class _PickLocationScreenState extends State<PickLocationScreen>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    print('State ${state}');
     super.didChangeAppLifecycleState(state);
-    print('State ${state}');
     if (state == AppLifecycleState.resumed) {
-      _getPosition();
+      _getUserLocation();
     }
   }
 
@@ -146,14 +73,88 @@ class _PickLocationScreenState extends State<PickLocationScreen>
     super.dispose();
   }
 
+  Future<void> _getUserLocation() async {
+    _initialPosition =
+        await _placeService.determinePosition().onError(_requestLocationAccess);
+
+    _addMarker('user',
+        LatLng(_initialPosition!.latitude, _initialPosition!.longitude));
+  }
+
+  Future<Position> _requestLocationAccess(error, stackTrace) {
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      showDialog(
+        context: context,
+        builder: (ctx) {
+          return AlertDialog(
+            //backgroundColor: Colors.white,
+            title: const Text('Turn on Location Services'),
+            //content: Text('Accept'),
+            actions: [
+              TextButton(
+                onPressed: () async {
+                  await _placeService.geolocatorInstance.openLocationSettings();
+                  Navigator.of(ctx).pop();
+                },
+                child: const Text('Sure'),
+              ),
+              TextButton(
+                onPressed: () async {
+                  showDialog(
+                    context: context,
+                    builder: (_) => AlertDialog(
+                      title: const Text(
+                          'This service cannot work without location services'),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            Navigator.of(context).pop();
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text('Okay'),
+                        )
+                      ],
+                    ),
+                  );
+                },
+                child: const Text('At all boss'),
+              ),
+            ],
+          );
+        },
+      );
+    });
+
+    return _placeService.determinePosition();
+  }
+
+  void _addMarker(String markerId, LatLng location) async {
+    // final t = await BitmapDescriptor.fromAssetImage(
+    //     ImageConfiguration.empty, 'assets/images/untitled.png');
+    if (markers.isNotEmpty) {
+      markers.removeWhere((element) => element.markerId.value == 'user');
+    }
+    setState(() {
+      markers.add(Marker(
+        markerId: MarkerId(markerId),
+        position: location,
+        // icon: t,
+      ));
+    });
+  }
+
   Future<void> _getSuggestions(String value) async {
     _suggestionsFuture = _placeService.getPredictions(value);
   }
 
   Future<void> _animateToAddress(String value) async {
-    var position = await _placeService.getCoordinates(value);
+    var location = await _placeService.getCoordinates(value);
+    _addMarker('user', LatLng(location.latitude, location.longitude));
+    log(markers.toString());
+
     _mapController.animateCamera(
-        CameraUpdate.newLatLng(LatLng(position.latitude, position.longitude)));
+        CameraUpdate.newLatLng(LatLng(location.latitude, location.longitude)));
   }
 
   Widget buildSuggestions(List<String> suggestions) {
@@ -171,42 +172,45 @@ class _PickLocationScreenState extends State<PickLocationScreen>
                 _animateToAddress(suggestions[i]);
               });
             },
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(
-                  HandeeIcons.map_pin,
-                  color: HandeeColors.blue,
-                  size: 18,
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Text(
-                    suggestions[i],
-                    style: const TextStyle(color: HandeeColors.blue),
+            child: SizedBox(
+              height: 50,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(
+                    HandeeIcons.map_pin,
+                    color: HandeeColors.blue,
+                    size: 22,
                   ),
-                ),
-                const SizedBox(width: 12),
-                GestureDetector(
-                  onTap: () {
-                    _searchController.text = suggestions[i];
-                    _searchController.selection = TextSelection.collapsed(
-                      offset: _searchController.text.length,
-                    );
-                    setState(() {
-                      _getSuggestions(_searchController.text);
-                    });
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-                    child: const Icon(
-                      Icons.edit,
-                      color: HandeeColors.blue,
-                      size: 18,
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      suggestions[i],
+                      style: const TextStyle(color: HandeeColors.blue),
                     ),
                   ),
-                ),
-              ],
+                  const SizedBox(width: 12),
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     _searchController.text = suggestions[i];
+                  //     _searchController.selection = TextSelection.collapsed(
+                  //       offset: _searchController.text.length,
+                  //     );
+                  //     setState(() {
+                  //       _getSuggestions(_searchController.text);
+                  //     });
+                  //   },
+                  //   child: Padding(
+                  //     padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                  //     child: const Icon(
+                  //       Icons.north_west,
+                  //       color: HandeeColors.blue,
+                  //       size: 18,
+                  //     ),
+                  //   ),
+                  // ),
+                ],
+              ),
             ),
           ),
         );
@@ -222,7 +226,7 @@ class _PickLocationScreenState extends State<PickLocationScreen>
         resizeToAvoidBottomInset: false,
         body: Stack(
           children: [
-            _position == null
+            _initialPosition == null
                 ? const Center(
                     child: CircleFadeOutLoader(
                       color: HandeeColors.blue,
@@ -231,8 +235,9 @@ class _PickLocationScreenState extends State<PickLocationScreen>
                 : GoogleMap(
                     markers: markers,
                     initialCameraPosition: CameraPosition(
-                      target: LatLng(_position!.latitude, _position!.longitude),
-                      zoom: 15,
+                      target: LatLng(_initialPosition!.latitude,
+                          _initialPosition!.longitude),
+                      zoom: 17,
                     ),
                     zoomControlsEnabled: false,
                     myLocationEnabled: false,
@@ -241,6 +246,7 @@ class _PickLocationScreenState extends State<PickLocationScreen>
                     compassEnabled: false,
                     onMapCreated: (controller) {
                       _mapController = controller;
+                      controller.setMapStyle(MAP_STYLE);
                     },
                   ),
             Positioned(
@@ -253,12 +259,13 @@ class _PickLocationScreenState extends State<PickLocationScreen>
                 onPressed: () async {
                   var res = await _placeService.determinePosition();
                   _mapController.animateCamera(
-                    CameraUpdate.newLatLng(
+                    CameraUpdate.newLatLngZoom(
                       LatLng(res.latitude, res.longitude),
+                      17,
                     ),
                   );
                   _searchController.text =
-                      await _placeService.getAddress(_position!);
+                      await _placeService.getAddress(_initialPosition!);
                 },
               ),
             ),
@@ -336,8 +343,8 @@ class _PickLocationScreenState extends State<PickLocationScreen>
                                 autofocus: false,
                                 focusNode: _searchFocus,
                                 decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.all(8),
-                                  prefixIcon: Icon(
+                                  contentPadding: const EdgeInsets.all(8),
+                                  prefixIcon: const Icon(
                                     Icons.search,
                                     color: HandeeColors.grey89,
                                     size: 20,
@@ -348,7 +355,7 @@ class _PickLocationScreenState extends State<PickLocationScreen>
                                         _searchController.clear();
                                       });
                                     },
-                                    child: Icon(Icons.cancel),
+                                    child: const Icon(Icons.cancel),
                                   ),
                                   border: InputBorder.none,
                                 ),
@@ -401,10 +408,11 @@ class _PickLocationScreenState extends State<PickLocationScreen>
                     ],
                   ),
                   HandeeButton(
-                      text: 'Done',
-                      onTap: () {
-                        Navigator.of(context).pop(_searchController.text);
-                      }),
+                    text: 'Done',
+                    onTap: () {
+                      Navigator.of(context).pop(_searchController.text);
+                    },
+                  ),
                 ],
               ),
             ),

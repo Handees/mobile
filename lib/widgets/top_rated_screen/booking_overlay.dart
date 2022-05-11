@@ -96,9 +96,10 @@ class _BookingOverlayState extends State<BookingOverlay> {
 
   @override
   Widget build(BuildContext context) {
-    bool isKeyboardOpen = 40 > MediaQuery.of(context).viewInsets.bottom;
+    final bottomInsets = MediaQuery.of(context).viewInsets.bottom;
+    bool isKeyboardOpen = 40 < bottomInsets;
     return SizedBox(
-      height: isKeyboardOpen ? 410 : 370,
+      height: isKeyboardOpen ? 360 : 410,
       width: double.infinity,
       child: FractionallySizedBox(
         widthFactor: 0.85,
@@ -299,7 +300,7 @@ class _BookingOverlayState extends State<BookingOverlay> {
                         ],
                       ),
                     ),
-                    if (isKeyboardOpen)
+                    if (!isKeyboardOpen)
                       Padding(
                         padding: const EdgeInsets.only(bottom: 17),
                         child: HandeeButton(

@@ -38,9 +38,9 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    SchedulerBinding.instance?.addPostFrameCallback((_) {
-      if (Navigator.of(context).canPop()) Navigator.of(context).pop();
-    });
+    // SchedulerBinding.instance?.addPostFrameCallback((_) {
+    //   if (Navigator.of(context).canPop()) Navigator.of(context).pop();
+    // });
 
     return Scaffold(
       appBar: _index == 0

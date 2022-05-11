@@ -36,7 +36,7 @@ class TopRatedScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: HandeeColors.white,
       body: CustomScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         slivers: [
           SliverAppBar(
             title: Text(
@@ -50,7 +50,7 @@ class TopRatedScreen extends StatelessWidget {
             floating: true,
           ),
           SliverPadding(
-            padding: EdgeInsets.symmetric(horizontal: 25),
+            padding: const EdgeInsets.symmetric(horizontal: 25),
             sliver: SliverList(
               delegate: SliverChildListDelegate(
                 [
@@ -108,13 +108,13 @@ class TopRatedScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 25)
+                  const SizedBox(height: 25)
                 ],
               ),
             ),
           ),
           SliverPadding(
-            padding: EdgeInsets.symmetric(horizontal: 25),
+            padding: const EdgeInsets.symmetric(horizontal: 25),
             sliver: SliverFillRemaining(
               hasScrollBody: false,
               child: Column(
@@ -147,7 +147,7 @@ class TopRatedScreen extends StatelessWidget {
                               '47',
                               style: Theme.of(context).textTheme.headlineSmall,
                             ),
-                            SizedBox(width: 4),
+                            const SizedBox(width: 4),
                             Text(
                               'Reviews',
                               style: Theme.of(context).textTheme.bodyMedium,
@@ -163,7 +163,7 @@ class TopRatedScreen extends StatelessWidget {
                               '72',
                               style: Theme.of(context).textTheme.headlineSmall,
                             ),
-                            SizedBox(width: 4),
+                            const SizedBox(width: 4),
                             Text(
                               'Jobs\nCompleted',
                               style: Theme.of(context).textTheme.bodyMedium,
@@ -280,7 +280,7 @@ class _ImagePageViewState extends State<ImagePageView> {
           child: Hero(
             tag: 'test', //Find suitable tag
             child: PageView.builder(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               itemCount: widget.images.length,
               onPageChanged: (index) {
                 setState(() {
