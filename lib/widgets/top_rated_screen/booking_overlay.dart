@@ -98,6 +98,8 @@ class _BookingOverlayState extends State<BookingOverlay> {
   Widget build(BuildContext context) {
     final bottomInsets = MediaQuery.of(context).viewInsets.bottom;
     bool isKeyboardOpen = 40 < bottomInsets;
+    const topMargin = 25.0;
+
     return SizedBox(
       height: isKeyboardOpen ? 360 : 410,
       width: double.infinity,
@@ -105,7 +107,7 @@ class _BookingOverlayState extends State<BookingOverlay> {
         widthFactor: 0.85,
         alignment: Alignment.center,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
               margin: EdgeInsets.only(top: 8),
@@ -120,6 +122,7 @@ class _BookingOverlayState extends State<BookingOverlay> {
               Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: const [
+                  SizedBox(height: topMargin),
                   TextLoader(),
                   SizedBox(height: 5),
                   Text(
@@ -144,7 +147,7 @@ class _BookingOverlayState extends State<BookingOverlay> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const SizedBox(height: 25),
+                    const SizedBox(height: 20),
                     const Text(
                       'Booking Details',
                       textScaleFactor: 1.5,
@@ -313,7 +316,7 @@ class _BookingOverlayState extends State<BookingOverlay> {
               Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  //Spacer(),
+                  SizedBox(height: topMargin),
                   Text(
                     'Booked',
                     textScaleFactor: 2,
@@ -352,6 +355,7 @@ class _BookingOverlayState extends State<BookingOverlay> {
               Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
+                  SizedBox(height: topMargin),
                   Container(
                     alignment: Alignment.center,
                     height: 170,
