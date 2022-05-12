@@ -46,7 +46,7 @@ class _PickLocationScreenState extends State<PickLocationScreen>
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance?.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
     _getUserLocation();
   }
 
@@ -69,7 +69,7 @@ class _PickLocationScreenState extends State<PickLocationScreen>
   void dispose() {
     _searchFocus.dispose();
     _searchController.dispose();
-    WidgetsBinding.instance?.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
@@ -82,7 +82,7 @@ class _PickLocationScreenState extends State<PickLocationScreen>
   }
 
   Future<Position> _requestLocationAccess(error, stackTrace) {
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       showDialog(
         context: context,
         builder: (ctx) {
