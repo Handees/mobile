@@ -34,17 +34,15 @@ class MyApp extends StatelessWidget {
       home: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (_, snapshot) {
-          // log("Snapshot: " + snapshot.toString());
           if (snapshot.hasData) {
-            // log("Snapshot Data: " + snapshot.data.toString());
-            return MainScreen();
+            return const MainScreen();
           }
-          return LandingPage();
+          return const LandingPage();
         },
       ),
       theme: ThemeData(
         textTheme: Theme.of(context).textTheme.copyWith(
-              titleMedium: TextStyle(
+              titleMedium: const TextStyle(
                 fontWeight: FontWeight.w500,
                 fontSize: 18,
               ),
@@ -53,12 +51,12 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: (settings) {
         if (settings.name == SigninPage.routeName) {
           return MaterialPageRoute(
-            builder: (_) => SigninPage(),
+            builder: (_) => const SigninPage(),
           );
         }
         if (settings.name == SignupPage.routeName) {
           return MaterialPageRoute(
-            builder: (_) => SignupPage(),
+            builder: (_) => const SignupPage(),
           );
         }
         if (settings.name == TopRatedScreen.routeName) {

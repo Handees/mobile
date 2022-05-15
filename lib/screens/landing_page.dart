@@ -8,15 +8,16 @@ class LandingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future.delayed(const Duration(seconds: 1)).then((_) {
+      Navigator.of(context).pushNamed(SigninPage.routeName);
+    });
+
     return Scaffold(
       backgroundColor: HandeeColors.backgroundDark,
       body: Center(
         child: FractionallySizedBox(
           widthFactor: 0.5,
-          child: GestureDetector(
-            onTap: () => Navigator.of(context).pushNamed(SigninPage.routeName),
-            child: Image.asset('assets/images/handee_logo.png'),
-          ),
+          child: Image.asset('assets/images/handee_logo.png'),
         ),
       ),
     );

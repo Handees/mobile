@@ -1,9 +1,4 @@
-import 'dart:convert';
-import 'dart:developer';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 import 'package:handee/handee_colors.dart';
 import 'package:handee/widgets/auth_screen/auth_textfield.dart';
@@ -179,38 +174,27 @@ class _SigninPageState extends State<SigninPage> with InputValidationMixin {
 
     _formGlobalKey.currentState?.save();
 
-    try {
-      setState(() {
-        _isLoading = true;
-      });
-      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: _details['email']!,
-        password: _details['password']!,
-      ); // TODO: sign in with phone
-    } on FirebaseAuthException catch (e) {
-      String message = 'An error occured';
-      if (e.code == 'user-not-found') {
-        message = 'No user found for that email.';
-      } else if (e.code == 'wrong-password') {
-        message = 'Wrong password provided for that user.';
-      } else {
-        message = e.toString();
-      }
+    setState(() {
+      _isLoading = true;
+    });
+
+    final result = await AuthService.instance.signinUser(_details);
+
+    setState(() {
+      _isLoading = false;
+    });
+
+    if (!mounted) return;
+
+    if (result == 'SUCCESS') {
+      Navigator.pop(context);
+    } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(message),
+          content: Text(result),
           backgroundColor: Colors.red,
         ),
       );
-    } catch (e) {
-      log("Auth Execption: " + e.toString());
-      rethrow;
-    } finally {
-      if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
-      }
     }
   }
 }
@@ -268,7 +252,6 @@ class _SignupPageState extends State<SignupPage> with InputValidationMixin {
                     AuthTextField(
                       labelText: 'Name',
                       onSaved: (value) {
-                        log('Saving Name: $value');
                         _details['name'] = value!;
                       },
                       validator: (value) {
@@ -282,12 +265,9 @@ class _SignupPageState extends State<SignupPage> with InputValidationMixin {
                     AuthTextField(
                       labelText: 'Phone or email',
                       onSaved: (value) {
-                        log('Saving P or E: $value');
                         if (isEmailValid(value!)) {
-                          log('Is email');
                           _details['email'] = value;
                         } else {
-                          log('Is number');
                           _details['number'] = value;
                         }
                       },
@@ -304,7 +284,6 @@ class _SignupPageState extends State<SignupPage> with InputValidationMixin {
                     AuthTextField(
                         labelText: 'Password',
                         onSaved: (value) {
-                          log('Saving PassWord: $value');
                           _details['password'] = value!;
                         },
                         validator: (value) {
@@ -414,52 +393,27 @@ class _SignupPageState extends State<SignupPage> with InputValidationMixin {
 
     _formGlobalKey.currentState?.save();
 
-    try {
-      setState(() {
-        _isLoading = true;
-      });
-      final credential = _details.containsKey('email')
-          ? await FirebaseAuth.instance.createUserWithEmailAndPassword(
-              email: _details['email']!,
-              password: _details['password']!,
-            )
-          : null;
-      // await FirebaseAuth.instance.verifyPhoneNumber(
-      //     phoneNumber: _details['phone']!,
-      //     verificationCompleted: (_) {},
-      //     verificationFailed: (_) {},
-      //     codeSent: codeSent,
-      //     codeAutoRetrievalTimeout: codeAutoRetrievalTimeout,
-      //   ); //TODO: Create phone sign-in;
+    setState(() {
+      _isLoading = true;
+    });
 
-      final result =
-          await AuthService.instance.postUserDetails(credential!, _details);
+    final result = await AuthService.instance.signupUser(_details);
 
-      log("stat ${result.statusCode}");
-      log("body ${result.body}");
-    } on FirebaseAuthException catch (e) {
-      String message = 'An error occured';
-      if (e.code == 'weak-password') {
-        message = 'The password provided is too weak.';
-      } else if (e.code == 'email-already-in-use') {
-        message = 'The account already exists for that email.';
-      } else {
-        message = e.toString();
-      }
+    setState(() {
+      _isLoading = false;
+    });
+
+    if (!mounted) return;
+
+    if (result == 'SUCCESS') {
+      Navigator.pop(context);
+    } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(message),
+          content: Text(result),
           backgroundColor: Colors.red,
         ),
       );
-    } catch (e) {
-      log("Auth Execption: " + e.toString());
-    } finally {
-      if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
-      }
     }
   }
 }

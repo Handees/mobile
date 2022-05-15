@@ -84,11 +84,8 @@ class _BookingOverlayState extends State<BookingOverlay> {
     );
 
     if (pickedDate != null /* && pickedDate TODO: SELECTED DATE */) {
-      _dateController.text = '${pickedDate.day}'.padLeft(2, '0') +
-          '-' +
-          '${pickedDate.month}'.padLeft(2, '0') +
-          '-' +
-          '${pickedDate.year}'.padLeft(4, '0');
+      _dateController.text =
+          '${'${pickedDate.day}'.padLeft(2, '0')}-${'${pickedDate.month}'.padLeft(2, '0')}-${'${pickedDate.year}'.padLeft(4, '0')}';
     }
 
     return pickedDate;
