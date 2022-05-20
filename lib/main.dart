@@ -5,7 +5,8 @@ import 'package:handee/screens/booking_details.dart';
 
 import 'package:handee/screens/main_screen.dart';
 import 'package:handee/screens/landing_page.dart';
-import 'package:handee/screens/auth_page.dart';
+import 'package:handee/screens/auth_screen.dart';
+import 'package:handee/screens/signup_screen.dart';
 import 'package:handee/screens/top_rated_screen.dart';
 
 // void main() {

@@ -277,20 +277,17 @@ class _ImagePageViewState extends State<ImagePageView> {
       children: [
         SizedBox(
           height: 300,
-          child: Hero(
-            tag: 'test', //Find suitable tag
-            child: PageView.builder(
-              physics: const BouncingScrollPhysics(),
-              itemCount: widget.images.length,
-              onPageChanged: (index) {
-                setState(() {
-                  _index = index;
-                });
-              },
-              itemBuilder: (ctx, index) {
-                return widget.images[index];
-              },
-            ),
+          child: PageView.builder(
+            physics: const BouncingScrollPhysics(),
+            itemCount: widget.images.length,
+            onPageChanged: (index) {
+              setState(() {
+                _index = index;
+              });
+            },
+            itemBuilder: (ctx, index) {
+              return widget.images[index];
+            },
           ),
         ),
         Row(
