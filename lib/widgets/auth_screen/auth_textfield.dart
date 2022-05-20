@@ -24,6 +24,16 @@ class AuthTextField extends FormField<String> {
               //margin: const EdgeInsets.all(8.0),
               height: 55,
               width: double.infinity,
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(5),
+                ),
+                //color: Color.fromRGBO(196, 196, 196, 0.15),
+                border: Border.all(
+                  width: 2,
+                  color: state.hasError ? Colors.red : HandeeColors.white,
+                ),
+              ),
               child: FractionallySizedBox(
                 widthFactor: 0.9,
                 child: TextField(
@@ -42,16 +52,6 @@ class AuthTextField extends FormField<String> {
                     labelStyle: const TextStyle(color: HandeeColors.white),
                     suffixIcon: icon,
                   ),
-                ),
-              ),
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(5),
-                ),
-                //color: Color.fromRGBO(196, 196, 196, 0.15),
-                border: Border.all(
-                  width: 2,
-                  color: state.hasError ? Colors.red : HandeeColors.white,
                 ),
               ),
             );

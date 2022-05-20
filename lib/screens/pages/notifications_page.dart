@@ -63,7 +63,7 @@ class _AllTab extends StatelessWidget {
       width: double.infinity,
       height: 500,
       child: ListView.builder(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         itemCount: 4,
         itemBuilder: (ctx, index) {
           switch (index) {

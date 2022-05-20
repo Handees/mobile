@@ -94,7 +94,7 @@ class _PickLocationScreenState extends State<PickLocationScreen>
               TextButton(
                 onPressed: () async {
                   await _placeService.geolocatorInstance.openLocationSettings();
-                  Navigator.of(ctx).pop();
+                  if (mounted) Navigator.of(ctx).pop();
                 },
                 child: const Text('Sure'),
               ),
@@ -246,7 +246,7 @@ class _PickLocationScreenState extends State<PickLocationScreen>
                     compassEnabled: false,
                     onMapCreated: (controller) {
                       _mapController = controller;
-                      controller.setMapStyle(MAP_STYLE);
+                      controller.setMapStyle(mapStyle);
                     },
                   ),
             Positioned(
@@ -295,13 +295,6 @@ class _PickLocationScreenState extends State<PickLocationScreen>
                           Container(
                             width: 45,
                             height: 40,
-                            child: IconButton(
-                              icon: const Icon(
-                                Icons.arrow_back,
-                                color: HandeeColors.white,
-                              ),
-                              onPressed: () => Navigator.of(context).pop(),
-                            ),
                             decoration: BoxDecoration(
                               color: HandeeColors.backgroundDark,
                               boxShadow: const [
@@ -310,6 +303,13 @@ class _PickLocationScreenState extends State<PickLocationScreen>
                                     blurRadius: 4),
                               ],
                               borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: IconButton(
+                              icon: const Icon(
+                                Icons.arrow_back,
+                                color: HandeeColors.white,
+                              ),
+                              onPressed: () => Navigator.of(context).pop(),
                             ),
                           ),
                           const SizedBox(width: 13),

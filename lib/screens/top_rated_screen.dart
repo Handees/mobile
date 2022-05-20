@@ -182,20 +182,20 @@ class TopRatedScreen extends StatelessWidget {
                       CircleAvatar(
                         backgroundColor: HandeeColors.transparent,
                         foregroundColor: HandeeColors.blue,
+                        radius: 25,
                         child: Icon(Icons.phone),
-                        radius: 25,
                       ),
                       CircleAvatar(
                         backgroundColor: HandeeColors.transparent,
                         foregroundColor: HandeeColors.blue,
+                        radius: 25,
                         child: Icon(Icons.mail_outline),
-                        radius: 25,
                       ),
                       CircleAvatar(
                         backgroundColor: HandeeColors.transparent,
                         foregroundColor: HandeeColors.blue,
-                        child: Icon(Icons.location_on_outlined),
                         radius: 25,
+                        child: Icon(Icons.location_on_outlined),
                       ),
                     ],
                   ),
@@ -234,7 +234,7 @@ class ImagePageView extends StatefulWidget {
   final List<Image> images;
 
   @override
-  _ImagePageViewState createState() => _ImagePageViewState();
+  State<ImagePageView> createState() => _ImagePageViewState();
 }
 
 class _ImagePageViewState extends State<ImagePageView> {

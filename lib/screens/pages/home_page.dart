@@ -12,7 +12,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      physics: BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       child: Center(
         child: Padding(
           //widthFactor: 0.85,
@@ -63,7 +63,7 @@ class HomePage extends StatelessWidget {
               //   width: double.infinity,
               //   color: Colors.blueAccent,
               // ),
-              TopSearched(),
+              const TopSearched(),
               const SizedBox(height: 50),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

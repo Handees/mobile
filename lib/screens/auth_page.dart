@@ -428,8 +428,8 @@ mixin InputValidationMixin {
 
   bool isPasswordValid(String password) {
     var light = r'^(?=.*?[A-Za-z])(?=.*?[0-9]).{6,}$';
-    var extreme =
-        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$';
+    // var extreme =
+    //     r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$';
     var regex = RegExp(light);
 
     return regex.hasMatch(password);

@@ -66,7 +66,18 @@ class SearchItem extends StatelessWidget {
       flex: name.length,
       child: InkWell(
         splashColor: Colors.transparent,
-        onTap: () => print('Launch ${name}'),
+        onTap: () {
+          ScaffoldMessenger.of(context).clearSnackBars();
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Search $name'),
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+          );
+        },
         child: Container(
           alignment: Alignment.center,
           //width: 150,

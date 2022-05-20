@@ -8,13 +8,9 @@ class BookingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double _height = MediaQuery.of(context).size.height -
-        MediaQuery.of(context).padding.vertical -
-        kBottomNavigationBarHeight;
-    //-80;
     return SafeArea(
       child: CustomScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         slivers: [
           SliverAppBar(
             title: Text(

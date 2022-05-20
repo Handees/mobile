@@ -1,4 +1,4 @@
-const String MAP_STYLE = '''[
+const String mapStyle = '''[
     {
         "featureType": "all",
         "elementType": "labels.text",

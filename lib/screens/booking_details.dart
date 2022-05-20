@@ -108,9 +108,9 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                                     children: [
                                       FittedBox(
                                         child: SizedBox(
+                                          height: 30,
                                           child: Text('Date booked : $pDate\n'
                                               'Time : $pTime'),
-                                          height: 30,
                                         ),
                                       ),
                                       const SizedBox(
@@ -118,9 +118,9 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                                       ),
                                       FittedBox(
                                         child: SizedBox(
+                                          height: 30,
                                           child: Text('Date started : $pDate\n'
                                               'Time : $pTime'),
-                                          height: 30,
                                         ),
                                       ),
                                       const SizedBox(
@@ -128,10 +128,10 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                                       ),
                                       FittedBox(
                                         child: SizedBox(
+                                          height: 30,
                                           child:
                                               Text('Date completed : $pDate\n'
                                                   'Time : $pTime'),
-                                          height: 30,
                                         ),
                                       ),
                                       const SizedBox(
@@ -139,8 +139,8 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                                       ),
                                       const FittedBox(
                                         child: SizedBox(
-                                          child: Text('Adrress: '),
                                           height: 30,
+                                          child: Text('Adrress: '),
                                         ),
                                       ),
                                     ],
@@ -275,7 +275,6 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
   }
 
   Future<bool> submit() async {
-    print(textController.text);
     int rating = _ratingsKey.currentState?.rating ?? 0;
     if (rating == 0) {
       setState(() {
@@ -296,7 +295,7 @@ class Ratings extends StatefulWidget {
   final Color color;
 
   @override
-  _RatingsState createState() => _RatingsState();
+  State<Ratings> createState() => _RatingsState();
 }
 
 class _RatingsState extends State<Ratings> {

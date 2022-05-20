@@ -31,8 +31,8 @@ class BookingWidget extends StatelessWidget {
                       children: [
                         Text('Gnomelander gardening service',
                             style: Theme.of(context).textTheme.titleMedium),
-                        SizedBox(height: 4),
-                        Text('4th Jan 2022'),
+                        const SizedBox(height: 4),
+                        const Text('4th Jan 2022'),
                       ],
                     ),
                   ),
