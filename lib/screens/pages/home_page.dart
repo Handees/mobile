@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:handee/handee_colors.dart';
@@ -11,17 +12,31 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
-      child: Center(
+    return Scaffold(
+      appBar: AppBar(
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: IconButton(
+              onPressed: () {
+                FirebaseAuth.instance.signOut();
+              },
+              icon: const Icon(
+                Icons.account_circle,
+                size: 30,
+              ),
+            ),
+          )
+        ],
+        elevation: 0,
+      ),
+      body: SingleChildScrollView(
         child: Padding(
-          //widthFactor: 0.85,
           padding: const EdgeInsets.symmetric(horizontal: 25),
           child: Column(
             children: [
               const SizedBox(height: 35),
               Container(
-                //margin: EdgeInsets.symmetric(horizontal: 30),
                 alignment: Alignment.centerLeft,
                 child: Text('Hi\n$username',
                     style: Theme.of(context).textTheme.headlineMedium),
@@ -31,26 +46,20 @@ class HomePage extends StatelessWidget {
                 width: double.infinity,
                 height: 55,
                 decoration: BoxDecoration(
-                  color: HandeeColors.grey237,
                   borderRadius: BorderRadius.circular(5),
                 ),
-                child: const FractionallySizedBox(
-                  widthFactor: 0.8,
-                  child: Center(
-                    child: TextField(
-                      //autofocus: false,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Search',
-                      ),
-                      cursorColor: HandeeColors.grey161,
-                    ),
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: const TextField(
+                  //autofocus: false,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'Search',
                   ),
+                  cursorColor: HandeeColors.grey161,
                 ),
               ),
               const SizedBox(height: 45),
               Container(
-                //margin: EdgeInsets.symmetric(horizontal: 30),
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'Top searched',
@@ -58,11 +67,6 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              // Container(
-              //   height: 100,
-              //   width: double.infinity,
-              //   color: Colors.blueAccent,
-              // ),
               const TopSearched(),
               const SizedBox(height: 50),
               Row(
@@ -87,15 +91,9 @@ class HomePage extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 20),
-              // SingleChildScrollView(
-              //   clipBehavior: Clip.none,
-              //   scrollDirection: Axis.horizontal,
-              //   child:
               SizedBox(
-                //width: 400,
                 height: 220,
                 child: ListView.builder(
-                  physics: BouncingScrollPhysics(),
                   itemCount: 10,
                   scrollDirection: Axis.horizontal,
                   clipBehavior: Clip.none,

@@ -42,88 +42,47 @@ class _MainScreenState extends State<MainScreen> {
     // });
 
     return Scaffold(
-      appBar: _index == 0
-          ? AppBar(
-              backgroundColor: HandeeColors.white,
-              actions: [
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: IconButton(
-                    onPressed: () {
-                      FirebaseAuth.instance.signOut();
-                    },
-                    icon: const Icon(
-                      Icons.account_circle,
-                      color: HandeeColors.grey196,
-                      size: 30,
-                    ),
-                  ),
-                )
-              ],
-              elevation: 0,
-            )
-          : null,
-      backgroundColor: HandeeColors.white,
       body: SafeArea(child: pages[_index]),
-      bottomNavigationBar: Container(
-        decoration: const BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: HandeeColors.shadowBlack,
-              blurRadius: 10,
-            )
-          ],
-        ),
-        child: BottomNavigationBar(
-          elevation: 0,
-          backgroundColor: HandeeColors.white,
-          type: BottomNavigationBarType.fixed,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(
-                HandeeIcons.home,
-              ),
-              label: 'Home',
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(
+              HandeeIcons.home,
             ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                HandeeIcons.categories,
-              ),
-              label: 'Category',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                HandeeIcons.notifications_bell,
-              ),
-              label: 'Notifications',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                HandeeIcons.bookings,
-              ),
-              label: 'Bookings',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                HandeeIcons.user,
-              ),
-              label: 'Profile',
-            ),
-          ],
-          currentIndex: _index,
-          onTap: (index) {
-            setState(() {
-              _index = index;
-            });
-          },
-          selectedItemColor: HandeeColors.black,
-          selectedIconTheme: const IconThemeData(
-            color: HandeeColors.black,
+            label: 'Home',
           ),
-          unselectedIconTheme: const IconThemeData(
-            color: HandeeColors.grey161,
+          BottomNavigationBarItem(
+            icon: Icon(
+              HandeeIcons.categories,
+            ),
+            label: 'Category',
           ),
-        ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              HandeeIcons.notifications_bell,
+            ),
+            label: 'Notifications',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              HandeeIcons.bookings,
+            ),
+            label: 'Bookings',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              HandeeIcons.user,
+            ),
+            label: 'Profile',
+          ),
+        ],
+        currentIndex: _index,
+        onTap: (index) {
+          setState(() {
+            _index = index;
+          });
+        },
       ),
     );
   }

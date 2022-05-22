@@ -21,26 +21,28 @@ class HandeeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: color,
-      borderRadius: BorderRadius.circular(5),
-      child: InkWell(
-        onTap: onTap,
-        child: Container(
-          alignment: Alignment.center,
-          width: double.infinity,
-          height: 50,
-          child: text == null
-              ? CircularProgressIndicator(
-                  color: textColor,
-                )
-              : Text(
-                  text!,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        color: textColor,
-                      ),
-                ),
-        ),
+    return ElevatedButton(
+      onPressed: onTap,
+      // style: ButtonStyle(
+      //   backgroundColor: MaterialStateProperty.all(color),
+      //   shape: MaterialStateProperty.all(
+      //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+      //   ),
+      // ),
+      child: Container(
+        alignment: Alignment.center,
+        width: double.infinity,
+        height: 50,
+        child: text == null
+            ? CircularProgressIndicator(
+                color: textColor,
+              )
+            : Text(
+                text!,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      color: textColor,
+                    ),
+              ),
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:handee/screens/booking_details.dart';
 
@@ -8,6 +9,8 @@ import 'package:handee/screens/landing_page.dart';
 import 'package:handee/screens/auth_screen.dart';
 import 'package:handee/screens/signup_screen.dart';
 import 'package:handee/screens/top_rated_screen.dart';
+import 'package:handee/themes/dark_theme.dart';
+import 'package:handee/themes/light_theme.dart';
 
 // void main() {
 //   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -29,7 +32,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Handee',
+      scrollBehavior: const CupertinoScrollBehavior(),
       home: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (_, snapshot) {
@@ -39,14 +43,9 @@ class MyApp extends StatelessWidget {
           return const LandingPage();
         },
       ),
-      theme: ThemeData(
-        textTheme: Theme.of(context).textTheme.copyWith(
-              titleMedium: const TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 18,
-              ),
-            ),
-      ),
+      themeMode: ThemeMode.light,
+      theme: lightTheme,
+      darkTheme: darkTheme,
       onGenerateRoute: (settings) {
         if (settings.name == SigninPage.routeName) {
           return MaterialPageRoute(

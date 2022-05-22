@@ -9,7 +9,8 @@ class LandingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Future.delayed(const Duration(seconds: 1)).then((_) {
-    //   Navigator.of(context).pushNamed(SigninPage.routeName);
+    //   if (Navigator.canPop(context))
+    //     Navigator.of(context).pushNamed(SigninPage.routeName);
     // });
 
     return Scaffold(

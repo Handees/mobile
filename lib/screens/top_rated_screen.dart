@@ -34,20 +34,14 @@ class TopRatedScreen extends StatelessWidget {
     }
 
     return Scaffold(
-      backgroundColor: HandeeColors.white,
       body: CustomScrollView(
-        physics: const BouncingScrollPhysics(),
         slivers: [
           SliverAppBar(
             title: Text(
               'Top Rated',
-              style: Theme.of(context).textTheme.titleLarge,
             ),
             centerTitle: true,
-            backgroundColor: HandeeColors.white,
-            foregroundColor: HandeeColors.textDark,
-            elevation: 0,
-            floating: true,
+            pinned: true,
           ),
           SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: 25),
@@ -82,16 +76,16 @@ class TopRatedScreen extends StatelessWidget {
                         text: TextSpan(
                           text: '\u20A6$cost',
                           style: const TextStyle(
-                              color: HandeeColors.black,
-                              fontSize: 24,
-                              fontWeight: FontWeight.w400),
+                            fontSize: 24,
+                            fontWeight: FontWeight.w400,
+                          ),
                           children: const [
                             TextSpan(
                               text: ' / hr',
                               style: TextStyle(
-                                  color: HandeeColors.black,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500),
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ],
                         ),
@@ -180,20 +174,14 @@ class TopRatedScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: const [
                       CircleAvatar(
-                        backgroundColor: HandeeColors.transparent,
-                        foregroundColor: HandeeColors.blue,
                         radius: 25,
                         child: Icon(Icons.phone),
                       ),
                       CircleAvatar(
-                        backgroundColor: HandeeColors.transparent,
-                        foregroundColor: HandeeColors.blue,
                         radius: 25,
                         child: Icon(Icons.mail_outline),
                       ),
                       CircleAvatar(
-                        backgroundColor: HandeeColors.transparent,
-                        foregroundColor: HandeeColors.blue,
                         radius: 25,
                         child: Icon(Icons.location_on_outlined),
                       ),
@@ -278,7 +266,6 @@ class _ImagePageViewState extends State<ImagePageView> {
         SizedBox(
           height: 300,
           child: PageView.builder(
-            physics: const BouncingScrollPhysics(),
             itemCount: widget.images.length,
             onPageChanged: (index) {
               setState(() {

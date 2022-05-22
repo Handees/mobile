@@ -26,16 +26,10 @@ class _NotificationsPageState extends State<NotificationsPage> {
               indicatorColor: HandeeColors.black,
               tabs: [
                 Tab(
-                  child: SizedBox(
-                    width: 90,
-                    child: Center(child: Text('All')),
-                  ),
+                  child: Text('All'),
                 ),
                 Tab(
-                  child: SizedBox(
-                    width: 90,
-                    child: Center(child: Text('Reminders')),
-                  ),
+                  child: Text('Reminders'),
                 ),
               ],
             ),
@@ -63,19 +57,16 @@ class _AllTab extends StatelessWidget {
       width: double.infinity,
       height: 500,
       child: ListView.builder(
-        physics: const BouncingScrollPhysics(),
         itemCount: 4,
         itemBuilder: (ctx, index) {
           switch (index) {
             case 0:
               return NotificationWidget.delivery(
                 agentName: 'The Heat Cleaners',
-                style: Theme.of(context).textTheme.bodySmall,
               );
             case 1:
               return NotificationWidget.schedule(
                 agentName: 'The Heat Cleaners',
-                style: Theme.of(context).textTheme.bodySmall,
               );
             case 2:
               return NotificationWidget(
@@ -86,12 +77,13 @@ class _AllTab extends StatelessWidget {
                     color: HandeeColors.red,
                   ),
                 ),
-                message: 'New device login. Is this you?',
+                message: Text(
+                  'New device login. Is this you?',
+                  style: TextStyle(),
+                ),
               );
             case 3:
-              return NotificationWidget.welcome(
-                style: Theme.of(context).textTheme.bodySmall,
-              );
+              return NotificationWidget.welcome();
             default:
               return const Text('Never getting here');
           }

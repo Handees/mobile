@@ -23,6 +23,7 @@ class TopRatedCard extends StatelessWidget {
           rating: rating,
         );
       },
+      closedColor: Theme.of(context).cardColor,
       openBuilder: (context, action) {
         return TopRatedScreen();
       },
@@ -44,28 +45,20 @@ class TopRatedCardClosed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 170,
       height: 220,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(color: HandeeColors.shadowBlack, blurRadius: 4),
-        ],
-      ),
       child: Column(
         children: [
-          Container(
-            //color: Colors.red,
+          Ink(
             width: 170,
             height: 120,
             decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage(imagePath), fit: BoxFit.cover),
+                image: AssetImage(imagePath),
+                fit: BoxFit.cover,
+              ),
             ),
-            // child: FittedBox(
-            //   child: Image.asset(name),
-            // ),
           ),
           SizedBox(
             width: 170,

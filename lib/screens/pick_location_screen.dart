@@ -253,8 +253,6 @@ class _PickLocationScreenState extends State<PickLocationScreen>
               bottom: 110,
               right: 20,
               child: FloatingActionButton(
-                backgroundColor: HandeeColors.backgroundDark,
-                foregroundColor: Colors.white,
                 child: const Icon(Icons.location_searching),
                 onPressed: () async {
                   var res = await _placeService.determinePosition();
@@ -276,7 +274,7 @@ class _PickLocationScreenState extends State<PickLocationScreen>
                 curve: Curves.decelerate,
                 opacity: _searchFocus.hasFocus ? 1.0 : 0.0,
                 child: Container(
-                  color: HandeeColors.white,
+                  color: Theme.of(context).backgroundColor,
                   height: double.infinity,
                   width: double.infinity,
                 ),
@@ -296,11 +294,12 @@ class _PickLocationScreenState extends State<PickLocationScreen>
                             width: 45,
                             height: 40,
                             decoration: BoxDecoration(
-                              color: HandeeColors.backgroundDark,
+                              color: Theme.of(context).colorScheme.primary,
                               boxShadow: const [
                                 BoxShadow(
-                                    color: HandeeColors.shadowBlack,
-                                    blurRadius: 4),
+                                  color: HandeeColors.shadowBlack,
+                                  blurRadius: 4,
+                                ),
                               ],
                               borderRadius: BorderRadius.circular(5),
                             ),

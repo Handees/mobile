@@ -2,117 +2,102 @@ import 'package:flutter/material.dart';
 import 'package:handee/handee_colors.dart';
 import 'package:handee/icons/handee_icons.dart';
 
+const style = TextStyle(color: Colors.black);
+
 class NotificationWidget extends StatelessWidget {
-  NotificationWidget(
-      {Key? key,
-      required String message,
-      this.leading,
-      this.style,
-      this.timeStyle,
-      this.color = Colors.transparent})
-      : super(key: key) {
-    this.message = Text(
-      message,
-      style: style,
-    );
-  }
+  NotificationWidget({
+    Key? key,
+    this.message,
+    this.leading,
+    this.color = Colors.transparent,
+  }) : super(key: key);
 
   NotificationWidget.delivery({
     Key? key,
     required String agentName,
-    this.color = HandeeColors.lightBlue,
-    this.leading = const CircleAvatar(
-      backgroundColor: Colors.transparent,
-      child: Icon(
-        HandeeIcons.delivery_truck,
-        color: HandeeColors.blue,
-      ),
-    ),
-    this.style,
-    this.timeStyle,
-  }) : super(key: key) {
-    message = RichText(
-      text: TextSpan(
-        children: [
-          TextSpan(
-            text: agentName,
-            style: const TextStyle(color: HandeeColors.blue),
+  }) : this(
+          color: HandeeColors.lightBlue,
+          leading: const CircleAvatar(
+            backgroundColor: Colors.transparent,
+            child: Icon(
+              HandeeIcons.delivery_truck,
+              color: HandeeColors.blue,
+            ),
           ),
-          const TextSpan(
-            text: ' are on their way to you!',
-            style: TextStyle(color: HandeeColors.black),
+          message: RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: agentName,
+                  style: style.copyWith(color: HandeeColors.blue),
+                ),
+                const TextSpan(
+                  text: ' are on their way to you!',
+                ),
+              ],
+              // style: style,
+            ),
           ),
-        ],
-        style: style,
-      ),
-    );
-  }
+        );
 
   NotificationWidget.schedule({
     Key? key,
     required String agentName,
-    this.color = HandeeColors.lightBlue,
-    this.leading = const CircleAvatar(
-      backgroundColor: Colors.transparent,
-      child: Icon(
-        HandeeIcons.clock,
-        color: HandeeColors.blue,
-      ),
-    ),
-    this.style,
-    this.timeStyle,
-  }) : super(key: key) {
-    message = RichText(
-      text: TextSpan(children: [
-        const TextSpan(
-          text: 'Your schedule service with ',
-          style: TextStyle(color: HandeeColors.black),
-        ),
-        TextSpan(
-          text: agentName,
-          style: const TextStyle(color: HandeeColors.blue),
-        ),
-        const TextSpan(
-          text: ' is tomorrow',
-          style: TextStyle(color: HandeeColors.black),
-        ),
-      ], style: style),
-    );
-  }
+  }) : this(
+          key: key,
+          color: HandeeColors.lightBlue,
+          leading: const CircleAvatar(
+            backgroundColor: Colors.transparent,
+            child: Icon(
+              HandeeIcons.clock,
+              color: HandeeColors.blue,
+            ),
+          ),
+          message: RichText(
+            text: TextSpan(
+              children: [
+                const TextSpan(
+                  text: 'Your schedule service with ',
+                ),
+                TextSpan(
+                  text: agentName,
+                  style: style.copyWith(color: HandeeColors.blue),
+                ),
+                const TextSpan(
+                  text: ' is tomorrow',
+                ),
+              ],
+            ),
+          ),
+        );
 
-  NotificationWidget.welcome(
-      {Key? key, this.style, this.timeStyle, this.color = Colors.transparent})
-      : super(key: key) {
-    leading = const CircleAvatar(
-      backgroundColor: HandeeColors.grey237,
-      foregroundColor: HandeeColors.black,
-      child: Icon(HandeeIcons.codesandbox),
-    );
-    message = RichText(
-      text: TextSpan(
-        children: const [
-          TextSpan(
-            text: 'Welcome to ',
-            style: TextStyle(color: HandeeColors.blue),
+  NotificationWidget.welcome({Key? key})
+      : this(
+          leading: const CircleAvatar(
+            backgroundColor: HandeeColors.grey237,
+            foregroundColor: HandeeColors.black,
+            child: Icon(HandeeIcons.codesandbox),
           ),
-          TextSpan(
-            text: 'Handee',
-            style: TextStyle(color: HandeeColors.blue),
+          message: RichText(
+            text: TextSpan(
+              children: [
+                const TextSpan(
+                  text: 'Welcome to ',
+                ),
+                TextSpan(
+                  text: 'Handee',
+                  style: style.copyWith(color: HandeeColors.blue),
+                ),
+                const TextSpan(
+                  text: ' Barbara.',
+                ),
+              ],
+            ),
           ),
-          TextSpan(
-            text: ' Barbara.',
-            style: TextStyle(color: HandeeColors.black),
-          ),
-        ],
-        style: style,
-      ),
-    );
-  }
+        );
 
-  Widget? message;
-  Widget? leading;
-  TextStyle? style = TextStyle(color: Colors.red);
-  final TextStyle? timeStyle;
+  final Widget? message;
+  final Widget? leading;
   final Color color;
 
   @override
@@ -137,13 +122,12 @@ class NotificationWidget extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * 0.55,
                 child: message,
               ),
-              Align(
+              const Align(
                 alignment: Alignment.bottomRight,
                 child: Padding(
-                  padding: const EdgeInsets.only(bottom: 12, right: 25),
-                  child: Text(
+                  padding: EdgeInsets.only(bottom: 12, right: 25),
+                  child: const Text(
                     'Time',
-                    style: timeStyle,
                   ),
                 ),
               )

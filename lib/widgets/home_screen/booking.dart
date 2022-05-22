@@ -19,18 +19,20 @@ class BookingWidget extends StatelessWidget {
             Container(
               height: 85,
               width: double.infinity,
-              color: HandeeColors.white,
+              padding: EdgeInsets.symmetric(horizontal: 5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 15),
+                  Expanded(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Gnomelander gardening service',
-                            style: Theme.of(context).textTheme.titleMedium),
+                        Text(
+                          'Gnomelander gardening services',
+                          style: Theme.of(context).textTheme.titleMedium,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                         const SizedBox(height: 4),
                         const Text('4th Jan 2022'),
                       ],
@@ -90,9 +92,7 @@ class BookingStatusWidget extends StatelessWidget {
     }
 
     return Container(
-      alignment: Alignment.center,
-      width: 60,
-      height: 25,
+      padding: EdgeInsets.all(4),
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(14),

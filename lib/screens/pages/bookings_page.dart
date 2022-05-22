@@ -10,17 +10,13 @@ class BookingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: CustomScrollView(
-        physics: const BouncingScrollPhysics(),
         slivers: [
           SliverAppBar(
             title: Text(
               'Booking History',
-              style: Theme.of(context).textTheme.titleLarge,
             ),
             pinned: true,
             centerTitle: true,
-            backgroundColor: HandeeColors.white,
-            shadowColor: Colors.black,
             // toolbarHeight: 60,
           ),
           SliverList(
@@ -32,27 +28,6 @@ class BookingsPage extends StatelessWidget {
               childCount: 10,
             ),
           ),
-          // Container(
-          //   width: double.infinity,
-          //   height: 65,
-          //   alignment: Alignment.bottomCenter,
-          //   decoration: const BoxDecoration(
-          //     color: HandeeColors.white,
-          //     boxShadow: [
-          //       BoxShadow(
-          //         color: HandeeColors.shadowBlack,
-          //         blurRadius: 10,
-          //       )
-          //     ],
-          //   ),
-          //   child: Padding(
-          //     padding: EdgeInsets.only(bottom: 25.0),
-          //     child: Text(
-          //       'Booking History',
-          //       style: Theme.of(context).textTheme.titleLarge,
-          //     ),
-          //   ),
-          // ),
         ],
       ),
     );

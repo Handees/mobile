@@ -9,47 +9,46 @@ class CategoriesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
+      child: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            title: Container(
+              width: double.infinity,
+              height: 55,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: const TextField(
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: 'Search',
+                ),
+                cursorColor: HandeeColors.grey161,
+              ),
+            ),
+          ),
+          SliverList(
+              delegate: SliverChildBuilderDelegate((context, index) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 20,
+              ),
+              child: const Categories(),
+            );
+          }, childCount: 3)),
+        ],
+      ),
+    );
+
+    SingleChildScrollView(
       child: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
           //widthFactor: 0.85,
           child: Column(
             children: [
-              Container(
-                width: double.infinity,
-                height: 55,
-                decoration: BoxDecoration(
-                  color: HandeeColors.grey237,
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: FractionallySizedBox(
-                  widthFactor: 0.8,
-                  child: Center(
-                    child: TextField(
-                      textAlign: TextAlign.center,
-                      decoration: InputDecoration(
-                        label: Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Icon(
-                                Icons.search,
-                                color: HandeeColors.grey141,
-                              ),
-                              Text('Search'),
-                              SizedBox(width: 10),
-                            ],
-                          ),
-                        ),
-                        border: InputBorder.none,
-                      ),
-                      cursorColor: HandeeColors.grey161,
-                    ),
-                  ),
-                ),
-              ),
               const SizedBox(height: 40),
               const Categories(),
               const SizedBox(height: 40),
