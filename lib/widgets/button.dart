@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:handee/handee_colors.dart';
+import 'package:handee/utils/handee_colors.dart';
 
 class HandeeButton extends StatelessWidget {
   const HandeeButton({
@@ -23,12 +23,10 @@ class HandeeButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onTap,
-      // style: ButtonStyle(
-      //   backgroundColor: MaterialStateProperty.all(color),
-      //   shape: MaterialStateProperty.all(
-      //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-      //   ),
-      // ),
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(color),
+        foregroundColor: MaterialStateProperty.all(textColor),
+      ),
       child: Container(
         alignment: Alignment.center,
         width: double.infinity,
@@ -39,9 +37,7 @@ class HandeeButton extends StatelessWidget {
               )
             : Text(
                 text!,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: textColor,
-                    ),
+                style: Theme.of(context).textTheme.titleMedium,
               ),
       ),
     );

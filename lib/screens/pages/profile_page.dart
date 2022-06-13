@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:handee/handee_colors.dart';
+import 'package:handee/utils/handee_colors.dart';
 import 'package:handee/widgets/button.dart';
 
 class ProfilePage extends StatelessWidget {

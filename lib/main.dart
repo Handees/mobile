@@ -5,19 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:handee/screens/booking_details.dart';
 
 import 'package:handee/screens/main_screen.dart';
-import 'package:handee/screens/landing_page.dart';
 import 'package:handee/screens/auth_screen.dart';
-import 'package:handee/screens/signup_screen.dart';
 import 'package:handee/screens/top_rated_screen.dart';
 import 'package:handee/themes/dark_theme.dart';
 import 'package:handee/themes/light_theme.dart';
-
-// void main() {
-//   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-//     statusBarColor: HandeeColors.white,
-//   ));
-//   runApp(const MyApp());
-// }
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,27 +25,22 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Handee',
       scrollBehavior: const CupertinoScrollBehavior(),
-      home: StreamBuilder(
+      home: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (_, snapshot) {
           if (snapshot.hasData) {
             return const MainScreen();
           }
-          return const LandingPage();
+          return const AuthScreen();
         },
       ),
       themeMode: ThemeMode.light,
       theme: lightTheme,
       darkTheme: darkTheme,
       onGenerateRoute: (settings) {
-        if (settings.name == SigninPage.routeName) {
+        if (settings.name == AuthScreen.routeName) {
           return MaterialPageRoute(
-            builder: (_) => const SigninPage(),
-          );
-        }
-        if (settings.name == SignupPage.routeName) {
-          return MaterialPageRoute(
-            builder: (_) => const SignupPage(),
+            builder: (_) => const AuthScreen(),
           );
         }
         if (settings.name == TopRatedScreen.routeName) {
@@ -72,11 +58,6 @@ class MyApp extends StatelessWidget {
             builder: (_) => const BookingDetailsScreen(),
           );
         }
-        // if (settings.name == ServicePage.routeName) {
-        //   return CupertinoPageRoute(
-        //     builder: (_) => ServicePage(),
-        //   );
-        // }
         return null;
       },
     );

@@ -1,7 +1,9 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'package:handee/handee_colors.dart';
+import 'package:handee/utils/handee_colors.dart';
 import 'package:handee/icons/handee_icons.dart';
 import 'package:handee/screens/pages/bookings_page.dart';
 import 'package:handee/screens/pages/categories_page.dart';
@@ -40,6 +42,9 @@ class _MainScreenState extends State<MainScreen> {
     // SchedulerBinding.instance?.addPostFrameCallback((_) {
     //   if (Navigator.of(context).canPop()) Navigator.of(context).pop();
     // });
+    FirebaseAuth.instance.currentUser?.getIdToken().then(
+          (value) => log(value),
+        );
 
     return Scaffold(
       body: SafeArea(child: pages[_index]),

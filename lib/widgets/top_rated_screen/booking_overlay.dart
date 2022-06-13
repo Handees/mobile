@@ -1,11 +1,17 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:handee/handee_colors.dart';
+import 'package:http/http.dart' as http;
+import 'package:handee/utils/handee_colors.dart';
 import 'package:handee/icons/handee_icons.dart';
 import 'package:handee/screens/pick_location_screen.dart';
 import 'package:handee/widgets/button.dart';
 import 'package:handee/widgets/loading_indicator.dart';
+
+import 'package:handee/services/places_service.dart';
 
 enum Status {
   filling,
@@ -51,13 +57,28 @@ class _BookingOverlayState extends State<BookingOverlay> {
 
   Future<void> submit() async {
     _formKey.currentState?.save();
-    setState(() {
-      status = Status.submitting;
-    });
-    await Future.delayed(const Duration(seconds: 1));
-    setState(() {
-      status = Status.failed;
-    });
+    final loc = await PlacesService.instance.determinePosition();
+    print(loc);
+    http.post(
+      Uri.https(
+        'a9a7-102-89-34-86.ngrok.io',
+        '/bookings/',
+      ),
+      headers: {HttpHeaders.contentTypeHeader: 'application/json'},
+      body: jsonEncode(
+        {
+          'lat': loc.latitude.toString(),
+          'lon': loc.longitude.toString(),
+        },
+      ),
+    );
+    // setState(() {
+    //   status = Status.submitting;
+    // });
+    // await Future.delayed(const Duration(seconds: 1));
+    // setState(() {
+    //   status = Status.failed;
+    // });
   }
 
   Future<TimeOfDay?> setTime() async {

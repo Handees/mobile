@@ -4,7 +4,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:handee/handee_colors.dart';
+import 'package:handee/utils/handee_colors.dart';
 import 'package:handee/icons/handee_icons.dart';
 import 'package:handee/map_style.dart';
 import 'package:handee/services/places_service.dart';

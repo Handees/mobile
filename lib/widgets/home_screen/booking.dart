@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:handee/booking_status.dart';
-import 'package:handee/handee_colors.dart';
+import 'package:handee/utils/handee_colors.dart';
 import 'package:handee/screens/booking_details.dart';
 
 class BookingWidget extends StatelessWidget {

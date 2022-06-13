@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:handee/handee_colors.dart';
+import 'package:handee/utils/handee_colors.dart';
 
 class ServiceCard extends StatelessWidget {
   const ServiceCard({Key? key}) : super(key: key);
