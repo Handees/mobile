@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:handees/pick_service_bottom_sheet.dart';
+
+import 'package:handees/res/shapes.dart';
+import 'package:handees/utils/widgets/custom_delegate.dart';
+
+import 'pick_service_bottom_sheet.dart';
+import 'service_card.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -26,7 +31,14 @@ class HomePage extends StatelessWidget {
             child: CustomScrollView(
               clipBehavior: Clip.none,
               slivers: [
-                const SliverAppBar(),
+                SliverAppBar(
+                  actions: [
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.notifications),
+                    )
+                  ],
+                ),
                 SliverToBoxAdapter(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
@@ -34,14 +46,17 @@ class HomePage extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        SizedBox(height: 8),
                         Text(
                           'Hello Barbara',
                           style: Theme.of(context).textTheme.titleLarge,
                         ),
+                        SizedBox(height: 8),
                         Text(
                           'Let\'s give you a hand',
                           style: Theme.of(context).textTheme.titleLarge,
                         ),
+                        SizedBox(height: 8),
                       ],
                     ),
                   ),
@@ -53,8 +68,21 @@ class HomePage extends StatelessWidget {
                     pinned: true,
                     delegate: CustomDelegate(
                       height: 64.0,
-                      child: const SizedBox(
+                      child: Container(
+                        alignment: Alignment.center,
                         height: double.infinity,
+                        decoration: ShapeDecoration(
+                          color: Theme.of(context).colorScheme.primary,
+                          shape: Shapes.bigShape,
+                        ),
+                        child: TextField(
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.location_on),
+                            border: InputBorder.none,
+                          ),
+                          cursorColor:
+                              Theme.of(context).colorScheme.onPrimaryContainer,
+                        ),
                       ),
                     ),
                   ),
@@ -119,10 +147,12 @@ class _SearchWidgetState extends State<SearchWidget> {
       vertical: 8.0,
       horizontal: 32.0,
     );
-    return Card(
+    return Material(
       elevation: 4.0,
-      margin: EdgeInsets.zero,
-      child: Container(
+      shadowColor: Theme.of(context).colorScheme.shadow,
+      color: Theme.of(context).colorScheme.primary,
+      shape: Shapes.bigShape,
+      child: ConstrainedBox(
         constraints: const BoxConstraints(minHeight: 64.0),
         child: isFocused
             ? Padding(
@@ -154,7 +184,7 @@ class _SearchWidgetState extends State<SearchWidget> {
                     focusNode.requestFocus();
                   });
                 },
-                customBorder: Theme.of(context).cardTheme.shape,
+                customBorder: Shapes.bigShape,
                 child: Padding(
                   padding: padding,
                   child: Row(
@@ -177,93 +207,5 @@ class _SearchWidgetState extends State<SearchWidget> {
               ),
       ),
     );
-  }
-}
-
-class ServiceCard extends StatelessWidget {
-  const ServiceCard({
-    Key? key,
-    required this.serviceName,
-    required this.icon,
-    required this.iconBackground,
-    required this.artisanCount,
-  }) : super(key: key);
-
-  final String serviceName;
-  final Widget icon;
-  final Color iconBackground;
-  final int artisanCount;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      // height: 96,
-      width: double.infinity,
-      child: Row(
-        children: [
-          Ink(
-            decoration: BoxDecoration(
-              color: iconBackground.withOpacity(0.2),
-              borderRadius: BorderRadius.circular(24.0),
-            ),
-            height: 72,
-            width: 72,
-            child: Center(
-              child: CircleAvatar(
-                backgroundColor: iconBackground,
-                child: icon,
-              ),
-            ),
-          ),
-          const SizedBox(width: 16),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Laundry',
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-              const SizedBox(height: 4),
-              Text(
-                '$artisanCount Handeemen near you',
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class CustomDelegate extends SliverPersistentHeaderDelegate {
-  CustomDelegate({
-    required this.height,
-    required this.child,
-  });
-
-  final double height;
-  final Widget child;
-
-  @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return Card(
-      margin: EdgeInsets.zero,
-      elevation: 4.0,
-      child: child,
-    );
-  }
-
-  @override
-  double get maxExtent => height;
-
-  @override
-  double get minExtent => height;
-
-  @override
-  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
-    return false;
   }
 }

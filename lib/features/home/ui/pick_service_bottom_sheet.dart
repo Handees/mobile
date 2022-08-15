@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:handees/home_page.dart';
+
+import 'home_screen.dart';
+import 'service_card.dart';
 
 class PickServiceBottomSheet extends StatelessWidget {
   const PickServiceBottomSheet({Key? key}) : super(key: key);
@@ -16,10 +18,10 @@ class PickServiceBottomSheet extends StatelessWidget {
         children: [
           Container(
             width: 56,
-            height: 8,
+            height: 4,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4),
-              color: Colors.orange,
+              color: Theme.of(context).colorScheme.primaryContainer,
             ),
           ),
           ServiceCard(
