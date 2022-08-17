@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:handees/theme/theme.dart';
 
 import 'home_screen.dart';
 import 'service_card.dart';
@@ -43,6 +44,8 @@ class PickServiceBottomSheet extends StatelessWidget {
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () {},
+              style:
+                  Theme.of(context).extension<ButtonThemeExtensions>()?.filled,
               child: Text('Proceed'),
             ),
           ),

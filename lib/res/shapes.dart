@@ -6,4 +6,7 @@ class Shapes {
 
   static final bigShape =
       RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0));
+
+  static final authShape =
+      RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0));
 }

@@ -11,11 +11,15 @@ class CustomDelegate extends SliverPersistentHeaderDelegate {
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return Material(
-      elevation: 4.0,
-      shape: shape ?? Shapes.bigShape,
-      shadowColor: Theme.of(context).colorScheme.shadow,
-      child: child,
+    return Padding(
+      padding: const EdgeInsets.only(top: 16.0),
+      child: Material(
+        elevation: 4.0,
+        shape: shape ?? Shapes.bigShape,
+        // color: Colors.transparent,
+        shadowColor: Theme.of(context).colorScheme.shadow,
+        child: child,
+      ),
     );
   }
 

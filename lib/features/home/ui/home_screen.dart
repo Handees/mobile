@@ -1,22 +1,130 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:handees/res/shapes.dart';
+import 'package:handees/routes/routes.dart';
+import 'package:handees/theme/theme.dart';
 import 'package:handees/utils/widgets/custom_delegate.dart';
 
 import 'pick_service_bottom_sheet.dart';
 import 'service_card.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     const horizontalPadding = 16.0;
+    const drawerItemHeight = 56.0;
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: Scaffold(
-        drawer: const Drawer(),
+        backgroundColor: Theme.of(context).colorScheme.background,
+        drawer: Drawer(
+          child: Column(
+            children: [
+              DrawerHeader(
+                child: Align(
+                  alignment: Alignment.bottomLeft,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        height: 48,
+                        width: 48,
+                        decoration: ShapeDecoration(
+                          shape: CircleBorder(),
+                          color: Colors.red,
+                        ),
+                      ),
+                      SizedBox(width: 16.0),
+                      Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Barbara',
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                          Text(
+                            'Edit profile',
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () => Navigator.of(context).pushNamed(AppRoutes.history),
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  alignment: Alignment.centerLeft,
+                  height: drawerItemHeight,
+                  child: Text(
+                    'History',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ),
+              ),
+              Divider(),
+              InkWell(
+                onTap: () {},
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  alignment: Alignment.centerLeft,
+                  height: drawerItemHeight,
+                  child: Text(
+                    'Settings',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ),
+              ),
+              Divider(),
+              InkWell(
+                onTap: () {},
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  alignment: Alignment.centerLeft,
+                  height: drawerItemHeight,
+                  child: Text(
+                    'Customer Support',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ),
+              ),
+              Divider(),
+              InkWell(
+                onTap: () {},
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  alignment: Alignment.centerLeft,
+                  height: drawerItemHeight,
+                  child: Text(
+                    'F.A.Q',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ),
+              ),
+              Spacer(),
+              SizedBox(
+                width: double.infinity,
+                child: Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: ElevatedButton(
+                    style: Theme.of(context)
+                        .extension<ButtonThemeExtensions>()
+                        ?.filled,
+                    onPressed: () {},
+                    child: Text('Become a Handee Man'),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
         bottomNavigationBar: const Padding(
           padding: EdgeInsets.only(
             bottom: horizontalPadding,
@@ -26,100 +134,127 @@ class HomePage extends StatelessWidget {
           child: SearchWidget(),
         ),
         body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 16.0),
-            child: CustomScrollView(
-              clipBehavior: Clip.none,
-              slivers: [
-                SliverAppBar(
-                  actions: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.notifications),
-                    )
-                  ],
-                ),
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: horizontalPadding),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 8),
-                        Text(
-                          'Hello Barbara',
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
-                        SizedBox(height: 8),
-                        Text(
-                          'Let\'s give you a hand',
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
-                        SizedBox(height: 8),
-                      ],
-                    ),
-                  ),
-                ),
-                SliverPadding(
+          child: CustomScrollView(
+            clipBehavior: Clip.none,
+            slivers: [
+              SliverAppBar(
+                systemOverlayStyle: SystemUiOverlayStyle(
+                    statusBarColor: Theme.of(context).colorScheme.surface),
+                actions: [
+                  IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(AppRoutes.notifications);
+                    },
+                    icon: const Icon(Icons.notifications_outlined),
+                  )
+                ],
+              ),
+              SliverToBoxAdapter(
+                child: Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: horizontalPadding),
-                  sliver: SliverPersistentHeader(
-                    pinned: true,
-                    delegate: CustomDelegate(
-                      height: 64.0,
-                      child: Container(
-                        alignment: Alignment.center,
-                        height: double.infinity,
-                        decoration: ShapeDecoration(
-                          color: Theme.of(context).colorScheme.primary,
-                          shape: Shapes.bigShape,
-                        ),
-                        child: TextField(
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.location_on),
-                            border: InputBorder.none,
-                          ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 8),
+                      Text(
+                        'Hello Barbara',
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        'Let\'s give you a hand',
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      const SizedBox(height: 8),
+                    ],
+                  ),
+                ),
+              ),
+              SliverPadding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: horizontalPadding),
+                sliver: SliverPersistentHeader(
+                  pinned: true,
+                  delegate: CustomDelegate(
+                    height: 80.0,
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: double.infinity,
+                      decoration: ShapeDecoration(
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                        shape: Shapes.bigShape,
+                      ),
+                      child: TextSelectionTheme(
+                        data: TextSelectionThemeData(
                           cursorColor:
                               Theme.of(context).colorScheme.onPrimaryContainer,
+                          selectionColor: Colors.orange,
+                          selectionHandleColor:
+                              Theme.of(context).colorScheme.onPrimaryContainer,
+                        ),
+                        child: TextField(
+                          style:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onPrimaryContainer,
+                                  ),
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.location_on,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onPrimaryContainer,
+                            ),
+                            border: InputBorder.none,
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
-                SliverPadding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  sliver: SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      (context, index) {
-                        return InkWell(
-                          onTap: () {
-                            showModalBottomSheet(
-                                context: context,
-                                builder: (sheetCtx) {
-                                  return PickServiceBottomSheet();
-                                });
-                          },
-                          child: const Padding(
-                            padding: EdgeInsets.symmetric(
-                              vertical: 8.0,
-                              horizontal: horizontalPadding,
-                            ),
-                            child: ServiceCard(
-                              artisanCount: 12,
-                              icon: Icon(Icons.abc),
-                              iconBackground: Colors.orange,
-                              serviceName: 'Laundry',
-                            ),
+              ),
+              SliverPadding(
+                padding: const EdgeInsets.only(top: 8.0),
+                sliver: SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      return InkWell(
+                        onTap: () {
+                          showModalBottomSheet(
+                              context: context,
+                              isScrollControlled: true,
+                              builder: (sheetCtx) {
+                                return Padding(
+                                  padding: EdgeInsets.only(
+                                    bottom: MediaQuery.of(sheetCtx)
+                                        .viewInsets
+                                        .bottom,
+                                  ),
+                                  child: PickServiceBottomSheet(),
+                                );
+                              });
+                        },
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(
+                            vertical: 8.0,
+                            horizontal: horizontalPadding,
                           ),
-                        );
-                      },
-                      childCount: 15,
-                    ),
+                          child: ServiceCard(
+                            artisanCount: 12,
+                            icon: Icon(Icons.abc),
+                            iconBackground: Colors.orange,
+                            serviceName: 'Laundry',
+                          ),
+                        ),
+                      );
+                    },
+                    childCount: 15,
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
@@ -150,7 +285,7 @@ class _SearchWidgetState extends State<SearchWidget> {
     return Material(
       elevation: 4.0,
       shadowColor: Theme.of(context).colorScheme.shadow,
-      color: Theme.of(context).colorScheme.primary,
+      color: Theme.of(context).colorScheme.primaryContainer,
       shape: Shapes.bigShape,
       child: ConstrainedBox(
         constraints: const BoxConstraints(minHeight: 64.0),
@@ -166,13 +301,19 @@ class _SearchWidgetState extends State<SearchWidget> {
                       focusNode.unfocus();
                     });
                   },
+                  cursorColor: Theme.of(context).colorScheme.onPrimaryContainer,
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      color: Theme.of(context).colorScheme.onPrimaryContainer),
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     suffixIcon: IconButton(
                       onPressed: () {
                         textController.clear();
                       },
-                      icon: const Icon(Icons.cancel),
+                      icon: Icon(
+                        Icons.cancel,
+                        color: Theme.of(context).colorScheme.onPrimaryContainer,
+                      ),
                     ),
                   ),
                 ),
@@ -194,17 +335,84 @@ class _SearchWidgetState extends State<SearchWidget> {
                         flex: 9,
                         child: Text(
                           'Need a hand?',
-                          style: Theme.of(context).textTheme.titleMedium,
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium
+                              ?.copyWith(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onPrimaryContainer),
                         ),
                       ),
                       const Spacer(flex: 2),
-                      const CircleAvatar(
-                        child: Icon(Icons.search),
+                      Icon(
+                        Icons.search,
+                        color: Theme.of(context).colorScheme.onPrimaryContainer,
                       )
                     ],
                   ),
                 ),
               ),
+      ),
+    );
+  }
+}
+
+class TrackerBottomSheet extends StatelessWidget {
+  const TrackerBottomSheet({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        vertical: 8,
+        horizontal: 16,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 56,
+            height: 4,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4),
+              color: Theme.of(context).colorScheme.secondaryContainer,
+            ),
+          ),
+          const ServiceCard(
+            serviceName: 'Hair Stylist',
+            icon: const Icon(Icons.abc),
+            iconBackground: Colors.orange,
+            artisanCount: 13,
+          ),
+          Text(
+            'While you wait, you can reach out to them to'
+            'confirm the  details of the service you need.',
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: () {},
+                  child: const Text('Call'),
+                  style: Theme.of(context)
+                      .extension<ButtonThemeExtensions>()
+                      ?.filled,
+                ),
+              ),
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: () {},
+                  child: const Text('Message'),
+                  style: Theme.of(context)
+                      .extension<ButtonThemeExtensions>()
+                      ?.tonal,
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
