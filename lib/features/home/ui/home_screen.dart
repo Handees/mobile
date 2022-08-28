@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:handees/features/test/test.dart';
 
 import 'package:handees/res/shapes.dart';
 import 'package:handees/routes/routes.dart';
 import 'package:handees/theme/theme.dart';
 import 'package:handees/utils/widgets/custom_delegate.dart';
+// import 'package:http/http.dart';
 
 import 'pick_service_bottom_sheet.dart';
 import 'service_card.dart';
@@ -96,6 +98,25 @@ class HomeScreen extends StatelessWidget {
                   height: drawerItemHeight,
                   child: Text(
                     'Customer Support',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ),
+              ),
+              Divider(),
+              InkWell(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) {
+                      return Test();
+                    },
+                  ));
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  alignment: Alignment.centerLeft,
+                  height: drawerItemHeight,
+                  child: Text(
+                    'Test',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                 ),
