@@ -27,33 +27,37 @@ class HomeScreen extends StatelessWidget {
               DrawerHeader(
                 child: Align(
                   alignment: Alignment.bottomLeft,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        height: 48,
-                        width: 48,
-                        decoration: ShapeDecoration(
-                          shape: CircleBorder(),
-                          color: Colors.red,
+                  child: InkWell(
+                    onTap: () =>
+                        Navigator.of(context).pushNamed(AppRoutes.profile),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          height: 48,
+                          width: 48,
+                          decoration: ShapeDecoration(
+                            shape: CircleBorder(),
+                            color: Colors.red,
+                          ),
                         ),
-                      ),
-                      SizedBox(width: 16.0),
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Barbara',
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                          Text(
-                            'Edit profile',
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                        ],
-                      ),
-                    ],
+                        SizedBox(width: 16.0),
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Barbara',
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                            Text(
+                              'Edit profile',
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -71,7 +75,8 @@ class HomeScreen extends StatelessWidget {
               ),
               Divider(),
               InkWell(
-                onTap: () {},
+                onTap: () =>
+                    Navigator.of(context).pushNamed(AppRoutes.settings),
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 16.0),
                   alignment: Alignment.centerLeft,
@@ -118,7 +123,9 @@ class HomeScreen extends StatelessWidget {
                         .extension<ButtonThemeExtensions>()
                         ?.filled,
                     onPressed: () {},
-                    child: Text('Become a Handee Man'),
+                    child: Text(
+                      'Become a Handee Man',
+                    ),
                   ),
                 ),
               ),
@@ -139,7 +146,8 @@ class HomeScreen extends StatelessWidget {
             slivers: [
               SliverAppBar(
                 systemOverlayStyle: SystemUiOverlayStyle(
-                    statusBarColor: Theme.of(context).colorScheme.surface),
+                  statusBarIconBrightness: Brightness.dark,
+                ),
                 actions: [
                   IconButton(
                     onPressed: () {
@@ -335,13 +343,12 @@ class _SearchWidgetState extends State<SearchWidget> {
                         flex: 9,
                         child: Text(
                           'Need a hand?',
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium
-                              ?.copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onPrimaryContainer),
+                          style:
+                              Theme.of(context).textTheme.titleMedium?.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onPrimaryContainer,
+                                  ),
                         ),
                       ),
                       const Spacer(flex: 2),

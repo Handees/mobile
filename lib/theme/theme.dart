@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:handees/res/shapes.dart';
 
+final textTheme = GoogleFonts.cabinTextTheme(const TextTheme()).copyWith(
+    // titleMedium: TextStyle(fontSize: 18),
+    // labelLarge: TextStyle(fontSize: 16),
+    );
+
 const lightColorScheme = ColorScheme.light(
-  primary: Colors.black,
+  primary: Color.fromRGBO(20, 22, 28, 1),
   onPrimary: Colors.white,
-  primaryContainer: Colors.black,
+  primaryContainer: Color.fromRGBO(20, 22, 28, 1),
   onPrimaryContainer: Colors.white,
+  brightness: Brightness.light,
 );
 
 const authColorScheme = ColorScheme.dark(
@@ -13,6 +20,7 @@ const authColorScheme = ColorScheme.dark(
   onPrimary: Colors.black,
   primaryContainer: Colors.white,
   onPrimaryContainer: Colors.black,
+  brightness: Brightness.dark,
 );
 
 final darkColorScheme = ColorScheme.dark(
@@ -21,6 +29,7 @@ final darkColorScheme = ColorScheme.dark(
   primaryContainer: Color.fromARGB(255, 97, 97, 97),
   onPrimaryContainer: Colors.white,
   background: ThemeData.dark().scaffoldBackgroundColor,
+  brightness: Brightness.dark,
 );
 
 final buttonStyle = ButtonStyle(
@@ -30,91 +39,37 @@ final buttonStyle = ButtonStyle(
   shape: MaterialStateProperty.all(Shapes.bigShape),
 );
 
-final lightTheme = ThemeData(
-  colorScheme: lightColorScheme,
-  useMaterial3: true,
-  elevatedButtonTheme: ElevatedButtonThemeData(style: buttonStyle),
-  outlinedButtonTheme: OutlinedButtonThemeData(style: buttonStyle),
-  extensions: [
-    ButtonThemeExtensions(
-      filled: ElevatedButton.styleFrom(
-        // Foreground color
-        onPrimary: lightColorScheme.onPrimary,
-        // Background color
-        primary: lightColorScheme.primary,
-      ).copyWith(
-        elevation: ButtonStyleButton.allOrNull(0.0),
-      ),
-      tonal: ElevatedButton.styleFrom(
-        // Foreground color
-        onPrimary: lightColorScheme.onSecondaryContainer,
-        // Background color
-        primary: lightColorScheme.secondaryContainer,
-      ).copyWith(
-        elevation: ButtonStyleButton.allOrNull(0.0),
-      ),
-    )
-  ],
-);
+ThemeData buildTheme(ColorScheme colorScheme) => ThemeData.from(
+      colorScheme: colorScheme,
+      useMaterial3: true,
+    ).copyWith(
+      // textTheme: textTheme,
+      appBarTheme: AppBarTheme().copyWith(centerTitle: true),
+      elevatedButtonTheme: ElevatedButtonThemeData(style: buttonStyle),
+      outlinedButtonTheme: OutlinedButtonThemeData(style: buttonStyle),
+      extensions: [
+        ButtonThemeExtensions(
+          filled: ElevatedButton.styleFrom(
+            onPrimary: colorScheme.onPrimary,
+            primary: colorScheme.primary,
+          ).copyWith(
+            elevation: ButtonStyleButton.allOrNull(0.0),
+          ),
+          tonal: ElevatedButton.styleFrom(
+            onPrimary: colorScheme.onSecondaryContainer,
+            primary: colorScheme.secondaryContainer,
+          ).copyWith(
+            elevation: ButtonStyleButton.allOrNull(0.0),
+          ),
+        )
+      ],
+    );
 
-final authTheme = ThemeData(
-  colorScheme: authColorScheme,
-  useMaterial3: true,
-  scaffoldBackgroundColor: authColorScheme.background,
-  elevatedButtonTheme: ElevatedButtonThemeData(
-    style: buttonStyle.copyWith(
-      shape: MaterialStateProperty.all(Shapes.authShape),
-    ),
-  ),
-  outlinedButtonTheme: OutlinedButtonThemeData(style: buttonStyle),
-  extensions: [
-    ButtonThemeExtensions(
-      filled: ElevatedButton.styleFrom(
-        // Foreground color
-        onPrimary: authColorScheme.onPrimary,
-        // Background color
-        primary: authColorScheme.primary,
-      ).copyWith(
-        elevation: ButtonStyleButton.allOrNull(0.0),
-      ),
-      tonal: ElevatedButton.styleFrom(
-        // Foreground color
-        onPrimary: authColorScheme.onSecondaryContainer,
-        // Background color
-        primary: authColorScheme.secondaryContainer,
-      ).copyWith(
-        elevation: ButtonStyleButton.allOrNull(0.0),
-      ),
-    )
-  ],
-);
+final lightTheme = buildTheme(lightColorScheme);
 
-final darkTheme = ThemeData(
-  colorScheme: darkColorScheme,
-  useMaterial3: true,
-  elevatedButtonTheme: ElevatedButtonThemeData(style: buttonStyle),
-  outlinedButtonTheme: OutlinedButtonThemeData(style: buttonStyle),
-  extensions: [
-    ButtonThemeExtensions(
-      filled: ElevatedButton.styleFrom(
-        // Foreground color
-        onPrimary: darkColorScheme.onPrimary,
-        // Background color
-        primary: darkColorScheme.primary,
-      ).copyWith(
-        elevation: ButtonStyleButton.allOrNull(0.0),
-      ),
-      tonal: ElevatedButton.styleFrom(
-        // Foreground color
-        onPrimary: authColorScheme.onSecondaryContainer,
-        // Background color
-        primary: authColorScheme.secondaryContainer,
-      ).copyWith(
-        elevation: ButtonStyleButton.allOrNull(0.0),
-      ),
-    )
-  ],
-);
+final darkTheme = buildTheme(darkColorScheme);
+
+final authTheme = buildTheme(authColorScheme);
 
 @immutable
 class ButtonThemeExtensions extends ThemeExtension<ButtonThemeExtensions> {

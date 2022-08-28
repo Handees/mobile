@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:handees/theme/theme.dart';
 
-import 'home_screen.dart';
 import 'service_card.dart';
 
 class PickServiceBottomSheet extends StatelessWidget {

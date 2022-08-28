@@ -1,10 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:handees/features/auth/ui/signup_screen.dart';
 import 'package:handees/features/auth/ui/verify_screen.dart';
-import 'package:handees/features/history/history_screen.dart';
+import 'package:handees/features/history/ui/history_screen.dart';
 import 'package:handees/features/home/ui/home_screen.dart';
 import 'package:handees/features/notifications/ui/notifications_screen.dart';
+import 'package:handees/features/profile/ui/profile.dart';
+import 'package:handees/features/settings/ui/settings.dart';
+import 'package:handees/theme/theme.dart';
 
 abstract class AppRoutes {
   static const String signin = '/auth/sign-in';
@@ -32,26 +34,42 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
   late Widget page;
   switch (settings.name) {
     case '/':
-      page = const SignupScreen();
+      page = Theme(
+        data: authTheme,
+        child: const SignupScreen(),
+      );
       break;
     case AppRoutes.signin:
       page = const HomeScreen();
       break;
     case AppRoutes.signup:
-      page = const SignupScreen();
+      page = Theme(
+        data: authTheme,
+        child: const SignupScreen(),
+      );
       break;
     case AppRoutes.verify:
-      page = const VerifyScreen();
+      page = Theme(
+        data: authTheme,
+        child: const VerifyScreen(),
+      );
       break;
 
     case AppRoutes.home:
       page = const HomeScreen();
+      break;
+    case AppRoutes.profile:
+      page = const ProfileScreen();
       break;
     case AppRoutes.notifications:
       page = const NotificationsScreen();
       break;
     case AppRoutes.history:
       page = const HistoryScreen();
+      break;
+
+    case AppRoutes.settings:
+      page = const SettingsScreen();
       break;
     default:
       throw Exception('Unknown route: ${settings.name}');

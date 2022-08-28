@@ -24,8 +24,9 @@ class ServiceCard extends StatelessWidget {
         children: [
           Ink(
             decoration: ShapeDecoration(
-                color: iconBackground.withOpacity(0.2),
-                shape: Shapes.smallShape),
+              color: iconBackground.withOpacity(0.2),
+              shape: Shapes.smallShape,
+            ),
             height: 72,
             width: 72,
             child: Center(
@@ -47,7 +48,7 @@ class ServiceCard extends StatelessWidget {
               const SizedBox(height: 4),
               Text(
                 '$artisanCount Handeemen near you',
-                style: Theme.of(context).textTheme.bodySmall,
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
             ],
           ),
