@@ -10,24 +10,26 @@ final textTheme = GoogleFonts.cabinTextTheme(const TextTheme()).copyWith(
 const lightColorScheme = ColorScheme.light(
   primary: Color.fromRGBO(20, 22, 28, 1),
   onPrimary: Colors.white,
-  primaryContainer: Color.fromRGBO(20, 22, 28, 1),
-  onPrimaryContainer: Colors.white,
+  secondary: Color.fromRGBO(242, 243, 244, 1),
+  onSecondary: Color.fromRGBO(20, 22, 28, 1),
+  // primaryContainer: Color.fromRGBO(20, 22, 28, 1),
+  // onPrimaryContainer: Colors.white,
   brightness: Brightness.light,
 );
 
 const authColorScheme = ColorScheme.dark(
   primary: Colors.white,
   onPrimary: Colors.black,
-  primaryContainer: Colors.white,
-  onPrimaryContainer: Colors.black,
+  // primaryContainer: Colors.white,
+  // onPrimaryContainer: Colors.black,
   brightness: Brightness.dark,
 );
 
 final darkColorScheme = ColorScheme.dark(
   primary: Color.fromARGB(255, 97, 97, 97),
   onPrimary: Colors.white,
-  primaryContainer: Color.fromARGB(255, 97, 97, 97),
-  onPrimaryContainer: Colors.white,
+  // primaryContainer: Color.fromARGB(255, 97, 97, 97),
+  // onPrimaryContainer: Colors.white,
   background: ThemeData.dark().scaffoldBackgroundColor,
   brightness: Brightness.dark,
 );
@@ -45,8 +47,13 @@ ThemeData buildTheme(ColorScheme colorScheme) => ThemeData.from(
     ).copyWith(
       // textTheme: textTheme,
       appBarTheme: AppBarTheme().copyWith(centerTitle: true),
+      scaffoldBackgroundColor: colorScheme.background,
+      radioTheme: RadioThemeData(
+        fillColor: MaterialStateProperty.all(colorScheme.primary),
+      ),
       elevatedButtonTheme: ElevatedButtonThemeData(style: buttonStyle),
       outlinedButtonTheme: OutlinedButtonThemeData(style: buttonStyle),
+      textButtonTheme: TextButtonThemeData(style: buttonStyle),
       extensions: [
         ButtonThemeExtensions(
           filled: ElevatedButton.styleFrom(

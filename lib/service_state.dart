@@ -45,7 +45,7 @@ class ServiceStateWidget extends StatelessWidget {
         horizontal: 8.0,
       ),
       decoration: ShapeDecoration(
-        shape: Shapes.smallShape,
+        shape: Shapes.mediumShape,
         color: color,
       ),
       child: Text(label),

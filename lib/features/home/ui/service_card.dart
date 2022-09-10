@@ -17,43 +17,39 @@ class ServiceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      // height: 96,
-      width: double.infinity,
-      child: Row(
-        children: [
-          Ink(
-            decoration: ShapeDecoration(
-              color: iconBackground.withOpacity(0.2),
-              shape: Shapes.smallShape,
-            ),
-            height: 72,
-            width: 72,
-            child: Center(
-              child: CircleAvatar(
-                backgroundColor: iconBackground,
-                child: icon,
-              ),
+    return Row(
+      children: [
+        Container(
+          decoration: ShapeDecoration(
+            color: iconBackground.withOpacity(0.2),
+            shape: Shapes.mediumShape,
+          ),
+          height: 72,
+          width: 72,
+          child: Center(
+            child: CircleAvatar(
+              backgroundColor: iconBackground,
+              child: icon,
             ),
           ),
-          const SizedBox(width: 16),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Laundry',
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-              const SizedBox(height: 4),
-              Text(
-                '$artisanCount Handeemen near you',
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-            ],
-          ),
-        ],
-      ),
+        ),
+        const SizedBox(width: 16),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              serviceName,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            const SizedBox(height: 4),
+            Text(
+              '$artisanCount Handeemen near you',
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

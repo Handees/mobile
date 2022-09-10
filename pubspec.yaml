@@ -39,6 +39,7 @@ dependencies:
   firebase_auth: ^3.7.0
   firebase_core: ^1.21.1
   socket_io_client: ^2.0.0
+  google_maps_flutter: ^2.2.0
 
 dev_dependencies:
   flutter_test:

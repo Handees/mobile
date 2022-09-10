@@ -3,9 +3,11 @@ import 'package:handees/features/auth/ui/signup_screen.dart';
 import 'package:handees/features/auth/ui/verify_screen.dart';
 import 'package:handees/features/history/ui/history_screen.dart';
 import 'package:handees/features/home/ui/home_screen.dart';
+import 'package:handees/features/home/ui/pick_service_dialog.dart';
 import 'package:handees/features/notifications/ui/notifications_screen.dart';
 import 'package:handees/features/profile/ui/profile.dart';
 import 'package:handees/features/settings/ui/settings.dart';
+import 'package:handees/features/tracker/ui/tracking_screen.dart';
 import 'package:handees/theme/theme.dart';
 
 abstract class AppRoutes {
@@ -14,6 +16,7 @@ abstract class AppRoutes {
   static const String verify = '/auth/verify';
 
   static const String home = '/home';
+  static const String pickService = '/pick-service';
   static const String tracking = '/tracking';
   static const String chat = '/chat';
   static const String notifications = '/notifications';
@@ -31,7 +34,8 @@ abstract class AppRoutes {
 }
 
 Route<dynamic> onGenerateRoute(RouteSettings settings) {
-  late Widget page;
+  Widget? page;
+  MaterialPageRoute? pageRoute;
   switch (settings.name) {
     case '/':
       page = Theme(
@@ -67,13 +71,22 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
     case AppRoutes.history:
       page = const HistoryScreen();
       break;
-
     case AppRoutes.settings:
       page = const SettingsScreen();
+      break;
+    case AppRoutes.tracking:
+      page = const TrackingScreen();
+      break;
+    case AppRoutes.pickService:
+      pageRoute = MaterialPageRoute(
+        builder: ((context) => const PickServiceDialog()),
+        fullscreenDialog: true,
+      );
       break;
     default:
       throw Exception('Unknown route: ${settings.name}');
   }
-
-  return MaterialPageRoute(builder: (context) => page);
+  return page != null
+      ? MaterialPageRoute(builder: (context) => page!)
+      : pageRoute!;
 }

@@ -19,135 +19,147 @@ class HomeScreen extends StatelessWidget {
     const horizontalPadding = 16.0;
     const drawerItemHeight = 56.0;
 
+    Icons.money;
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.background,
+        // backgroundColor: Theme.of(context).colorScheme.background,
         drawer: Drawer(
-          child: Column(
-            children: [
-              DrawerHeader(
-                child: Align(
-                  alignment: Alignment.bottomLeft,
-                  child: InkWell(
-                    onTap: () =>
-                        Navigator.of(context).pushNamed(AppRoutes.profile),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Container(
-                          height: 48,
-                          width: 48,
-                          decoration: ShapeDecoration(
-                            shape: CircleBorder(),
-                            color: Colors.red,
+          child: CustomScrollView(
+            slivers: [
+              SliverFillRemaining(
+                hasScrollBody: false,
+                child: Column(
+                  children: [
+                    DrawerHeader(
+                      child: Align(
+                        alignment: Alignment.bottomLeft,
+                        child: InkWell(
+                          onTap: () => Navigator.of(context)
+                              .pushNamed(AppRoutes.profile),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Container(
+                                height: 48,
+                                width: 48,
+                                decoration: ShapeDecoration(
+                                  shape: CircleBorder(),
+                                  color: Colors.red,
+                                ),
+                              ),
+                              SizedBox(width: 16.0),
+                              Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Barbara',
+                                    style:
+                                        Theme.of(context).textTheme.titleMedium,
+                                  ),
+                                  Text(
+                                    'Edit profile',
+                                    style:
+                                        Theme.of(context).textTheme.titleMedium,
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
-                        SizedBox(width: 16.0),
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Barbara',
-                              style: Theme.of(context).textTheme.titleMedium,
-                            ),
-                            Text(
-                              'Edit profile',
-                              style: Theme.of(context).textTheme.titleMedium,
-                            ),
-                          ],
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () =>
+                          Navigator.of(context).pushNamed(AppRoutes.history),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        alignment: Alignment.centerLeft,
+                        height: drawerItemHeight,
+                        child: Text(
+                          'History',
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () => Navigator.of(context).pushNamed(AppRoutes.history),
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 16.0),
-                  alignment: Alignment.centerLeft,
-                  height: drawerItemHeight,
-                  child: Text(
-                    'History',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                ),
-              ),
-              Divider(),
-              InkWell(
-                onTap: () =>
-                    Navigator.of(context).pushNamed(AppRoutes.settings),
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 16.0),
-                  alignment: Alignment.centerLeft,
-                  height: drawerItemHeight,
-                  child: Text(
-                    'Settings',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                ),
-              ),
-              Divider(),
-              InkWell(
-                onTap: () {},
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 16.0),
-                  alignment: Alignment.centerLeft,
-                  height: drawerItemHeight,
-                  child: Text(
-                    'Customer Support',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                ),
-              ),
-              Divider(),
-              InkWell(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) {
-                      return Test();
-                    },
-                  ));
-                },
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 16.0),
-                  alignment: Alignment.centerLeft,
-                  height: drawerItemHeight,
-                  child: Text(
-                    'Test',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                ),
-              ),
-              Divider(),
-              InkWell(
-                onTap: () {},
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 16.0),
-                  alignment: Alignment.centerLeft,
-                  height: drawerItemHeight,
-                  child: Text(
-                    'F.A.Q',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                ),
-              ),
-              Spacer(),
-              SizedBox(
-                width: double.infinity,
-                child: Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: ElevatedButton(
-                    style: Theme.of(context)
-                        .extension<ButtonThemeExtensions>()
-                        ?.filled,
-                    onPressed: () {},
-                    child: Text(
-                      'Become a Handee Man',
+                    Divider(),
+                    InkWell(
+                      onTap: () =>
+                          Navigator.of(context).pushNamed(AppRoutes.settings),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        alignment: Alignment.centerLeft,
+                        height: drawerItemHeight,
+                        child: Text(
+                          'Settings',
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      ),
                     ),
-                  ),
+                    Divider(),
+                    InkWell(
+                      onTap: () {},
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        alignment: Alignment.centerLeft,
+                        height: drawerItemHeight,
+                        child: Text(
+                          'Customer Support',
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      ),
+                    ),
+                    Divider(),
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) {
+                            return Test();
+                          },
+                        ));
+                      },
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        alignment: Alignment.centerLeft,
+                        height: drawerItemHeight,
+                        child: Text(
+                          'Test',
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      ),
+                    ),
+                    Divider(),
+                    InkWell(
+                      onTap: () {},
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        alignment: Alignment.centerLeft,
+                        height: drawerItemHeight,
+                        child: Text(
+                          'F.A.Q',
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      ),
+                    ),
+                    Spacer(),
+                    SizedBox(
+                      width: double.infinity,
+                      child: Padding(
+                        padding: EdgeInsets.all(16.0),
+                        child: ElevatedButton(
+                          style: Theme.of(context)
+                              .extension<ButtonThemeExtensions>()
+                              ?.filled,
+                          onPressed: () {},
+                          child: Text(
+                            'Become a Handee Man',
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -163,7 +175,6 @@ class HomeScreen extends StatelessWidget {
         ),
         body: SafeArea(
           child: CustomScrollView(
-            clipBehavior: Clip.none,
             slivers: [
               SliverAppBar(
                 systemOverlayStyle: SystemUiOverlayStyle(
@@ -207,40 +218,7 @@ class HomeScreen extends StatelessWidget {
                   pinned: true,
                   delegate: CustomDelegate(
                     height: 80.0,
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: double.infinity,
-                      decoration: ShapeDecoration(
-                        color: Theme.of(context).colorScheme.primaryContainer,
-                        shape: Shapes.bigShape,
-                      ),
-                      child: TextSelectionTheme(
-                        data: TextSelectionThemeData(
-                          cursorColor:
-                              Theme.of(context).colorScheme.onPrimaryContainer,
-                          selectionColor: Colors.orange,
-                          selectionHandleColor:
-                              Theme.of(context).colorScheme.onPrimaryContainer,
-                        ),
-                        child: TextField(
-                          style:
-                              Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onPrimaryContainer,
-                                  ),
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.location_on,
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onPrimaryContainer,
-                            ),
-                            border: InputBorder.none,
-                          ),
-                        ),
-                      ),
-                    ),
+                    child: LocationPicker(),
                   ),
                 ),
               ),
@@ -284,6 +262,43 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class LocationPicker extends StatelessWidget {
+  const LocationPicker({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.center,
+      height: double.infinity,
+      decoration: ShapeDecoration(
+        color: Theme.of(context).colorScheme.primaryContainer,
+        shape: Shapes.bigShape,
+      ),
+      child: TextSelectionTheme(
+        data: TextSelectionThemeData(
+          cursorColor: Theme.of(context).colorScheme.onPrimaryContainer,
+          selectionColor:
+              Theme.of(context).colorScheme.onPrimaryContainer.withOpacity(0.5),
+          selectionHandleColor:
+              Theme.of(context).colorScheme.onPrimaryContainer,
+        ),
+        child: TextField(
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                color: Theme.of(context).colorScheme.onPrimaryContainer,
+              ),
+          decoration: InputDecoration(
+            prefixIcon: Icon(
+              Icons.location_on,
+              color: Theme.of(context).colorScheme.onPrimaryContainer,
+            ),
+            border: InputBorder.none,
           ),
         ),
       ),
@@ -340,7 +355,7 @@ class _SearchWidgetState extends State<SearchWidget> {
                         textController.clear();
                       },
                       icon: Icon(
-                        Icons.cancel,
+                        Icons.close,
                         color: Theme.of(context).colorScheme.onPrimaryContainer,
                       ),
                     ),
