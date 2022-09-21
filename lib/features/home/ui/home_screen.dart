@@ -33,6 +33,7 @@ class HomeScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     DrawerHeader(
+                      padding: EdgeInsets.all(16.0),
                       child: Align(
                         alignment: Alignment.bottomLeft,
                         child: InkWell(
@@ -71,48 +72,33 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    InkWell(
+                    ListTile(
+                      onTap: () {},
+                      leading: Icon(Icons.credit_card),
+                      title: Text('Payments'),
+                    ),
+                    Divider(),
+                    ListTile(
                       onTap: () =>
                           Navigator.of(context).pushNamed(AppRoutes.history),
-                      child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 16.0),
-                        alignment: Alignment.centerLeft,
-                        height: drawerItemHeight,
-                        child: Text(
-                          'History',
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                      ),
+                      leading: Icon(Icons.history),
+                      title: Text('History'),
                     ),
                     Divider(),
-                    InkWell(
+                    ListTile(
                       onTap: () =>
                           Navigator.of(context).pushNamed(AppRoutes.settings),
-                      child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 16.0),
-                        alignment: Alignment.centerLeft,
-                        height: drawerItemHeight,
-                        child: Text(
-                          'Settings',
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                      ),
+                      leading: Icon(Icons.settings_outlined),
+                      title: Text('Settings'),
                     ),
                     Divider(),
-                    InkWell(
+                    ListTile(
                       onTap: () {},
-                      child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 16.0),
-                        alignment: Alignment.centerLeft,
-                        height: drawerItemHeight,
-                        child: Text(
-                          'Customer Support',
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                      ),
+                      leading: Icon(Icons.support_agent),
+                      title: Text('Customer Support'),
                     ),
                     Divider(),
-                    InkWell(
+                    ListTile(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) {
@@ -120,28 +106,14 @@ class HomeScreen extends StatelessWidget {
                           },
                         ));
                       },
-                      child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 16.0),
-                        alignment: Alignment.centerLeft,
-                        height: drawerItemHeight,
-                        child: Text(
-                          'Test',
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                      ),
+                      leading: Icon(Icons.handyman),
+                      title: Text('Test'),
                     ),
                     Divider(),
-                    InkWell(
+                    ListTile(
                       onTap: () {},
-                      child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 16.0),
-                        alignment: Alignment.centerLeft,
-                        height: drawerItemHeight,
-                        child: Text(
-                          'F.A.Q',
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                      ),
+                      leading: Icon(Icons.help_outline_outlined),
+                      title: Text('FAQ'),
                     ),
                     Spacer(),
                     SizedBox(

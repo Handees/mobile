@@ -13,8 +13,8 @@ class _InProgressBottomSheetState extends State<InProgressBottomSheet>
     with TickerProviderStateMixin {
   bool get _expanded => _controller.status != AnimationStatus.completed;
   final _curve = Curves.linear;
-  final _duration = Duration(milliseconds: 200);
-  final _reverseDuration = Duration(milliseconds: 250);
+  final _duration = const Duration(milliseconds: 200);
+  final _reverseDuration = const Duration(milliseconds: 250);
   final time = 4;
 
   late final AnimationController _controller = AnimationController(
@@ -131,7 +131,7 @@ class _InProgressBottomSheetState extends State<InProgressBottomSheet>
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
-                  SizedBox(height: 8.0),
+                  const SizedBox(height: 8.0),
                 ],
               ),
             ),
@@ -157,7 +157,7 @@ class _InProgressBottomSheetState extends State<InProgressBottomSheet>
                                   .colorScheme
                                   .primaryContainer,
                             ),
-                            padding: EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(8.0),
                             child: Text('Arrival time: $time mins',
                                 style: Theme.of(context)
                                     .textTheme
@@ -168,10 +168,10 @@ class _InProgressBottomSheetState extends State<InProgressBottomSheet>
                                           .onPrimaryContainer,
                                     )),
                           ),
-                          SizedBox(height: 8.0),
+                          const SizedBox(height: 8.0),
                           Row(
                             children: [
-                              CircleAvatar(radius: 28),
+                              const CircleAvatar(radius: 28),
                               const SizedBox(width: 16),
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -196,7 +196,7 @@ class _InProgressBottomSheetState extends State<InProgressBottomSheet>
                                   ),
                                 ],
                               ),
-                              Spacer(),
+                              const Spacer(),
                               Container(
                                 decoration: ShapeDecoration(
                                   color: Colors.orange.withOpacity(0.2),
@@ -204,8 +204,8 @@ class _InProgressBottomSheetState extends State<InProgressBottomSheet>
                                 ),
                                 height: 72,
                                 width: 72,
-                                child: Center(
-                                  child: CircleAvatar(
+                                child: const Center(
+                                  child: const CircleAvatar(
                                     backgroundColor: Colors.orange,
                                     child: Icon(Icons.abc),
                                   ),
@@ -213,12 +213,12 @@ class _InProgressBottomSheetState extends State<InProgressBottomSheet>
                               ),
                             ],
                           ),
-                          SizedBox(height: 8.0),
+                          const SizedBox(height: 8.0),
                           Row(
                             children: [
-                              SizedBox(
+                              const SizedBox(
                                 width: 64,
-                                child: Icon(Icons.money),
+                                child: const Icon(Icons.money),
                               ),
                               const SizedBox(width: 16),
                               Text(
@@ -237,11 +237,11 @@ class _InProgressBottomSheetState extends State<InProgressBottomSheet>
                         children: [
                           Text('ETA $time minutes'),
                           LinearProgressIndicator(
-                            value: 0.7,
+                            // value: 0.7,
                             backgroundColor:
                                 Theme.of(context).colorScheme.secondary,
                           ),
-                          SizedBox(height: 8.0),
+                          const SizedBox(height: 8.0),
                         ],
                       ),
                     ),
@@ -255,6 +255,7 @@ class _InProgressBottomSheetState extends State<InProgressBottomSheet>
                 child: Divider(
                   height: 32.0,
                   thickness: 8.0,
+                  color: Theme.of(context).colorScheme.secondary,
                 ),
               ),
             ),
@@ -264,28 +265,28 @@ class _InProgressBottomSheetState extends State<InProgressBottomSheet>
               ),
               child: Column(
                 children: [
-                  SizedBox(height: 8.0),
-                  Text(
+                  const SizedBox(height: 8.0),
+                  const Text(
                       'While you wait, you can reach out to them to confirm the  details of the service you need.'),
-                  SizedBox(height: 16.0),
+                  const SizedBox(height: 16.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () {},
-                          child: Text('Call'),
+                          child: const Text('Call'),
                           style: Theme.of(context)
                               .extension<ButtonThemeExtensions>()
                               ?.filled,
                         ),
                       ),
-                      SizedBox(width: 16),
+                      const SizedBox(width: 16),
                       Expanded(
                         // width: double.infinity,
                         child: ElevatedButton(
                           onPressed: () {},
-                          child: Text('Message'),
+                          child: const Text('Message'),
                           style: Theme.of(context)
                               .extension<ButtonThemeExtensions>()
                               ?.tonal,
@@ -299,8 +300,8 @@ class _InProgressBottomSheetState extends State<InProgressBottomSheet>
                       alignment: Alignment.center,
                       child: TextButton.icon(
                         onPressed: () {},
-                        icon: Icon(Icons.close),
-                        label: Text('Cancel'),
+                        icon: const Icon(Icons.close),
+                        label: const Text('Cancel'),
                         style:
                             Theme.of(context).textButtonTheme.style?.copyWith(
                                   foregroundColor: MaterialStateProperty.all(
@@ -310,7 +311,7 @@ class _InProgressBottomSheetState extends State<InProgressBottomSheet>
                       ),
                     ),
                   ),
-                  SizedBox(height: 8.0),
+                  const SizedBox(height: 8.0),
                 ],
               ),
             ),

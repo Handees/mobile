@@ -23,7 +23,7 @@ class PickServiceBottomSheet extends StatelessWidget {
             height: 8,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4),
-              color: Theme.of(context).colorScheme.primaryContainer,
+              color: Theme.of(context).colorScheme.secondary,
             ),
           ),
           SizedBox(height: 16.0),

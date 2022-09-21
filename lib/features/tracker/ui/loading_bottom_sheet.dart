@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:handees/features/auth/services/auth_service.dart';
 import 'package:handees/res/shapes.dart';
 import 'package:handees/theme/theme.dart';
 
@@ -20,7 +21,7 @@ class LoadingBottomSheet extends StatelessWidget {
             height: 8,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4),
-              color: Theme.of(context).colorScheme.primaryContainer,
+              color: Theme.of(context).colorScheme.secondary,
             ),
           ),
           SizedBox(height: 16.0),

@@ -40,6 +40,10 @@ dependencies:
   firebase_core: ^1.21.1
   socket_io_client: ^2.0.0
   google_maps_flutter: ^2.2.0
+  firebase: ^9.0.3
+  auth: ^8.1.0
+  flutter_riverpod: ^1.0.4
+  pin_code_fields: ^7.4.0
 
 dev_dependencies:
   flutter_test:

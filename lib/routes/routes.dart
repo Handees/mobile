@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:handees/features/auth/ui/signup_screen.dart';
-import 'package:handees/features/auth/ui/verify_screen.dart';
+import 'package:handees/features/auth/ui/screens/signin_screen.dart';
+import 'package:handees/features/auth/ui/screens/signup_screen.dart';
+import 'package:handees/features/auth/ui/screens/verify_screen.dart';
 import 'package:handees/features/history/ui/history_screen.dart';
 import 'package:handees/features/home/ui/home_screen.dart';
 import 'package:handees/features/home/ui/pick_service_dialog.dart';
@@ -40,16 +41,19 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
     case '/':
       page = Theme(
         data: authTheme,
-        child: const SignupScreen(),
+        child: SignupScreen(),
       );
       break;
     case AppRoutes.signin:
-      page = const HomeScreen();
+      page = Theme(
+        data: authTheme,
+        child: SigninScreen(),
+      );
       break;
     case AppRoutes.signup:
       page = Theme(
         data: authTheme,
-        child: const SignupScreen(),
+        child: SignupScreen(),
       );
       break;
     case AppRoutes.verify:

@@ -13,37 +13,42 @@ class Test extends StatefulWidget {
 }
 
 class _TestState extends State<Test> {
-  Future<void> submit() async {
-    // final loc = await PlacesService.instance.determinePosition();
-    final future = http.post(
-      Uri.https(
-        '49c7-102-89-32-36.ngrok.io',
-        '/bookings/',
-      ),
-      headers: {HttpHeaders.contentTypeHeader: 'application/json'},
-      body: jsonEncode(
-        {
-          "lat": 6.517871336509268,
-          "lon": 3.399740067230001,
-          "user_id": "jksdhfuihewuiohio2",
-        },
-      ),
-    );
+  // Future<void> submit() async {
+  //   // final loc = await PlacesService.instance.determinePosition();
+  //   final future = http.post(
+  //     Uri.https(
+  //       '49c7-102-89-32-36.ngrok.io',
+  //       '/bookings/',
+  //     ),
+  //     headers: {HttpHeaders.contentTypeHeader: 'application/json'},
+  //     body: jsonEncode(
+  //       {
+  //         'lat': 6.517871336509268,
+  //         'lon': 3.399740067230001,
+  //         'user_id': 'jksdhfuihewuiohio2',
+  //       },
+  //     ),
+  //   );
 
-    final response = await future;
-    print(response.body);
-    // setState(() {
-    //   status = Status.submitting;
-    // });
-    // await Future.delayed(const Duration(seconds: 1));
-    // setState(() {
-    //   status = Status.failed;
-    // });
-  }
+  //   final response = await future;
+  //   print(response.body);
+  //   // setState(() {
+  //   //   status = Status.submitting;
+  //   // });
+  //   // await Future.delayed(const Duration(seconds: 1));
+  //   // setState(() {
+  //   //   status = Status.failed;
+  //   // });
+  // }
+
+  final site = '96a7-102-89-41-79.ngrok.io';
 
 // Dart client
-  IO.Socket socket = IO.io('https://49c7-102-89-32-36.ngrok.io/',
+  IO.Socket socket = IO.io('https://96a7-102-89-41-79.ngrok.io/',
       IO.OptionBuilder().setTransports(['websocket']).build());
+
+  String? bookingId;
+  String? artisanId;
 
   @override
   void initState() {
@@ -52,10 +57,14 @@ class _TestState extends State<Test> {
     socket.onConnect((_) {
       print('connect');
     });
-    // socket.on('event', (data) => print("Event $data"));
+    // socket.on('event', (data) => print('Event $data'));
     socket.onDisconnect((_) => print('client disconnect'));
 
-    socket.on('msg', (data) => print('Offer $data'));
+    socket.on('msg', (data) {
+      print('Event update: $data');
+
+      artisanId = data['artisan_id'];
+    });
 
     super.initState();
   }
@@ -71,24 +80,89 @@ class _TestState extends State<Test> {
             InkWell(
               onTap: () {
                 socket.emit('close_offer', {
-                  {"booking_id": "9f04dd34-0c9a-48d6-b7a1-d00ab3e12536"}
+                  {'booking_id': '9f04dd34-0c9a-48d6-b7a1-d00ab3e12536'}
                 });
                 print('Close');
               },
-              child: Container(
+              child: Ink(
                 height: 80,
                 width: 80,
                 color: Colors.blue,
               ),
             ),
             InkWell(
-              onTap: () {
-                socket.emit('booking_update', {
-                  {"booking_id": "9f04dd34-0c9a-48d6-b7a1-d00ab3e12536"}
-                });
-                print('Update');
+              onTap: () async {
+                // final loc = await PlacesService.instance.determinePosition();
+                final future = http.post(
+                  Uri.https(
+                    site,
+                    '/user/',
+                  ),
+                  headers: {HttpHeaders.contentTypeHeader: 'application/json'},
+                  body: jsonEncode(
+                    {
+                      'name': 'Omaka',
+                      'telephone': '+38943984320',
+                      'email': 'omas44@outlook.com',
+                      'user_id': 'hSv2Aq5Bo3SSheaFFgqnuH9Sn0u1'
+                    },
+                  ),
+                );
+
+                final response = await future;
+                print(response.body);
               },
-              child: Container(
+              child: Ink(
+                height: 80,
+                width: 80,
+                color: Colors.green,
+              ),
+            ),
+            InkWell(
+              onTap: () async {
+                final future = http.post(
+                  Uri.https(
+                    site,
+                    '/bookings/',
+                  ),
+                  headers: {HttpHeaders.contentTypeHeader: 'application/json'},
+                  body: jsonEncode(
+                    {
+                      'lat': 6.517871336509268,
+                      'lon': 3.399740067230001,
+                      'user_id': 'u1ih272y8h3e',
+                      'job_category': 'carpentary',
+                    },
+                  ),
+                );
+
+                final response = await future;
+                print(response.body);
+
+                final json = jsonDecode(response.body);
+                bookingId = json['data']['booking_id'];
+
+                socket.emit('booking_update', {
+                  {'booking_id': bookingId}
+                });
+                print(bookingId);
+              },
+              child: Ink(
+                height: 80,
+                width: 80,
+                color: Colors.purple,
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                socket.emit('cancel_offer', {
+                  {
+                    'booking_id': bookingId,
+                    'artisan_id': artisanId,
+                  }
+                });
+              },
+              child: Ink(
                 height: 80,
                 width: 80,
                 color: Colors.red,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:handees/res/shapes.dart';
 import 'package:handees/theme/theme.dart';
@@ -23,12 +24,12 @@ class _TrackingScreenState extends State<TrackingScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Future.delayed(Duration(seconds: 2)).then((value) {
+    Future.delayed(const Duration(seconds: 2)).then((value) {
       setState(() {
         _trackingState = TrackingState.inProgress;
       });
     }).then((value) {
-      Future.delayed(Duration(seconds: 800000)).then((value) => {
+      Future.delayed(const Duration(seconds: 800000)).then((value) => {
             setState(() {
               _trackingState = TrackingState.arrived;
             })
@@ -42,13 +43,13 @@ class _TrackingScreenState extends State<TrackingScreen> {
 
     switch (_trackingState) {
       case TrackingState.loading:
-        bottomSheet = LoadingBottomSheet();
+        bottomSheet = const LoadingBottomSheet();
         break;
       case TrackingState.inProgress:
-        bottomSheet = InProgressBottomSheet();
+        bottomSheet = const InProgressBottomSheet();
         break;
       case TrackingState.arrived:
-        bottomSheet = ArrivedBottomSheet();
+        bottomSheet = const ArrivedBottomSheet();
         break;
       default:
     }
@@ -56,17 +57,24 @@ class _TrackingScreenState extends State<TrackingScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        // systemOverlayStyle: SystemUiOverlayStyle(
+        //   systemNavigationBarIconBrightness: Brightness.dark,
+        // ),
       ),
       extendBodyBehindAppBar: true,
-      bottomSheet: bottomSheet,
+      bottomSheet: Material(
+        elevation: 24,
+        shadowColor: Colors.black,
+        child: bottomSheet,
+      ),
       body: _trackingState == TrackingState.loading
-          ? Center(
+          ? const Center(
               child: Padding(
-                padding: EdgeInsets.only(bottom: 48.0),
+                padding: const EdgeInsets.only(bottom: 48.0),
                 child: CircleFadeOutLoader(),
               ),
             )
-          : GoogleMap(
+          : const GoogleMap(
               initialCameraPosition: CameraPosition(
                 target: LatLng(12, 15),
               ),
@@ -87,7 +95,7 @@ class ArrivedBottomSheet extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          SizedBox(height: 16.0),
+          const SizedBox(height: 16.0),
           Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: Text(
@@ -95,17 +103,17 @@ class ArrivedBottomSheet extends StatelessWidget {
               style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
-          SizedBox(height: 8.0),
+          const SizedBox(height: 8.0),
           Container(
             width: double.infinity,
-            padding: EdgeInsets.all(12.0),
+            padding: const EdgeInsets.all(12.0),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(40.0),
               color: Theme.of(context).colorScheme.primary,
             ),
             child: Row(
               children: [
-                CircleAvatar(radius: 28),
+                const CircleAvatar(radius: 28),
                 const SizedBox(width: 16),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -123,7 +131,7 @@ class ArrivedBottomSheet extends StatelessWidget {
                           Icons.money,
                           color: Theme.of(context).colorScheme.onPrimary,
                         ),
-                        SizedBox(width: 4.0),
+                        const SizedBox(width: 4.0),
                         Text(
                           '₦500/hr',
                           style: Theme.of(context)
@@ -137,16 +145,16 @@ class ArrivedBottomSheet extends StatelessWidget {
                     ),
                   ],
                 ),
-                Spacer(),
+                const Spacer(),
                 Container(
                   decoration: ShapeDecoration(
-                    color: Color.fromRGBO(253, 223, 242, 1),
+                    color: const Color.fromRGBO(253, 223, 242, 1),
                     shape: Shapes.mediumShape,
                   ),
                   height: 64,
                   width: 64,
-                  child: Center(
-                    child: CircleAvatar(
+                  child: const Center(
+                    child: const CircleAvatar(
                       backgroundColor: Color.fromRGBO(255, 125, 203, 1),
                       child: Icon(Icons.abc),
                     ),
@@ -155,25 +163,25 @@ class ArrivedBottomSheet extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: 24.0),
+          const SizedBox(height: 24.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
                 child: ElevatedButton(
                   onPressed: () {},
-                  child: Text('Call'),
+                  child: const Text('Call'),
                   style: Theme.of(context)
                       .extension<ButtonThemeExtensions>()
                       ?.filled,
                 ),
               ),
-              SizedBox(width: 16),
+              const SizedBox(width: 16),
               Expanded(
                 // width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {},
-                  child: Text('Message'),
+                  child: const Text('Message'),
                   style: Theme.of(context)
                       .extension<ButtonThemeExtensions>()
                       ?.tonal,
@@ -181,7 +189,7 @@ class ArrivedBottomSheet extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 8.0),
+          const SizedBox(height: 8.0),
         ],
       ),
     );
