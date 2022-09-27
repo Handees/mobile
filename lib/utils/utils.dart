@@ -25,15 +25,15 @@ mixin InputValidationMixin {
   }
 }
 
-void showSnackBar(BuildContext context, String message) {
-  ScaffoldMessenger.of(context).clearSnackBars();
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      content: Text(message),
-      behavior: SnackBarBehavior.floating,
-      // shape: RoundedRectangleBorder(
-      //   borderRadius: BorderRadius.circular(10),
-      // ),
-    ),
-  );
-}
+// void showSnackBar(BuildContext context, String message) {
+//   ScaffoldMessenger.of(context).clearSnackBars();
+//   ScaffoldMessenger.of(context).showSnackBar(
+//     SnackBar(
+//       content: Text(message),
+//       behavior: SnackBarBehavior.floating,
+//       // shape: RoundedRectangleBorder(
+//       //   borderRadius: BorderRadius.circular(10),
+//       // ),
+//     ),
+//   );
+// }

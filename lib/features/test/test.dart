@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:socket_io_client/socket_io_client.dart' as IO;
@@ -41,10 +42,11 @@ class _TestState extends State<Test> {
   //   // });
   // }
 
-  final site = '96a7-102-89-41-79.ngrok.io';
+  final site = 'fef9-197-211-58-29.ngrok.io';
+  late String token;
 
 // Dart client
-  IO.Socket socket = IO.io('https://96a7-102-89-41-79.ngrok.io/',
+  IO.Socket socket = IO.io('https://fef9-197-211-58-29.ngrok.io/',
       IO.OptionBuilder().setTransports(['websocket']).build());
 
   String? bookingId;
@@ -52,6 +54,10 @@ class _TestState extends State<Test> {
 
   @override
   void initState() {
+    FirebaseAuth.instance.currentUser!
+        .getIdToken()
+        .then((value) => token = value);
+
     socket.connect();
 
     socket.onConnect((_) {
@@ -69,6 +75,7 @@ class _TestState extends State<Test> {
     super.initState();
   }
 
+  late String vId;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -153,19 +160,84 @@ class _TestState extends State<Test> {
                 color: Colors.purple,
               ),
             ),
+            TextField(
+              onTap: () async {
+                // socket.emit('cancel_offer', {
+                //   {
+                //     'booking_id': bookingId,
+                //     'artisan_id': artisanId,
+                //   }
+                // });
+
+                await FirebaseAuth.instance.verifyPhoneNumber(
+                  phoneNumber: '+2348052345679',
+                  verificationCompleted: (phoneAuthCredential) {
+                    print('phoneCred is $phoneAuthCredential');
+                    // FirebaseAuth.instance.currentUser
+                    //     ?.updatePhoneNumber(phoneAuthCredential);
+                    // credential.user?.linkWithCredential(phoneAuthCredential);
+                  },
+                  verificationFailed: (error) {
+                    print('verification error $error');
+                  },
+                  codeSent: (verificationId, forceResendingToken) {
+                    print('code sent');
+                    vId = verificationId;
+                  },
+                  codeAutoRetrievalTimeout: (verificationId) {
+                    // String smsCode = 'xxxx';
+
+                    // // Create a PhoneAuthCredential with the code
+                    // PhoneAuthCredential phoneAuthCredential =
+                    //     PhoneAuthProvider.credential(
+                    //         verificationId: verificationId, smsCode: smsCode);
+
+                    // credential.user?.updatePhoneNumber(phoneAuthCredential);
+                  },
+                );
+
+                // PhoneAuthCredential phoneAuthCredential =
+                //     PhoneAuthProvider.credential(
+                //         verificationId: verificationId, smsCode: '254350');
+
+                // FirebaseAuth.instance.currentUser
+                //     ?.updatePhoneNumber(phoneAuthCredential);
+              },
+              onSubmitted: (value) {
+                String smsCode = value;
+                // Create a PhoneAuthCredential with the code
+                PhoneAuthCredential phoneAuthCredential =
+                    PhoneAuthProvider.credential(
+                        verificationId: vId, smsCode: smsCode);
+
+                // FirebaseAuth.instance.currentUser
+                //     ?.updatePhoneNumber(phoneAuthCredential);
+                FirebaseAuth.instance.currentUser
+                    ?.linkWithCredential(phoneAuthCredential);
+              },
+            ),
             InkWell(
-              onTap: () {
-                socket.emit('cancel_offer', {
-                  {
-                    'booking_id': bookingId,
-                    'artisan_id': artisanId,
-                  }
-                });
+              onTap: () async {
+                print(token);
+                // final loc = await PlacesService.instance.determinePosition();
+                final future = http.get(
+                  Uri.https(
+                    site,
+                    '/user/bookings',
+                  ),
+                  headers: {
+                    // HttpHeaders.contentTypeHeader: 'application/json',
+                    'access-token': token,
+                  },
+                );
+
+                final response = await future;
+                print(response.body);
               },
               child: Ink(
                 height: 80,
                 width: 80,
-                color: Colors.red,
+                color: Colors.brown,
               ),
             ),
           ],

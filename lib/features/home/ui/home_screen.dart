@@ -1,5 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:handees/features/auth/models/auth_model.dart';
+import 'package:handees/features/auth/services/auth_service.dart';
 import 'package:handees/features/test/test.dart';
 
 import 'package:handees/res/shapes.dart';
@@ -11,15 +15,15 @@ import 'package:handees/utils/widgets/custom_delegate.dart';
 import 'pick_service_bottom_sheet.dart';
 import 'service_card.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     const horizontalPadding = 16.0;
     const drawerItemHeight = 56.0;
 
-    Icons.money;
+    final authModel = ref.watch(authProvider.notifier);
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -111,7 +115,11 @@ class HomeScreen extends StatelessWidget {
                     ),
                     Divider(),
                     ListTile(
-                      onTap: () {},
+                      onTap: () {
+                        authModel.signoutUser();
+                        Navigator.of(context)
+                            .pushReplacementNamed(AppRoutes.signin);
+                      },
                       leading: Icon(Icons.help_outline_outlined),
                       title: Text('FAQ'),
                     ),

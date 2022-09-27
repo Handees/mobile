@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:handees/features/auth/services/auth_service.dart';
 import 'package:handees/routes/routes.dart';
 import 'package:handees/theme/theme.dart';
 import 'package:handees/utils/utils.dart';
 
-import '../widgets/auth_textfield.dart';
+import '../../models/auth_model.dart';
 import '../widgets/phone_proceed_dialog.dart';
 
 class SignupScreen extends ConsumerWidget with InputValidationMixin {
@@ -19,10 +18,35 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    String email = '';
-    String password = '';
-    String name = '';
-    String phone = '';
+    final model = ref.watch(authProvider.notifier);
+    final signinState = ref.watch(authProvider);
+
+    String? phoneError;
+    String? emailError;
+    String? passwordError;
+
+    print(signinState);
+
+    switch (signinState) {
+      case AuthState.invalidPhone:
+        phoneError = 'Not a valid phone number';
+        break;
+      case AuthState.phoneInUse:
+        phoneError = 'An account already exists with this phone number';
+        break;
+      case AuthState.emailInUse:
+        emailError = 'An account already exists with this email';
+        break;
+      case AuthState.invalidPassword:
+        passwordError = 'Password too weak';
+        break;
+      default:
+    }
+
+    if (signinState == AuthState.authenticated) {
+      Future.microtask(
+          () => Navigator.of(context).pushReplacementNamed(AppRoutes.home));
+    }
 
     return Scaffold(
       body: SafeArea(
@@ -48,57 +72,41 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
                         ),
                       ),
                     ),
-                    const Spacer(flex: 2),
+                    const Spacer(flex: 1),
                     Form(
                       key: _formGlobalKey,
                       child: Column(
                         children: [
-                          AuthTextField(
-                            hintText: 'Name',
+                          const SizedBox(height: 16),
+                          TextFormField(
+                            decoration: InputDecoration(
+                              labelText: 'Name',
+                              hintText: 'Omaka',
+                            ),
                             textCapitalization: TextCapitalization.words,
-                            onSaved: (value) {
-                              name = value!;
-                            },
-                            validator: (value) {
-                              if (value != null && value.isNotEmpty) {
-                                return null;
-                              }
-                              const errorMessage = 'Invalid name';
-                              showSnackBar(context, errorMessage);
-                              return errorMessage;
-                            },
+                            onSaved: model.onNameSaved,
+                            validator: model.nameValidator,
                           ),
                           const SizedBox(height: 24),
-                          AuthTextField(
-                            hintText: 'Phone',
-                            onSaved: (value) {
-                              phone = value!;
-                            },
-                            validator: (value) {
-                              if (value != null && isNumberValid(value)) {
-                                return null;
-                              }
-
-                              const errorMessage = 'Invalid phone number';
-                              showSnackBar(context, errorMessage);
-                              return errorMessage;
-                            },
+                          TextFormField(
+                            decoration: InputDecoration(
+                                labelText: 'Phone',
+                                hintText: '+2348123456789',
+                                errorText: phoneError
+                                // icon: CircleAvatar(),
+                                ),
+                            onSaved: model.onPhoneSaved,
+                            validator: model.phoneValidator,
                           ),
                           const SizedBox(height: 24),
-                          AuthTextField(
-                            hintText: 'Email',
-                            onSaved: (value) {
-                              email = value!;
-                            },
-                            validator: (value) {
-                              if (value != null && isEmailValid(value)) {
-                                return null;
-                              }
-
-                              const errorMessage = 'Invalid Email';
-                              showSnackBar(context, errorMessage);
-                              return errorMessage;
-                            },
+                          TextFormField(
+                            decoration: InputDecoration(
+                              labelText: 'Email',
+                              hintText: 'example123@examples.com',
+                              errorText: emailError,
+                            ),
+                            onSaved: model.onEmailSaved,
+                            validator: model.emailValidator,
                           ),
                           const SizedBox(height: 24),
                           Consumer(
@@ -106,34 +114,28 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
                               final obscureText =
                                   ref.watch(_obscureTextProvider);
 
-                              return AuthTextField(
-                                hintText: 'Password',
-                                obscureText: ref.watch(_obscureTextProvider),
-                                onSaved: (value) {
-                                  password = value!;
-                                },
-                                icon: IconButton(
-                                  icon: Icon(
-                                    obscureText ? Icons.abc : Icons.password,
+                              return TextFormField(
+                                decoration: InputDecoration(
+                                  labelText: 'Password',
+                                  hintText: '••••••••••••',
+                                  errorText: passwordError,
+                                  suffixIcon: IconButton(
+                                    icon: Icon(
+                                      obscureText ? Icons.abc : Icons.password,
+                                    ),
+                                    // color: obscureText
+                                    //     ? Theme.of(context).unselectedWidgetColor
+                                    //     : null,
+                                    onPressed: () {
+                                      ref
+                                          .read(_obscureTextProvider.state)
+                                          .update((state) => state = !state);
+                                    },
                                   ),
-                                  // color: obscureText
-                                  //     ? Theme.of(context).unselectedWidgetColor
-                                  //     : null,
-                                  onPressed: () {
-                                    ref
-                                        .read(_obscureTextProvider.state)
-                                        .update((state) => state = !state);
-                                  },
                                 ),
-                                validator: (value) {
-                                  if (value != null && isPasswordValid(value)) {
-                                    return null;
-                                  }
-
-                                  const errorMessage = 'Weak password';
-                                  showSnackBar(context, errorMessage);
-                                  return errorMessage;
-                                },
+                                obscureText: ref.watch(_obscureTextProvider),
+                                onSaved: model.onPasswordSaved,
+                                validator: model.passwordValidator,
                               );
                             },
                           ),
@@ -170,6 +172,7 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
                         ),
                         InkWell(
                           onTap: () {
+                            model.resetState();
                             Navigator.of(context)
                                 .pushReplacementNamed(AppRoutes.signin);
                           },
@@ -181,24 +184,22 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (ctx) {
-                              return const PhoneProceedDialog();
-                            },
-                          );
+                        onPressed: signinState == AuthState.loading
+                            ? null
+                            : () {
+                                // showDialog(
+                                //   context: context,
+                                //   builder: (ctx) {
+                                //     return const PhoneProceedDialog();
+                                //   },
+                                // );
 
-                          if (!_formGlobalKey.currentState!.validate()) return;
-
-                          _formGlobalKey.currentState?.save();
-                          print(
-                              'Email: $email, Password: $password, Name: $name');
-
-                          ref
-                              .read(authServiceProvider)
-                              .signupUser(email, password, name);
-                        },
+                                if (!_formGlobalKey.currentState!.validate()) {
+                                  return;
+                                }
+                                _formGlobalKey.currentState?.save();
+                                model.signupUser();
+                              },
                         style: Theme.of(context)
                             .extension<ButtonThemeExtensions>()
                             ?.filled,

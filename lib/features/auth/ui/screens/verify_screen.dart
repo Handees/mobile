@@ -33,11 +33,12 @@ class VerifyScreen extends StatelessWidget {
                 onChanged: (value) {},
                 keyboardType: TextInputType.number,
                 pinTheme: PinTheme(
+                  borderRadius: BorderRadius.circular(4.0),
                   shape: PinCodeFieldShape.box,
                   activeColor: Theme.of(context).unselectedWidgetColor,
                   selectedColor: Theme.of(context).colorScheme.primary,
                   inactiveColor: Theme.of(context).unselectedWidgetColor,
-                  disabledColor: Theme.of(context).unselectedWidgetColor,
+                  // disabledColor: Theme.of(context).unselectedWidgetColor,
                 ),
               ),
             ),

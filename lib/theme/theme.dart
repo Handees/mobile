@@ -58,14 +58,14 @@ ThemeData buildTheme(ColorScheme colorScheme) => ThemeData.from(
       extensions: [
         ButtonThemeExtensions(
           filled: ElevatedButton.styleFrom(
-            onPrimary: colorScheme.onPrimary,
-            primary: colorScheme.primary,
+            foregroundColor: colorScheme.onPrimary,
+            backgroundColor: colorScheme.primary,
           ).copyWith(
             elevation: ButtonStyleButton.allOrNull(0.0),
           ),
           tonal: ElevatedButton.styleFrom(
-            onPrimary: colorScheme.onSecondaryContainer,
-            primary: colorScheme.secondaryContainer,
+            foregroundColor: colorScheme.onSecondaryContainer,
+            backgroundColor: colorScheme.secondaryContainer,
           ).copyWith(
             elevation: ButtonStyleButton.allOrNull(0.0),
           ),
@@ -77,7 +77,25 @@ final lightTheme = buildTheme(lightColorScheme);
 
 final darkTheme = buildTheme(darkColorScheme);
 
-final authTheme = buildTheme(authColorScheme);
+final authTheme = buildTheme(authColorScheme).copyWith(
+  inputDecorationTheme: InputDecorationTheme(
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(4.0),
+    ),
+    // enabledBorder: OutlineInputBorder(
+    //   borderSide: BorderSide(
+    //     width: 2.0,
+    //     color: authColorScheme.onBackground,
+    //   ),
+    // ),
+    // errorBorder: OutlineInputBorder(
+    //   borderSide: BorderSide(
+    //     width: 2.0,
+    //     color: authColorScheme.error,
+    //   ),
+    // ),
+  ),
+);
 
 @immutable
 class ButtonThemeExtensions extends ThemeExtension<ButtonThemeExtensions> {

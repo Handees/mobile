@@ -1,3 +1,4 @@
+import 'package:auth/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:handees/features/auth/ui/screens/signin_screen.dart';
 import 'package:handees/features/auth/ui/screens/signup_screen.dart';
@@ -39,10 +40,12 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
   MaterialPageRoute? pageRoute;
   switch (settings.name) {
     case '/':
-      page = Theme(
-        data: authTheme,
-        child: SignupScreen(),
-      );
+      page = FirebaseAuth.instance.currentUser == null
+          ? Theme(
+              data: authTheme,
+              child: SigninScreen(),
+            )
+          : HomeScreen();
       break;
     case AppRoutes.signin:
       page = Theme(

@@ -26,31 +26,15 @@ class PhoneProceedDialog extends StatelessWidget {
           SizedBox(height: 24),
           Text('You’ll receive a 4 digit code to verify'),
           SizedBox(height: 24),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                // width: double.infinity,
-                child: OutlinedButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text('Use Email'),
-                ),
-              ),
-              SizedBox(width: 16),
-              Expanded(
-                // width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () =>
-                      Navigator.of(context).pushNamed(AppRoutes.verify),
-                  child: Text('Continue'),
-                  style: Theme.of(context)
-                      .extension<ButtonThemeExtensions>()
-                      ?.filled,
-                ),
-              )
-            ],
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: () =>
+                  Navigator.of(context).pushNamed(AppRoutes.verify),
+              child: Text('Continue'),
+              style:
+                  Theme.of(context).extension<ButtonThemeExtensions>()?.filled,
+            ),
           ),
         ],
       ),
