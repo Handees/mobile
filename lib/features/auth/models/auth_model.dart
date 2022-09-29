@@ -1,5 +1,6 @@
 import 'package:auth/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/features/auth/services/auth_service.dart';
 import 'package:handees/utils/utils.dart';
@@ -10,7 +11,10 @@ final authProvider = StateNotifierProvider<AuthModel, AuthState>((ref) {
 });
 
 class AuthModel extends StateNotifier<AuthState> with InputValidationMixin {
-  final authInstance = FirebaseAuth.instance;
+  AuthModel(this.authService)
+      : super(authService.isAuthenticated()
+            ? AuthState.authenticated
+            : AuthState.waiting);
 
   final AuthService authService;
 
@@ -19,77 +23,8 @@ class AuthModel extends StateNotifier<AuthState> with InputValidationMixin {
   String _email = '';
   String _password = '';
 
-  // bool obscureText = true;
-
-  // void toggle
-
-  void signinUser() async {
-    // if (!_formGlobalKey.currentState!.validate()) return;
-
-    // _formGlobalKey.currentState?.save();
-    // print(
-    //     'Email: $email, Password: $password, Name: $name');
-    state = AuthState.loading;
-    final response = await authService.signinUser(_email, _password);
-    // await Future.delayed(Duration(seconds: 2));
-
-    switch (response) {
-      case AuthResponse.success:
-        state = AuthState.authenticated;
-        break;
-      case AuthResponse.incorrectPassword:
-        state = AuthState.invalidPassword;
-        break;
-      case AuthResponse.noSuchEmail:
-        state = AuthState.noSuchEmail;
-        break;
-      case AuthResponse.unknownError:
-        state = AuthState.waiting;
-        break;
-      default:
-        state = AuthState.waiting;
-    }
-  }
-
-  void signupUser() async {
-    state = AuthState.loading;
-    final response = await authService.signupUser(
-      email: _email,
-      password: _password,
-      name: _name,
-      phone: _phone,
-    );
-    // await Future.delayed(Duration(seconds: 2));
-
-    switch (response) {
-      case AuthResponse.success:
-        state = AuthState.authenticated;
-        break;
-      case AuthResponse.weakPassword:
-        state = AuthState.invalidPassword;
-        break;
-      case AuthResponse.emailInUse:
-        state = AuthState.emailInUse;
-        break;
-      case AuthResponse.invalidPhone:
-        state = AuthState.invalidPhone;
-        break;
-
-      case AuthResponse.phoneInUse:
-        state = AuthState.phoneInUse;
-        break;
-      case AuthResponse.unknownError:
-        state = AuthState.waiting;
-        break;
-      default:
-        state = AuthState.waiting;
-    }
-  }
-
-  void signoutUser() {
-    resetState();
-    authService.signoutUser();
-  }
+  // String _smsCode = '';
+  late String _verificationId;
 
   String? emailValidator(String? email) {
     if (email != null && isEmailValid(email)) {
@@ -129,6 +64,137 @@ class AuthModel extends StateNotifier<AuthState> with InputValidationMixin {
   void onNameSaved(String? name) => _name = name!;
   void onPhoneSaved(String? phone) => _phone = phone!;
 
+  void signinUser() async {
+    // if (!_formGlobalKey.currentState!.validate()) return;
+
+    // _formGlobalKey.currentState?.save();
+    // print(
+    //     'Email: $email, Password: $password, Name: $name');
+    state = AuthState.loading;
+    final response = await authService.signinUser(_email, _password);
+    // await Future.delayed(Duration(seconds: 2));
+
+    switch (response) {
+      case AuthResponse.success:
+        state = AuthState.authenticated;
+        break;
+      case AuthResponse.incorrectPassword:
+        state = AuthState.invalidPassword;
+        break;
+      case AuthResponse.noSuchEmail:
+        state = AuthState.noSuchEmail;
+        break;
+      case AuthResponse.unknownError:
+        state = AuthState.waiting;
+        break;
+      default:
+        state = AuthState.waiting;
+    }
+  }
+
+  void verifyNumber(String smsCode) async {
+    state = AuthState.loading;
+    final response = await authService.verifyNumber(smsCode, _verificationId);
+    // await Future.delayed(Duration(seconds: 2));
+
+    switch (response) {
+      case AuthResponse.success:
+        final completeResponse =
+            await authService.completeProfile(_email, _password, _name);
+
+        switch (completeResponse) {
+          case AuthResponse.success:
+            state = AuthState.authenticated;
+            break;
+          case AuthResponse.weakPassword:
+            state = AuthState.invalidPassword;
+            break;
+          case AuthResponse.emailInUse:
+            state = AuthState.emailInUse;
+            break;
+          case AuthResponse.invalidEmail:
+            state = AuthState.invalidEmail;
+            break;
+          case AuthResponse.unknownError:
+            state = AuthState.waiting;
+            break;
+          default:
+            state = AuthState.waiting;
+        }
+
+        break;
+      case AuthResponse.phoneInUse:
+        state = AuthState.phoneInUse;
+        break;
+      case AuthResponse.invalidPhone:
+        state = AuthState.invalidPhone;
+        break;
+      case AuthResponse.invalidVerificationCode:
+        state = AuthState.invalidVerificationCode;
+        break;
+      case AuthResponse.unknownError:
+        state = AuthState.waiting;
+        break;
+      default:
+        state = AuthState.waiting;
+    }
+  }
+
+  void signupUser({required void Function() onCodeSent}) async {
+    state = AuthState.loading;
+
+    if (await authService.emailInUse(_email)) {
+      state = AuthState.emailInUse;
+      return;
+    }
+
+    authService.signupWithPhone(
+      phone: _phone,
+      onCodeSent: (verificationId, forceResendingToken) {
+        state = AuthState.verifying;
+        _verificationId = verificationId;
+        onCodeSent();
+      },
+      onVerifcationComplete: (phoneAuthCredential) async {
+        state = AuthState.authenticated;
+      },
+      onVerificationFailed: (error) {
+        debugPrint('Phone verification failed with error $error');
+        state = AuthState.waiting;
+      },
+    );
+    // await Future.delayed(Duration(seconds: 2));
+
+    // switch (response) {
+    //   case AuthResponse.success:
+    //     state = AuthState.authenticated;
+    //     break;
+    //   case AuthResponse.weakPassword:
+    //     state = AuthState.invalidPassword;
+    //     break;
+    //   case AuthResponse.emailInUse:
+    //     state = AuthState.emailInUse;
+    //     break;
+    //   case AuthResponse.invalidPhone:
+    //     state = AuthState.invalidPhone;
+    //     break;
+
+    //   case AuthResponse.phoneInUse:
+    //     state = AuthState.phoneInUse;
+    //     break;
+    //   case AuthResponse.unknownError:
+    //     state = AuthState.waiting;
+    //     break;
+    //   default:
+    //     state = AuthState.waiting;
+    // }
+  }
+
+  void signoutUser() {
+    resetState();
+    authService.signoutUser();
+  }
+
   void resetState() {
     _email = '';
     _name = '';
@@ -136,20 +202,18 @@ class AuthModel extends StateNotifier<AuthState> with InputValidationMixin {
     _phone = '';
     state = AuthState.waiting;
   }
-
-  AuthModel(this.authService)
-      : super(FirebaseAuth.instance.currentUser == null
-            ? AuthState.waiting
-            : AuthState.authenticated);
 }
 
 enum AuthState {
   waiting,
   loading,
+  verifying,
   authenticated,
   noSuchEmail,
   invalidPassword,
   invalidPhone,
+  invalidVerificationCode,
+  invalidEmail,
   emailInUse,
   phoneInUse,
 }

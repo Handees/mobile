@@ -18,11 +18,17 @@ class SigninScreen extends ConsumerWidget with InputValidationMixin {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final model = ref.watch(authProvider.notifier);
-    final signinState = ref.watch(authProvider);
+    final authState = ref.watch(authProvider);
 
-    if (signinState == AuthState.authenticated) {
+    // print('signingstate $authState');
+
+    if (authState == AuthState.authenticated) {
       Future.microtask(
-          () => Navigator.of(context).pushReplacementNamed(AppRoutes.home));
+        () => Navigator.of(context).pushNamedAndRemoveUntil(
+          AppRoutes.home,
+          (route) => false,
+        ),
+      );
     }
 
     return Scaffold(
@@ -60,7 +66,7 @@ class SigninScreen extends ConsumerWidget with InputValidationMixin {
                             validator: model.emailValidator,
                             decoration: InputDecoration(
                               hintText: 'Phone or email',
-                              errorText: signinState == AuthState.noSuchEmail
+                              errorText: authState == AuthState.noSuchEmail
                                   ? 'No account exists with this email'
                                   : null,
                             ),
@@ -79,7 +85,7 @@ class SigninScreen extends ConsumerWidget with InputValidationMixin {
                                 decoration: InputDecoration(
                                   hintText: 'Password',
                                   errorText:
-                                      signinState == AuthState.invalidPassword
+                                      authState == AuthState.invalidPassword
                                           ? 'Incorrect password'
                                           : null,
                                   suffixIcon: IconButton(
@@ -145,7 +151,7 @@ class SigninScreen extends ConsumerWidget with InputValidationMixin {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: signinState == AuthState.loading
+                        onPressed: authState == AuthState.loading
                             ? null
                             : () {
                                 if (!_formGlobalKey.currentState!.validate()) {

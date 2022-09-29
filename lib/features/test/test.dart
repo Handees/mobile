@@ -161,59 +161,12 @@ class _TestState extends State<Test> {
               ),
             ),
             TextField(
-              onTap: () async {
-                // socket.emit('cancel_offer', {
-                //   {
-                //     'booking_id': bookingId,
-                //     'artisan_id': artisanId,
-                //   }
-                // });
-
-                await FirebaseAuth.instance.verifyPhoneNumber(
-                  phoneNumber: '+2348052345679',
-                  verificationCompleted: (phoneAuthCredential) {
-                    print('phoneCred is $phoneAuthCredential');
-                    // FirebaseAuth.instance.currentUser
-                    //     ?.updatePhoneNumber(phoneAuthCredential);
-                    // credential.user?.linkWithCredential(phoneAuthCredential);
-                  },
-                  verificationFailed: (error) {
-                    print('verification error $error');
-                  },
-                  codeSent: (verificationId, forceResendingToken) {
-                    print('code sent');
-                    vId = verificationId;
-                  },
-                  codeAutoRetrievalTimeout: (verificationId) {
-                    // String smsCode = 'xxxx';
-
-                    // // Create a PhoneAuthCredential with the code
-                    // PhoneAuthCredential phoneAuthCredential =
-                    //     PhoneAuthProvider.credential(
-                    //         verificationId: verificationId, smsCode: smsCode);
-
-                    // credential.user?.updatePhoneNumber(phoneAuthCredential);
-                  },
-                );
-
-                // PhoneAuthCredential phoneAuthCredential =
-                //     PhoneAuthProvider.credential(
-                //         verificationId: verificationId, smsCode: '254350');
-
-                // FirebaseAuth.instance.currentUser
-                //     ?.updatePhoneNumber(phoneAuthCredential);
-              },
               onSubmitted: (value) {
-                String smsCode = value;
-                // Create a PhoneAuthCredential with the code
-                PhoneAuthCredential phoneAuthCredential =
-                    PhoneAuthProvider.credential(
-                        verificationId: vId, smsCode: smsCode);
+                print(
+                    'Email verified ${FirebaseAuth.instance.currentUser?.email?.isEmpty}');
 
-                // FirebaseAuth.instance.currentUser
-                //     ?.updatePhoneNumber(phoneAuthCredential);
-                FirebaseAuth.instance.currentUser
-                    ?.linkWithCredential(phoneAuthCredential);
+                // FirebaseAuth.instance.currentUser?.updateEmail(value);
+                // FirebaseAuth.instance.currentUser?.updatePassword('zalyzek4');
               },
             ),
             InkWell(

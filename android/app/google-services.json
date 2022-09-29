@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "497088547007-fjr05iaunob43cqu9uc0q9fjf29lucat.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.handees",
+            "certificate_hash": "8cdecbb12f1765eb777d170946863f6cbd340b6e"
+          }
+        },
+        {
           "client_id": "497088547007-62kmdetgchl8j6e8kjvbuihsf8adlvkh.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,6 +37,13 @@
             {
               "client_id": "497088547007-62kmdetgchl8j6e8kjvbuihsf8adlvkh.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "497088547007-c9das9k5ggi23opcmmfqbpn06s1qte93.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.handees"
+              }
             }
           ]
         }

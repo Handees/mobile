@@ -10,12 +10,14 @@ class AuthService {
   late String _verificationId;
   final firebaseAuth = FirebaseAuth.instance;
 
-  Future<bool> checkIfEmailInUse(String emailAddress) async {
+  bool isAuthenticated() =>
+      firebaseAuth.currentUser != null &&
+      firebaseAuth.currentUser!.email!.isNotEmpty;
+
+  Future<bool> emailInUse(String emailAddress) async {
     try {
       // Fetch sign-in methods for the email address
-      final list =
-          await FirebaseAuth.instance.fetchSignInMethodsForEmail(emailAddress);
-
+      final list = await firebaseAuth.fetchSignInMethodsForEmail(emailAddress);
       // In case list is not empty
       if (list.isNotEmpty) {
         // Return true because there is an existing
@@ -28,49 +30,6 @@ class AuthService {
     } catch (error) {
       debugPrint(error.toString());
       return true;
-    }
-  }
-
-  Future<AuthResponse> verifyNumber(
-      String smsCode, String verificationId) async {
-    // Create a PhoneAuthCredential with the code
-    PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.credential(
-      verificationId: verificationId,
-      smsCode: smsCode,
-    );
-    try {
-      final credential =
-          await FirebaseAuth.instance.signInWithCredential(phoneAuthCredential);
-      return AuthResponse.success;
-    } on FirebaseAuthException catch (e) {
-      String message = 'An error occured';
-      AuthResponse response;
-
-      switch (e.code) {
-        case 'account-exists-with-different-credential':
-          message = 'An account already exists for that phone number';
-          response = AuthResponse.phoneInUse;
-          break;
-        case 'invalid-verification-code':
-        case 'invalid-verification-id':
-          message =
-              'An error occured. Please try resending the verification code';
-          response = AuthResponse.invalidVerificationCode;
-          break;
-        case 'invalid-phone-number':
-          message = 'The phone number provided is not valid';
-          response = AuthResponse.invalidPhone;
-          break;
-        default:
-          message = e.toString();
-          response = AuthResponse.unknownError;
-      }
-      debugPrint(message);
-      return response;
-    } catch (e) {
-      final message = 'Auth Execption: $e';
-      debugPrint(message);
-      return AuthResponse.unknownError;
     }
   }
 
@@ -109,23 +68,22 @@ class AuthService {
     }
   }
 
-  Future<AuthResponse> linkWithEmail(
+  Future<AuthResponse> completeProfile(
     String email,
     String password,
+    String name,
   ) async {
-    try {
-      final credential = await firebaseAuth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+    final user = firebaseAuth.currentUser!;
 
-      await credential.user?.updateDisplayName(name);
-      // await credential.user?.updatePhoneNumber(phoneCredential) //TODO: add phone
+    try {
+      await user.updatePassword(password);
+      await user.updateEmail(email);
+      await user.updateDisplayName(name);
 
       return AuthResponse.success;
     } on FirebaseAuthException catch (e) {
       String message = 'An error occured';
-      AuthResponse response;
+      AuthResponse response = AuthResponse.unknownError;
 
       switch (e.code) {
         case 'weak-password':
@@ -136,9 +94,54 @@ class AuthService {
           message = 'An account already exists for that email.';
           response = AuthResponse.emailInUse;
           break;
-        case 'phone-number-already-exists':
+        case 'invalid-email':
+          message = 'Not a valid email';
+          response = AuthResponse.invalidEmail;
+          break;
+        case 'requires-recent-login':
+          message =
+              'Requires recent login. Shouldn\'t occur as this is instantenous';
+          break;
+
+        default:
+          message = e.toString();
+      }
+
+      debugPrint(message);
+      return response;
+    } catch (e) {
+      final message = 'Auth Execption: $e';
+      debugPrint(message);
+      return AuthResponse.unknownError;
+    }
+  }
+
+  Future<AuthResponse> verifyNumber(
+      String smsCode, String verificationId) async {
+    // Create a PhoneAuthCredential with the code
+    PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.credential(
+      verificationId: verificationId,
+      smsCode: smsCode,
+    );
+    print('Verifying with smscode $smsCode and id $verificationId');
+    try {
+      final credential =
+          await FirebaseAuth.instance.signInWithCredential(phoneAuthCredential);
+      return AuthResponse.success;
+    } on FirebaseAuthException catch (e) {
+      String message = 'An error occured';
+      AuthResponse response;
+
+      switch (e.code) {
+        case 'account-exists-with-different-credential':
           message = 'An account already exists for that phone number';
           response = AuthResponse.phoneInUse;
+          break;
+        case 'invalid-verification-code':
+        case 'invalid-verification-id':
+          message =
+              'An error occured. Please try resending the verification code';
+          response = AuthResponse.invalidVerificationCode;
           break;
         case 'invalid-phone-number':
           message = 'The phone number provided is not valid';
@@ -157,13 +160,23 @@ class AuthService {
     }
   }
 
-  Future<AuthResponse> signupUser({
-    required String email,
-    required String password,
-    required String name,
+  void signupWithPhone({
     required String phone,
-  }) async {
-    if (await checkIfEmailInUse(email)) return AuthResponse.emailInUse;
+    required void Function(String verificationId, int? forceResendingToken)
+        onCodeSent,
+    required void Function(PhoneAuthCredential phoneAuthCredential)
+        onVerifcationComplete,
+    required void Function(FirebaseAuthException error) onVerificationFailed,
+  }) {
+    // await credential.user?.updateDisplayName(name);
+
+    FirebaseAuth.instance.verifyPhoneNumber(
+      phoneNumber: phone,
+      verificationCompleted: onVerifcationComplete,
+      verificationFailed: onVerificationFailed,
+      codeSent: onCodeSent,
+      codeAutoRetrievalTimeout: (verificationId) {},
+    );
   }
 
   void signoutUser() => firebaseAuth.signOut();
@@ -177,6 +190,7 @@ enum AuthResponse {
   weakPassword,
   emailInUse,
   phoneInUse,
+  invalidEmail,
   invalidPhone,
   invalidVerificationCode,
 }

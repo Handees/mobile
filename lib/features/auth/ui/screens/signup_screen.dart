@@ -19,15 +19,13 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final model = ref.watch(authProvider.notifier);
-    final signinState = ref.watch(authProvider);
+    final authState = ref.watch(authProvider);
 
     String? phoneError;
     String? emailError;
     String? passwordError;
 
-    print(signinState);
-
-    switch (signinState) {
+    switch (authState) {
       case AuthState.invalidPhone:
         phoneError = 'Not a valid phone number';
         break;
@@ -40,12 +38,19 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
       case AuthState.invalidPassword:
         passwordError = 'Password too weak';
         break;
+      case AuthState.invalidEmail:
+        emailError = 'Not a valid email';
+        break;
       default:
     }
 
-    if (signinState == AuthState.authenticated) {
+    if (authState == AuthState.authenticated) {
       Future.microtask(
-          () => Navigator.of(context).pushReplacementNamed(AppRoutes.home));
+        () => Navigator.of(context).pushNamedAndRemoveUntil(
+          AppRoutes.home,
+          (route) => false,
+        ),
+      );
     }
 
     return Scaffold(
@@ -184,7 +189,7 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: signinState == AuthState.loading
+                        onPressed: authState == AuthState.loading
                             ? null
                             : () {
                                 // showDialog(
@@ -198,7 +203,10 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
                                   return;
                                 }
                                 _formGlobalKey.currentState?.save();
-                                model.signupUser();
+                                model.signupUser(
+                                  onCodeSent: () => Navigator.of(context)
+                                      .pushNamed(AppRoutes.verify),
+                                );
                               },
                         style: Theme.of(context)
                             .extension<ButtonThemeExtensions>()

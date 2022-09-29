@@ -1,14 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/routes/routes.dart';
 import 'package:handees/theme/theme.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-class VerifyScreen extends StatelessWidget {
+import '../../models/auth_model.dart';
+
+class VerifyScreen extends ConsumerWidget {
   const VerifyScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     const verticalMargin = 24.0;
+
+    final model = ref.watch(authProvider.notifier);
+    final authState = ref.watch(authProvider);
+
+    // print(authState);
+
+    // switch (authState) {
+    //   case AuthState.invalidVerificationCode:
+    //   case AuthState.verifying:
+    //   case AuthState.loading:
+    //     break;
+    //   default:
+    //     Future.microtask(() => Navigator.of(context).pop());
+    //     break;
+    // }
 
     return Scaffold(
       appBar: AppBar(
@@ -29,8 +47,9 @@ class VerifyScreen extends StatelessWidget {
               // height: 48,
               child: PinCodeTextField(
                 appContext: context,
-                length: 5,
+                length: 6,
                 onChanged: (value) {},
+                onCompleted: model.verifyNumber,
                 keyboardType: TextInputType.number,
                 pinTheme: PinTheme(
                   borderRadius: BorderRadius.circular(4.0),
@@ -64,8 +83,7 @@ class VerifyScreen extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () =>
-                    Navigator.of(context).pushNamed(AppRoutes.home),
+                onPressed: authState == AuthState.loading ? null : () {},
                 style: Theme.of(context)
                     .extension<ButtonThemeExtensions>()
                     ?.filled,
