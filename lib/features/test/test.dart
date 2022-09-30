@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:handees/res/shapes.dart';
 import 'package:http/http.dart' as http;
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
@@ -162,11 +163,74 @@ class _TestState extends State<Test> {
             ),
             TextField(
               onSubmitted: (value) {
-                print(
-                    'Email verified ${FirebaseAuth.instance.currentUser?.email?.isEmpty}');
-
-                // FirebaseAuth.instance.currentUser?.updateEmail(value);
-                // FirebaseAuth.instance.currentUser?.updatePassword('zalyzek4');
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    // width: 260,
+                    padding: EdgeInsets.zero,
+                    margin: EdgeInsets.symmetric(horizontal: 80, vertical: 24),
+                    clipBehavior: Clip.hardEdge,
+                    content: Container(
+                      decoration: ShapeDecoration(
+                        shape: Shapes.smallShape,
+                        color: Colors.white,
+                        shadows: [
+                          BoxShadow(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .shadow
+                                .withOpacity(0.2),
+                            blurRadius: 7,
+                          )
+                        ],
+                      ),
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 12,
+                            height: 56,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.horizontal(
+                                left: Radius.circular(8.0),
+                              ),
+                              color: Theme.of(context).colorScheme.onSurface,
+                            ),
+                          ),
+                          SizedBox(width: 12),
+                          CircleAvatar(),
+                          SizedBox(width: 16),
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Success',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium
+                                    ?.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSurface,
+                                    ),
+                              ),
+                              Text(
+                                'your new card has been added',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall
+                                    ?.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSurface,
+                                    ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
               },
             ),
             InkWell(

@@ -26,31 +26,25 @@ class PickServiceBottomSheet extends StatelessWidget {
               color: Theme.of(context).colorScheme.secondary,
             ),
           ),
-          SizedBox(height: 16.0),
-          ServiceCard(
+          const SizedBox(height: 16.0),
+          const ServiceCard(
             serviceName: 'Hair Stylist',
             icon: Icon(Icons.abc),
             iconBackground: Colors.orange,
             artisanCount: 13,
           ),
-          SizedBox(height: 8.0),
-          TextField(
+          const SizedBox(height: 8.0),
+          const TextField(
             decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: Shapes.bigShape.borderRadius as BorderRadius,
-                borderSide: BorderSide.none,
-              ),
               prefixIcon: Icon(Icons.error_outline),
               hintText:
                   'Additional information e.g ‘this is the hair style I want...’',
-              fillColor: Theme.of(context).colorScheme.secondary,
-              filled: true,
               hintMaxLines: 1,
             ),
             minLines: 1,
             maxLines: 4,
           ),
-          SizedBox(height: 16.0),
+          const SizedBox(height: 16.0),
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
@@ -64,10 +58,10 @@ class PickServiceBottomSheet extends StatelessWidget {
               },
               style:
                   Theme.of(context).extension<ButtonThemeExtensions>()?.filled,
-              child: Text('Proceed'),
+              child: const Text('Proceed'),
             ),
           ),
-          SizedBox(height: 8.0),
+          const SizedBox(height: 8.0),
         ],
       ),
     );

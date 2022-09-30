@@ -26,6 +26,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  // FirebaseAppCheck.
   await FirebaseAppCheck.instance.activate();
   runApp(const ProviderScope(child: MyApp()));
 }

@@ -274,6 +274,7 @@ class LocationPicker extends StatelessWidget {
                 color: Theme.of(context).colorScheme.onPrimaryContainer,
               ),
           decoration: InputDecoration(
+            filled: false,
             prefixIcon: Icon(
               Icons.location_on,
               color: Theme.of(context).colorScheme.onPrimaryContainer,
@@ -330,6 +331,7 @@ class _SearchWidgetState extends State<SearchWidget> {
                       color: Theme.of(context).colorScheme.onPrimaryContainer),
                   decoration: InputDecoration(
                     border: InputBorder.none,
+                    filled: false,
                     suffixIcon: IconButton(
                       onPressed: () {
                         textController.clear();
