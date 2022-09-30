@@ -192,20 +192,25 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
                         onPressed: authState == AuthState.loading
                             ? null
                             : () {
-                                // showDialog(
-                                //   context: context,
-                                //   builder: (ctx) {
-                                //     return const PhoneProceedDialog();
-                                //   },
-                                // );
-
                                 if (!_formGlobalKey.currentState!.validate()) {
                                   return;
                                 }
                                 _formGlobalKey.currentState?.save();
-                                model.signupUser(
-                                  onCodeSent: () => Navigator.of(context)
-                                      .pushNamed(AppRoutes.verify),
+
+                                showDialog(
+                                  context: context,
+                                  builder: (ctx) {
+                                    return PhoneProceedDialog(
+                                      onProceed: () {
+                                        Navigator.of(context).pop();
+                                        model.signupUser(
+                                          onCodeSent: () =>
+                                              Navigator.of(context)
+                                                  .pushNamed(AppRoutes.verify),
+                                        );
+                                      },
+                                    );
+                                  },
                                 );
                               },
                         style: Theme.of(context)

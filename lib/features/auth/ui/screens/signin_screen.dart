@@ -22,6 +22,10 @@ class SigninScreen extends ConsumerWidget with InputValidationMixin {
 
     // print('signingstate $authState');
 
+    final emailError = authState == AuthState.noSuchEmail
+        ? 'No account exists with this email'
+        : null;
+
     if (authState == AuthState.authenticated) {
       Future.microtask(
         () => Navigator.of(context).pushNamedAndRemoveUntil(
@@ -66,9 +70,7 @@ class SigninScreen extends ConsumerWidget with InputValidationMixin {
                             validator: model.emailValidator,
                             decoration: InputDecoration(
                               hintText: 'Phone or email',
-                              errorText: authState == AuthState.noSuchEmail
-                                  ? 'No account exists with this email'
-                                  : null,
+                              errorText: emailError,
                             ),
                           ),
                           const SizedBox(height: 24),

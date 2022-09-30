@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/routes/routes.dart';
@@ -7,7 +9,10 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import '../../models/auth_model.dart';
 
 class VerifyScreen extends ConsumerWidget {
-  const VerifyScreen({Key? key}) : super(key: key);
+  VerifyScreen({Key? key}) : super(key: key);
+
+  StreamController<ErrorAnimationType> errorController =
+      StreamController<ErrorAnimationType>();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -16,7 +21,8 @@ class VerifyScreen extends ConsumerWidget {
     final model = ref.watch(authProvider.notifier);
     final authState = ref.watch(authProvider);
 
-    // print(authState);
+    if (authState == AuthState.invalidVerificationCode)
+      errorController.add(ErrorAnimationType.shake);
 
     // switch (authState) {
     //   case AuthState.invalidVerificationCode:
@@ -40,7 +46,7 @@ class VerifyScreen extends ConsumerWidget {
         ),
         child: Column(
           children: [
-            Text('Code has been sent to *** ***68'),
+            Text('Code has been sent to *** ***${model.last2Digits}'),
             SizedBox(height: verticalMargin),
             Container(
               width: double.infinity,
@@ -48,9 +54,12 @@ class VerifyScreen extends ConsumerWidget {
               child: PinCodeTextField(
                 appContext: context,
                 length: 6,
-                onChanged: (value) {},
-                onCompleted: model.verifyNumber,
+                onChanged: (value) {
+                  model.smsCode = value;
+                },
+                onCompleted: (_) => model.verifyNumber(),
                 keyboardType: TextInputType.number,
+                errorAnimationController: errorController,
                 pinTheme: PinTheme(
                   borderRadius: BorderRadius.circular(4.0),
                   shape: PinCodeFieldShape.box,
@@ -78,12 +87,19 @@ class VerifyScreen extends ConsumerWidget {
               ],
             ),
             SizedBox(height: verticalMargin),
-            Text('Get via call'),
+            InkWell(
+              onTap: () {
+                // errorController.close()
+              },
+              child: Text('Get via call'),
+            ),
             SizedBox(height: verticalMargin),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: authState == AuthState.loading ? null : () {},
+                onPressed: authState == AuthState.loading
+                    ? null
+                    : () => model.verifyNumber(),
                 style: Theme.of(context)
                     .extension<ButtonThemeExtensions>()
                     ?.filled,

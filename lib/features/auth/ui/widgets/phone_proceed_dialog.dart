@@ -6,7 +6,10 @@ import 'package:handees/theme/theme.dart';
 class PhoneProceedDialog extends StatelessWidget {
   const PhoneProceedDialog({
     Key? key,
+    required this.onProceed,
   }) : super(key: key);
+
+  final void Function() onProceed;
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +32,7 @@ class PhoneProceedDialog extends StatelessWidget {
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: () =>
-                  Navigator.of(context).pushNamed(AppRoutes.verify),
+              onPressed: onProceed,
               child: Text('Continue'),
               style:
                   Theme.of(context).extension<ButtonThemeExtensions>()?.filled,

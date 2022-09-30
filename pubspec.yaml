@@ -44,6 +44,7 @@ dependencies:
   auth: ^8.1.0
   flutter_riverpod: ^1.0.4
   pin_code_fields: ^7.4.0
+  firebase_app_check: ^0.0.8
 
 dev_dependencies:
   flutter_test:

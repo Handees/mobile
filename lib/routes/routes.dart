@@ -65,7 +65,7 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
     case AppRoutes.verify:
       page = Theme(
         data: authTheme,
-        child: const VerifyScreen(),
+        child: VerifyScreen(),
       );
       break;
 

@@ -23,8 +23,11 @@ class AuthModel extends StateNotifier<AuthState> with InputValidationMixin {
   String _email = '';
   String _password = '';
 
-  // String _smsCode = '';
+  String _smsCode = '';
+  set smsCode(String code) => _smsCode = code;
   late String _verificationId;
+
+  String get last2Digits => _phone.substring(_phone.length - 2, _phone.length);
 
   String? emailValidator(String? email) {
     if (email != null && isEmailValid(email)) {
@@ -92,9 +95,9 @@ class AuthModel extends StateNotifier<AuthState> with InputValidationMixin {
     }
   }
 
-  void verifyNumber(String smsCode) async {
+  void verifyNumber() async {
     state = AuthState.loading;
-    final response = await authService.verifyNumber(smsCode, _verificationId);
+    final response = await authService.verifyNumber(_smsCode, _verificationId);
     // await Future.delayed(Duration(seconds: 2));
 
     switch (response) {
