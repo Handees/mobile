@@ -88,7 +88,6 @@ class ArrivedBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('building');
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
       child: Column(
@@ -104,65 +103,7 @@ class ArrivedBottomSheet extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8.0),
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(12.0),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(40.0),
-              color: Theme.of(context).colorScheme.primary,
-            ),
-            child: Row(
-              children: [
-                const CircleAvatar(radius: 28),
-                const SizedBox(width: 16),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Jane Doe',
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          color: Theme.of(context).colorScheme.onPrimary),
-                    ),
-                    const SizedBox(height: 2),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.money,
-                          color: Theme.of(context).colorScheme.onPrimary,
-                        ),
-                        const SizedBox(width: 4.0),
-                        Text(
-                          '₦500/hr',
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium
-                              ?.copyWith(
-                                  color:
-                                      Theme.of(context).colorScheme.onPrimary),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                const Spacer(),
-                Container(
-                  decoration: ShapeDecoration(
-                    color: const Color.fromRGBO(253, 223, 242, 1),
-                    shape: Shapes.mediumShape,
-                  ),
-                  height: 64,
-                  width: 64,
-                  child: const Center(
-                    child: const CircleAvatar(
-                      backgroundColor: Color.fromRGBO(255, 125, 203, 1),
-                      child: Icon(Icons.abc),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
+          ProgressCard(),
           const SizedBox(height: 24.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -190,6 +131,73 @@ class ArrivedBottomSheet extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 8.0),
+        ],
+      ),
+    );
+  }
+}
+
+class ProgressCard extends StatelessWidget {
+  const ProgressCard({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(12.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(40.0),
+        color: Theme.of(context).colorScheme.primary,
+      ),
+      child: Row(
+        children: [
+          const CircleAvatar(radius: 28),
+          const SizedBox(width: 16),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Jane Doe',
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium
+                    ?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
+              ),
+              const SizedBox(height: 2),
+              Row(
+                children: [
+                  Icon(
+                    Icons.money,
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
+                  const SizedBox(width: 4.0),
+                  Text(
+                    '₦500/hr',
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: Theme.of(context).colorScheme.onPrimary),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          const Spacer(),
+          Container(
+            decoration: ShapeDecoration(
+              color: const Color.fromRGBO(253, 223, 242, 1),
+              shape: Shapes.mediumShape,
+            ),
+            height: 64,
+            width: 64,
+            child: const Center(
+              child: const CircleAvatar(
+                backgroundColor: Color.fromRGBO(255, 125, 203, 1),
+                child: Icon(Icons.abc),
+              ),
+            ),
+          ),
         ],
       ),
     );

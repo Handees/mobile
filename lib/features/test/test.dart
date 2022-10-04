@@ -162,74 +162,125 @@ class _TestState extends State<Test> {
               ),
             ),
             TextField(
-              onSubmitted: (value) {
+              onTap: () {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    // width: 260,
                     padding: EdgeInsets.zero,
-                    margin: EdgeInsets.symmetric(horizontal: 80, vertical: 24),
-                    clipBehavior: Clip.hardEdge,
-                    content: Container(
-                      decoration: ShapeDecoration(
-                        shape: Shapes.smallShape,
-                        color: Colors.white,
-                        shadows: [
-                          BoxShadow(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .shadow
-                                .withOpacity(0.2),
-                            blurRadius: 7,
-                          )
-                        ],
-                      ),
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 12,
-                            height: 56,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.horizontal(
-                                left: Radius.circular(8.0),
+                    backgroundColor: Colors.transparent,
+                    // clipBehavior: Clip.hardEdge,
+                    content: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        margin: EdgeInsets.all(8.0),
+                        decoration: ShapeDecoration(
+                          shape: Shapes.smallShape,
+                          color: Colors.white,
+                          shadows: [
+                            BoxShadow(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .shadow
+                                  .withOpacity(0.2),
+                              blurRadius: 7,
+                            )
+                          ],
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              width: 12,
+                              height: 56,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.horizontal(
+                                  left: Radius.circular(8.0),
+                                ),
+                                color: Theme.of(context).colorScheme.onSurface,
                               ),
-                              color: Theme.of(context).colorScheme.onSurface,
                             ),
-                          ),
-                          SizedBox(width: 12),
-                          CircleAvatar(),
-                          SizedBox(width: 16),
-                          Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Success',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleMedium
-                                    ?.copyWith(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onSurface,
-                                    ),
-                              ),
-                              Text(
-                                'your new card has been added',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodySmall
-                                    ?.copyWith(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onSurface,
-                                    ),
-                              ),
-                            ],
-                          ),
-                        ],
+                            SizedBox(width: 12),
+                            CircleAvatar(),
+                            SizedBox(width: 16),
+                            Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Success',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium
+                                      ?.copyWith(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSurface,
+                                      ),
+                                ),
+                                Text(
+                                  'your new card has been added',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodySmall
+                                      ?.copyWith(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSurface,
+                                      ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(width: 16),
+                          ],
+                        ),
                       ),
                     ),
                   ),
+                );
+              },
+              onSubmitted: (_) {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    // return AlertDialog(
+                    //   content: Text('sdfjsdf'),
+                    //   icon: CircleAvatar(radius: 35),
+                    //   iconColor: Colors.red,
+                    //   title: Text('sdfasdf'),
+
+                    //   actions: [
+                    //     ElevatedButton(onPressed: () {}, child: Text('child')),
+                    //     ElevatedButton(onPressed: () {}, child: Text('child')),
+                    //   ],
+                    // );
+                    return SimpleDialog(
+                      contentPadding: EdgeInsets.all(24.0),
+                      children: [
+                        Ink(
+                          decoration: ShapeDecoration(
+                            color: Colors.blue,
+                            shape: CircleBorder(),
+                          ),
+                          height: 56,
+                          width: 56,
+                          child: Center(
+                            child: CircleAvatar(
+                              backgroundColor: Colors.pink,
+                              radius: 16,
+                              child: Icon(Icons.abc),
+                            ),
+                          ),
+                        ),
+                        SimpleDialogOption(
+                          onPressed: () {},
+                          child: Container(
+                            color: Colors.orange,
+                            height: 20,
+                            width: 40,
+                          ),
+                        )
+                      ],
+                    );
+                  },
                 );
               },
             ),

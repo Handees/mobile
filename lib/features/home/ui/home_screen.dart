@@ -1,10 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/features/auth/models/auth_model.dart';
 import 'package:handees/features/auth/services/auth_service.dart';
 import 'package:handees/features/test/test.dart';
+import 'package:handees/features/tracker/ui/tracking_screen.dart';
 
 import 'package:handees/res/shapes.dart';
 import 'package:handees/routes/routes.dart';
@@ -187,18 +187,61 @@ class HomeScreen extends ConsumerWidget {
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                       const SizedBox(height: 8),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 16,
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ),
               SliverPadding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: horizontalPadding),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: horizontalPadding,
+                ),
                 sliver: SliverPersistentHeader(
-                  pinned: true,
+                  // pinned: true,
+                  floating: true,
                   delegate: CustomDelegate(
-                    height: 80.0,
+                    height: 64.0,
                     child: LocationPicker(),
+                  ),
+                ),
+              ),
+              SliverPersistentHeader(
+                pinned: true,
+                delegate: CustomDelegate(
+                  height: 144.0,
+                  shape: RoundedRectangleBorder(),
+                  elevation: 0,
+                  padding: EdgeInsets.zero,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: horizontalPadding,
+                        ),
+                        child: Text(
+                          'Ongoing Handee',
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      ),
+                      Spacer(flex: 1),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: horizontalPadding,
+                        ),
+                        child: ProgressCard(),
+                      ),
+                      Spacer(flex: 3),
+                      Divider(
+                        thickness: 8.0,
+                        height: 0.0,
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -256,11 +299,8 @@ class LocationPicker extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      height: double.infinity,
-      decoration: ShapeDecoration(
-        color: Theme.of(context).colorScheme.primaryContainer,
-        shape: Shapes.bigShape,
-      ),
+      height: 64.0,
+      color: Theme.of(context).colorScheme.primaryContainer,
       child: TextSelectionTheme(
         data: TextSelectionThemeData(
           cursorColor: Theme.of(context).colorScheme.onPrimaryContainer,

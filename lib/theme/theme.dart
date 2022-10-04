@@ -57,7 +57,7 @@ ThemeData _buildTheme(ColorScheme colorScheme) => ThemeData.from(
       useMaterial3: true,
     ).copyWith(
       // textTheme: textTheme,
-
+// dialogTheme: DialogTheme(),
       appBarTheme: AppBarTheme().copyWith(centerTitle: true),
       scaffoldBackgroundColor: colorScheme.background,
       radioTheme: RadioThemeData(

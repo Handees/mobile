@@ -1,15 +1,18 @@
 import 'package:flutter/painting.dart';
 
 class Shapes {
-  static final smallShape =
-      RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0));
+  static const smallShape = RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(8.0)));
 
-  static final mediumShape =
-      RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0));
+  static const mediumShape = RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(24.0)));
 
-  static final bigShape =
-      RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0));
+  static const bigShape = RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(16.0)));
 
-  static final authShape =
-      RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0));
+  static const extraBigShape = RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(40.0)));
+
+  static const authShape = RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(4.0)));
 }

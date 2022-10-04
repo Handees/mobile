@@ -2,32 +2,45 @@ import 'package:flutter/material.dart';
 import 'package:handees/res/shapes.dart';
 
 class CustomDelegate extends SliverPersistentHeaderDelegate {
-  CustomDelegate({required this.height, required this.child, this.shape});
+  CustomDelegate({
+    required this.height,
+    required this.child,
+    this.shape = Shapes.bigShape,
+    this.padding = const EdgeInsets.symmetric(
+      vertical: 16,
+    ),
+    this.elevation = 4.0,
+  });
 
   final double height;
   final Widget child;
-  final ShapeBorder? shape;
+  final ShapeBorder shape;
+  final EdgeInsets padding;
+  final double elevation;
 
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 16.0),
-      child: Material(
-        elevation: 4.0,
-        shape: shape ?? Shapes.bigShape,
-        // color: Colors.transparent,
-        shadowColor: Theme.of(context).colorScheme.shadow,
-        child: child,
+    return Material(
+      child: Padding(
+        padding: padding,
+        child: Material(
+          elevation: elevation,
+          shape: shape,
+          clipBehavior: Clip.hardEdge,
+          // color: Colors.transparent,
+          shadowColor: Theme.of(context).colorScheme.shadow,
+          child: child,
+        ),
       ),
     );
   }
 
   @override
-  double get maxExtent => height;
+  double get maxExtent => height + padding.vertical;
 
   @override
-  double get minExtent => height;
+  double get minExtent => height + padding.vertical;
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
