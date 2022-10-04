@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:handees/res/shapes.dart';
 import 'package:handees/theme/theme.dart';
-import 'package:handees/utils/widgets/circle_fadeout_loader.dart';
+import 'package:handees/shared/widgets/circle_fadeout_loader.dart';
 
 import 'in_progress_bottom_sheet.dart';
 import 'loading_bottom_sheet.dart';

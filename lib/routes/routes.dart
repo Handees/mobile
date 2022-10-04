@@ -13,7 +13,7 @@ import 'package:handees/features/settings/ui/settings.dart';
 import 'package:handees/features/tracker/ui/tracking_screen.dart';
 import 'package:handees/theme/theme.dart';
 
-abstract class AppRoutes {
+abstract class CustomerAppRoutes {
   static const String signin = '/auth/sign-in';
   static const String signup = '/auth/sign-up';
   static const String verify = '/auth/verify';
@@ -36,8 +36,11 @@ abstract class AppRoutes {
   static const String servicesData = '/services-data';
 }
 
+abstract class HandeemanAppRoutes {}
+
 Route<dynamic> onGenerateRoute(RouteSettings settings) {
   Widget? page;
+
   MaterialPageRoute? pageRoute;
   switch (settings.name) {
     case '/':
@@ -50,44 +53,44 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
               child: SigninScreen(),
             );
       break;
-    case AppRoutes.signin:
+    case CustomerAppRoutes.signin:
       page = Theme(
         data: authTheme,
         child: SigninScreen(),
       );
       break;
-    case AppRoutes.signup:
+    case CustomerAppRoutes.signup:
       page = Theme(
         data: authTheme,
         child: SignupScreen(),
       );
       break;
-    case AppRoutes.verify:
+    case CustomerAppRoutes.verify:
       page = Theme(
         data: authTheme,
         child: VerifyScreen(),
       );
       break;
 
-    case AppRoutes.home:
+    case CustomerAppRoutes.home:
       page = const HomeScreen();
       break;
-    case AppRoutes.profile:
+    case CustomerAppRoutes.profile:
       page = const ProfileScreen();
       break;
-    case AppRoutes.notifications:
+    case CustomerAppRoutes.notifications:
       page = const NotificationsScreen();
       break;
-    case AppRoutes.history:
+    case CustomerAppRoutes.history:
       page = const HistoryScreen();
       break;
-    case AppRoutes.settings:
+    case CustomerAppRoutes.settings:
       page = const SettingsScreen();
       break;
-    case AppRoutes.tracking:
+    case CustomerAppRoutes.tracking:
       page = const TrackingScreen();
       break;
-    case AppRoutes.pickService:
+    case CustomerAppRoutes.pickService:
       pageRoute = MaterialPageRoute(
         builder: ((context) => const PickServiceDialog()),
         fullscreenDialog: true,

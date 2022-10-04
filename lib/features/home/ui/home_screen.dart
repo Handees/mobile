@@ -9,7 +9,7 @@ import 'package:handees/features/tracker/ui/tracking_screen.dart';
 import 'package:handees/res/shapes.dart';
 import 'package:handees/routes/routes.dart';
 import 'package:handees/theme/theme.dart';
-import 'package:handees/utils/widgets/custom_delegate.dart';
+import 'package:handees/shared/widgets/custom_delegate.dart';
 // import 'package:http/http.dart';
 
 import 'pick_service_bottom_sheet.dart';
@@ -42,7 +42,7 @@ class HomeScreen extends ConsumerWidget {
                         alignment: Alignment.bottomLeft,
                         child: InkWell(
                           onTap: () => Navigator.of(context)
-                              .pushNamed(AppRoutes.profile),
+                              .pushNamed(CustomerAppRoutes.profile),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -83,15 +83,15 @@ class HomeScreen extends ConsumerWidget {
                     ),
                     Divider(),
                     ListTile(
-                      onTap: () =>
-                          Navigator.of(context).pushNamed(AppRoutes.history),
+                      onTap: () => Navigator.of(context)
+                          .pushNamed(CustomerAppRoutes.history),
                       leading: Icon(Icons.history),
                       title: Text('History'),
                     ),
                     Divider(),
                     ListTile(
-                      onTap: () =>
-                          Navigator.of(context).pushNamed(AppRoutes.settings),
+                      onTap: () => Navigator.of(context)
+                          .pushNamed(CustomerAppRoutes.settings),
                       leading: Icon(Icons.settings_outlined),
                       title: Text('Settings'),
                     ),
@@ -118,7 +118,7 @@ class HomeScreen extends ConsumerWidget {
                       onTap: () {
                         authModel.signoutUser();
                         Navigator.of(context)
-                            .pushReplacementNamed(AppRoutes.signin);
+                            .pushReplacementNamed(CustomerAppRoutes.signin);
                       },
                       leading: Icon(Icons.help_outline_outlined),
                       title: Text('FAQ'),
@@ -163,7 +163,8 @@ class HomeScreen extends ConsumerWidget {
                 actions: [
                   IconButton(
                     onPressed: () {
-                      Navigator.of(context).pushNamed(AppRoutes.notifications);
+                      Navigator.of(context)
+                          .pushNamed(CustomerAppRoutes.notifications);
                     },
                     icon: const Icon(Icons.notifications_outlined),
                   )

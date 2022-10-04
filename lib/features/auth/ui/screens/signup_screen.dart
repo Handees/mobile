@@ -47,7 +47,7 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
     if (authState == AuthState.authenticated) {
       Future.microtask(
         () => Navigator.of(context).pushNamedAndRemoveUntil(
-          AppRoutes.home,
+          CustomerAppRoutes.home,
           (route) => false,
         ),
       );
@@ -179,7 +179,7 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
                           onTap: () {
                             model.resetState();
                             Navigator.of(context)
-                                .pushReplacementNamed(AppRoutes.signin);
+                                .pushReplacementNamed(CustomerAppRoutes.signin);
                           },
                           child: const Text('Sign in'),
                         ),
@@ -205,8 +205,8 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
                                         Navigator.of(context).pop();
                                         model.signupUser(
                                           onCodeSent: () =>
-                                              Navigator.of(context)
-                                                  .pushNamed(AppRoutes.verify),
+                                              Navigator.of(context).pushNamed(
+                                                  CustomerAppRoutes.verify),
                                         );
                                       },
                                     );

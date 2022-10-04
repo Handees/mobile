@@ -50,11 +50,11 @@ class PickServiceBottomSheet extends StatelessWidget {
             child: ElevatedButton(
               onPressed: () async {
                 final res = await Navigator.of(context)
-                    .pushNamed(AppRoutes.pickService);
+                    .pushNamed(CustomerAppRoutes.pickService);
                 print(res);
 
                 if (res != null)
-                  Navigator.of(context).pushNamed(AppRoutes.tracking);
+                  Navigator.of(context).pushNamed(CustomerAppRoutes.tracking);
               },
               style:
                   Theme.of(context).extension<ButtonThemeExtensions>()?.filled,
