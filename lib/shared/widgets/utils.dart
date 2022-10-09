@@ -119,7 +119,9 @@ Future<T?> showHandeeDialog<T>(
             child: Center(
               child: Text(
                 subtitle,
-                style: Theme.of(context).textTheme.titleSmall,
+                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                      color: Theme.of(context).unselectedWidgetColor,
+                    ),
               ),
             ),
           ),

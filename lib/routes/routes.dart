@@ -1,16 +1,16 @@
 import 'package:auth/auth.dart';
 import 'package:flutter/material.dart';
-import 'package:handees/features/auth/services/auth_service.dart';
-import 'package:handees/features/auth/ui/screens/signin_screen.dart';
-import 'package:handees/features/auth/ui/screens/signup_screen.dart';
-import 'package:handees/features/auth/ui/screens/verify_screen.dart';
-import 'package:handees/features/history/ui/history_screen.dart';
-import 'package:handees/features/home/ui/home_screen.dart';
-import 'package:handees/features/home/ui/pick_service_dialog.dart';
-import 'package:handees/features/notifications/ui/notifications_screen.dart';
-import 'package:handees/features/profile/ui/profile.dart';
-import 'package:handees/features/settings/ui/settings.dart';
-import 'package:handees/features/tracker/ui/tracking_screen.dart';
+import 'package:handees/customer_app/services/auth_service.dart';
+import 'package:handees/customer_app/features/auth/ui/screens/signin_screen.dart';
+import 'package:handees/customer_app/features/auth/ui/screens/signup_screen.dart';
+import 'package:handees/customer_app/features/auth/ui/screens/verify_screen.dart';
+import 'package:handees/customer_app/features/history/ui/history_screen.dart';
+import 'package:handees/customer_app/features/home/ui/home_screen.dart';
+import 'package:handees/customer_app/features/home/ui/pick_service_dialog.dart';
+import 'package:handees/customer_app/features/notifications/ui/notifications_screen.dart';
+import 'package:handees/customer_app/features/profile/ui/profile.dart';
+import 'package:handees/customer_app/features/settings/ui/settings.dart';
+import 'package:handees/customer_app/features/tracker/ui/tracking_screen.dart';
 import 'package:handees/theme/theme.dart';
 
 abstract class CustomerAppRoutes {

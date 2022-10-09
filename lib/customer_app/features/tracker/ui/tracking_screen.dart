@@ -24,12 +24,12 @@ class _TrackingScreenState extends State<TrackingScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Future.delayed(const Duration(seconds: 2)).then((value) {
+    Future.delayed(const Duration(seconds: 10)).then((value) {
       setState(() {
         _trackingState = TrackingState.inProgress;
       });
     }).then((value) {
-      Future.delayed(const Duration(seconds: 800000)).then((value) => {
+      Future.delayed(const Duration(seconds: 20)).then((value) => {
             setState(() {
               _trackingState = TrackingState.arrived;
             })

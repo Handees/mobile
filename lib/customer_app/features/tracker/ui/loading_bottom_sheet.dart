@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:handees/features/auth/services/auth_service.dart';
+import 'package:handees/customer_app/services/auth_service.dart';
 import 'package:handees/res/shapes.dart';
 import 'package:handees/theme/theme.dart';
 
@@ -77,6 +77,7 @@ class LoadingBottomSheet extends StatelessWidget {
                   Theme.of(context).extension<ButtonThemeExtensions>()?.filled,
               child: CircularProgressIndicator(
                 color: Theme.of(context).colorScheme.onPrimary,
+                strokeWidth: 2,
               ),
             ),
           ),

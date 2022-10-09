@@ -45,7 +45,9 @@ class ServiceCard extends StatelessWidget {
             const SizedBox(height: 4),
             Text(
               '$artisanCount Handeemen near you',
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: Theme.of(context).unselectedWidgetColor,
+                  ),
             ),
           ],
         ),

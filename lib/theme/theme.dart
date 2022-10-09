@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:handees/res/shapes.dart';
 
-final _textTheme = GoogleFonts.cabinTextTheme(const TextTheme()).copyWith(
-    // titleMedium: TextStyle(fontSize: 18),
-    // labelLarge: TextStyle(fontSize: 16),
-    );
+final _textTheme = GoogleFonts.cabinTextTheme();
+// .copyWith(
+//     // titleMedium: TextStyle(fontSize: 18),
+//     // labelLarge: TextStyle(fontSize: 16),
+// );
 
 const _lightColorScheme = ColorScheme.light(
   primary: Color.fromRGBO(20, 22, 28, 1),
@@ -56,7 +57,7 @@ ThemeData _buildTheme(ColorScheme colorScheme) => ThemeData.from(
       colorScheme: colorScheme,
       useMaterial3: true,
     ).copyWith(
-      // textTheme: textTheme,
+      textTheme: _textTheme,
 // dialogTheme: DialogTheme(),
       appBarTheme: AppBarTheme().copyWith(centerTitle: true),
       scaffoldBackgroundColor: colorScheme.background,

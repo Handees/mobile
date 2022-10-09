@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:handees/features/auth/models/auth_model.dart';
-import 'package:handees/features/auth/services/auth_service.dart';
-import 'package:handees/features/test/test.dart';
-import 'package:handees/features/tracker/ui/tracking_screen.dart';
+import 'package:handees/customer_app/features/test/test.dart';
+import 'package:handees/customer_app/features/tracker/ui/tracking_screen.dart';
 
 import 'package:handees/res/shapes.dart';
 import 'package:handees/routes/routes.dart';
@@ -12,6 +10,7 @@ import 'package:handees/theme/theme.dart';
 import 'package:handees/shared/widgets/custom_delegate.dart';
 // import 'package:http/http.dart';
 
+import 'location_picker.dart';
 import 'pick_service_bottom_sheet.dart';
 import 'service_card.dart';
 
@@ -23,7 +22,7 @@ class HomeScreen extends ConsumerWidget {
     const horizontalPadding = 16.0;
     const drawerItemHeight = 56.0;
 
-    final authModel = ref.watch(authProvider.notifier);
+    // final authModel = ref.watch(authProvider.notifier);
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -116,9 +115,9 @@ class HomeScreen extends ConsumerWidget {
                     Divider(),
                     ListTile(
                       onTap: () {
-                        authModel.signoutUser();
-                        Navigator.of(context)
-                            .pushReplacementNamed(CustomerAppRoutes.signin);
+                        // authModel.signoutUser();
+                        // Navigator.of(context)
+                        //     .pushReplacementNamed(CustomerAppRoutes.signin);
                       },
                       leading: Icon(Icons.help_outline_outlined),
                       title: Text('FAQ'),
@@ -180,7 +179,9 @@ class HomeScreen extends ConsumerWidget {
                       const SizedBox(height: 8),
                       Text(
                         'Hello Barbara',
-                        style: Theme.of(context).textTheme.titleLarge,
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                              color: Theme.of(context).unselectedWidgetColor,
+                            ),
                       ),
                       const SizedBox(height: 8),
                       Text(
@@ -188,11 +189,6 @@ class HomeScreen extends ConsumerWidget {
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                       const SizedBox(height: 8),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 16,
-                        ),
-                      ),
                     ],
                   ),
                 ),
@@ -217,32 +213,12 @@ class HomeScreen extends ConsumerWidget {
                   shape: RoundedRectangleBorder(),
                   elevation: 0,
                   padding: EdgeInsets.zero,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: horizontalPadding,
-                        ),
-                        child: Text(
-                          'Ongoing Handee',
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                      ),
-                      Spacer(flex: 1),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: horizontalPadding,
-                        ),
-                        child: ProgressCard(),
-                      ),
-                      Spacer(flex: 3),
-                      Divider(
-                        thickness: 8.0,
-                        height: 0.0,
-                      ),
-                    ],
+                  child: PageView.builder(
+                    itemBuilder: (context, index) {
+                      return OngoingServiceHeader(
+                        horizontalPadding: horizontalPadding,
+                      );
+                    },
                   ),
                 ),
               ),
@@ -293,37 +269,51 @@ class HomeScreen extends ConsumerWidget {
   }
 }
 
-class LocationPicker extends StatelessWidget {
-  const LocationPicker({Key? key}) : super(key: key);
+class OngoingServiceHeader extends StatelessWidget {
+  const OngoingServiceHeader({
+    Key? key,
+    required this.horizontalPadding,
+  }) : super(key: key);
+
+  final double horizontalPadding;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      height: 64.0,
-      color: Theme.of(context).colorScheme.primaryContainer,
-      child: TextSelectionTheme(
-        data: TextSelectionThemeData(
-          cursorColor: Theme.of(context).colorScheme.onPrimaryContainer,
-          selectionColor:
-              Theme.of(context).colorScheme.onPrimaryContainer.withOpacity(0.5),
-          selectionHandleColor:
-              Theme.of(context).colorScheme.onPrimaryContainer,
-        ),
-        child: TextField(
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                color: Theme.of(context).colorScheme.onPrimaryContainer,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: horizontalPadding,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Ongoing Handee',
+                style: Theme.of(context).textTheme.titleMedium,
               ),
-          decoration: InputDecoration(
-            filled: false,
-            prefixIcon: Icon(
-              Icons.location_on,
-              color: Theme.of(context).colorScheme.onPrimaryContainer,
-            ),
-            border: InputBorder.none,
+              Text(
+                '00 : 03 : 43',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+            ],
           ),
         ),
-      ),
+        Spacer(flex: 1),
+        Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: horizontalPadding,
+          ),
+          child: ProgressCard(),
+        ),
+        Spacer(flex: 3),
+        Divider(
+          thickness: 8.0,
+          height: 0.0,
+        ),
+      ],
     );
   }
 }
@@ -424,62 +414,62 @@ class _SearchWidgetState extends State<SearchWidget> {
   }
 }
 
-class TrackerBottomSheet extends StatelessWidget {
-  const TrackerBottomSheet({Key? key}) : super(key: key);
+// class TrackerBottomSheet extends StatelessWidget {
+//   const TrackerBottomSheet({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: 8,
-        horizontal: 16,
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            width: 56,
-            height: 4,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4),
-              color: Theme.of(context).colorScheme.secondaryContainer,
-            ),
-          ),
-          const ServiceCard(
-            serviceName: 'Hair Stylist',
-            icon: const Icon(Icons.abc),
-            iconBackground: Colors.orange,
-            artisanCount: 13,
-          ),
-          Text(
-            'While you wait, you can reach out to them to'
-            'confirm the  details of the service you need.',
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: ElevatedButton(
-                  onPressed: () {},
-                  child: const Text('Call'),
-                  style: Theme.of(context)
-                      .extension<ButtonThemeExtensions>()
-                      ?.filled,
-                ),
-              ),
-              Expanded(
-                child: ElevatedButton(
-                  onPressed: () {},
-                  child: const Text('Message'),
-                  style: Theme.of(context)
-                      .extension<ButtonThemeExtensions>()
-                      ?.tonal,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: const EdgeInsets.symmetric(
+//         vertical: 8,
+//         horizontal: 16,
+//       ),
+//       child: Column(
+//         mainAxisSize: MainAxisSize.min,
+//         children: [
+//           Container(
+//             width: 56,
+//             height: 4,
+//             decoration: BoxDecoration(
+//               borderRadius: BorderRadius.circular(4),
+//               color: Theme.of(context).colorScheme.secondaryContainer,
+//             ),
+//           ),
+//           const ServiceCard(
+//             serviceName: 'Hair Stylist',
+//             icon: const Icon(Icons.abc),
+//             iconBackground: Colors.orange,
+//             artisanCount: 13,
+//           ),
+//           Text(
+//             'While you wait, you can reach out to them to'
+//             'confirm the  details of the service you need.',
+//             style: Theme.of(context).textTheme.bodyMedium,
+//           ),
+//           Row(
+//             children: [
+//               Expanded(
+//                 child: ElevatedButton(
+//                   onPressed: () {},
+//                   child: const Text('Call'),
+//                   style: Theme.of(context)
+//                       .extension<ButtonThemeExtensions>()
+//                       ?.filled,
+//                 ),
+//               ),
+//               Expanded(
+//                 child: ElevatedButton(
+//                   onPressed: () {},
+//                   child: const Text('Message'),
+//                   style: Theme.of(context)
+//                       .extension<ButtonThemeExtensions>()
+//                       ?.tonal,
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }

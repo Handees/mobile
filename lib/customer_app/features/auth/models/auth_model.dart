@@ -2,7 +2,7 @@ import 'package:auth/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:handees/features/auth/services/auth_service.dart';
+import 'package:handees/customer_app/services/auth_service.dart';
 import 'package:handees/utils/utils.dart';
 
 final authProvider = StateNotifierProvider<AuthModel, AuthState>((ref) {
@@ -159,6 +159,7 @@ class AuthModel extends StateNotifier<AuthState> with InputValidationMixin {
         onCodeSent();
       },
       onVerifcationComplete: (phoneAuthCredential) async {
+        resetState();
         state = AuthState.authenticated;
       },
       onVerificationFailed: (error) {
@@ -193,10 +194,10 @@ class AuthModel extends StateNotifier<AuthState> with InputValidationMixin {
     // }
   }
 
-  void signoutUser() {
-    resetState();
-    authService.signoutUser();
-  }
+  // void signoutUser() {
+  //   resetState();
+  //   authService.signoutUser();
+  // }
 
   void resetState() {
     _email = '';

@@ -143,6 +143,7 @@ class _WorkDurationWidgetState extends State<WorkDurationWidget> {
           ),
         ),
         ListTile(
+          minVerticalPadding: 8.0,
           title: const Text('One-time'),
           subtitle: Text(
               'The one-time time duration is for handee services that may be completed under 24hrs'),
@@ -157,6 +158,7 @@ class _WorkDurationWidgetState extends State<WorkDurationWidget> {
           ),
         ),
         ListTile(
+          minVerticalPadding: 8.0,
           title: Text('Contract'),
           subtitle: Text(
               'The contract time duration is for handee services that may not be completed under 24hrs'),
