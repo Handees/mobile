@@ -4,7 +4,7 @@ import 'package:handees/routes/routes.dart';
 import 'package:handees/theme/theme.dart';
 import 'package:handees/utils/utils.dart';
 
-import '../../models/auth_model.dart';
+import '../../providers/auth_provider.dart';
 import '../widgets/phone_proceed_dialog.dart';
 
 class SignupScreen extends ConsumerWidget with InputValidationMixin {

@@ -5,13 +5,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/customer_app/services/auth_service.dart';
 import 'package:handees/utils/utils.dart';
 
-final authProvider = StateNotifierProvider<AuthModel, AuthState>((ref) {
-  final authService = ref.watch(authServiceProvider);
-  return AuthModel(authService);
+final authProvider = StateNotifierProvider<AuthStateNotifier, AuthState>((ref) {
+  // final authService = ref.watch(authServiceProvider);
+  return AuthStateNotifier(AuthService.instance);
 });
 
-class AuthModel extends StateNotifier<AuthState> with InputValidationMixin {
-  AuthModel(this.authService)
+class AuthStateNotifier extends StateNotifier<AuthState>
+    with InputValidationMixin {
+  AuthStateNotifier(this.authService)
       : super(authService.isAuthenticated()
             ? AuthState.authenticated
             : AuthState.waiting);

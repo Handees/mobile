@@ -1,11 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+// import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final authServiceProvider = Provider<AuthService>((ref) => AuthService._());
+// final authServiceProvider = Provider<AuthService>((ref) => AuthService._());
 
 class AuthService {
   AuthService._();
+  static final AuthService _instance = AuthService._();
+  static AuthService get instance => _instance;
 
   late String _verificationId;
   final firebaseAuth = FirebaseAuth.instance;

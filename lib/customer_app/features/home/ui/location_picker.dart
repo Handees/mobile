@@ -1,7 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:handees/customer_app/features/home/models/location_model.dart';
+import 'package:handees/customer_app/features/home/providers/suggestions_provider.dart';
 import 'package:handees/customer_app/services/places_service.dart';
 import 'package:handees/res/shapes.dart';
 
@@ -86,8 +86,8 @@ class _LocationPickerOpenedState extends ConsumerState<LocationPickerOpened> {
 
   @override
   Widget build(BuildContext context) {
-    final notifier = ref.watch(locationProvider.notifier);
-    final suggestions = ref.watch(locationProvider);
+    final notifier = ref.watch(suggestionsProvider.notifier);
+    final suggestions = ref.watch(suggestionsProvider);
 
     return Scaffold(
       appBar: AppBar(

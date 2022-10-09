@@ -4,7 +4,7 @@ import 'package:handees/routes/routes.dart';
 import 'package:handees/theme/theme.dart';
 import 'package:handees/utils/utils.dart';
 
-import '../../models/auth_model.dart';
+import '../../providers/auth_provider.dart';
 
 class SigninScreen extends ConsumerWidget with InputValidationMixin {
   SigninScreen({Key? key}) : super(key: key);

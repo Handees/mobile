@@ -10,8 +10,8 @@ import 'package:uuid/uuid.dart';
 
 const kMapsApiKey = 'AIzaSyARglR29MXnF774yULbD_4h3xYBj0vIHfk';
 
-final placeServiceProvider =
-    Provider<PlacesService>((ref) => PlacesService._());
+// final placeServiceProvider =
+//     Provider<PlacesService>((ref) => PlacesService._());
 
 class PlacesService {
   PlacesService._();
