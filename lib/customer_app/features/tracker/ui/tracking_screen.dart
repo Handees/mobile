@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:handees/res/shapes.dart';
+import 'package:handees/routes/routes.dart';
 import 'package:handees/theme/theme.dart';
 import 'package:handees/shared/widgets/circle_fadeout_loader.dart';
 
@@ -121,7 +122,9 @@ class ArrivedBottomSheet extends StatelessWidget {
               Expanded(
                 // width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(CustomerAppRoutes.chat);
+                  },
                   child: const Text('Message'),
                   style: Theme.of(context)
                       .extension<ButtonThemeExtensions>()

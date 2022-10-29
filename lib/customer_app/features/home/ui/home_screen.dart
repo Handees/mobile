@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/customer_app/features/test/test.dart';
 import 'package:handees/customer_app/features/tracker/ui/tracking_screen.dart';
+import 'package:handees/customer_app/services/auth_service.dart';
 
 import 'package:handees/res/shapes.dart';
 import 'package:handees/routes/routes.dart';
@@ -115,9 +116,9 @@ class HomeScreen extends ConsumerWidget {
                     Divider(),
                     ListTile(
                       onTap: () {
-                        // authModel.signoutUser();
-                        // Navigator.of(context)
-                        //     .pushReplacementNamed(CustomerAppRoutes.signin);
+                        AuthService.instance.signoutUser();
+                        Navigator.of(context)
+                            .pushReplacementNamed(AuthRoutes.signin);
                       },
                       leading: Icon(Icons.help_outline_outlined),
                       title: Text('FAQ'),

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:handees/customer_app/features/home/models/place_model.dart';
 import 'package:handees/customer_app/services/auth_service.dart';
 import 'package:http/http.dart';
 import 'package:geolocator/geolocator.dart';
@@ -24,13 +25,13 @@ class PlacesService {
   bool serviceEnabled = false;
 
   /// Get Predictions based on the specified input
-  Future<List<String>> getPredictions(String input) async {
+  Future<List<PlaceModel>> getPredictions(String input) async {
     final request = Uri.https(
       'maps.googleapis.com',
       '/maps/api/place/autocomplete/json',
       {
         'input': input,
-        'types': 'geocode',
+        // 'types': 'geocode', //necessary?
         'components': 'country:ng', //Localize?
         'key': kMapsApiKey,
         'sessionToken': sessionToken,
@@ -42,11 +43,37 @@ class PlacesService {
     final json = jsonDecode(response.body);
 
     //return list of prediction results
-    final result = (json['predictions'] as List)
-        .map<String>((e) => e['description'])
-        .toList();
+    final result = (json['predictions'] as List).map<PlaceModel>((e) {
+      final model = PlaceModel.fromJson(e);
+      print(model);
+
+      return model;
+    }).toList();
 
     return result;
+  }
+
+  Future<String> getLocation(String id) async {
+    final request = Uri.https(
+      'maps.googleapis.com',
+      '/maps/api/place/details/json',
+      {
+        'place_id': id,
+        'fields': 'formatted_address,geometry',
+        'key': kMapsApiKey,
+        'sessionToken': sessionToken,
+      },
+    );
+
+    final response = await get(request);
+
+    final json = jsonDecode(response.body);
+    print(json);
+
+    //return list of prediction results
+    final result = json['candidates'];
+
+    return result.toString();
   }
 
   /// Determine the current position of the device.

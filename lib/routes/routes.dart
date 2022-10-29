@@ -1,5 +1,6 @@
 import 'package:auth/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:handees/customer_app/features/chat/ui/chat_screen.dart';
 import 'package:handees/customer_app/services/auth_service.dart';
 import 'package:handees/customer_app/features/auth/ui/screens/signin_screen.dart';
 import 'package:handees/customer_app/features/auth/ui/screens/signup_screen.dart';
@@ -13,11 +14,13 @@ import 'package:handees/customer_app/features/settings/ui/settings.dart';
 import 'package:handees/customer_app/features/tracker/ui/tracking_screen.dart';
 import 'package:handees/theme/theme.dart';
 
-abstract class CustomerAppRoutes {
+abstract class AuthRoutes {
   static const String signin = '/auth/sign-in';
   static const String signup = '/auth/sign-up';
   static const String verify = '/auth/verify';
+}
 
+abstract class CustomerAppRoutes {
   static const String home = '/home';
   static const String pickService = '/pick-service';
   static const String tracking = '/tracking';
@@ -36,7 +39,14 @@ abstract class CustomerAppRoutes {
   static const String servicesData = '/services-data';
 }
 
-abstract class HandeemanAppRoutes {}
+abstract class HandeemanAppRoutes {
+  static const String completeProfile = '/complete-profile';
+  static const String basicInfo = '/complete-profile/basic-info';
+  static const String documentUpload = '/complete-profile/document-upload';
+  // static const String completeProfile = '/form/complete-profile';
+
+  static const String home = '/home';
+}
 
 Route<dynamic> onGenerateRoute(RouteSettings settings) {
   Widget? page;
@@ -53,25 +63,24 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
               child: SigninScreen(),
             );
       break;
-    case CustomerAppRoutes.signin:
+    case AuthRoutes.signin:
       page = Theme(
         data: authTheme,
         child: SigninScreen(),
       );
       break;
-    case CustomerAppRoutes.signup:
+    case AuthRoutes.signup:
       page = Theme(
         data: authTheme,
         child: SignupScreen(),
       );
       break;
-    case CustomerAppRoutes.verify:
+    case AuthRoutes.verify:
       page = Theme(
         data: authTheme,
         child: VerifyScreen(),
       );
       break;
-
     case CustomerAppRoutes.home:
       page = const HomeScreen();
       break;
@@ -90,12 +99,18 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
     case CustomerAppRoutes.tracking:
       page = const TrackingScreen();
       break;
+    case CustomerAppRoutes.chat:
+      page = const ChatScreen();
+      break;
     case CustomerAppRoutes.pickService:
       pageRoute = MaterialPageRoute(
         builder: ((context) => const PickServiceDialog()),
         fullscreenDialog: true,
       );
       break;
+
+    //Artisan routes
+
     default:
       throw Exception('Unknown route: ${settings.name}');
   }

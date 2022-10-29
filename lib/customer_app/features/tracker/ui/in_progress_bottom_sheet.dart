@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:handees/res/shapes.dart';
+import 'package:handees/routes/routes.dart';
 import 'package:handees/theme/theme.dart';
 
 class InProgressBottomSheet extends StatefulWidget {
@@ -285,7 +286,11 @@ class _InProgressBottomSheetState extends State<InProgressBottomSheet>
                       Expanded(
                         // width: double.infinity,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            print('why now');
+                            Navigator.of(context)
+                                .pushNamed(CustomerAppRoutes.chat);
+                          },
                           child: const Text('Message'),
                           style: Theme.of(context)
                               .extension<ButtonThemeExtensions>()

@@ -17,7 +17,9 @@ class LocationPicker extends StatelessWidget {
       // closedColor: Theme.of(context).cardColor,
       closedShape: Shapes.bigShape,
       openShape: Shapes.bigShape,
-
+      // openColor: Theme.of(context).colorScheme.primary,
+      closedColor: Theme.of(context).colorScheme.primary,
+      // middleColor: Colors.red, // Theme.of(context).colorScheme.primary,
       openBuilder: (context, action) {
         return LocationPickerOpened();
       },
@@ -100,7 +102,15 @@ class _LocationPickerOpenedState extends ConsumerState<LocationPickerOpened> {
       ),
       body: ListView.builder(
         itemBuilder: (context, index) {
-          return Text(suggestions[index]);
+          return InkWell(
+            onTap: () {
+              notifier.getLoc(suggestions[index].id);
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(suggestions[index].description),
+            ),
+          );
         },
         itemCount: suggestions.length,
       ),

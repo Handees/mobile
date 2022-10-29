@@ -143,7 +143,7 @@ class SigninScreen extends ConsumerWidget with InputValidationMixin {
                           onTap: () {
                             model.resetState();
                             Navigator.of(context)
-                                .pushReplacementNamed(CustomerAppRoutes.signup);
+                                .pushReplacementNamed(AuthRoutes.signup);
                           },
                           child: const Text('Sign up'),
                         ),
