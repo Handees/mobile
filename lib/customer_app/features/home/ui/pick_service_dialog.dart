@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:handees/routes/routes.dart';
 import 'package:handees/theme/theme.dart';
 
 enum WorkDuration { oneTime, contract }
@@ -108,7 +109,9 @@ class _PaymentMethodsState extends State<PaymentMethods> {
             ),
           ),
         InkWell(
-          onTap: () {},
+          onTap: () {
+            Navigator.of(context).pushNamed(CustomerAppRoutes.addCard);
+          },
           child: ListTile(
             dense: true,
             title: const Text('Add debit / credit card'),

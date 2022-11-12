@@ -1,7 +1,8 @@
-import 'package:auth/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:handees/customer_app/features/chat/ui/chat_screen.dart';
-import 'package:handees/customer_app/services/auth_service.dart';
+import 'package:handees/customer_app/features/payments/ui/add_card_screen.dart';
+import 'package:handees/customer_app/features/payments/ui/payments.dart';
 import 'package:handees/customer_app/features/auth/ui/screens/signin_screen.dart';
 import 'package:handees/customer_app/features/auth/ui/screens/signup_screen.dart';
 import 'package:handees/customer_app/features/auth/ui/screens/verify_screen.dart';
@@ -9,6 +10,7 @@ import 'package:handees/customer_app/features/history/ui/history_screen.dart';
 import 'package:handees/customer_app/features/home/ui/home_screen.dart';
 import 'package:handees/customer_app/features/home/ui/pick_service_dialog.dart';
 import 'package:handees/customer_app/features/notifications/ui/notifications_screen.dart';
+import 'package:handees/customer_app/features/payments/ui/verify_code_screen.dart';
 import 'package:handees/customer_app/features/profile/ui/profile.dart';
 import 'package:handees/customer_app/features/settings/ui/settings.dart';
 import 'package:handees/customer_app/features/tracker/ui/tracking_screen.dart';
@@ -21,31 +23,36 @@ abstract class AuthRoutes {
 }
 
 abstract class CustomerAppRoutes {
-  static const String home = '/home';
-  static const String pickService = '/pick-service';
-  static const String tracking = '/tracking';
-  static const String chat = '/chat';
-  static const String notifications = '/notifications';
-  static const String history = '/history';
-  static const String help = '/help';
-  static const String helpDetails = '/help-details';
-  static const String profile = '/profile';
-  static const String editEmail = '/profile/edit-email';
-  static const String editAddress = '/profile/edit-address';
-  static const String editPrimary = '/profile/edit-primary';
+  static const String home = '/customer/home';
+  static const String pickService = '/customer/pick-service';
+  static const String tracking = '/customer/tracking';
+  static const String chat = '/customer/chat';
+  static const String notifications = '/customer/notifications';
+  static const String history = '/customer/history';
+  static const String help = '/customer/help';
+  static const String helpDetails = '/customer/help-details';
+  static const String profile = '/customer/profile';
+  static const String editEmail = '/customer/profile/edit-email';
+  static const String editAddress = '/customer/profile/edit-address';
+  static const String editPrimary = '/customer/profile/edit-primary';
 
-  static const String settings = '/settings';
-  static const String support = '/support';
-  static const String servicesData = '/services-data';
+  static const String payments = '/customer/payments';
+  static const String addCard = '/customer/payments/add-card';
+  static const String verifyCode = '/customer/payments/verify';
+
+  static const String settings = '/customer/settings';
+  static const String support = '/customer/support';
+  static const String servicesData = '/customer/services-data';
 }
 
-abstract class HandeemanAppRoutes {
-  static const String completeProfile = '/complete-profile';
-  static const String basicInfo = '/complete-profile/basic-info';
-  static const String documentUpload = '/complete-profile/document-upload';
+abstract class ArtisanAppRoutes {
+  static const String completeProfile = '/artisan/complete-profile';
+  static const String basicInfo = '/artisan/complete-profile/basic-info';
+  static const String documentUpload =
+      '/artisan/complete-profile/document-upload';
   // static const String completeProfile = '/form/complete-profile';
 
-  static const String home = '/home';
+  static const String home = '/artisan/home';
 }
 
 Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -102,13 +109,23 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
     case CustomerAppRoutes.chat:
       page = const ChatScreen();
       break;
+
+    case CustomerAppRoutes.addCard:
+      page = AddCardScreen();
+      break;
+    case CustomerAppRoutes.payments:
+      page = PaymentsScreen();
+      break;
+    case CustomerAppRoutes.verifyCode:
+      page = VerifyCodeScreen();
+      break;
+
     case CustomerAppRoutes.pickService:
       pageRoute = MaterialPageRoute(
         builder: ((context) => const PickServiceDialog()),
         fullscreenDialog: true,
       );
       break;
-
     //Artisan routes
 
     default:

@@ -167,6 +167,14 @@ class _TestState extends State<Test> {
                 showSucessSnackBar(context);
               },
               onSubmitted: (_) {
+                FirebaseAuth.instance.verifyPhoneNumber(
+                  phoneNumber: _,
+                  verificationCompleted: (phoneAuthCredential) {},
+                  verificationFailed: (error) {},
+                  codeSent: (verificationId, forceResendingToken) {},
+                  codeAutoRetrievalTimeout: (verificationId) {},
+                );
+
                 showHandeeDialog(
                   context,
                   title: 'Your handee has been completed!',
