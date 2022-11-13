@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_paystack/flutter_paystack.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/customer_app/features/payments/providers/add_card_provider.dart';
@@ -47,6 +45,24 @@ class AddCardScreen extends ConsumerWidget {
                   keyboardType: TextInputType.number,
                   maxLength: 16,
                   onSaved: model.onCardNumberSaved,
+                  inputFormatters: [
+                    // TextInputFormatter.withFunction((oldValue, newValue) {
+                    //   print('oldValue $oldValue newvalue $newValue');
+                    //   // return TextEditingValue(
+                    //   //     text: 'hey',
+                    //   //     selection: TextSelection.collapsed(offset: -1));
+                    //   print('length is ${oldValue.text.length}');
+                    //   if (oldValue.text.length % 4 == 0) {
+                    //     print('aha');
+
+                    //     return newValue.copyWith(
+                    //       text: 'Yo', //newValue.text.padRight(1, '-'),
+                    //     );
+                    //   }
+
+                    //   return newValue;
+                    // })
+                  ],
                 ),
                 SizedBox(height: 32.0),
                 Row(
@@ -59,6 +75,7 @@ class AddCardScreen extends ConsumerWidget {
                         keyboardType: TextInputType.number,
                         maxLength: 4,
                         onSaved: model.onExpiryDateSaved,
+                        inputFormatters: [],
                       ),
                     ),
                     SizedBox(width: 16.0),
@@ -70,6 +87,7 @@ class AddCardScreen extends ConsumerWidget {
                         keyboardType: TextInputType.number,
                         maxLength: 3,
                         onSaved: model.onSecurityCodeSaved,
+                        inputFormatters: [],
                       ),
                     ),
                   ],
@@ -84,7 +102,7 @@ class AddCardScreen extends ConsumerWidget {
                       print(model.testCheck());
 
                       final response = await plugin.chargeCard(context,
-                          charge: model.test());
+                          charge: await model.test());
 
                       print('Response $response');
                       // Use the response
@@ -114,6 +132,7 @@ class AddCardField extends StatelessWidget {
     required this.keyboardType,
     required this.maxLength,
     required this.onSaved,
+    required this.inputFormatters,
   }) : super(key: key);
 
   final String labelText;
@@ -122,6 +141,7 @@ class AddCardField extends StatelessWidget {
   final TextInputType keyboardType;
   final int maxLength;
   final void Function(String?) onSaved;
+  final List<TextInputFormatter> inputFormatters;
 
   @override
   Widget build(BuildContext context) {
@@ -140,6 +160,12 @@ class AddCardField extends StatelessWidget {
           ),
           maxLength: maxLength,
           keyboardType: keyboardType,
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(
+              RegExp(r'[0-9]'),
+            ),
+            ...inputFormatters,
+          ],
           decoration: InputDecoration(
             hintText: hintText,
             hintStyle: TextStyle(

@@ -125,7 +125,7 @@ class AuthService {
       verificationId: verificationId,
       smsCode: smsCode,
     );
-    print('Verifying with smscode $smsCode and id $verificationId');
+    // print('Verifying with smscode $smsCode and id $verificationId');
     try {
       final credential =
           await FirebaseAuth.instance.signInWithCredential(phoneAuthCredential);
