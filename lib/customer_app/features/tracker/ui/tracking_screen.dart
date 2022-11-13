@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:handees/res/shapes.dart';
 import 'package:handees/routes/routes.dart';
@@ -40,7 +39,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    late final bottomSheet;
+    late final Widget bottomSheet;
 
     switch (_trackingState) {
       case TrackingState.loading:
@@ -71,7 +70,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
       body: _trackingState == TrackingState.loading
           ? const Center(
               child: Padding(
-                padding: const EdgeInsets.only(bottom: 48.0),
+                padding: EdgeInsets.only(bottom: 48.0),
                 child: CircleFadeOutLoader(),
               ),
             )
@@ -104,7 +103,7 @@ class ArrivedBottomSheet extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8.0),
-          ProgressCard(),
+          const ProgressCard(),
           const SizedBox(height: 24.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -112,10 +111,10 @@ class ArrivedBottomSheet extends StatelessWidget {
               Expanded(
                 child: ElevatedButton(
                   onPressed: () {},
-                  child: const Text('Call'),
                   style: Theme.of(context)
                       .extension<ButtonThemeExtensions>()
                       ?.filled,
+                  child: const Text('Call'),
                 ),
               ),
               const SizedBox(width: 16),
@@ -125,10 +124,10 @@ class ArrivedBottomSheet extends StatelessWidget {
                   onPressed: () {
                     Navigator.of(context).pushNamed(CustomerAppRoutes.chat);
                   },
-                  child: const Text('Message'),
                   style: Theme.of(context)
                       .extension<ButtonThemeExtensions>()
                       ?.tonal,
+                  child: const Text('Message'),
                 ),
               ),
             ],
@@ -188,14 +187,14 @@ class ProgressCard extends StatelessWidget {
           ),
           const Spacer(),
           Container(
-            decoration: ShapeDecoration(
-              color: const Color.fromRGBO(253, 223, 242, 1),
+            decoration: const ShapeDecoration(
+              color: Color.fromRGBO(253, 223, 242, 1),
               shape: Shapes.mediumShape,
             ),
             height: 64,
             width: 64,
             child: const Center(
-              child: const CircleAvatar(
+              child: CircleAvatar(
                 backgroundColor: Color.fromRGBO(255, 125, 203, 1),
                 child: Icon(Icons.abc),
               ),

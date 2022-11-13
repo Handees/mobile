@@ -1,9 +1,7 @@
 import 'dart:convert';
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/customer_app/features/home/models/place_model.dart';
-import 'package:handees/customer_app/services/auth_service.dart';
-import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart';
 import 'package:uuid/uuid.dart';
 // import 'package:geocoding/geocoding.dart';
@@ -38,7 +36,7 @@ class PlacesService {
       },
     );
 
-    final response = await get(request);
+    final response = await http.get(request);
 
     final json = jsonDecode(response.body);
 
@@ -65,7 +63,7 @@ class PlacesService {
       },
     );
 
-    final response = await get(request);
+    final response = await http.get(request);
 
     final json = jsonDecode(response.body);
     print(json);

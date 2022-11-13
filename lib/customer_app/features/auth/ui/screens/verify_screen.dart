@@ -10,7 +10,7 @@ import '../../providers/auth_provider.dart';
 class VerifyScreen extends ConsumerWidget {
   VerifyScreen({Key? key}) : super(key: key);
 
-  StreamController<ErrorAnimationType> errorController =
+  final StreamController<ErrorAnimationType> errorController =
       StreamController<ErrorAnimationType>();
 
   @override
@@ -20,8 +20,9 @@ class VerifyScreen extends ConsumerWidget {
     final model = ref.watch(authProvider.notifier);
     final authState = ref.watch(authProvider);
 
-    if (authState == AuthState.invalidVerificationCode)
+    if (authState == AuthState.invalidVerificationCode) {
       errorController.add(ErrorAnimationType.shake);
+    }
 
     // switch (authState) {
     //   case AuthState.invalidVerificationCode:
@@ -35,7 +36,7 @@ class VerifyScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Verify Phone'),
+        title: const Text('Verify Phone'),
         centerTitle: true,
       ),
       body: Padding(
@@ -46,8 +47,8 @@ class VerifyScreen extends ConsumerWidget {
         child: Column(
           children: [
             Text('Code has been sent to *** ***${model.last2Digits}'),
-            SizedBox(height: verticalMargin),
-            Container(
+            const SizedBox(height: verticalMargin),
+            SizedBox(
               width: double.infinity,
               // height: 48,
               child: PinCodeTextField(
@@ -69,7 +70,7 @@ class VerifyScreen extends ConsumerWidget {
                 ),
               ),
             ),
-            SizedBox(height: verticalMargin),
+            const SizedBox(height: verticalMargin),
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -81,18 +82,18 @@ class VerifyScreen extends ConsumerWidget {
                 ),
                 InkWell(
                   onTap: () {},
-                  child: Text('Request again'),
+                  child: const Text('Request again'),
                 ),
               ],
             ),
-            SizedBox(height: verticalMargin),
+            const SizedBox(height: verticalMargin),
             InkWell(
               onTap: () {
                 // errorController.close()
               },
-              child: Text('Get via call'),
+              child: const Text('Get via call'),
             ),
-            SizedBox(height: verticalMargin),
+            const SizedBox(height: verticalMargin),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
@@ -102,7 +103,7 @@ class VerifyScreen extends ConsumerWidget {
                 style: Theme.of(context)
                     .extension<ButtonThemeExtensions>()
                     ?.filled,
-                child: Text('Verify and Create Account'),
+                child: const Text('Verify and Create Account'),
               ),
             ),
           ],

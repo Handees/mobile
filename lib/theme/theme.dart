@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:handees/res/shapes.dart';
 
-final _textTheme = TextTheme(); //GoogleFonts.cabinTextTheme(TextTheme());
+final _textTheme = GoogleFonts.cabinTextTheme(const TextTheme());
 // .copyWith(
 //     // titleMedium: TextStyle(fontSize: 18),
 //     // labelLarge: TextStyle(fontSize: 16),
@@ -28,7 +28,7 @@ const _authColorScheme = ColorScheme.dark(
 );
 
 final _darkColorScheme = ColorScheme.dark(
-  primary: Color.fromARGB(255, 97, 97, 97),
+  primary: const Color.fromARGB(255, 97, 97, 97),
   onPrimary: Colors.white,
   // primaryContainer: Color.fromARGB(255, 97, 97, 97),
   // onPrimaryContainer: Colors.white,
@@ -38,7 +38,7 @@ final _darkColorScheme = ColorScheme.dark(
 
 final _buttonStyle = ButtonStyle(
   padding: MaterialStateProperty.all<EdgeInsets>(
-    EdgeInsets.all(16),
+    const EdgeInsets.all(16),
   ),
   shape: MaterialStateProperty.all(Shapes.bigShape),
 );
@@ -59,7 +59,7 @@ ThemeData _buildTheme(ColorScheme colorScheme) => ThemeData.from(
       useMaterial3: true,
     ).copyWith(
 // dialogTheme: DialogTheme(),
-      appBarTheme: AppBarTheme().copyWith(centerTitle: true),
+      appBarTheme: const AppBarTheme().copyWith(centerTitle: true),
       scaffoldBackgroundColor: colorScheme.background,
       radioTheme: RadioThemeData(
         fillColor: MaterialStateProperty.all(colorScheme.primary),

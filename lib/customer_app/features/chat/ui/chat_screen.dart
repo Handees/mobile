@@ -128,8 +128,8 @@ class ChatScreen extends StatelessWidget {
                   height: 48,
                   color: Colors.red,
                 ),
-                SizedBox(width: 16),
-                Text('Jane Doe'),
+                const SizedBox(width: 16),
+                const Text('Jane Doe'),
               ],
             ),
             centerTitle: true,
@@ -147,22 +147,11 @@ class ChatScreen extends StatelessWidget {
                         : CrossAxisAlignment.end,
                     children: [
                       Container(
-                        padding: EdgeInsets.symmetric(
+                        padding: const EdgeInsets.symmetric(
                           horizontal: 16.0,
                           vertical: 8.0,
                         ),
-                        margin: EdgeInsets.symmetric(vertical: 4.0),
-                        child: Text(
-                          messages[index].message,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium
-                              ?.copyWith(
-                                color: isUser
-                                    ? Theme.of(context).colorScheme.onSecondary
-                                    : Theme.of(context).colorScheme.onPrimary,
-                              ),
-                        ),
+                        margin: const EdgeInsets.symmetric(vertical: 4.0),
                         decoration: BoxDecoration(
                           borderRadius:
                               (Shapes.smallShape.borderRadius as BorderRadius)
@@ -173,6 +162,17 @@ class ChatScreen extends StatelessWidget {
                           color: isUser
                               ? Theme.of(context).colorScheme.secondary
                               : Theme.of(context).colorScheme.primary,
+                        ),
+                        child: Text(
+                          messages[index].message,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(
+                                color: isUser
+                                    ? Theme.of(context).colorScheme.onSecondary
+                                    : Theme.of(context).colorScheme.onPrimary,
+                              ),
                         ),
                       ),
                       Text(
@@ -194,7 +194,7 @@ class ChatScreen extends StatelessWidget {
           decoration: InputDecoration(
               hintText: 'Type a message',
               suffixIcon: IconButton(
-                icon: Icon(Icons.send),
+                icon: const Icon(Icons.send),
                 onPressed: () {},
               )),
         ),

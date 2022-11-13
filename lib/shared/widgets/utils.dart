@@ -11,7 +11,7 @@ void showSucessSnackBar(BuildContext context) =>
         content: Align(
           alignment: Alignment.bottomCenter,
           child: Container(
-            margin: EdgeInsets.all(8.0),
+            margin: const EdgeInsets.all(8.0),
             decoration: ShapeDecoration(
               shape: Shapes.smallShape,
               color: Colors.white,
@@ -29,15 +29,15 @@ void showSucessSnackBar(BuildContext context) =>
                   width: 12,
                   height: 56,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.horizontal(
+                    borderRadius: const BorderRadius.horizontal(
                       left: Radius.circular(8.0),
                     ),
                     color: Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
-                SizedBox(width: 12),
-                CircleAvatar(),
-                SizedBox(width: 16),
+                const SizedBox(width: 12),
+                const CircleAvatar(),
+                const SizedBox(width: 16),
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,7 +56,7 @@ void showSucessSnackBar(BuildContext context) =>
                     ),
                   ],
                 ),
-                SizedBox(width: 16),
+                const SizedBox(width: 16),
               ],
             ),
           ),
@@ -85,17 +85,17 @@ Future<T?> showHandeeDialog<T>(
   return showDialog(
     context: context,
     builder: (context) => SimpleDialog(
-      contentPadding: EdgeInsets.all(20.0),
+      contentPadding: const EdgeInsets.all(20.0),
       // alignment: Alignment.center,
       children: [
         Ink(
-          decoration: ShapeDecoration(
+          decoration: const ShapeDecoration(
             color: Colors.blue,
             shape: CircleBorder(),
           ),
           height: 56,
           width: 56,
-          child: Center(
+          child: const Center(
             child: CircleAvatar(
               backgroundColor: Colors.pink,
               radius: 16,
@@ -103,7 +103,7 @@ Future<T?> showHandeeDialog<T>(
             ),
           ),
         ),
-        SizedBox(height: 14),
+        const SizedBox(height: 14),
         Padding(
           padding: const EdgeInsets.all(2.0),
           child: Center(
@@ -125,7 +125,7 @@ Future<T?> showHandeeDialog<T>(
               ),
             ),
           ),
-        SizedBox(height: 14),
+        const SizedBox(height: 14),
         if (content != null) content,
         Padding(
           padding: const EdgeInsets.symmetric(vertical: verticalPadding),

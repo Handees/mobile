@@ -2,7 +2,6 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/customer_app/features/home/providers/suggestions_provider.dart';
-import 'package:handees/customer_app/services/places_service.dart';
 import 'package:handees/res/shapes.dart';
 
 class LocationPicker extends StatelessWidget {
@@ -12,7 +11,7 @@ class LocationPicker extends StatelessWidget {
   Widget build(BuildContext context) {
     return OpenContainer(
       closedBuilder: (context, action) {
-        return LocationPickerClosed();
+        return const LocationPickerClosed();
       },
       // closedColor: Theme.of(context).cardColor,
       closedShape: Shapes.bigShape,
@@ -21,7 +20,7 @@ class LocationPicker extends StatelessWidget {
       closedColor: Theme.of(context).colorScheme.primary,
       // middleColor: Colors.red, // Theme.of(context).colorScheme.primary,
       openBuilder: (context, action) {
-        return LocationPickerOpened();
+        return const LocationPickerOpened();
       },
     );
   }

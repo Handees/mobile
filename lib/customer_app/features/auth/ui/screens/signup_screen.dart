@@ -84,9 +84,9 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
                         children: [
                           const SizedBox(height: 16),
                           TextFormField(
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               labelText: 'Name',
-                              hintText: 'Omaka',
+                              hintText: 'John',
                             ),
                             textCapitalization: TextCapitalization.words,
                             onSaved: model.onNameSaved,

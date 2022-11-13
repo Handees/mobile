@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:handees/routes/routes.dart';
 import 'package:handees/theme/theme.dart';
 
@@ -15,7 +13,7 @@ class PickServiceDialog extends StatelessWidget {
       appBar: AppBar(),
       body: CustomScrollView(
         slivers: [
-          SliverList(
+          const SliverList(
             delegate: SliverChildListDelegate.fixed(
               [
                 PaymentMethods(),
@@ -33,7 +31,8 @@ class PickServiceDialog extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               child: Container(
                 width: double.infinity,
-                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 16.0, vertical: 24.0),
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).pop('test');
@@ -41,7 +40,7 @@ class PickServiceDialog extends StatelessWidget {
                   style: Theme.of(context)
                       .extension<ButtonThemeExtensions>()
                       ?.filled,
-                  child: Text('Proceed'),
+                  child: const Text('Proceed'),
                 ),
               ),
             ),
@@ -82,7 +81,7 @@ class _PaymentMethodsState extends State<PaymentMethods> {
         ListTile(
           dense: true,
           title: const Text('Cash / Bank Transfer'),
-          leading: Icon(Icons.money),
+          leading: const Icon(Icons.money),
           trailing: Radio<String>(
             value: 'cash',
             groupValue: _value,
@@ -97,7 +96,7 @@ class _PaymentMethodsState extends State<PaymentMethods> {
           ListTile(
             dense: true,
             title: Text(card),
-            leading: Icon(Icons.credit_card),
+            leading: const Icon(Icons.credit_card),
             trailing: Radio<String>(
               value: card,
               groupValue: _value,
@@ -112,9 +111,9 @@ class _PaymentMethodsState extends State<PaymentMethods> {
           onTap: () {
             Navigator.of(context).pushNamed(CustomerAppRoutes.addCard);
           },
-          child: ListTile(
+          child: const ListTile(
             dense: true,
-            title: const Text('Add debit / credit card'),
+            title: Text('Add debit / credit card'),
             leading: Icon(Icons.add_card),
           ),
         )
@@ -148,7 +147,7 @@ class _WorkDurationWidgetState extends State<WorkDurationWidget> {
         ListTile(
           minVerticalPadding: 8.0,
           title: const Text('One-time'),
-          subtitle: Text(
+          subtitle: const Text(
               'The one-time time duration is for handee services that may be completed under 24hrs'),
           trailing: Radio<WorkDuration>(
             value: WorkDuration.oneTime,
@@ -162,8 +161,8 @@ class _WorkDurationWidgetState extends State<WorkDurationWidget> {
         ),
         ListTile(
           minVerticalPadding: 8.0,
-          title: Text('Contract'),
-          subtitle: Text(
+          title: const Text('Contract'),
+          subtitle: const Text(
               'The contract time duration is for handee services that may not be completed under 24hrs'),
           trailing: Radio<WorkDuration>(
             value: WorkDuration.contract,

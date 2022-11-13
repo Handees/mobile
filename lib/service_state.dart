@@ -27,10 +27,10 @@ class ServiceStateWidget extends StatelessWidget {
         textColor = Colors.white,
         super(key: key);
 
-  ServiceStateWidget.canceled({Key? key})
-      : color = Color.fromARGB(255, 201, 200, 200),
+  const ServiceStateWidget.canceled({Key? key})
+      : color = const Color.fromARGB(255, 201, 200, 200),
         label = 'Canceled',
-        textColor = Color.fromARGB(255, 105, 105, 105),
+        textColor = const Color.fromARGB(255, 105, 105, 105),
         super(key: key);
 
   final Color color;
@@ -40,7 +40,7 @@ class ServiceStateWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(
+      padding: const EdgeInsets.symmetric(
         vertical: 4.0,
         horizontal: 8.0,
       ),

@@ -21,7 +21,7 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     const horizontalPadding = 16.0;
-    const drawerItemHeight = 56.0;
+    // const drawerItemHeight = 56.0;
 
     // final authModel = ref.watch(authProvider.notifier);
 
@@ -37,7 +37,7 @@ class HomeScreen extends ConsumerWidget {
                 child: Column(
                   children: [
                     DrawerHeader(
-                      padding: EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.all(16.0),
                       child: Align(
                         alignment: Alignment.bottomLeft,
                         child: InkWell(
@@ -49,12 +49,12 @@ class HomeScreen extends ConsumerWidget {
                               Container(
                                 height: 48,
                                 width: 48,
-                                decoration: ShapeDecoration(
+                                decoration: const ShapeDecoration(
                                   shape: CircleBorder(),
                                   color: Colors.red,
                                 ),
                               ),
-                              SizedBox(width: 16.0),
+                              const SizedBox(width: 16.0),
                               Column(
                                 mainAxisSize: MainAxisSize.min,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,62 +78,62 @@ class HomeScreen extends ConsumerWidget {
                     ),
                     ListTile(
                       onTap: () {},
-                      leading: Icon(Icons.credit_card),
-                      title: Text('Payments'),
+                      leading: const Icon(Icons.credit_card),
+                      title: const Text('Payments'),
                     ),
-                    Divider(),
+                    const Divider(),
                     ListTile(
                       onTap: () => Navigator.of(context)
                           .pushNamed(CustomerAppRoutes.history),
-                      leading: Icon(Icons.history),
-                      title: Text('History'),
+                      leading: const Icon(Icons.history),
+                      title: const Text('History'),
                     ),
-                    Divider(),
+                    const Divider(),
                     ListTile(
                       onTap: () => Navigator.of(context)
                           .pushNamed(CustomerAppRoutes.settings),
-                      leading: Icon(Icons.settings_outlined),
-                      title: Text('Settings'),
+                      leading: const Icon(Icons.settings_outlined),
+                      title: const Text('Settings'),
                     ),
-                    Divider(),
+                    const Divider(),
                     ListTile(
                       onTap: () {},
-                      leading: Icon(Icons.support_agent),
-                      title: Text('Customer Support'),
+                      leading: const Icon(Icons.support_agent),
+                      title: const Text('Customer Support'),
                     ),
-                    Divider(),
+                    const Divider(),
                     ListTile(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) {
-                            return Test();
+                            return const Test();
                           },
                         ));
                       },
-                      leading: Icon(Icons.handyman),
-                      title: Text('Test'),
+                      leading: const Icon(Icons.handyman),
+                      title: const Text('Test'),
                     ),
-                    Divider(),
+                    const Divider(),
                     ListTile(
                       onTap: () {
                         AuthService.instance.signoutUser();
                         Navigator.of(context)
                             .pushReplacementNamed(AuthRoutes.signin);
                       },
-                      leading: Icon(Icons.help_outline_outlined),
-                      title: Text('FAQ'),
+                      leading: const Icon(Icons.help_outline_outlined),
+                      title: const Text('FAQ'),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     SizedBox(
                       width: double.infinity,
                       child: Padding(
-                        padding: EdgeInsets.all(16.0),
+                        padding: const EdgeInsets.all(16.0),
                         child: ElevatedButton(
                           style: Theme.of(context)
                               .extension<ButtonThemeExtensions>()
                               ?.filled,
                           onPressed: () {},
-                          child: Text(
+                          child: const Text(
                             'Become a Handee Man',
                           ),
                         ),
@@ -157,7 +157,7 @@ class HomeScreen extends ConsumerWidget {
           child: CustomScrollView(
             slivers: [
               SliverAppBar(
-                systemOverlayStyle: SystemUiOverlayStyle(
+                systemOverlayStyle: const SystemUiOverlayStyle(
                   statusBarIconBrightness: Brightness.dark,
                 ),
                 actions: [
@@ -203,7 +203,7 @@ class HomeScreen extends ConsumerWidget {
                   floating: true,
                   delegate: CustomDelegate(
                     height: 64.0,
-                    child: LocationPicker(),
+                    child: const LocationPicker(),
                   ),
                 ),
               ),
@@ -211,12 +211,12 @@ class HomeScreen extends ConsumerWidget {
                 pinned: true,
                 delegate: CustomDelegate(
                   height: 144.0,
-                  shape: RoundedRectangleBorder(),
+                  shape: const RoundedRectangleBorder(),
                   elevation: 0,
                   padding: EdgeInsets.zero,
                   child: PageView.builder(
                     itemBuilder: (context, index) {
-                      return OngoingServiceHeader(
+                      return const OngoingServiceHeader(
                         horizontalPadding: horizontalPadding,
                       );
                     },
@@ -240,7 +240,7 @@ class HomeScreen extends ConsumerWidget {
                                         .viewInsets
                                         .bottom,
                                   ),
-                                  child: PickServiceBottomSheet(),
+                                  child: const PickServiceBottomSheet(),
                                 );
                               });
                         },
@@ -302,15 +302,15 @@ class OngoingServiceHeader extends StatelessWidget {
             ],
           ),
         ),
-        Spacer(flex: 1),
+        const Spacer(flex: 1),
         Padding(
           padding: EdgeInsets.symmetric(
             horizontal: horizontalPadding,
           ),
-          child: ProgressCard(),
+          child: const ProgressCard(),
         ),
-        Spacer(flex: 3),
-        Divider(
+        const Spacer(flex: 3),
+        const Divider(
           thickness: 8.0,
           height: 0.0,
         ),

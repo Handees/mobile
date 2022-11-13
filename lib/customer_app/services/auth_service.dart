@@ -9,8 +9,10 @@ class AuthService {
   static final AuthService _instance = AuthService._();
   static AuthService get instance => _instance;
 
-  late String _verificationId;
+  // late String _verificationId;
   final firebaseAuth = FirebaseAuth.instance;
+
+  User get user => firebaseAuth.currentUser!;
 
   bool isAuthenticated() =>
       firebaseAuth.currentUser != null &&
@@ -37,10 +39,10 @@ class AuthService {
 
   Future<AuthResponse> signinUser(String email, String password) async {
     try {
-      final credential = await firebaseAuth.signInWithEmailAndPassword(
+      await firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password,
-      ); // TODO: sign in with phone
+      );
       return AuthResponse.success;
     } on FirebaseAuthException catch (e) {
       String message = 'An error occured';
@@ -127,8 +129,7 @@ class AuthService {
     );
     // print('Verifying with smscode $smsCode and id $verificationId');
     try {
-      final credential =
-          await FirebaseAuth.instance.signInWithCredential(phoneAuthCredential);
+      await FirebaseAuth.instance.signInWithCredential(phoneAuthCredential);
       return AuthResponse.success;
     } on FirebaseAuthException catch (e) {
       String message = 'An error occured';

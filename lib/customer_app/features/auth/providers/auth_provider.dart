@@ -10,12 +10,12 @@ final authProvider = StateNotifierProvider<AuthStateNotifier, AuthState>((ref) {
 
 class AuthStateNotifier extends StateNotifier<AuthState>
     with InputValidationMixin {
-  AuthStateNotifier(this.authService)
-      : super(authService.isAuthenticated()
+  AuthStateNotifier(this._authService)
+      : super(_authService.isAuthenticated()
             ? AuthState.authenticated
             : AuthState.waiting);
 
-  final AuthService authService;
+  final AuthService _authService;
 
   String _name = '';
   String _phone = '';
@@ -73,7 +73,7 @@ class AuthStateNotifier extends StateNotifier<AuthState>
     // print(
     //     'Email: $email, Password: $password, Name: $name');
     state = AuthState.loading;
-    final response = await authService.signinUser(_email, _password);
+    final response = await _authService.signinUser(_email, _password);
     // await Future.delayed(Duration(seconds: 2));
 
     switch (response) {
@@ -96,13 +96,13 @@ class AuthStateNotifier extends StateNotifier<AuthState>
 
   void verifyNumber() async {
     state = AuthState.loading;
-    final response = await authService.verifyNumber(_smsCode, _verificationId);
+    final response = await _authService.verifyNumber(_smsCode, _verificationId);
     // await Future.delayed(Duration(seconds: 2));
 
     switch (response) {
       case AuthResponse.success:
         final completeResponse =
-            await authService.completeProfile(_email, _password, _name);
+            await _authService.completeProfile(_email, _password, _name);
 
         switch (completeResponse) {
           case AuthResponse.success:
@@ -145,12 +145,12 @@ class AuthStateNotifier extends StateNotifier<AuthState>
   void signupUser({required void Function() onCodeSent}) async {
     state = AuthState.loading;
 
-    if (await authService.emailInUse(_email)) {
+    if (await _authService.emailInUse(_email)) {
       state = AuthState.emailInUse;
       return;
     }
 
-    authService.signupWithPhone(
+    _authService.signupWithPhone(
       phone: _phone,
       onCodeSent: (verificationId, forceResendingToken) {
         state = AuthState.verifying;

@@ -3,10 +3,9 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:handees/res/shapes.dart';
 import 'package:handees/shared/widgets/utils.dart';
 import 'package:http/http.dart' as http;
-import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:socket_io_client/socket_io_client.dart' as io;
 
 class Test extends StatefulWidget {
   const Test({Key? key}) : super(key: key);
@@ -48,8 +47,8 @@ class _TestState extends State<Test> {
   late String token;
 
 // Dart client
-  IO.Socket socket = IO.io('https://fef9-197-211-58-29.ngrok.io/',
-      IO.OptionBuilder().setTransports(['websocket']).build());
+  io.Socket socket = io.io('https://fef9-197-211-58-29.ngrok.io/',
+      io.OptionBuilder().setTransports(['websocket']).build());
 
   String? bookingId;
   String? artisanId;

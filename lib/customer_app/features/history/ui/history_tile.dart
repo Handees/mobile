@@ -26,28 +26,28 @@ class _HistoryTileState extends State<HistoryTile> {
         });
       },
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Column(
           children: [
             AnimatedOpacity(
               opacity: _test ? 0 : 1,
-              duration: Duration(milliseconds: 200),
+              duration: const Duration(milliseconds: 200),
               curve: Curves.fastOutSlowIn,
               child: AnimatedContainer(
                 height: _test ? 0 : 40.0,
-                duration: Duration(milliseconds: 200),
+                duration: const Duration(milliseconds: 200),
                 curve: Curves.fastOutSlowIn,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
                       child: Text('data'),
                     ),
                     TextButton.icon(
                       onPressed: () {},
-                      icon: Icon(Icons.ac_unit),
-                      label: Text('Need help?'),
+                      icon: const Icon(Icons.ac_unit),
+                      label: const Text('Need help?'),
                     ),
                   ],
                 ),
@@ -60,7 +60,7 @@ class _HistoryTileState extends State<HistoryTile> {
                   Container(
                     decoration: ShapeDecoration(
                       color: widget.iconBackground.withOpacity(0.2),
-                      shape: CircleBorder(),
+                      shape: const CircleBorder(),
                     ),
                     height: 56,
                     width: 56,
@@ -72,11 +72,11 @@ class _HistoryTileState extends State<HistoryTile> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 16.0),
-                  Expanded(
+                  const SizedBox(width: 16.0),
+                  const Expanded(
                     child: Text('Your handee man has arrived'),
                   ),
-                  SizedBox(width: 16.0),
+                  const SizedBox(width: 16.0),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.end,

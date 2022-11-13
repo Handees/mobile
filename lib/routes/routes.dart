@@ -64,7 +64,7 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       final isAuth = FirebaseAuth.instance.currentUser != null &&
           FirebaseAuth.instance.currentUser!.email!.isNotEmpty;
       page = isAuth
-          ? HomeScreen()
+          ? const HomeScreen()
           : Theme(
               data: authTheme,
               child: SigninScreen(),
@@ -114,10 +114,10 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       page = AddCardScreen();
       break;
     case CustomerAppRoutes.payments:
-      page = PaymentsScreen();
+      page = const PaymentsScreen();
       break;
     case CustomerAppRoutes.verifyCode:
-      page = VerifyCodeScreen();
+      page = const VerifyCodeScreen();
       break;
 
     case CustomerAppRoutes.pickService:

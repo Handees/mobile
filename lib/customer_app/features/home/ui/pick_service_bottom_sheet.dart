@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:handees/res/shapes.dart';
 import 'package:handees/routes/routes.dart';
 import 'package:handees/theme/theme.dart';
 
@@ -53,8 +52,9 @@ class PickServiceBottomSheet extends StatelessWidget {
                     .pushNamed(CustomerAppRoutes.pickService);
                 print(res);
 
-                if (res != null)
+                if (res != null) {
                   Navigator.of(context).pushNamed(CustomerAppRoutes.tracking);
+                }
               },
               style:
                   Theme.of(context).extension<ButtonThemeExtensions>()?.filled,

@@ -12,7 +12,7 @@ class NotificationsScreen extends StatelessWidget {
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return [
               SliverAppBar(
-                title: Text('Notifications'),
+                title: const Text('Notifications'),
                 pinned: true,
                 floating: true,
                 snap: true,
@@ -40,13 +40,13 @@ class NotificationsScreen extends StatelessWidget {
           body: TabBarView(
             children: [
               ListView.builder(
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                itemBuilder: (context, index) => NotificationCard(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                itemBuilder: (context, index) => const NotificationCard(
                   icon: Icon(Icons.abc),
                   iconBackground: Colors.orange,
                 ),
               ),
-              SizedBox(),
+              const SizedBox(),
             ],
           ),
         ),
@@ -75,7 +75,7 @@ class NotificationCard extends StatelessWidget {
           Ink(
             decoration: ShapeDecoration(
               color: iconBackground.withOpacity(0.2),
-              shape: CircleBorder(),
+              shape: const CircleBorder(),
             ),
             height: 56,
             width: 56,
@@ -87,12 +87,12 @@ class NotificationCard extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(width: 16.0),
-          Expanded(
+          const SizedBox(width: 16.0),
+          const Expanded(
             child: Text('Your handee man has arrived'),
           ),
-          SizedBox(width: 16.0),
-          Text('Time'),
+          const SizedBox(width: 16.0),
+          const Text('Time'),
         ],
       ),
     );

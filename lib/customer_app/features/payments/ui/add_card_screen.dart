@@ -31,21 +31,21 @@ class AddCardScreen extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Spacer(),
+                const Spacer(),
                 Container(
                   width: 280,
                   height: 172,
                   color: Colors.red,
                 ),
-                Spacer(),
+                const Spacer(),
                 AddCardField(
                   labelText: 'CARD NUMBER',
                   hintText: 'XXXX XXXX XXXX XXXX',
-                  autofillHints: [AutofillHints.creditCardNumber],
+                  autofillHints: const [AutofillHints.creditCardNumber],
                   keyboardType: TextInputType.number,
                   maxLength: 16,
                   onSaved: model.onCardNumberSaved,
-                  inputFormatters: [
+                  inputFormatters: const [
                     // TextInputFormatter.withFunction((oldValue, newValue) {
                     //   print('oldValue $oldValue newvalue $newValue');
                     //   // return TextEditingValue(
@@ -64,45 +64,47 @@ class AddCardScreen extends ConsumerWidget {
                     // })
                   ],
                 ),
-                SizedBox(height: 32.0),
+                const SizedBox(height: 32.0),
                 Row(
                   children: [
                     Expanded(
                       child: AddCardField(
                         labelText: 'EXPIRY DATE',
-                        autofillHints: [AutofillHints.creditCardExpirationDate],
+                        autofillHints: const [
+                          AutofillHints.creditCardExpirationDate
+                        ],
                         hintText: 'MM/YY',
                         keyboardType: TextInputType.number,
                         maxLength: 4,
                         onSaved: model.onExpiryDateSaved,
-                        inputFormatters: [],
+                        inputFormatters: const [],
                       ),
                     ),
-                    SizedBox(width: 16.0),
+                    const SizedBox(width: 16.0),
                     Expanded(
                       child: AddCardField(
                         labelText: 'CVV/CSV',
-                        autofillHints: [AutofillHints.creditCardSecurityCode],
+                        autofillHints: const [
+                          AutofillHints.creditCardSecurityCode
+                        ],
                         hintText: 'XXX',
                         keyboardType: TextInputType.number,
                         maxLength: 3,
                         onSaved: model.onSecurityCodeSaved,
-                        inputFormatters: [],
+                        inputFormatters: const [],
                       ),
                     ),
                   ],
                 ),
-                Spacer(),
+                const Spacer(),
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () async {
                       _formGlobalKey.currentState?.save();
 
-                      print(model.testCheck());
-
                       final response = await plugin.chargeCard(context,
-                          charge: await model.test());
+                          charge: await model.getCharge());
 
                       print('Response $response');
                       // Use the response
@@ -113,7 +115,7 @@ class AddCardScreen extends ConsumerWidget {
                     child: const Text('Done'),
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
               ],
             ),
           ),
@@ -155,7 +157,7 @@ class AddCardField extends StatelessWidget {
           ),
         ),
         TextFormField(
-          style: TextStyle(
+          style: const TextStyle(
             letterSpacing: 1.5,
           ),
           maxLength: maxLength,
@@ -168,7 +170,7 @@ class AddCardField extends StatelessWidget {
           ],
           decoration: InputDecoration(
             hintText: hintText,
-            hintStyle: TextStyle(
+            hintStyle: const TextStyle(
               letterSpacing: 1.5,
             ),
           ),
