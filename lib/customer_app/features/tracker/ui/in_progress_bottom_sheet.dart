@@ -66,6 +66,20 @@ class _InProgressBottomSheetState extends State<InProgressBottomSheet>
     super.dispose();
   }
 
+  var progress = 0;
+  @override
+  void initState() {
+    var progressStream =
+        Stream<int>.periodic(Duration(milliseconds: 10), (x) => x).take(2000);
+
+    progressStream.forEach((element) {
+      setState(() {
+        progress = element;
+      });
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     print('building');
@@ -238,7 +252,7 @@ class _InProgressBottomSheetState extends State<InProgressBottomSheet>
                         children: [
                           Text('ETA $time minutes'),
                           LinearProgressIndicator(
-                            // value: 0.7,
+                            value: progress / 2000,
                             backgroundColor:
                                 Theme.of(context).colorScheme.secondary,
                           ),

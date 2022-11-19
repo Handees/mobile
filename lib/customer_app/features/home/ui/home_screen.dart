@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:handees/customer_app/features/home/providers/home_provider.dart';
 import 'package:handees/customer_app/features/test/test.dart';
 import 'package:handees/customer_app/features/tracker/ui/tracking_screen.dart';
 import 'package:handees/customer_app/services/auth_service.dart';
@@ -24,6 +25,8 @@ class HomeScreen extends ConsumerWidget {
     // const drawerItemHeight = 56.0;
 
     // final authModel = ref.watch(authProvider.notifier);
+
+    final name = ref.watch(nameProvider);
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -179,7 +182,7 @@ class HomeScreen extends ConsumerWidget {
                     children: [
                       const SizedBox(height: 8),
                       Text(
-                        'Hello Barbara',
+                        'Hello $name',
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
                               color: Theme.of(context).unselectedWidgetColor,
                             ),

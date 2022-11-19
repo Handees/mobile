@@ -19,22 +19,28 @@ class TrackingScreen extends StatefulWidget {
 
 class _TrackingScreenState extends State<TrackingScreen> {
   var _trackingState = TrackingState.loading;
+  var progress = 0;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    Future.delayed(const Duration(seconds: 10)).then((value) {
+
+    Future.delayed(const Duration(seconds: 3)).then((value) {
       setState(() {
         _trackingState = TrackingState.inProgress;
       });
-    }).then((value) {
-      Future.delayed(const Duration(seconds: 20)).then((value) => {
-            setState(() {
-              _trackingState = TrackingState.arrived;
-            })
-          });
     });
+    //.then((value) {
+    //   Future.delayed(const Duration(seconds: 20)).then((value) => {
+    //         if (mounted)
+    //           {
+    //             setState(() {
+    //               _trackingState = TrackingState.arrived;
+    //             })
+    //           }
+    //       });
+    // });
   }
 
   @override

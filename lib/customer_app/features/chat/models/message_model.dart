@@ -8,4 +8,6 @@ class MessageModel {
     required this.time,
     required this.senderId,
   });
+
+  bool get isUser => senderId == 'a';
 }

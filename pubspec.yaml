@@ -48,6 +48,7 @@ dependencies:
   animations: ^2.0.7
   firebase_app_check: ^0.1.1+2
   flutter_paystack: ^1.0.6
+  http: ^0.13.5
 
 dev_dependencies:
   flutter_test:

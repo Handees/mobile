@@ -1,114 +1,21 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/customer_app/features/chat/models/message_model.dart';
+import 'package:handees/customer_app/features/chat/providers/chat_provider.dart';
 import 'package:handees/res/shapes.dart';
 
-class ChatScreen extends StatelessWidget {
+class ChatScreen extends ConsumerWidget {
   const ChatScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final rand = Random(DateTime.now().millisecond);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final model = ref.watch(messagesProvider.notifier);
 
-    final messages = [
-      MessageModel(
-        message: 'How far',
-        time: DateTime.fromMillisecondsSinceEpoch(
-            rand.nextInt(25200000) + 1665922275000),
-        senderId: rand.nextInt(10) % 2 == 0 ? 'a' : 'b',
-      ),
-      MessageModel(
-        message: 'Don\'t go naow',
-        time: DateTime.fromMillisecondsSinceEpoch(
-            rand.nextInt(25200000) + 1665922275000),
-        senderId: rand.nextInt(10) % 2 == 0 ? 'a' : 'b',
-      ),
-      MessageModel(
-        message: 'Lol',
-        time: DateTime.fromMillisecondsSinceEpoch(
-            rand.nextInt(25200000) + 1665922275000),
-        senderId: rand.nextInt(10) % 2 == 0 ? 'a' : 'b',
-      ),
-      MessageModel(
-        message: 'Try me',
-        time: DateTime.fromMillisecondsSinceEpoch(
-            rand.nextInt(25200000) + 1665922275000),
-        senderId: rand.nextInt(10) % 2 == 0 ? 'a' : 'b',
-      ),
-      MessageModel(
-        message: 'How far',
-        time: DateTime.fromMillisecondsSinceEpoch(
-            rand.nextInt(25200000) + 1665922275000),
-        senderId: rand.nextInt(10) % 2 == 0 ? 'a' : 'b',
-      ),
-      MessageModel(
-        message: 'Don\'t go naow',
-        time: DateTime.fromMillisecondsSinceEpoch(
-            rand.nextInt(25200000) + 1665922275000),
-        senderId: rand.nextInt(10) % 2 == 0 ? 'a' : 'b',
-      ),
-      MessageModel(
-        message: 'Lol',
-        time: DateTime.fromMillisecondsSinceEpoch(
-            rand.nextInt(25200000) + 1665922275000),
-        senderId: rand.nextInt(10) % 2 == 0 ? 'a' : 'b',
-      ),
-      MessageModel(
-        message: 'Try me',
-        time: DateTime.fromMillisecondsSinceEpoch(
-            rand.nextInt(25200000) + 1665922275000),
-        senderId: rand.nextInt(10) % 2 == 0 ? 'a' : 'b',
-      ),
-      MessageModel(
-        message: 'How far',
-        time: DateTime.fromMillisecondsSinceEpoch(
-            rand.nextInt(25200000) + 1665922275000),
-        senderId: rand.nextInt(10) % 2 == 0 ? 'a' : 'b',
-      ),
-      MessageModel(
-        message: 'Don\'t go naow',
-        time: DateTime.fromMillisecondsSinceEpoch(
-            rand.nextInt(25200000) + 1665922275000),
-        senderId: rand.nextInt(10) % 2 == 0 ? 'a' : 'b',
-      ),
-      MessageModel(
-        message: 'Lol',
-        time: DateTime.fromMillisecondsSinceEpoch(
-            rand.nextInt(25200000) + 1665922275000),
-        senderId: rand.nextInt(10) % 2 == 0 ? 'a' : 'b',
-      ),
-      MessageModel(
-        message: 'Try me',
-        time: DateTime.fromMillisecondsSinceEpoch(
-            rand.nextInt(25200000) + 1665922275000),
-        senderId: rand.nextInt(10) % 2 == 0 ? 'a' : 'b',
-      ),
-      MessageModel(
-        message: 'How far',
-        time: DateTime.fromMillisecondsSinceEpoch(
-            rand.nextInt(25200000) + 1665922275000),
-        senderId: rand.nextInt(10) % 2 == 0 ? 'a' : 'b',
-      ),
-      MessageModel(
-        message: 'Don\'t go naow',
-        time: DateTime.fromMillisecondsSinceEpoch(
-            rand.nextInt(25200000) + 1665922275000),
-        senderId: rand.nextInt(10) % 2 == 0 ? 'a' : 'b',
-      ),
-      MessageModel(
-        message: 'Lol',
-        time: DateTime.fromMillisecondsSinceEpoch(
-            rand.nextInt(25200000) + 1665922275000),
-        senderId: rand.nextInt(10) % 2 == 0 ? 'a' : 'b',
-      ),
-      MessageModel(
-        message: 'Try me',
-        time: DateTime.fromMillisecondsSinceEpoch(
-            rand.nextInt(25200000) + 1665922275000),
-        senderId: rand.nextInt(10) % 2 == 0 ? 'a' : 'b',
-      ),
-    ];
+    final messages = ref.watch(messagesProvider);
+
+    print(messages);
 
     return Scaffold(
       // appBar: AppBar(
@@ -140,7 +47,8 @@ class ChatScreen extends StatelessWidget {
               delegate: SliverChildBuilderDelegate(
                 (context, index) {
                   // return Text('How');
-                  final isUser = messages[index].senderId == 'a';
+                  final isUser = messages[index].isUser;
+
                   return Column(
                     crossAxisAlignment: isUser
                         ? CrossAxisAlignment.start
@@ -192,11 +100,16 @@ class ChatScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: TextField(
           decoration: InputDecoration(
-              hintText: 'Type a message',
-              suffixIcon: IconButton(
-                icon: const Icon(Icons.send),
-                onPressed: () {},
-              )),
+            hintText: 'Type a message',
+            suffixIcon: IconButton(
+              icon: const Icon(Icons.send),
+              onPressed: () {
+                print('added how');
+                ref.read(messagesProvider.notifier).sendMessage('Very far');
+                // model.sendMessage('Very far');
+              },
+            ),
+          ),
         ),
       ),
       // bottomNavigationBar: TextField(),
