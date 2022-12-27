@@ -41,6 +41,10 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
       case AuthState.invalidEmail:
         emailError = 'Not a valid email';
         break;
+      // case AuthState.error:
+      //   ScaffoldMessenger.of(context)
+      //       .showSnackBar(SnackBar(content: Text('An error occured')));
+      // break;
       default:
     }
 

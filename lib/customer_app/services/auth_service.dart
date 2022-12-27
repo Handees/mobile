@@ -1,11 +1,20 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:handees/res/constants.dart';
+import 'package:http/http.dart' as http;
 // import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // final authServiceProvider = Provider<AuthService>((ref) => AuthService._());
 
 class AuthService {
-  AuthService._();
+  AuthService._() {
+    FirebaseAuth.instance.idTokenChanges().listen((user) {
+      user?.getIdToken().then((value) => _token = value);
+    });
+  }
   static final AuthService _instance = AuthService._();
   static AuthService get instance => _instance;
 
@@ -13,6 +22,10 @@ class AuthService {
   final firebaseAuth = FirebaseAuth.instance;
 
   User get user => firebaseAuth.currentUser!;
+
+  late String _token;
+  String get token => _token;
+  // void updateToken(String token) => _token = token;
 
   bool isAuthenticated() =>
       firebaseAuth.currentUser != null &&
@@ -120,6 +133,41 @@ class AuthService {
     }
   }
 
+  Future<AuthResponse> submitUserData({
+    required String name,
+    required String phone,
+    required String email,
+    required String uid,
+  }) async {
+    final future = http.post(
+      AppConstants.addNewUserUri,
+      headers: {
+        HttpHeaders.contentTypeHeader: 'application/json',
+        'access-token': token,
+      },
+      body: jsonEncode(
+        {
+          'name': name,
+          'telephone': phone,
+          'email': email,
+          'user_id': uid,
+        },
+      ),
+    );
+
+    final response = await future;
+    print("Submit user data response ${response.body}");
+
+    //TODO: Error handling
+
+    if (response.statusCode == 200) {
+      return AuthResponse.success;
+    } else {
+      return AuthResponse.submitError;
+      //TODO what if it fails password is still there
+    }
+  }
+
   Future<AuthResponse> verifyNumber(
       String smsCode, String verificationId) async {
     // Create a PhoneAuthCredential with the code
@@ -196,4 +244,5 @@ enum AuthResponse {
   invalidEmail,
   invalidPhone,
   invalidVerificationCode,
+  submitError,
 }

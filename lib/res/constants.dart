@@ -1,3 +1,8 @@
 abstract class AppConstants {
-  static const url = 'cfm67.localtonet.com';
+  static const url = '20.9.22.141:5020';
+
+  static final addNewUserUri = Uri.https(
+    url,
+    '/api/user/',
+  );
 }

@@ -159,11 +159,22 @@ class AuthStateNotifier extends StateNotifier<AuthState>
       },
       onVerifcationComplete: (phoneAuthCredential) async {
         resetState();
-        state = AuthState.authenticated;
+        // state = AuthState.authenticated;
+        final user = _authService.user;
+        final result = await _authService.submitUserData(
+          name: user.displayName!,
+          phone: user.phoneNumber!,
+          email: user.email!,
+          uid: user.uid,
+        );
+        //TODO: check this
+        state = result == AuthResponse.success
+            ? AuthState.authenticated
+            : AuthState.error;
       },
       onVerificationFailed: (error) {
         debugPrint('Phone verification failed with error $error');
-        state = AuthState.waiting;
+        state = AuthState.error;
       },
     );
     // await Future.delayed(Duration(seconds: 2));
@@ -219,4 +230,5 @@ enum AuthState {
   invalidEmail,
   emailInUse,
   phoneInUse,
+  error,
 }

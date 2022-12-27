@@ -53,7 +53,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Handees',
       theme: lightTheme,
-      darkTheme: darkTheme,
       onGenerateRoute: onGenerateRoute,
     );
   }
