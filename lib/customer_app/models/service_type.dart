@@ -17,4 +17,7 @@ class ServiceType {
 
 abstract class ServiceTypes {
   static const laundry = ServiceType._(name: 'Laundry');
+  // static const laundry = ServiceType._(name: 'Laundry');
+  // static const laundry = ServiceType._(name: 'Laundry');
+  // static const laundry = ServiceType._(name: 'Laundry');
 }

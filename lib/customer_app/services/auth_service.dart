@@ -139,32 +139,40 @@ class AuthService {
     required String email,
     required String uid,
   }) async {
-    final future = http.post(
-      AppConstants.addNewUserUri,
-      headers: {
-        HttpHeaders.contentTypeHeader: 'application/json',
-        'access-token': token,
-      },
-      body: jsonEncode(
-        {
-          'name': name,
-          'telephone': phone,
-          'email': email,
-          'user_id': uid,
+    print('Submittin user data');
+
+    try {
+      final future = http.post(
+        AppConstants.addNewUserUri,
+        headers: {
+          HttpHeaders.contentTypeHeader: 'application/json',
+          'access-token': token,
         },
-      ),
-    );
+        body: jsonEncode(
+          {
+            'name': name,
+            'telephone': phone,
+            'email': email,
+            'user_id': uid,
+          },
+        ),
+      );
 
-    final response = await future;
-    print("Submit user data response ${response.body}");
+      final response = await future;
+      print("Submit user data response ${response.body}");
 
-    //TODO: Error handling
+      //TODO: Error handling
 
-    if (response.statusCode == 200) {
-      return AuthResponse.success;
-    } else {
+      if (response.statusCode == 200) {
+        return AuthResponse.success;
+      } else {
+        return AuthResponse.submitError;
+        //TODO what if it fails password is still there
+      }
+    } on Exception catch (e) {
+      print('Got error $e');
+      debugPrint(e.toString());
       return AuthResponse.submitError;
-      //TODO what if it fails password is still there
     }
   }
 
@@ -209,6 +217,18 @@ class AuthService {
       debugPrint(message);
       return AuthResponse.unknownError;
     }
+  }
+
+  Future<AuthResponse> signinWithCredential(
+      PhoneAuthCredential credential) async {
+    final userCredential = await firebaseAuth.signInWithCredential(credential);
+
+    return await submitUserData(
+      name: userCredential.user!.displayName!,
+      phone: userCredential.user!.phoneNumber!,
+      email: userCredential.user!.email!,
+      uid: userCredential.user!.uid,
+    );
   }
 
   void signupWithPhone({

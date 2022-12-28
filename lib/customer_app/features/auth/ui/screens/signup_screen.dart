@@ -41,20 +41,24 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
       case AuthState.invalidEmail:
         emailError = 'Not a valid email';
         break;
-      // case AuthState.error:
-      //   ScaffoldMessenger.of(context)
-      //       .showSnackBar(SnackBar(content: Text('An error occured')));
-      // break;
+      case AuthState.error:
+        Future.microtask(
+          () => ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('An error occured'),
+            ),
+          ),
+        );
+        break;
+        // case AuthState.authenticated:
+        //   Future.microtask(
+        //     () => Navigator.of(context).pushNamedAndRemoveUntil(
+        //       CustomerAppRoutes.home,
+        //       (route) => false,
+        //     ),
+        //   );
+        break;
       default:
-    }
-
-    if (authState == AuthState.authenticated) {
-      Future.microtask(
-        () => Navigator.of(context).pushNamedAndRemoveUntil(
-          CustomerAppRoutes.home,
-          (route) => false,
-        ),
-      );
     }
 
     return Scaffold(
@@ -207,6 +211,7 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
                                     return PhoneProceedDialog(
                                       onProceed: () {
                                         Navigator.of(context).pop();
+                                        print('Sign up user');
                                         model.signupUser(
                                           onCodeSent: () =>
                                               Navigator.of(context)

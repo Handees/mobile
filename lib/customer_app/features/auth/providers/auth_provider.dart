@@ -10,10 +10,10 @@ final authProvider = StateNotifierProvider<AuthStateNotifier, AuthState>((ref) {
 
 class AuthStateNotifier extends StateNotifier<AuthState>
     with InputValidationMixin {
-  AuthStateNotifier(this._authService)
-      : super(_authService.isAuthenticated()
-            ? AuthState.authenticated
-            : AuthState.waiting);
+  AuthStateNotifier(this._authService) : super(
+            // _authService.isAuthenticated()
+            //     ? AuthState.authenticated:
+            AuthState.waiting);
 
   final AuthService _authService;
 
@@ -78,7 +78,7 @@ class AuthStateNotifier extends StateNotifier<AuthState>
 
     switch (response) {
       case AuthResponse.success:
-        state = AuthState.authenticated;
+        state = AuthState.waiting; // AuthState.authenticated;
         break;
       case AuthResponse.incorrectPassword:
         state = AuthState.invalidPassword;
@@ -106,7 +106,18 @@ class AuthStateNotifier extends StateNotifier<AuthState>
 
         switch (completeResponse) {
           case AuthResponse.success:
-            state = AuthState.authenticated;
+            print('Verfication completed');
+            final user = _authService.user;
+            final result = await _authService.submitUserData(
+              name: user.displayName!,
+              phone: user.phoneNumber!,
+              email: user.email!,
+              uid: user.uid,
+            );
+            //TODO: check this
+            state = result == AuthResponse.success
+                ? AuthState.waiting //AuthState.authenticated
+                : AuthState.error;
             break;
           case AuthResponse.weakPassword:
             state = AuthState.invalidPassword;
@@ -144,6 +155,7 @@ class AuthStateNotifier extends StateNotifier<AuthState>
 
   void signupUser({required void Function() onCodeSent}) async {
     state = AuthState.loading;
+    print('Signing up user');
 
     if (await _authService.emailInUse(_email)) {
       state = AuthState.emailInUse;
@@ -158,18 +170,10 @@ class AuthStateNotifier extends StateNotifier<AuthState>
         onCodeSent();
       },
       onVerifcationComplete: (phoneAuthCredential) async {
-        resetState();
-        // state = AuthState.authenticated;
-        final user = _authService.user;
-        final result = await _authService.submitUserData(
-          name: user.displayName!,
-          phone: user.phoneNumber!,
-          email: user.email!,
-          uid: user.uid,
-        );
-        //TODO: check this
-        state = result == AuthResponse.success
-            ? AuthState.authenticated
+        // resetState();
+        state = await _authService.signinWithCredential(phoneAuthCredential) ==
+                AuthResponse.success
+            ? AuthState.waiting
             : AuthState.error;
       },
       onVerificationFailed: (error) {
@@ -222,7 +226,7 @@ enum AuthState {
   waiting,
   loading,
   verifying,
-  authenticated,
+  // authenticated,
   noSuchEmail,
   invalidPassword,
   invalidPhone,

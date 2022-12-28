@@ -61,14 +61,27 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
   MaterialPageRoute? pageRoute;
   switch (settings.name) {
     case '/':
-      final isAuth = FirebaseAuth.instance.currentUser != null &&
-          FirebaseAuth.instance.currentUser!.email!.isNotEmpty;
-      page = isAuth
-          ? const HomeScreen()
-          : Theme(
-              data: authTheme,
-              child: SigninScreen(),
-            );
+      // final isAuth = FirebaseAuth.instance.currentUser != null &&
+      //     FirebaseAuth.instance.currentUser!.email!.isNotEmpty;
+      // page = isAuth
+      //     ? const HomeScreen()
+      //     : Theme(
+      //         data: authTheme,
+      //         child: SigninScreen(),
+      //       );
+      page = StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          // Navigator.of(context).popUntil((route) => route.isFirst);
+          print("Woah");
+          return snapshot.hasData
+              ? const HomeScreen()
+              : Theme(
+                  data: authTheme,
+                  child: SigninScreen(),
+                );
+        },
+      );
       break;
     case AuthRoutes.signin:
       page = Theme(

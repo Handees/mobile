@@ -26,14 +26,14 @@ class SigninScreen extends ConsumerWidget with InputValidationMixin {
         ? 'No account exists with this email'
         : null;
 
-    if (authState == AuthState.authenticated) {
-      Future.microtask(
-        () => Navigator.of(context).pushNamedAndRemoveUntil(
-          CustomerAppRoutes.home,
-          (route) => false,
-        ),
-      );
-    }
+    // if (authState == AuthState.authenticated) {
+    //   Future.microtask(
+    //     () => Navigator.of(context).pushNamedAndRemoveUntil(
+    //       CustomerAppRoutes.home,
+    //       (route) => false,
+    //     ),
+    //   );
+    // }
 
     return Scaffold(
       body: SafeArea(

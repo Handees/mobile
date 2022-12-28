@@ -120,8 +120,6 @@ class HomeScreen extends ConsumerWidget {
                     ListTile(
                       onTap: () {
                         AuthService.instance.signoutUser();
-                        Navigator.of(context)
-                            .pushReplacementNamed(AuthRoutes.signin);
                       },
                       leading: const Icon(Icons.help_outline_outlined),
                       title: const Text('FAQ'),

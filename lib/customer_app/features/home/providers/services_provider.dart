@@ -7,6 +7,11 @@ final serviceProvider = StateNotifierProvider<ServiceNotifier, bool>((ref) {
   return ServiceNotifier();
 });
 
+// final etaProvider = StreamProvider<int>((ref) async* {
+//   final service = ref.watch(serviceProvider.notifier);
+//   return service.ongoingServices![0].distance;
+// });
+
 class ServiceNotifier extends StateNotifier<bool> {
   ServiceNotifier() : super(true) {
     getServices();
