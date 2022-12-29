@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/customer_app/features/home/providers/home_provider.dart';
 import 'package:handees/customer_app/features/test/test.dart';
 import 'package:handees/customer_app/features/tracker/ui/tracking_screen.dart';
+import 'package:handees/customer_app/models/job_category.dart';
 import 'package:handees/customer_app/services/auth_service.dart';
 
 import 'package:handees/res/shapes.dart';
@@ -27,6 +28,7 @@ class HomeScreen extends ConsumerWidget {
     // final authModel = ref.watch(authProvider.notifier);
 
     final name = ref.watch(nameProvider);
+    final categories = ref.watch(categoryProvider);
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -245,21 +247,24 @@ class HomeScreen extends ConsumerWidget {
                                 );
                               });
                         },
-                        child: const Padding(
+                        child: Padding(
                           padding: EdgeInsets.symmetric(
                             vertical: 8.0,
                             horizontal: horizontalPadding,
                           ),
                           child: ServiceCard(
                             artisanCount: 12,
-                            icon: Icon(Icons.abc),
-                            iconBackground: Colors.orange,
-                            serviceName: 'Laundry',
+                            icon: Icon(
+                              categories[index].icon,
+                              color: Colors.white,
+                            ),
+                            iconBackground: categories[index].foregroundColor,
+                            serviceName: categories[index].name,
                           ),
                         ),
                       );
                     },
-                    childCount: 15,
+                    childCount: categories.length,
                   ),
                 ),
               ),

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:handees/customer_app/models/service_model.dart';
-import 'package:handees/customer_app/models/service_type.dart';
+import 'package:handees/customer_app/models/job_category.dart';
 
 class DeliveryService extends IDeliveryService {
   DeliveryService._();
@@ -20,7 +20,7 @@ class DeliveryServiceTest extends IDeliveryService {
   @override
   Stream<List<ServiceModel>> get activeServices async* {
     yield [
-      ServiceModel(serviceType: ServiceTypes.laundry),
+      // ServiceModel(serviceType: ServiceTypes.laundry),
     ];
   }
 }

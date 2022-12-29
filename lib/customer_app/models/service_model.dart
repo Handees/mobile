@@ -1,7 +1,7 @@
-import 'package:handees/customer_app/models/service_type.dart';
+import 'package:handees/customer_app/models/job_category.dart';
 
 class ServiceModel {
-  final ServiceType serviceType;
+  final JobCategory serviceType;
 
   Stream<int> get distance async* {
     int i = 1000;

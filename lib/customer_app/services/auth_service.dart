@@ -151,7 +151,7 @@ class AuthService {
         body: jsonEncode(
           {
             'name': name,
-            'telephone': phone,
+            // 'telephone': phone,
             'email': email,
             'user_id': uid,
           },

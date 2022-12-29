@@ -5,4 +5,9 @@ abstract class AppConstants {
     url,
     '/api/user/',
   );
+
+  static final bookServiceUri = Uri.https(
+    url,
+    '/api/bookings',
+  );
 }
