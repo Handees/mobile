@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:handees/res/constants.dart';
 import 'package:handees/shared/widgets/utils.dart';
 import 'package:http/http.dart' as http;
 import 'package:socket_io_client/socket_io_client.dart' as io;
@@ -43,7 +44,7 @@ class _TestState extends State<Test> {
   //   // });
   // }
 
-  final site = 'fef9-197-211-58-29.ngrok.io';
+  final site = AppConstants.url;
   late String token;
 
 // Dart client
@@ -100,24 +101,18 @@ class _TestState extends State<Test> {
             ),
             InkWell(
               onTap: () async {
+                print('right');
+                print(FirebaseAuth.instance.currentUser!.uid);
                 // final loc = await PlacesService.instance.determinePosition();
-                final future = http.post(
-                  Uri.https(
+                final future = http.get(
+                  Uri.http(
                     site,
-                    '/user/',
-                  ),
-                  headers: {HttpHeaders.contentTypeHeader: 'application/json'},
-                  body: jsonEncode(
-                    {
-                      'name': 'Omaka',
-                      'telephone': '+38943984320',
-                      'email': 'omas44@outlook.com',
-                      'user_id': 'hSv2Aq5Bo3SSheaFFgqnuH9Sn0u1'
-                    },
+                    '/api/user/${FirebaseAuth.instance.currentUser!.uid}',
                   ),
                 );
 
                 final response = await future;
+                print(response.statusCode);
                 print(response.body);
               },
               child: Ink(

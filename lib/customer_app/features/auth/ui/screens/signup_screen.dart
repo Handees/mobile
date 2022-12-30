@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:handees/customer_app/features/auth/ui/screens/verify_screen.dart';
 import 'package:handees/routes/routes.dart';
 import 'package:handees/theme/theme.dart';
 import 'package:handees/utils/utils.dart';
@@ -8,7 +9,12 @@ import '../../providers/auth_provider.dart';
 import '../widgets/phone_proceed_dialog.dart';
 
 class SignupScreen extends ConsumerWidget with InputValidationMixin {
-  SignupScreen({Key? key}) : super(key: key);
+  SignupScreen({
+    Key? key,
+    required this.onSwapScreen,
+  }) : super(key: key);
+
+  final void Function() onSwapScreen;
 
   final _formGlobalKey = GlobalKey<FormState>();
 
@@ -184,11 +190,7 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
                               ),
                         ),
                         InkWell(
-                          onTap: () {
-                            model.resetState();
-                            Navigator.of(context)
-                                .pushReplacementNamed(AuthRoutes.signin);
-                          },
+                          onTap: onSwapScreen,
                           child: const Text('Sign in'),
                         ),
                       ],
@@ -213,9 +215,12 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
                                         Navigator.of(context).pop();
                                         print('Sign up user');
                                         model.signupUser(
-                                          onCodeSent: () =>
-                                              Navigator.of(context)
-                                                  .pushNamed(AuthRoutes.verify),
+                                          onCodeSent: () => showDialog(
+                                            context: context,
+                                            builder: ((_) {
+                                              return VerifyScreen();
+                                            }),
+                                          ),
                                         );
                                       },
                                     );

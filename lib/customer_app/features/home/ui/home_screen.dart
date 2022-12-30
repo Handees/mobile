@@ -243,7 +243,8 @@ class HomeScreen extends ConsumerWidget {
                                         .viewInsets
                                         .bottom,
                                   ),
-                                  child: const PickServiceBottomSheet(),
+                                  child:
+                                      PickServiceBottomSheet(categories[index]),
                                 );
                               });
                         },

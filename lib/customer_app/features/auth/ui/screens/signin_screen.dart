@@ -7,7 +7,12 @@ import 'package:handees/utils/utils.dart';
 import '../../providers/auth_provider.dart';
 
 class SigninScreen extends ConsumerWidget with InputValidationMixin {
-  SigninScreen({Key? key}) : super(key: key);
+  SigninScreen({
+    Key? key,
+    required this.onSwapScreen,
+  }) : super(key: key);
+
+  final void Function() onSwapScreen;
 
   final _formGlobalKey = GlobalKey<FormState>();
 
@@ -140,11 +145,7 @@ class SigninScreen extends ConsumerWidget with InputValidationMixin {
                                       Theme.of(context).unselectedWidgetColor),
                         ),
                         InkWell(
-                          onTap: () {
-                            model.resetState();
-                            Navigator.of(context)
-                                .pushReplacementNamed(AuthRoutes.signup);
-                          },
+                          onTap: onSwapScreen,
                           child: const Text('Sign up'),
                         ),
                       ],

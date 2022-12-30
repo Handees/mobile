@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:handees/customer_app/models/job_category.dart';
 import 'package:handees/routes/routes.dart';
 import 'package:handees/theme/theme.dart';
 
 import 'service_card.dart';
 
 class PickServiceBottomSheet extends StatelessWidget {
-  const PickServiceBottomSheet({Key? key}) : super(key: key);
+  const PickServiceBottomSheet(
+    this.category, {
+    Key? key,
+  }) : super(key: key);
+
+  final JobCategory category;
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +32,13 @@ class PickServiceBottomSheet extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16.0),
-          const ServiceCard(
-            serviceName: 'Hair Stylist',
-            icon: Icon(Icons.abc),
-            iconBackground: Colors.orange,
+          ServiceCard(
+            serviceName: category.name,
+            icon: Icon(
+              category.icon,
+              color: Colors.white,
+            ),
+            iconBackground: category.foregroundColor,
             artisanCount: 13,
           ),
           const SizedBox(height: 8.0),

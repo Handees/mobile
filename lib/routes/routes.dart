@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:handees/customer_app/features/auth/ui/auth_screen.dart';
 import 'package:handees/customer_app/features/chat/ui/chat_screen.dart';
 import 'package:handees/customer_app/features/payments/ui/add_card_screen.dart';
 import 'package:handees/customer_app/features/payments/ui/payments.dart';
@@ -16,11 +17,11 @@ import 'package:handees/customer_app/features/settings/ui/settings.dart';
 import 'package:handees/customer_app/features/tracker/ui/tracking_screen.dart';
 import 'package:handees/theme/theme.dart';
 
-abstract class AuthRoutes {
-  static const String signin = '/auth/sign-in';
-  static const String signup = '/auth/sign-up';
-  static const String verify = '/auth/verify';
-}
+// abstract class AuthRoutes {
+//   static const String signin = '/auth/sign-in';
+//   static const String signup = '/auth/sign-up';
+//   static const String verify = '/auth/verify';
+// }
 
 abstract class CustomerAppRoutes {
   static const String home = '/customer/home';
@@ -78,29 +79,29 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
               ? const HomeScreen()
               : Theme(
                   data: authTheme,
-                  child: SigninScreen(),
+                  child: const AuthScreen(),
                 );
         },
       );
       break;
-    case AuthRoutes.signin:
-      page = Theme(
-        data: authTheme,
-        child: SigninScreen(),
-      );
-      break;
-    case AuthRoutes.signup:
-      page = Theme(
-        data: authTheme,
-        child: SignupScreen(),
-      );
-      break;
-    case AuthRoutes.verify:
-      page = Theme(
-        data: authTheme,
-        child: VerifyScreen(),
-      );
-      break;
+    // case AuthRoutes.signin:
+    //   page = Theme(
+    //     data: authTheme,
+    //     child: SigninScreen(),
+    //   );
+    //   break;
+    // case AuthRoutes.signup:
+    //   page = Theme(
+    //     data: authTheme,
+    //     child: SignupScreen(),
+    //   );
+    //   break;
+    // case AuthRoutes.verify:
+    //   page = Theme(
+    //     data: authTheme,
+    //     child: VerifyScreen(),
+    //   );
+    //   break;
     case CustomerAppRoutes.home:
       page = const HomeScreen();
       break;
