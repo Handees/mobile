@@ -17,11 +17,11 @@ import 'package:handees/customer_app/features/settings/ui/settings.dart';
 import 'package:handees/customer_app/features/tracker/ui/tracking_screen.dart';
 import 'package:handees/theme/theme.dart';
 
-// abstract class AuthRoutes {
-//   static const String signin = '/auth/sign-in';
-//   static const String signup = '/auth/sign-up';
-//   static const String verify = '/auth/verify';
-// }
+abstract class AuthRoutes {
+  static const String signin = '/auth/sign-in';
+  static const String signup = '/auth/sign-up';
+  static const String verify = '/auth/verify';
+}
 
 abstract class CustomerAppRoutes {
   static const String home = '/customer/home';
@@ -73,7 +73,9 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       page = StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
-          // Navigator.of(context).popUntil((route) => route.isFirst);
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.of(context).popUntil((route) => route.isFirst);
+          });
           print("Woah");
           return snapshot.hasData
               ? const HomeScreen()
@@ -96,12 +98,12 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
     //     child: SignupScreen(),
     //   );
     //   break;
-    // case AuthRoutes.verify:
-    //   page = Theme(
-    //     data: authTheme,
-    //     child: VerifyScreen(),
-    //   );
-    //   break;
+    case AuthRoutes.verify:
+      page = Theme(
+        data: authTheme,
+        child: VerifyScreen(),
+      );
+      break;
     case CustomerAppRoutes.home:
       page = const HomeScreen();
       break;

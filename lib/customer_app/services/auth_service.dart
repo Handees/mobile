@@ -15,6 +15,7 @@ class AuthService {
       user?.getIdToken().then((value) => _token = value);
     });
   }
+
   static final AuthService _instance = AuthService._();
   static AuthService get instance => _instance;
 
@@ -30,6 +31,16 @@ class AuthService {
   bool isAuthenticated() =>
       firebaseAuth.currentUser != null &&
       firebaseAuth.currentUser!.email!.isNotEmpty;
+
+  Future<bool> userExists() async {
+    final response = await http.get(
+      Uri.http(
+        AppConstants.url,
+        '/api/user/${user.uid}',
+      ),
+    );
+    return response.statusCode == 404;
+  }
 
   Future<bool> emailInUse(String emailAddress) async {
     try {
@@ -91,6 +102,8 @@ class AuthService {
     String name,
   ) async {
     final user = firebaseAuth.currentUser!;
+
+    print('Completing profile');
 
     try {
       await user.updatePassword(password);
@@ -219,16 +232,20 @@ class AuthService {
     }
   }
 
-  Future<AuthResponse> signinWithCredential(
-      PhoneAuthCredential credential) async {
+  Future<void> signinWithCredential(PhoneAuthCredential credential,
+      {required void Function() onSignin}) async {
     final userCredential = await firebaseAuth.signInWithCredential(credential);
+    final user = userCredential.user!;
 
-    return await submitUserData(
-      name: userCredential.user!.displayName!,
-      phone: userCredential.user!.phoneNumber!,
-      email: userCredential.user!.email!,
-      uid: userCredential.user!.uid,
-    );
+    print('Signed in');
+    onSignin();
+
+    // return await submitUserData(
+    //   name: user.displayName!,
+    //   phone: user.phoneNumber!,
+    //   email: user.email!,
+    //   uid: user.uid,
+    // );
   }
 
   void signupWithPhone({

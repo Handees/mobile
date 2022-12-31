@@ -12,6 +12,8 @@ import 'package:handees/routes/routes.dart';
 import 'firebase_options.dart';
 import 'theme/theme.dart';
 
+import 'package:stack_trace/stack_trace.dart' as stack_trace;
+
 class MyHttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext? context) {
@@ -39,6 +41,13 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  FlutterError.demangleStackTrace = (StackTrace stack) {
+    if (stack is stack_trace.Trace) return stack.vmTrace;
+    if (stack is stack_trace.Chain) return stack.toTrace().vmTrace;
+    return stack;
+  };
+
   // FirebaseAppCheck.
   await FirebaseAppCheck.instance.activate();
   runApp(const ProviderScope(child: MyApp()));

@@ -215,12 +215,9 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
                                         Navigator.of(context).pop();
                                         print('Sign up user');
                                         model.signupUser(
-                                          onCodeSent: () => showDialog(
-                                            context: context,
-                                            builder: ((_) {
-                                              return VerifyScreen();
-                                            }),
-                                          ),
+                                          onCodeSent: () =>
+                                              Navigator.of(context)
+                                                  .pushNamed(AuthRoutes.verify),
                                         );
                                       },
                                     );

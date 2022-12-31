@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/customer_app/services/auth_service.dart';
+import 'package:handees/res/constants.dart';
 import 'package:handees/utils/utils.dart';
 
 final authProvider = StateNotifierProvider<AuthStateNotifier, AuthState>((ref) {
@@ -13,7 +14,28 @@ class AuthStateNotifier extends StateNotifier<AuthState>
   AuthStateNotifier(this._authService) : super(
             // _authService.isAuthenticated()
             //     ? AuthState.authenticated:
-            AuthState.waiting);
+            AuthState.waiting) {
+    _authService.firebaseAuth.userChanges().listen((user) {
+      if (user == null) return;
+
+      temp();
+    });
+  }
+
+  void temp() async {
+    final user = _authService.user;
+    if (user.displayName != null &&
+        user.email != null &&
+        user.phoneNumber != null) {
+      if (await _authService.userExists()) {
+        _authService.submitUserData(
+            name: user.displayName!,
+            phone: user.phoneNumber!,
+            email: user.email!,
+            uid: user.uid);
+      }
+    }
+  }
 
   final AuthService _authService;
 
@@ -66,7 +88,7 @@ class AuthStateNotifier extends StateNotifier<AuthState>
   void onNameSaved(String? name) => _name = name!;
   void onPhoneSaved(String? phone) => _phone = phone!;
 
-  void signinUser() async {
+  Future<void> signinUser() async {
     // if (!_formGlobalKey.currentState!.validate()) return;
 
     // _formGlobalKey.currentState?.save();
@@ -94,46 +116,54 @@ class AuthStateNotifier extends StateNotifier<AuthState>
     }
   }
 
-  void verifyNumber() async {
+  Future<void> _completeProfile(
+    String email,
+    String password,
+    String name,
+  ) async {
+    final completeResponse =
+        await _authService.completeProfile(_email, _password, _name);
+
+    switch (completeResponse) {
+      case AuthResponse.success:
+        print('Verfication completed');
+        final user = _authService.user;
+        final result = await _authService.submitUserData(
+          name: user.displayName!,
+          phone: user.phoneNumber!,
+          email: user.email!,
+          uid: user.uid,
+        );
+        //TODO: check this
+        state = result == AuthResponse.success
+            ? AuthState.waiting //AuthState.authenticated
+            : AuthState.error;
+        break;
+      case AuthResponse.weakPassword:
+        state = AuthState.invalidPassword;
+        break;
+      case AuthResponse.emailInUse:
+        state = AuthState.emailInUse;
+        break;
+      case AuthResponse.invalidEmail:
+        state = AuthState.invalidEmail;
+        break;
+      case AuthResponse.unknownError:
+        state = AuthState.waiting;
+        break;
+      default:
+        state = AuthState.waiting;
+    }
+  }
+
+  Future<void> verifyNumber() async {
     state = AuthState.loading;
     final response = await _authService.verifyNumber(_smsCode, _verificationId);
     // await Future.delayed(Duration(seconds: 2));
 
     switch (response) {
       case AuthResponse.success:
-        final completeResponse =
-            await _authService.completeProfile(_email, _password, _name);
-
-        switch (completeResponse) {
-          case AuthResponse.success:
-            print('Verfication completed');
-            final user = _authService.user;
-            final result = await _authService.submitUserData(
-              name: user.displayName!,
-              phone: user.phoneNumber!,
-              email: user.email!,
-              uid: user.uid,
-            );
-            //TODO: check this
-            state = result == AuthResponse.success
-                ? AuthState.waiting //AuthState.authenticated
-                : AuthState.error;
-            break;
-          case AuthResponse.weakPassword:
-            state = AuthState.invalidPassword;
-            break;
-          case AuthResponse.emailInUse:
-            state = AuthState.emailInUse;
-            break;
-          case AuthResponse.invalidEmail:
-            state = AuthState.invalidEmail;
-            break;
-          case AuthResponse.unknownError:
-            state = AuthState.waiting;
-            break;
-          default:
-            state = AuthState.waiting;
-        }
+        _completeProfile(_email, _password, _name);
 
         break;
       case AuthResponse.phoneInUse:
@@ -153,7 +183,7 @@ class AuthStateNotifier extends StateNotifier<AuthState>
     }
   }
 
-  void signupUser({required void Function() onCodeSent}) async {
+  Future<void> signupUser({required void Function() onCodeSent}) async {
     state = AuthState.loading;
     print('Signing up user');
 
@@ -171,10 +201,18 @@ class AuthStateNotifier extends StateNotifier<AuthState>
       },
       onVerifcationComplete: (phoneAuthCredential) async {
         // resetState();
-        state = await _authService.signinWithCredential(phoneAuthCredential) ==
-                AuthResponse.success
-            ? AuthState.waiting
-            : AuthState.error;
+        await _authService.signinWithCredential(
+          phoneAuthCredential,
+          onSignin: () {
+            _completeProfile(_email, _password, _name);
+          },
+        );
+        //     ==
+        //     AuthResponse.success
+        // ? AuthState.loading
+        // : AuthState.error;
+
+        // await _completeProfile(_email, _password, _name);
       },
       onVerificationFailed: (error) {
         debugPrint('Phone verification failed with error $error');

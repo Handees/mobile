@@ -3,7 +3,7 @@ import 'package:handees/customer_app/models/job_category.dart';
 import 'package:handees/customer_app/services/auth_service.dart';
 
 final nameProvider = Provider<String>((ref) {
-  return AuthService.instance.user.displayName!;
+  return AuthService.instance.user.displayName ?? "";
 });
 
 final categoryProvider = Provider<List<JobCategory>>((ref) {
