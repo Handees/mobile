@@ -52,7 +52,7 @@ class AuthService {
         // user using the email address
         return true;
       } else {
-        // Return false because email adress is not in use
+        // Return false because email address is not in use
         return false;
       }
     } catch (error) {
@@ -190,13 +190,7 @@ class AuthService {
   }
 
   Future<AuthResponse> verifyNumber(
-      String smsCode, String verificationId) async {
-    // Create a PhoneAuthCredential with the code
-    PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.credential(
-      verificationId: verificationId,
-      smsCode: smsCode,
-    );
-    // print('Verifying with smscode $smsCode and id $verificationId');
+      PhoneAuthCredential phoneAuthCredential) async {
     try {
       await FirebaseAuth.instance.signInWithCredential(phoneAuthCredential);
       return AuthResponse.success;
@@ -232,21 +226,32 @@ class AuthService {
     }
   }
 
-  Future<void> signinWithCredential(PhoneAuthCredential credential,
-      {required void Function() onSignin}) async {
-    final userCredential = await firebaseAuth.signInWithCredential(credential);
-    final user = userCredential.user!;
+  // Future<AuthResponse> verifyNumber(
+  //     String smsCode, String verificationId) async {
+  //   // Create a PhoneAuthCredential with the code
+  //   PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.credential(
+  //     verificationId: verificationId,
+  //     smsCode: smsCode,
+  //   );
+  //   // print('Verifying with smscode $smsCode and id $verificationId');
+  //   return verifyNumberWithCredential(phoneAuthCredential);
+  // }
 
-    print('Signed in');
-    onSignin();
+  // Future<void> signinWithCredential(PhoneAuthCredential credential,
+  //     {required void Function() onSignin}) async {
+  //   final userCredential = await firebaseAuth.signInWithCredential(credential);
+  //   final user = userCredential.user!;
 
-    // return await submitUserData(
-    //   name: user.displayName!,
-    //   phone: user.phoneNumber!,
-    //   email: user.email!,
-    //   uid: user.uid,
-    // );
-  }
+  //   print('Signed in');
+  //   onSignin();
+
+  //   // return await submitUserData(
+  //   //   name: user.displayName!,
+  //   //   phone: user.phoneNumber!,
+  //   //   email: user.email!,
+  //   //   uid: user.uid,
+  //   // );
+  // }
 
   void signupWithPhone({
     required String phone,
@@ -256,8 +261,6 @@ class AuthService {
         onVerifcationComplete,
     required void Function(FirebaseAuthException error) onVerificationFailed,
   }) {
-    // await credential.user?.updateDisplayName(name);
-
     FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: phone,
       verificationCompleted: onVerifcationComplete,

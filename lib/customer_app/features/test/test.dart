@@ -48,7 +48,7 @@ class _TestState extends State<Test> {
   late String token;
 
 // Dart client
-  io.Socket socket = io.io('https://fef9-197-211-58-29.ngrok.io/',
+  io.Socket socket = io.io('http://${AppConstants.url}/',
       io.OptionBuilder().setTransports(['websocket']).build());
 
   String? bookingId;
@@ -60,6 +60,7 @@ class _TestState extends State<Test> {
         .getIdToken()
         .then((value) => token = value);
 
+    print('try connect');
     socket.connect();
 
     socket.onConnect((_) {
@@ -123,17 +124,21 @@ class _TestState extends State<Test> {
             ),
             InkWell(
               onTap: () async {
+                print('submitting');
                 final future = http.post(
-                  Uri.https(
+                  Uri.http(
                     site,
-                    '/bookings/',
+                    '/api/bookings/',
                   ),
-                  headers: {HttpHeaders.contentTypeHeader: 'application/json'},
+                  headers: {
+                    HttpHeaders.contentTypeHeader: 'application/json',
+                    'access-token': token,
+                  },
                   body: jsonEncode(
                     {
                       'lat': 6.517871336509268,
                       'lon': 3.399740067230001,
-                      'user_id': 'u1ih272y8h3e',
+                      'user_id': FirebaseAuth.instance.currentUser!.uid,
                       'job_category': 'carpentary',
                     },
                   ),
@@ -181,7 +186,7 @@ class _TestState extends State<Test> {
             ),
             InkWell(
               onTap: () async {
-                print(token);
+                // print(token);
                 // final loc = await PlacesService.instance.determinePosition();
                 final future = http.get(
                   Uri.https(

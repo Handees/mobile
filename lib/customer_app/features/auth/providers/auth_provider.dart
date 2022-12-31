@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/customer_app/services/auth_service.dart';
@@ -11,31 +12,7 @@ final authProvider = StateNotifierProvider<AuthStateNotifier, AuthState>((ref) {
 
 class AuthStateNotifier extends StateNotifier<AuthState>
     with InputValidationMixin {
-  AuthStateNotifier(this._authService) : super(
-            // _authService.isAuthenticated()
-            //     ? AuthState.authenticated:
-            AuthState.waiting) {
-    _authService.firebaseAuth.userChanges().listen((user) {
-      if (user == null) return;
-
-      temp();
-    });
-  }
-
-  void temp() async {
-    final user = _authService.user;
-    if (user.displayName != null &&
-        user.email != null &&
-        user.phoneNumber != null) {
-      if (await _authService.userExists()) {
-        _authService.submitUserData(
-            name: user.displayName!,
-            phone: user.phoneNumber!,
-            email: user.email!,
-            uid: user.uid);
-      }
-    }
-  }
+  AuthStateNotifier(this._authService) : super(AuthState.waiting);
 
   final AuthService _authService;
 
@@ -89,14 +66,8 @@ class AuthStateNotifier extends StateNotifier<AuthState>
   void onPhoneSaved(String? phone) => _phone = phone!;
 
   Future<void> signinUser() async {
-    // if (!_formGlobalKey.currentState!.validate()) return;
-
-    // _formGlobalKey.currentState?.save();
-    // print(
-    //     'Email: $email, Password: $password, Name: $name');
     state = AuthState.loading;
     final response = await _authService.signinUser(_email, _password);
-    // await Future.delayed(Duration(seconds: 2));
 
     switch (response) {
       case AuthResponse.success:
@@ -156,9 +127,16 @@ class AuthStateNotifier extends StateNotifier<AuthState>
     }
   }
 
-  Future<void> verifyNumber() async {
+  void verifyNumber() => _verifyNumber();
+
+  Future<void> _verifyNumber({PhoneAuthCredential? phoneAuthCredential}) async {
     state = AuthState.loading;
-    final response = await _authService.verifyNumber(_smsCode, _verificationId);
+    PhoneAuthCredential credential = phoneAuthCredential ??
+        PhoneAuthProvider.credential(
+          verificationId: _verificationId,
+          smsCode: _smsCode,
+        );
+    final response = await _authService.verifyNumber(credential);
     // await Future.delayed(Duration(seconds: 2));
 
     switch (response) {
@@ -199,51 +177,14 @@ class AuthStateNotifier extends StateNotifier<AuthState>
         _verificationId = verificationId;
         onCodeSent();
       },
-      onVerifcationComplete: (phoneAuthCredential) async {
-        // resetState();
-        await _authService.signinWithCredential(
-          phoneAuthCredential,
-          onSignin: () {
-            _completeProfile(_email, _password, _name);
-          },
-        );
-        //     ==
-        //     AuthResponse.success
-        // ? AuthState.loading
-        // : AuthState.error;
-
-        // await _completeProfile(_email, _password, _name);
+      onVerifcationComplete: (phoneAuthCredential) {
+        _verifyNumber(phoneAuthCredential: phoneAuthCredential);
       },
       onVerificationFailed: (error) {
         debugPrint('Phone verification failed with error $error');
         state = AuthState.error;
       },
     );
-    // await Future.delayed(Duration(seconds: 2));
-
-    // switch (response) {
-    //   case AuthResponse.success:
-    //     state = AuthState.authenticated;
-    //     break;
-    //   case AuthResponse.weakPassword:
-    //     state = AuthState.invalidPassword;
-    //     break;
-    //   case AuthResponse.emailInUse:
-    //     state = AuthState.emailInUse;
-    //     break;
-    //   case AuthResponse.invalidPhone:
-    //     state = AuthState.invalidPhone;
-    //     break;
-
-    //   case AuthResponse.phoneInUse:
-    //     state = AuthState.phoneInUse;
-    //     break;
-    //   case AuthResponse.unknownError:
-    //     state = AuthState.waiting;
-    //     break;
-    //   default:
-    //     state = AuthState.waiting;
-    // }
   }
 
   // void signoutUser() {
