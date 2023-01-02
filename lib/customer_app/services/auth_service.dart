@@ -4,10 +4,8 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:handees/res/constants.dart';
+import 'package:handees/res/uri.dart';
 import 'package:http/http.dart' as http;
-// import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-// final authServiceProvider = Provider<AuthService>((ref) => AuthService._());
 
 class AuthService {
   AuthService._() {
@@ -25,6 +23,7 @@ class AuthService {
   User get user => firebaseAuth.currentUser!;
 
   late String _token;
+
   String get token => _token;
   // void updateToken(String token) => _token = token;
 
@@ -34,18 +33,15 @@ class AuthService {
 
   Future<bool> userExists() async {
     final response = await http.get(
-      Uri.http(
-        AppConstants.url,
-        '/api/user/${user.uid}',
-      ),
+      AppUris.userDataUri(user.uid),
     );
     return response.statusCode == 404;
   }
 
-  Future<bool> emailInUse(String emailAddress) async {
+  Future<bool> emailInUse(String email) async {
     try {
       // Fetch sign-in methods for the email address
-      final list = await firebaseAuth.fetchSignInMethodsForEmail(emailAddress);
+      final list = await firebaseAuth.fetchSignInMethodsForEmail(email);
       // In case list is not empty
       if (list.isNotEmpty) {
         // Return true because there is an existing
@@ -156,7 +152,7 @@ class AuthService {
 
     try {
       final future = http.post(
-        AppConstants.addNewUserUri,
+        AppUris.addNewUserUri,
         headers: {
           HttpHeaders.contentTypeHeader: 'application/json',
           'access-token': token,
@@ -225,33 +221,6 @@ class AuthService {
       return AuthResponse.unknownError;
     }
   }
-
-  // Future<AuthResponse> verifyNumber(
-  //     String smsCode, String verificationId) async {
-  //   // Create a PhoneAuthCredential with the code
-  //   PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.credential(
-  //     verificationId: verificationId,
-  //     smsCode: smsCode,
-  //   );
-  //   // print('Verifying with smscode $smsCode and id $verificationId');
-  //   return verifyNumberWithCredential(phoneAuthCredential);
-  // }
-
-  // Future<void> signinWithCredential(PhoneAuthCredential credential,
-  //     {required void Function() onSignin}) async {
-  //   final userCredential = await firebaseAuth.signInWithCredential(credential);
-  //   final user = userCredential.user!;
-
-  //   print('Signed in');
-  //   onSignin();
-
-  //   // return await submitUserData(
-  //   //   name: user.displayName!,
-  //   //   phone: user.phoneNumber!,
-  //   //   email: user.email!,
-  //   //   uid: user.uid,
-  //   // );
-  // }
 
   void signupWithPhone({
     required String phone,
