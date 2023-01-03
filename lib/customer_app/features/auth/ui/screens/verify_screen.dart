@@ -6,6 +6,7 @@ import 'package:handees/theme/theme.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 import '../../providers/auth_provider.dart';
+import '../auth_screen.dart';
 
 class VerifyScreen extends ConsumerWidget {
   VerifyScreen({Key? key}) : super(key: key);

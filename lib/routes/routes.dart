@@ -73,9 +73,9 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       page = StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            Navigator.of(context).popUntil((route) => route.isFirst);
-          });
+          // WidgetsBinding.instance.addPostFrameCallback((_) {
+          //   Navigator.of(context).popUntil((route) => route.isFirst);
+          // });
           print("Woah");
           return snapshot.hasData
               ? const HomeScreen()

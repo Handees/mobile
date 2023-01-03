@@ -26,10 +26,12 @@ class _TrackingScreenState extends State<TrackingScreen> {
     // TODO: implement initState
     super.initState();
 
-    Future.delayed(const Duration(seconds: 3)).then((value) {
-      setState(() {
-        _trackingState = TrackingState.inProgress;
-      });
+    Future.delayed(const Duration(seconds: 300)).then((value) {
+      if (mounted) {
+        setState(() {
+          _trackingState = TrackingState.inProgress;
+        });
+      }
     });
     //.then((value) {
     //   Future.delayed(const Duration(seconds: 20)).then((value) => {

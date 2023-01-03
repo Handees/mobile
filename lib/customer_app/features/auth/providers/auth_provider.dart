@@ -6,12 +6,51 @@ import 'package:handees/utils/utils.dart';
 
 final authProvider = StateNotifierProvider<AuthStateNotifier, AuthState>((ref) {
   // final authService = ref.watch(authServiceProvider);
-  return AuthStateNotifier(AuthService.instance);
+  return AuthNotifierTest(
+      AuthService.instance); //AuthStateNotifier(AuthService.instance);
 });
+
+class AuthNotifierTest extends AuthStateNotifier {
+  AuthNotifierTest(AuthService authService) : super(authService) {
+    if (_authService.isAuthenticated()) {
+      final user = _authService.user;
+      trySubmitData(
+        name: user.displayName!,
+        phone: user.phoneNumber!,
+        email: user.email!,
+        uid: user.uid,
+      );
+    }
+  }
+
+  @override
+  Future<void> trySubmitData({
+    required String name,
+    required String phone,
+    required String email,
+    required String uid,
+  }) async {
+    // _submitted = true;
+    print("Submitting _");
+    await Future.delayed(Duration(seconds: 2));
+    _submitted = true;
+    print("Submitted now $_submitted");
+  }
+}
 
 class AuthStateNotifier extends StateNotifier<AuthState>
     with InputValidationMixin {
-  AuthStateNotifier(this._authService) : super(AuthState.waiting);
+  AuthStateNotifier(this._authService) : super(AuthState.waiting) {
+    // if (_authService.isAuthenticated()) {
+    //   final user = _authService.user;
+    //   _authService.submitUserData(
+    //     name: user.displayName!,
+    //     phone: user.phoneNumber!,
+    //     email: user.email!,
+    //     uid: user.uid,
+    //   );
+    // }
+  }
 
   final AuthService _authService;
 
@@ -23,6 +62,11 @@ class AuthStateNotifier extends StateNotifier<AuthState>
   String _smsCode = '';
   set smsCode(String code) => _smsCode = code;
   late String _verificationId;
+
+  bool _submitted = false;
+
+  ///Check if user data has been submitted to the server
+  bool get submitted => _submitted;
 
   String get last2Digits => _phone.substring(_phone.length - 2, _phone.length);
 
@@ -86,6 +130,22 @@ class AuthStateNotifier extends StateNotifier<AuthState>
     }
   }
 
+  Future<void> trySubmitData({
+    required String name,
+    required String phone,
+    required String email,
+    required String uid,
+  }) async {
+    bool submitted = await _authService.dataSubmitted();
+    int count = 5;
+
+    while (!submitted && count > 0) {
+      submitted = await _authService.submitUserData(
+          name: name, phone: phone, email: email, uid: uid);
+    }
+    _submitted = submitted;
+  }
+
   Future<void> _completeProfile(
     String email,
     String password,
@@ -98,6 +158,7 @@ class AuthStateNotifier extends StateNotifier<AuthState>
       case AuthResponse.success:
         print('Verfication completed');
         final user = _authService.user;
+        state = AuthState.loading;
         final result = await _authService.submitUserData(
           name: user.displayName!,
           phone: user.phoneNumber!,
@@ -105,7 +166,7 @@ class AuthStateNotifier extends StateNotifier<AuthState>
           uid: user.uid,
         );
         //TODO: check this
-        state = result == AuthResponse.success
+        state = result
             ? AuthState.waiting //AuthState.authenticated
             : AuthState.error;
         break;
@@ -186,16 +247,18 @@ class AuthStateNotifier extends StateNotifier<AuthState>
     );
   }
 
-  // void signoutUser() {
-  //   resetState();
-  //   authService.signoutUser();
-  // }
+  void signoutUser() {
+    resetState();
+    _authService.signoutUser();
+  }
 
   void resetState() {
     _email = '';
     _name = '';
     _password = '';
     _phone = '';
+    _submitted = false;
+    smsCode = '';
     state = AuthState.waiting;
   }
 }

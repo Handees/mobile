@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:handees/customer_app/features/auth/ui/screens/verify_screen.dart';
 import 'package:handees/routes/routes.dart';
 import 'package:handees/theme/theme.dart';
 import 'package:handees/utils/utils.dart';
