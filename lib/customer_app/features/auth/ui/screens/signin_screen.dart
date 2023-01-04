@@ -5,6 +5,10 @@ import 'package:handees/utils/utils.dart';
 
 import '../../providers/auth_provider.dart';
 
+final _obscureTextProvider = StateProvider<bool>((ref) {
+  return true;
+});
+
 class SigninScreen extends ConsumerWidget with InputValidationMixin {
   SigninScreen({
     Key? key,
@@ -14,10 +18,6 @@ class SigninScreen extends ConsumerWidget with InputValidationMixin {
   final void Function() onSwapScreen;
 
   final _formGlobalKey = GlobalKey<FormState>();
-
-  final _obscureTextProvider = StateProvider<bool>((ref) {
-    return true;
-  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -105,7 +105,7 @@ class SigninScreen extends ConsumerWidget with InputValidationMixin {
                                     onPressed: () {
                                       ref
                                           .read(_obscureTextProvider.state)
-                                          .update((state) => state = !state);
+                                          .update((state) => !state);
                                     },
                                   ),
                                 ),

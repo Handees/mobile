@@ -4,16 +4,43 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/customer_app/services/auth_service.dart';
 import 'package:handees/utils/utils.dart';
 
+enum AuthState {
+  waiting,
+  loading,
+  verifying,
+  // authenticated,
+  noSuchEmail,
+  invalidPassword,
+  invalidPhone,
+  invalidVerificationCode,
+  invalidEmail,
+  emailInUse,
+  phoneInUse,
+  error,
+}
+
+enum SubmitStatus {
+  notSubmitted,
+  submitted,
+  submitError,
+}
+
 final authProvider = StateNotifierProvider<AuthStateNotifier, AuthState>((ref) {
   // final authService = ref.watch(authServiceProvider);
   return AuthNotifierTest(
-      AuthService.instance); //AuthStateNotifier(AuthService.instance);
+      ref, AuthService.instance); //AuthStateNotifier(AuthService.instance);
 });
 
+final _submittedProvider =
+    StateProvider<SubmitStatus>((ref) => SubmitStatus.notSubmitted);
+
 class AuthNotifierTest extends AuthStateNotifier {
-  AuthNotifierTest(AuthService authService) : super(authService) {
+  AuthNotifierTest(StateNotifierProviderRef<AuthStateNotifier, AuthState> ref,
+      AuthService authService)
+      : super(ref, authService) {
     if (_authService.isAuthenticated()) {
       final user = _authService.user;
+
       trySubmitData(
         name: user.displayName!,
         phone: user.phoneNumber!,
@@ -32,27 +59,31 @@ class AuthNotifierTest extends AuthStateNotifier {
   }) async {
     // _submitted = true;
     print("Submitting _");
-    await Future.delayed(Duration(seconds: 2));
-    _submitted = true;
-    print("Submitted now $_submitted");
+    await Future.delayed(Duration(seconds: 6));
+    ref.read(_submittedProvider.state).update(
+          (state) => SubmitStatus.submitted,
+        );
+    // print("Submitted now $_submitted");
   }
 }
 
 class AuthStateNotifier extends StateNotifier<AuthState>
     with InputValidationMixin {
-  AuthStateNotifier(this._authService) : super(AuthState.waiting) {
-    // if (_authService.isAuthenticated()) {
-    //   final user = _authService.user;
-    //   _authService.submitUserData(
-    //     name: user.displayName!,
-    //     phone: user.phoneNumber!,
-    //     email: user.email!,
-    //     uid: user.uid,
-    //   );
-    // }
+  AuthStateNotifier(this.ref, this._authService) : super(AuthState.waiting) {
+    if (_authService.isAuthenticated()) {
+      final user = _authService.user;
+      trySubmitData(
+        name: user.displayName!,
+        phone: user.phoneNumber!,
+        email: user.email!,
+        uid: user.uid,
+      );
+    }
   }
 
   final AuthService _authService;
+
+  StateNotifierProviderRef<AuthStateNotifier, AuthState> ref;
 
   String _name = '';
   String _phone = '';
@@ -63,10 +94,8 @@ class AuthStateNotifier extends StateNotifier<AuthState>
   set smsCode(String code) => _smsCode = code;
   late String _verificationId;
 
-  bool _submitted = false;
-
   ///Check if user data has been submitted to the server
-  bool get submitted => _submitted;
+  SubmitStatus get submitted => ref.watch(_submittedProvider);
 
   String get last2Digits => _phone.substring(_phone.length - 2, _phone.length);
 
@@ -143,7 +172,10 @@ class AuthStateNotifier extends StateNotifier<AuthState>
       submitted = await _authService.submitUserData(
           name: name, phone: phone, email: email, uid: uid);
     }
-    _submitted = submitted;
+    ref.read(_submittedProvider.state).update(
+          (state) =>
+              submitted ? SubmitStatus.submitted : SubmitStatus.submitError,
+        );
   }
 
   Future<void> _completeProfile(
@@ -257,23 +289,10 @@ class AuthStateNotifier extends StateNotifier<AuthState>
     _name = '';
     _password = '';
     _phone = '';
-    _submitted = false;
+    ref.read(_submittedProvider.state).update(
+          (state) => SubmitStatus.notSubmitted,
+        );
     smsCode = '';
     state = AuthState.waiting;
   }
-}
-
-enum AuthState {
-  waiting,
-  loading,
-  verifying,
-  // authenticated,
-  noSuchEmail,
-  invalidPassword,
-  invalidPhone,
-  invalidVerificationCode,
-  invalidEmail,
-  emailInUse,
-  phoneInUse,
-  error,
 }

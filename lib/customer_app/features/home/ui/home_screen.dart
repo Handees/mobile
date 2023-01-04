@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:handees/customer_app/features/auth/providers/auth_provider.dart';
 import 'package:handees/customer_app/features/home/providers/home_provider.dart';
 import 'package:handees/customer_app/features/test/test.dart';
 import 'package:handees/customer_app/features/tracker/ui/tracking_screen.dart';
@@ -25,30 +26,7 @@ class HomeScreen extends ConsumerWidget {
     const horizontalPadding = 16.0;
     // const drawerItemHeight = 56.0;
 
-    // showDialog(
-    //   context: context,
-    //   builder: (context) => Container(
-    //     decoration: ShapeDecoration(
-    //       shape: Shapes.mediumShape,
-    //       color: Theme.of(context).colorScheme.surface,
-    //     ),
-    //     padding: EdgeInsets.all(32.0),
-    //     child: Column(
-    //       mainAxisSize: MainAxisSize.min,
-    //       children: [
-    //         CircleFadeOutLoader(
-    //           size: 100,
-    //         ),
-    //         Text('Finalizing'),
-    //       ],
-    //     ),
-    //   ),
-    // );
-
-    // final authModel = ref.watch(authProvider.notifier);
-
-    final dataSubmitted = ref.watch(userDataStatusProvider);
-    print('Submitted $dataSubmitted');
+    final submitStatus = ref.watch(userDataStatusProvider);
 
     final name = ref.watch(nameProvider);
     final categories = ref.watch(categoryProvider);
@@ -306,7 +284,7 @@ class HomeScreen extends ConsumerWidget {
               ),
             ),
           ),
-          if (!dataSubmitted)
+          if (submitStatus != SubmitStatus.submitted)
             Container(
               // width: double.infinity,
               alignment: Alignment.center,
@@ -320,10 +298,14 @@ class HomeScreen extends ConsumerWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    CircleFadeOutLoader(
-                      size: 100,
-                    ),
-                    Text('Finalizing'),
+                    submitStatus == SubmitStatus.notSubmitted
+                        ? CircleFadeOutLoader(
+                            size: 100,
+                          )
+                        : CircleAvatar(radius: 50, backgroundColor: Colors.red),
+                    Text(submitStatus == SubmitStatus.notSubmitted
+                        ? 'Finalizing'
+                        : 'Error'),
                   ],
                 ),
               ),
