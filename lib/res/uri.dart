@@ -11,9 +11,9 @@ abstract class AppUris {
     '/api/bookings/',
   );
 
-  static final paymentsUri = Uri.https(
+  static final paymentsUri = Uri.http(
     AppConstants.url,
-    '/payments/',
+    '/api/payments/',
   );
 
   static Uri userDataUri(String uid) => Uri.http(

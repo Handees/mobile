@@ -28,13 +28,22 @@ class AuthService {
 
   bool isAuthenticated() =>
       firebaseAuth.currentUser != null &&
+      firebaseAuth.currentUser!.email != null &&
       firebaseAuth.currentUser!.email!.isNotEmpty;
 
   Future<bool> dataSubmitted() async {
-    final response = await http.get(
-      AppUris.userDataUri(user.uid),
-    );
-    return response.statusCode == 404;
+    try {
+      final response = await http.get(
+        AppUris.userDataUri(user.uid),
+      );
+
+      print('Data submit ${response.body}');
+      print('Data submit code${response.statusCode}');
+      return response.statusCode != 404;
+    } on Exception catch (e) {
+      debugPrint('Data submit error $e');
+      return false;
+    }
   }
 
   Future<bool> emailInUse(String email) async {

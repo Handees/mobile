@@ -4,8 +4,6 @@ import 'package:handees/customer_app/features/auth/ui/auth_screen.dart';
 import 'package:handees/customer_app/features/chat/ui/chat_screen.dart';
 import 'package:handees/customer_app/features/payments/ui/add_card_screen.dart';
 import 'package:handees/customer_app/features/payments/ui/payments.dart';
-import 'package:handees/customer_app/features/auth/ui/screens/signin_screen.dart';
-import 'package:handees/customer_app/features/auth/ui/screens/signup_screen.dart';
 import 'package:handees/customer_app/features/auth/ui/screens/verify_screen.dart';
 import 'package:handees/customer_app/features/history/ui/history_screen.dart';
 import 'package:handees/customer_app/features/home/ui/home_screen.dart';
@@ -73,9 +71,11 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       page = StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
-          // WidgetsBinding.instance.addPostFrameCallback((_) {
-          //   Navigator.of(context).popUntil((route) => route.isFirst);
-          // });
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.of(context).popUntil((route) {
+              return (route.settings.name ?? "") != AuthRoutes.verify;
+            });
+          });
           print("Woah");
           return snapshot.hasData
               ? const HomeScreen()
@@ -99,10 +99,13 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
     //   );
     //   break;
     case AuthRoutes.verify:
-      page = Theme(
-        data: authTheme,
-        child: VerifyScreen(),
-      );
+      pageRoute = MaterialPageRoute(
+          builder: ((context) => Theme(
+                data: authTheme,
+                child: VerifyScreen(),
+              )),
+          fullscreenDialog: true,
+          settings: RouteSettings(name: AuthRoutes.verify));
       break;
     case CustomerAppRoutes.home:
       page = const HomeScreen();

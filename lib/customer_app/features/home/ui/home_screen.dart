@@ -26,6 +26,7 @@ class HomeScreen extends ConsumerWidget {
     const horizontalPadding = 16.0;
     // const drawerItemHeight = 56.0;
 
+    final authModel = ref.watch(authProvider.notifier);
     final submitStatus = ref.watch(userDataStatusProvider);
 
     final name = ref.watch(nameProvider);
@@ -127,7 +128,7 @@ class HomeScreen extends ConsumerWidget {
                         const Divider(),
                         ListTile(
                           onTap: () {
-                            AuthService.instance.signoutUser();
+                            authModel.signoutUser();
                           },
                           leading: const Icon(Icons.help_outline_outlined),
                           title: const Text('FAQ'),

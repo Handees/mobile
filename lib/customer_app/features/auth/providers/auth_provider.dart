@@ -27,58 +27,71 @@ enum SubmitStatus {
 
 final authProvider = StateNotifierProvider<AuthStateNotifier, AuthState>((ref) {
   // final authService = ref.watch(authServiceProvider);
-  return AuthNotifierTest(
-      ref, AuthService.instance); //AuthStateNotifier(AuthService.instance);
+  return
+      //  AuthNotifierTest(ref, AuthService.instance);
+      AuthStateNotifier(ref, AuthService.instance);
 });
 
 final _submittedProvider =
     StateProvider<SubmitStatus>((ref) => SubmitStatus.notSubmitted);
 
-class AuthNotifierTest extends AuthStateNotifier {
-  AuthNotifierTest(StateNotifierProviderRef<AuthStateNotifier, AuthState> ref,
-      AuthService authService)
-      : super(ref, authService) {
-    if (_authService.isAuthenticated()) {
-      final user = _authService.user;
+// class AuthNotifierTest extends AuthStateNotifier {
+//   AuthNotifierTest(StateNotifierProviderRef<AuthStateNotifier, AuthState> ref,
+//       AuthService authService)
+//       : super(ref, authService) {
+//     if (_authService.isAuthenticated()) {
+//       final user = _authService.user;
 
-      trySubmitData(
-        name: user.displayName!,
-        phone: user.phoneNumber!,
-        email: user.email!,
-        uid: user.uid,
-      );
-    }
-  }
+//       trySubmitData(
+//         name: user.displayName!,
+//         phone: user.phoneNumber!,
+//         email: user.email!,
+//         uid: user.uid,
+//       );
+//     }
+//   }
 
-  @override
-  Future<void> trySubmitData({
-    required String name,
-    required String phone,
-    required String email,
-    required String uid,
-  }) async {
-    // _submitted = true;
-    print("Submitting _");
-    await Future.delayed(Duration(seconds: 6));
-    ref.read(_submittedProvider.state).update(
-          (state) => SubmitStatus.submitted,
-        );
-    // print("Submitted now $_submitted");
-  }
-}
+//   @override
+//   Future<void> trySubmitData({
+//     required String name,
+//     required String phone,
+//     required String email,
+//     required String uid,
+//   }) async {
+//     // _submitted = true;
+//     print("Submitting _");
+//     await Future.delayed(Duration(seconds: 6));
+//     final t = ref.read(_submittedProvider.state);
+//     t.update(
+//       (state) => SubmitStatus.submitted,
+//     );
+//     // print("Submitted now $_submitted");
+//   }
+// }
 
 class AuthStateNotifier extends StateNotifier<AuthState>
     with InputValidationMixin {
   AuthStateNotifier(this.ref, this._authService) : super(AuthState.waiting) {
-    if (_authService.isAuthenticated()) {
-      final user = _authService.user;
-      trySubmitData(
-        name: user.displayName!,
-        phone: user.phoneNumber!,
-        email: user.email!,
-        uid: user.uid,
-      );
-    }
+    _authService.firebaseAuth.authStateChanges().listen((user) {
+      if (_authService.isAuthenticated()) {
+        trySubmitData(
+          name: user!.displayName!,
+          phone: user.phoneNumber!,
+          email: user.email!,
+          uid: user.uid,
+        ).timeout(
+          Duration(seconds: 10),
+          onTimeout: () {
+            print("Timeout yolo");
+            ref.read(_submittedProvider.state).update(
+                  (state) => SubmitStatus.submitError,
+                );
+          },
+        );
+      } else {
+        resetState();
+      }
+    });
   }
 
   final AuthService _authService;
@@ -166,11 +179,14 @@ class AuthStateNotifier extends StateNotifier<AuthState>
     required String uid,
   }) async {
     bool submitted = await _authService.dataSubmitted();
-    int count = 5;
 
-    while (!submitted && count > 0) {
+    while (!submitted) {
       submitted = await _authService.submitUserData(
-          name: name, phone: phone, email: email, uid: uid);
+        name: name,
+        phone: phone,
+        email: email,
+        uid: uid,
+      );
     }
     ref.read(_submittedProvider.state).update(
           (state) =>
@@ -189,18 +205,19 @@ class AuthStateNotifier extends StateNotifier<AuthState>
     switch (completeResponse) {
       case AuthResponse.success:
         print('Verfication completed');
-        final user = _authService.user;
-        state = AuthState.loading;
-        final result = await _authService.submitUserData(
-          name: user.displayName!,
-          phone: user.phoneNumber!,
-          email: user.email!,
-          uid: user.uid,
-        );
-        //TODO: check this
-        state = result
-            ? AuthState.waiting //AuthState.authenticated
-            : AuthState.error;
+        state = AuthState.waiting;
+        // final user = _authService.user;
+        // state = AuthState.loading;
+        // final result = await _authService.submitUserData(
+        //   name: user.displayName!,
+        //   phone: user.phoneNumber!,
+        //   email: user.email!,
+        //   uid: user.uid,
+        // );
+        // //TODO: check this
+        // state = result
+        //     ? AuthState.waiting //AuthState.authenticated
+        //     : AuthState.error;
         break;
       case AuthResponse.weakPassword:
         state = AuthState.invalidPassword;
@@ -280,7 +297,7 @@ class AuthStateNotifier extends StateNotifier<AuthState>
   }
 
   void signoutUser() {
-    resetState();
+    // resetState();
     _authService.signoutUser();
   }
 
@@ -289,10 +306,12 @@ class AuthStateNotifier extends StateNotifier<AuthState>
     _name = '';
     _password = '';
     _phone = '';
+    smsCode = '';
     ref.read(_submittedProvider.state).update(
           (state) => SubmitStatus.notSubmitted,
         );
-    smsCode = '';
-    state = AuthState.waiting;
+    if (mounted) {
+      state = AuthState.waiting;
+    }
   }
 }
