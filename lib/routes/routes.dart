@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:handees/customer_app/features/auth/ui/auth_screen.dart';
 import 'package:handees/customer_app/features/chat/ui/chat_screen.dart';
 import 'package:handees/customer_app/features/payments/ui/add_card_screen.dart';
-import 'package:handees/customer_app/features/payments/ui/payments.dart';
+import 'package:handees/customer_app/features/payments/ui/payments_screen.dart';
 import 'package:handees/customer_app/features/auth/ui/screens/verify_screen.dart';
 import 'package:handees/customer_app/features/history/ui/history_screen.dart';
 import 'package:handees/customer_app/features/home/ui/home_screen.dart';
@@ -99,13 +99,10 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
     //   );
     //   break;
     case AuthRoutes.verify:
-      pageRoute = MaterialPageRoute(
-          builder: ((context) => Theme(
-                data: authTheme,
-                child: VerifyScreen(),
-              )),
-          fullscreenDialog: true,
-          settings: RouteSettings(name: AuthRoutes.verify));
+      page = Theme(
+        data: authTheme,
+        child: VerifyScreen(),
+      );
       break;
     case CustomerAppRoutes.home:
       page = const HomeScreen();
@@ -151,6 +148,11 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       throw Exception('Unknown route: ${settings.name}');
   }
   return page != null
-      ? MaterialPageRoute(builder: (context) => page!)
+      ? MaterialPageRoute(
+          builder: (context) => page!,
+          settings: RouteSettings(
+            name: settings.name,
+          ),
+        )
       : pageRoute!;
 }
