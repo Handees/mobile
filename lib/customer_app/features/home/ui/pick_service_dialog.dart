@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:handees/customer_app/features/payments/ui/widgets/payment_methods.dart';
 import 'package:handees/routes/routes.dart';
 import 'package:handees/theme/theme.dart';
 
@@ -16,12 +17,12 @@ class PickServiceDialog extends StatelessWidget {
           const SliverList(
             delegate: SliverChildListDelegate.fixed(
               [
-                PaymentMethods(),
+                _PaymentMethodsWidget(),
                 Divider(
                   height: 32.0,
                   thickness: 8.0,
                 ),
-                WorkDurationWidget(),
+                _WorkDurationWidget(),
               ],
             ),
           ),
@@ -51,23 +52,35 @@ class PickServiceDialog extends StatelessWidget {
   }
 }
 
-class PaymentMethods extends StatelessWidget {
-  const PaymentMethods({super.key});
+class _PaymentMethodsWidget extends StatelessWidget {
+  const _PaymentMethodsWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 16.0, bottom: 8.0),
+          child: Text(
+            'Payment Methods',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+        ),
+        PaymentMethods(),
+      ],
+    );
   }
 }
 
-class WorkDurationWidget extends StatefulWidget {
-  const WorkDurationWidget({Key? key}) : super(key: key);
+class _WorkDurationWidget extends StatefulWidget {
+  const _WorkDurationWidget({Key? key}) : super(key: key);
 
   @override
-  State<WorkDurationWidget> createState() => _WorkDurationWidgetState();
+  State<_WorkDurationWidget> createState() => _WorkDurationWidgetState();
 }
 
-class _WorkDurationWidgetState extends State<WorkDurationWidget> {
+class _WorkDurationWidgetState extends State<_WorkDurationWidget> {
   WorkDuration _workDuration = WorkDuration.oneTime;
 
   @override

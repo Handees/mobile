@@ -12,7 +12,5 @@ final categoryProvider = Provider<List<JobCategory>>((ref) {
 });
 
 final userDataStatusProvider = Provider<SubmitStatus>((ref) {
-  final submitted = ref.watch(authProvider.notifier).submitted;
-  print("In provider submitted is $submitted");
-  return submitted;
+  return ref.watch(authProvider.notifier).submitted;
 });

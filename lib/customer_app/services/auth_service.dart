@@ -37,8 +37,8 @@ class AuthService {
         AppUris.userDataUri(user.uid),
       );
 
-      print('Data submit ${response.body}');
-      print('Data submit code${response.statusCode}');
+      print('Check Data submit ${response.body}');
+      print('Check Data submit code${response.statusCode}');
       return response.statusCode != 404;
     } on Exception catch (e) {
       debugPrint('Data submit error $e');
@@ -181,9 +181,11 @@ class AuthService {
       final response = await future;
       print("Submit user data response ${response.body}");
 
+      print("Submit user data response code ${response.statusCode}");
+
       //TODO: Error handling
 
-      if (response.statusCode == 200) {
+      if (response.statusCode > 200 && response.statusCode < 400) {
         return true;
       } else {
         return false;

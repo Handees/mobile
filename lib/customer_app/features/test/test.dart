@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:handees/res/constants.dart';
+import 'package:handees/res/uri.dart';
 import 'package:handees/shared/widgets/utils.dart';
 import 'package:http/http.dart' as http;
 import 'package:socket_io_client/socket_io_client.dart' as io;
@@ -17,38 +18,15 @@ class Test extends StatefulWidget {
 
 class _TestState extends State<Test> {
   // Future<void> submit() async {
-  //   // final loc = await PlacesService.instance.determinePosition();
-  //   final future = http.post(
-  //     Uri.https(
-  //       '49c7-102-89-32-36.ngrok.io',
-  //       '/bookings/',
-  //     ),
-  //     headers: {HttpHeaders.contentTypeHeader: 'application/json'},
-  //     body: jsonEncode(
-  //       {
-  //         'lat': 6.517871336509268,
-  //         'lon': 3.399740067230001,
-  //         'user_id': 'jksdhfuihewuiohio2',
-  //       },
-  //     ),
-  //   );
-
-  //   final response = await future;
-  //   print(response.body);
-  //   // setState(() {
-  //   //   status = Status.submitting;
-  //   // });
-  //   // await Future.delayed(const Duration(seconds: 1));
-  //   // setState(() {
-  //   //   status = Status.failed;
-  //   // });
-  // }
 
   final site = AppConstants.url;
   late String token;
 
 // Dart client
-  io.Socket socket = io.io('http://${AppConstants.url}/',
+  io.Socket customerSocket = io.io(AppUris.customerSocketUri.toString(),
+      io.OptionBuilder().setTransports(['websocket']).build());
+
+  io.Socket chatSocket = io.io(AppUris.chatSocketUri.toString(),
       io.OptionBuilder().setTransports(['websocket']).build());
 
   String? bookingId;
@@ -56,23 +34,34 @@ class _TestState extends State<Test> {
 
   @override
   void initState() {
+    print("Uri is ${AppUris.customerSocketUri.toString()}");
+
     FirebaseAuth.instance.currentUser!
         .getIdToken()
         .then((value) => token = value);
 
     print('try connect');
-    socket.connect();
+    customerSocket.connect();
+    chatSocket.connect();
 
-    socket.onConnect((_) {
-      print('connect');
+    customerSocket.onConnect((_) {
+      print('customer connected');
+    });
+    chatSocket.onConnect((_) {
+      print('Chat connected');
     });
     // socket.on('event', (data) => print('Event $data'));
-    socket.onDisconnect((_) => print('client disconnect'));
+    customerSocket.onDisconnect((_) => print('client disconnected'));
+    chatSocket.onDisconnect((_) => print('Chat disconnected'));
 
-    socket.on('msg', (data) {
-      print('Event update: $data');
+    customerSocket.on('msg', (data) {
+      print('Customer update: $data');
 
       artisanId = data['artisan_id'];
+    });
+
+    chatSocket.on('msg', (data) {
+      print('Chat update: $data');
     });
 
     super.initState();
@@ -89,7 +78,7 @@ class _TestState extends State<Test> {
           children: [
             InkWell(
               onTap: () {
-                socket.emit('close_offer', {
+                customerSocket.emit('close_offer', {
                   {'booking_id': '9f04dd34-0c9a-48d6-b7a1-d00ab3e12536'}
                 });
                 print('Close');
@@ -98,28 +87,6 @@ class _TestState extends State<Test> {
                 height: 80,
                 width: 80,
                 color: Colors.blue,
-              ),
-            ),
-            InkWell(
-              onTap: () async {
-                print('right');
-                print(FirebaseAuth.instance.currentUser!.uid);
-                // final loc = await PlacesService.instance.determinePosition();
-                final future = http.get(
-                  Uri.http(
-                    site,
-                    '/api/user/${FirebaseAuth.instance.currentUser!.uid}',
-                  ),
-                );
-
-                final response = await future;
-                print(response.statusCode);
-                print(response.body);
-              },
-              child: Ink(
-                height: 80,
-                width: 80,
-                color: Colors.green,
               ),
             ),
             InkWell(
@@ -150,7 +117,7 @@ class _TestState extends State<Test> {
                 final json = jsonDecode(response.body);
                 bookingId = json['data']['booking_id'];
 
-                socket.emit('booking_update', {
+                customerSocket.emit('booking_update', {
                   {'booking_id': bookingId}
                 });
                 print(bookingId);

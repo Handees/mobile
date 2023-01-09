@@ -2,9 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:handees/customer_app/features/chat/models/message_model.dart';
-import 'package:handees/customer_app/features/chat/providers/chat_provider.dart';
 import 'package:handees/res/shapes.dart';
+
+import '../providers/messages_provider.dart';
 
 class ChatScreen extends ConsumerWidget {
   const ChatScreen({Key? key}) : super(key: key);
@@ -18,10 +18,6 @@ class ChatScreen extends ConsumerWidget {
     print(messages);
 
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Jane Doe'),
-      //   centerTitle: true,
-      // ),
       resizeToAvoidBottomInset: true,
       body: CustomScrollView(
         slivers: [

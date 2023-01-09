@@ -76,7 +76,6 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
               return (route.settings.name ?? "") != AuthRoutes.verify;
             });
           });
-          print("Woah");
           return snapshot.hasData
               ? const HomeScreen()
               : Theme(

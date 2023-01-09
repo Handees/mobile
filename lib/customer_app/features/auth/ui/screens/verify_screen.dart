@@ -6,7 +6,6 @@ import 'package:handees/theme/theme.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 import '../../providers/auth_provider.dart';
-import '../auth_screen.dart';
 
 class VerifyScreen extends ConsumerWidget {
   VerifyScreen({Key? key}) : super(key: key);
@@ -25,16 +24,6 @@ class VerifyScreen extends ConsumerWidget {
       errorController.add(ErrorAnimationType.shake);
     }
 
-    // switch (authState) {
-    //   case AuthState.invalidVerificationCode:
-    //   case AuthState.verifying:
-    //   case AuthState.loading:
-    //     break;
-    //   default:
-    //     Future.microtask(() => Navigator.of(context).pop());
-    //     break;
-    // }
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Verify Phone'),
@@ -51,7 +40,6 @@ class VerifyScreen extends ConsumerWidget {
             const SizedBox(height: verticalMargin),
             SizedBox(
               width: double.infinity,
-              // height: 48,
               child: PinCodeTextField(
                 appContext: context,
                 length: 6,
@@ -67,7 +55,6 @@ class VerifyScreen extends ConsumerWidget {
                   activeColor: Theme.of(context).unselectedWidgetColor,
                   selectedColor: Theme.of(context).colorScheme.primary,
                   inactiveColor: Theme.of(context).unselectedWidgetColor,
-                  // disabledColor: Theme.of(context).unselectedWidgetColor,
                 ),
               ),
             ),

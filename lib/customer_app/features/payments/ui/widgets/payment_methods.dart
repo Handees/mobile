@@ -21,13 +21,6 @@ class _PaymentMethodsState extends State<PaymentMethods> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 16.0, bottom: 8.0),
-          child: Text(
-            'Payment Methods',
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-        ),
         ListTile(
           dense: true,
           title: const Text('Cash / Bank Transfer'),
