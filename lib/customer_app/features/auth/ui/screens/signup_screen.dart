@@ -68,179 +68,178 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
     }
 
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 16.0,
-            vertical: 24.0,
-          ),
-          child: CustomScrollView(
-            slivers: [
-              SliverFillRemaining(
-                hasScrollBody: false,
-                child: Column(
-                  children: [
-                    const Spacer(flex: 4),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: SizedBox(
-                        width: 220,
-                        child: Text(
-                          'Let\'s get you signed up',
-                          style: Theme.of(context).textTheme.headlineMedium,
-                        ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 16.0,
+          vertical: 24.0,
+        ),
+        child: SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: MediaQuery.of(context).size.height -
+                  MediaQuery.of(context).viewPadding.top -
+                  MediaQuery.of(context).viewPadding.bottom,
+            ),
+            child: SizedBox(
+              height: 400,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Spacer(flex: 4),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: SizedBox(
+                      width: 220,
+                      child: Text(
+                        'Let\'s get you signed up',
+                        style: Theme.of(context).textTheme.headlineMedium,
                       ),
                     ),
-                    const Spacer(flex: 1),
-                    Form(
-                      key: _formGlobalKey,
-                      child: Column(
-                        children: [
-                          const SizedBox(height: 16),
-                          TextFormField(
-                            decoration: const InputDecoration(
-                              labelText: 'Name',
-                              hintText: 'John',
-                            ),
-                            textCapitalization: TextCapitalization.words,
-                            onSaved: model.onNameSaved,
-                            validator: model.nameValidator,
+                  ),
+                  const Spacer(flex: 1),
+                  Form(
+                    key: _formGlobalKey,
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 16),
+                        TextFormField(
+                          decoration: const InputDecoration(
+                            labelText: 'Name',
+                            hintText: 'John',
                           ),
-                          const SizedBox(height: 24),
-                          TextFormField(
-                            decoration: InputDecoration(
-                                labelText: 'Phone',
-                                hintText: '+2348123456789',
-                                errorText: phoneError
-                                // icon: CircleAvatar(),
-                                ),
-                            onSaved: model.onPhoneSaved,
-                            validator: model.phoneValidator,
+                          textCapitalization: TextCapitalization.words,
+                          onSaved: model.onNameSaved,
+                          validator: model.nameValidator,
+                        ),
+                        const SizedBox(height: 24),
+                        TextFormField(
+                          decoration: InputDecoration(
+                              labelText: 'Phone',
+                              hintText: '+2348123456789',
+                              errorText: phoneError
+                              // icon: CircleAvatar(),
+                              ),
+                          onSaved: model.onPhoneSaved,
+                          validator: model.phoneValidator,
+                        ),
+                        const SizedBox(height: 24),
+                        TextFormField(
+                          decoration: InputDecoration(
+                            labelText: 'Email',
+                            hintText: 'example123@examples.com',
+                            errorText: emailError,
                           ),
-                          const SizedBox(height: 24),
-                          TextFormField(
-                            decoration: InputDecoration(
-                              labelText: 'Email',
-                              hintText: 'example123@examples.com',
-                              errorText: emailError,
-                            ),
-                            onSaved: model.onEmailSaved,
-                            validator: model.emailValidator,
-                          ),
-                          const SizedBox(height: 24),
-                          Consumer(
-                            builder: (context, ref, child) {
-                              final obscureText =
-                                  ref.watch(_obscureTextProvider);
+                          onSaved: model.onEmailSaved,
+                          validator: model.emailValidator,
+                        ),
+                        const SizedBox(height: 24),
+                        Consumer(
+                          builder: (context, ref, child) {
+                            final obscureText = ref.watch(_obscureTextProvider);
 
-                              return TextFormField(
-                                decoration: InputDecoration(
-                                  labelText: 'Password',
-                                  hintText: '••••••••••••',
-                                  errorText: passwordError,
-                                  suffixIcon: IconButton(
-                                    icon: Icon(
-                                      obscureText ? Icons.abc : Icons.password,
-                                    ),
-                                    // color: obscureText
-                                    //     ? Theme.of(context).unselectedWidgetColor
-                                    //     : null,
-                                    onPressed: () {
-                                      ref
-                                          .read(_obscureTextProvider.state)
-                                          .update((state) => state = !state);
-                                    },
+                            return TextFormField(
+                              decoration: InputDecoration(
+                                labelText: 'Password',
+                                hintText: '••••••••••••',
+                                errorText: passwordError,
+                                suffixIcon: IconButton(
+                                  icon: Icon(
+                                    obscureText ? Icons.abc : Icons.password,
                                   ),
+                                  // color: obscureText
+                                  //     ? Theme.of(context).unselectedWidgetColor
+                                  //     : null,
+                                  onPressed: () {
+                                    ref
+                                        .read(_obscureTextProvider.state)
+                                        .update((state) => state = !state);
+                                  },
                                 ),
-                                obscureText: ref.watch(_obscureTextProvider),
-                                onSaved: model.onPasswordSaved,
-                                validator: model.passwordValidator,
+                              ),
+                              obscureText: ref.watch(_obscureTextProvider),
+                              onSaved: model.onPasswordSaved,
+                              validator: model.passwordValidator,
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Spacer(flex: 3),
+                  Text(
+                    'Sign up with',
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: Theme.of(context).unselectedWidgetColor),
+                  ),
+                  const Spacer(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: const [
+                      CircleAvatar(radius: 24.0),
+                      CircleAvatar(radius: 24.0),
+                      CircleAvatar(radius: 24.0),
+                    ],
+                  ),
+                  const Spacer(flex: 2),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Have an account? ',
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: Theme.of(context).unselectedWidgetColor,
+                            ),
+                      ),
+                      InkWell(
+                        onTap: onSwapScreen,
+                        child: const Text('Sign in'),
+                      ),
+                    ],
+                  ),
+                  const Spacer(flex: 2),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: authState == AuthState.loading
+                          ? null
+                          : () {
+                              if (!_formGlobalKey.currentState!.validate()) {
+                                return;
+                              }
+                              _formGlobalKey.currentState?.save();
+
+                              showDialog(
+                                context: context,
+                                builder: (ctx) {
+                                  return PhoneProceedDialog(
+                                    onProceed: () {
+                                      Navigator.of(context).pop();
+                                      print('Sign up user');
+                                      model.signupUser(
+                                        onCodeSent: () => Navigator.of(context)
+                                            .pushNamed(AuthRoutes.verify),
+                                      );
+                                    },
+                                  );
+                                },
                               );
                             },
-                          ),
-                        ],
-                      ),
+                      style: Theme.of(context)
+                          .extension<ButtonThemeExtensions>()
+                          ?.filled,
+                      child: const Text('Sign up'),
                     ),
-                    const Spacer(flex: 3),
-                    Text(
-                      'Sign up with',
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Theme.of(context).unselectedWidgetColor),
-                    ),
-                    const Spacer(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: const [
-                        CircleAvatar(radius: 24.0),
-                        CircleAvatar(radius: 24.0),
-                        CircleAvatar(radius: 24.0),
-                      ],
-                    ),
-                    const Spacer(flex: 2),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          'Have an account? ',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium
-                              ?.copyWith(
-                                color: Theme.of(context).unselectedWidgetColor,
-                              ),
-                        ),
-                        InkWell(
-                          onTap: onSwapScreen,
-                          child: const Text('Sign in'),
-                        ),
-                      ],
-                    ),
-                    const Spacer(flex: 2),
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: authState == AuthState.loading
-                            ? null
-                            : () {
-                                if (!_formGlobalKey.currentState!.validate()) {
-                                  return;
-                                }
-                                _formGlobalKey.currentState?.save();
-
-                                showDialog(
-                                  context: context,
-                                  builder: (ctx) {
-                                    return PhoneProceedDialog(
-                                      onProceed: () {
-                                        Navigator.of(context).pop();
-                                        print('Sign up user');
-                                        model.signupUser(
-                                          onCodeSent: () =>
-                                              Navigator.of(context)
-                                                  .pushNamed(AuthRoutes.verify),
-                                        );
-                                      },
-                                    );
-                                  },
-                                );
-                              },
-                        style: Theme.of(context)
-                            .extension<ButtonThemeExtensions>()
-                            ?.filled,
-                        child: const Text('Sign up'),
-                      ),
-                    ),
-                    const Spacer(flex: 1),
-                    Text(
-                      'By clicking Sign up, you agree to '
-                      'our User Agreement and Privacy Policy',
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                  ],
-                ),
+                  ),
+                  const Spacer(flex: 1),
+                  Text(
+                    'By clicking Sign up, you agree to '
+                    'our User Agreement and Privacy Policy',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),

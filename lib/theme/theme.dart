@@ -11,11 +11,9 @@ final _textTheme = GoogleFonts.cabinTextTheme(const TextTheme());
 const _lightColorScheme = ColorScheme.light(
   primary: Color.fromRGBO(20, 22, 28, 1),
   onPrimary: Colors.white,
-  // secondary: Color.fromRGBO(242, 243, 244, 1),
+  tertiary: Color.fromRGBO(243, 248, 254, 1),
   onSecondary: Color.fromRGBO(20, 22, 28, 1),
   secondary: Color.fromRGBO(235, 237, 240, 1),
-  // primaryContainer: Color.fromRGBO(20, 22, 28, 1),
-  // onPrimaryContainer: Colors.white,
   brightness: Brightness.light,
 );
 

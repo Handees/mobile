@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:handees/customer_app/features/home/providers/home_provider.dart';
 import 'package:handees/customer_app/features/test/test.dart';
 import 'package:handees/customer_app/features/tracker/ui/tracking_screen.dart';
@@ -29,247 +30,279 @@ class HomeScreen extends ConsumerWidget {
 
     final name = ref.watch(nameProvider);
     final categories = ref.watch(categoryProvider);
+    Function focusNodeCallback = () {};
 
-    return Scaffold(
-      resizeToAvoidBottomInset: true,
-      body: Scaffold(
-        // backgroundColor: Theme.of(context).colorScheme.background,
-        drawer: Drawer(
-          child: CustomScrollView(
-            slivers: [
-              SliverFillRemaining(
-                hasScrollBody: false,
-                child: Column(
-                  children: [
-                    DrawerHeader(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Align(
-                        alignment: Alignment.bottomLeft,
-                        child: InkWell(
-                          onTap: () => Navigator.of(context)
-                              .pushNamed(CustomerAppRoutes.profile),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Container(
-                                height: 48,
-                                width: 48,
-                                decoration: const ShapeDecoration(
-                                  shape: CircleBorder(),
-                                  color: Colors.red,
-                                ),
-                              ),
-                              const SizedBox(width: 16.0),
-                              Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Barbara',
-                                    style:
-                                        Theme.of(context).textTheme.titleMedium,
-                                  ),
-                                  Text(
-                                    'Edit profile',
-                                    style:
-                                        Theme.of(context).textTheme.titleMedium,
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    ListTile(
-                      onTap: () {},
-                      leading: const Icon(Icons.credit_card),
-                      title: const Text('Payments'),
-                    ),
-                    const Divider(),
-                    ListTile(
-                      onTap: () => Navigator.of(context)
-                          .pushNamed(CustomerAppRoutes.history),
-                      leading: const Icon(Icons.history),
-                      title: const Text('History'),
-                    ),
-                    const Divider(),
-                    ListTile(
-                      onTap: () => Navigator.of(context)
-                          .pushNamed(CustomerAppRoutes.settings),
-                      leading: const Icon(Icons.settings_outlined),
-                      title: const Text('Settings'),
-                    ),
-                    const Divider(),
-                    ListTile(
-                      onTap: () {},
-                      leading: const Icon(Icons.support_agent),
-                      title: const Text('Customer Support'),
-                    ),
-                    const Divider(),
-                    ListTile(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) {
-                            return const Test();
-                          },
-                        ));
-                      },
-                      leading: const Icon(Icons.handyman),
-                      title: const Text('Test'),
-                    ),
-                    const Divider(),
-                    ListTile(
-                      onTap: () {
-                        AuthService.instance.signoutUser();
-                      },
-                      leading: const Icon(Icons.help_outline_outlined),
-                      title: const Text('FAQ'),
-                    ),
-                    const Spacer(),
-                    SizedBox(
-                      width: double.infinity,
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: ElevatedButton(
-                          style: Theme.of(context)
-                              .extension<ButtonThemeExtensions>()
-                              ?.filled,
-                          onPressed: () {},
-                          child: const Text(
-                            'Become a Handee Man',
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-        bottomNavigationBar: const Padding(
-          padding: EdgeInsets.only(
-            bottom: horizontalPadding,
-            left: horizontalPadding,
-            right: horizontalPadding,
-          ),
-          child: SearchWidget(),
-        ),
-        body: SafeArea(
-          child: CustomScrollView(
-            slivers: [
-              SliverAppBar(
-                systemOverlayStyle: const SystemUiOverlayStyle(
-                  statusBarIconBrightness: Brightness.dark,
-                ),
-                actions: [
-                  IconButton(
-                    onPressed: () {
-                      Navigator.of(context)
-                          .pushNamed(CustomerAppRoutes.notifications);
-                    },
-                    icon: const Icon(Icons.notifications_outlined),
-                  )
-                ],
-              ),
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: horizontalPadding),
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).requestFocus(FocusNode());
+
+        focusNodeCallback();
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        body: Scaffold(
+          // backgroundColor: Theme.of(context).colorScheme.background,
+          drawer: Drawer(
+            child: CustomScrollView(
+              slivers: [
+                SliverFillRemaining(
+                  hasScrollBody: false,
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const SizedBox(height: 8),
-                      Text(
-                        'Hello $name',
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              color: Theme.of(context).unselectedWidgetColor,
+                      DrawerHeader(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Align(
+                          alignment: Alignment.bottomLeft,
+                          child: InkWell(
+                            onTap: () => Navigator.of(context)
+                                .pushNamed(CustomerAppRoutes.profile),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                AuthService.instance.user.photoURL != null
+                                    ? CircleAvatar(
+                                        radius: 28,
+                                        backgroundImage: NetworkImage(
+                                          AuthService.instance.user.photoURL!,
+                                        ),
+                                      )
+                                    : Container(
+                                        height: 48,
+                                        width: 48,
+                                        decoration: ShapeDecoration(
+                                          shape: CircleBorder(),
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .tertiary,
+                                        ),
+                                        child: Icon(Icons.account_circle),
+                                      ),
+                                const SizedBox(width: 16.0),
+                                Text(
+                                  name,
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
+                                ),
+                                const Spacer(),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    debugPrint("Swap button pressed");
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    minimumSize: Size.zero,
+                                    padding: const EdgeInsets.all(5),
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(5),
+                                      ),
+                                    ),
+                                    backgroundColor:
+                                        Theme.of(context).colorScheme.onPrimary,
+                                  ),
+                                  child: const Icon(
+                                    Icons.swap_horiz,
+                                  ),
+                                )
+                              ],
                             ),
+                          ),
+                        ),
                       ),
-                      const SizedBox(height: 8),
-                      Text(
-                        'Let\'s give you a hand',
-                        style: Theme.of(context).textTheme.titleLarge,
+                      ListTile(
+                        onTap: () {},
+                        leading: const Icon(Icons.credit_card),
+                        title: const Text('Payments'),
                       ),
-                      const SizedBox(height: 8),
+                      const Divider(),
+                      ListTile(
+                        onTap: () => Navigator.of(context)
+                            .pushNamed(CustomerAppRoutes.history),
+                        leading: const Icon(Icons.history),
+                        title: const Text('History'),
+                      ),
+                      const Divider(),
+                      ListTile(
+                        onTap: () => Navigator.of(context)
+                            .pushNamed(CustomerAppRoutes.settings),
+                        leading: const Icon(Icons.settings_outlined),
+                        title: const Text('Settings'),
+                      ),
+                      const Divider(),
+                      ListTile(
+                        onTap: () {},
+                        leading: const Icon(Icons.support_agent),
+                        title: const Text('Customer Support'),
+                      ),
+                      const Divider(),
+                      ListTile(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) {
+                              return const Test();
+                            },
+                          ));
+                        },
+                        leading: const Icon(Icons.handyman),
+                        title: const Text('Test'),
+                      ),
+                      const Divider(),
+                      ListTile(
+                        onTap: () {
+                          AuthService.instance.signoutUser();
+                        },
+                        leading: const Icon(Icons.help_outline_outlined),
+                        title: const Text('FAQ'),
+                      ),
+                      const Spacer(),
+                      SizedBox(
+                        width: double.infinity,
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: ElevatedButton(
+                            style: Theme.of(context)
+                                .extension<ButtonThemeExtensions>()
+                                ?.filled,
+                            onPressed: () {},
+                            child: const Text(
+                              'Become a Handee Man',
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
-              ),
-              SliverPadding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: horizontalPadding,
-                ),
-                sliver: SliverPersistentHeader(
-                  // pinned: true,
-                  floating: true,
-                  delegate: CustomDelegate(
-                    height: 64.0,
-                    child: const LocationPicker(),
+              ],
+            ),
+          ),
+          bottomNavigationBar: Padding(
+            padding: const EdgeInsets.only(
+              bottom: horizontalPadding,
+              left: horizontalPadding,
+              right: horizontalPadding,
+            ),
+            child: SearchWidget((callback) {
+              focusNodeCallback = callback;
+            }),
+          ),
+          body: SafeArea(
+            child: CustomScrollView(
+              slivers: [
+                SliverAppBar(
+                  systemOverlayStyle: const SystemUiOverlayStyle(
+                    statusBarIconBrightness: Brightness.dark,
                   ),
+                  actions: [
+                    IconButton(
+                      onPressed: () {
+                        Navigator.of(context)
+                            .pushNamed(CustomerAppRoutes.notifications);
+                      },
+                      icon: const Icon(Icons.notifications_outlined),
+                    )
+                  ],
                 ),
-              ),
-              SliverPersistentHeader(
-                pinned: true,
-                delegate: CustomDelegate(
-                  height: 144.0,
-                  shape: const RoundedRectangleBorder(),
-                  elevation: 0,
-                  padding: EdgeInsets.zero,
-                  child: PageView.builder(
-                    itemBuilder: (context, index) {
-                      return const OngoingServiceHeader(
-                        horizontalPadding: horizontalPadding,
-                      );
-                    },
-                  ),
-                ),
-              ),
-              SliverPadding(
-                padding: const EdgeInsets.only(top: 8.0),
-                sliver: SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      return InkWell(
-                        onTap: () {
-                          showModalBottomSheet(
-                              context: context,
-                              isScrollControlled: true,
-                              builder: (sheetCtx) {
-                                return Padding(
-                                  padding: EdgeInsets.only(
-                                    bottom: MediaQuery.of(sheetCtx)
-                                        .viewInsets
-                                        .bottom,
-                                  ),
-                                  child:
-                                      PickServiceBottomSheet(categories[index]),
-                                );
-                              });
-                        },
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                            vertical: 8.0,
-                            horizontal: horizontalPadding,
-                          ),
-                          child: ServiceCard(
-                            artisanCount: 12,
-                            icon: Icon(
-                              categories[index].icon,
-                              color: Colors.white,
-                            ),
-                            iconBackground: categories[index].foregroundColor,
-                            serviceName: categories[index].name,
-                          ),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: horizontalPadding),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 8),
+                        Text(
+                          'Hello $name',
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleLarge
+                              ?.copyWith(
+                                color: Theme.of(context).unselectedWidgetColor,
+                              ),
                         ),
-                      );
-                    },
-                    childCount: categories.length,
+                        const SizedBox(height: 8),
+                        Text(
+                          'Let\'s give you a hand',
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                        const SizedBox(height: 8),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+                SliverPadding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: horizontalPadding,
+                  ),
+                  sliver: SliverPersistentHeader(
+                    // pinned: true,
+                    floating: true,
+                    delegate: CustomDelegate(
+                      height: 64.0,
+                      child: const LocationPicker(),
+                    ),
+                  ),
+                ),
+                SliverPersistentHeader(
+                  pinned: true,
+                  delegate: CustomDelegate(
+                    height: 144.0,
+                    shape: const RoundedRectangleBorder(),
+                    elevation: 0,
+                    padding: EdgeInsets.zero,
+                    child: PageView.builder(
+                      itemBuilder: (context, index) {
+                        return const OngoingServiceHeader(
+                          horizontalPadding: horizontalPadding,
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                SliverPadding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  sliver: SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        return InkWell(
+                          onTap: () {
+                            showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                builder: (sheetCtx) {
+                                  return Padding(
+                                    padding: EdgeInsets.only(
+                                      bottom: MediaQuery.of(sheetCtx)
+                                          .viewInsets
+                                          .bottom,
+                                    ),
+                                    child: PickServiceBottomSheet(
+                                        categories[index]),
+                                  );
+                                });
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                              vertical: 8.0,
+                              horizontal: horizontalPadding,
+                            ),
+                            child: ServiceCard(
+                              artisanCount: 12,
+                              icon: Icon(
+                                categories[index].icon,
+                                color: Colors.white,
+                              ),
+                              iconBackground: categories[index].foregroundColor,
+                              serviceName: categories[index].name,
+                            ),
+                          ),
+                        );
+                      },
+                      childCount: categories.length,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -327,9 +360,8 @@ class OngoingServiceHeader extends StatelessWidget {
 }
 
 class SearchWidget extends StatefulWidget {
-  const SearchWidget({
-    Key? key,
-  }) : super(key: key);
+  final callback;
+  const SearchWidget(this.callback, {Key? key}) : super(key: key);
 
   @override
   State<SearchWidget> createState() => _SearchWidgetState();
@@ -346,6 +378,9 @@ class _SearchWidgetState extends State<SearchWidget> {
       vertical: 8.0,
       horizontal: 32.0,
     );
+    widget.callback(() => setState(
+          () => isFocused = false,
+        ));
     return Material(
       elevation: 4.0,
       shadowColor: Theme.of(context).colorScheme.shadow,
@@ -421,63 +456,3 @@ class _SearchWidgetState extends State<SearchWidget> {
     );
   }
 }
-
-// class TrackerBottomSheet extends StatelessWidget {
-//   const TrackerBottomSheet({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.symmetric(
-//         vertical: 8,
-//         horizontal: 16,
-//       ),
-//       child: Column(
-//         mainAxisSize: MainAxisSize.min,
-//         children: [
-//           Container(
-//             width: 56,
-//             height: 4,
-//             decoration: BoxDecoration(
-//               borderRadius: BorderRadius.circular(4),
-//               color: Theme.of(context).colorScheme.secondaryContainer,
-//             ),
-//           ),
-//           const ServiceCard(
-//             serviceName: 'Hair Stylist',
-//             icon: const Icon(Icons.abc),
-//             iconBackground: Colors.orange,
-//             artisanCount: 13,
-//           ),
-//           Text(
-//             'While you wait, you can reach out to them to'
-//             'confirm the  details of the service you need.',
-//             style: Theme.of(context).textTheme.bodyMedium,
-//           ),
-//           Row(
-//             children: [
-//               Expanded(
-//                 child: ElevatedButton(
-//                   onPressed: () {},
-//                   child: const Text('Call'),
-//                   style: Theme.of(context)
-//                       .extension<ButtonThemeExtensions>()
-//                       ?.filled,
-//                 ),
-//               ),
-//               Expanded(
-//                 child: ElevatedButton(
-//                   onPressed: () {},
-//                   child: const Text('Message'),
-//                   style: Theme.of(context)
-//                       .extension<ButtonThemeExtensions>()
-//                       ?.tonal,
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
