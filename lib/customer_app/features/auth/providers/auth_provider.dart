@@ -4,16 +4,58 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/customer_app/services/auth_service.dart';
 import 'package:handees/utils/utils.dart';
 
+enum AuthState {
+  waiting,
+  loading,
+  verifying,
+  // authenticated,
+  noSuchEmail,
+  invalidPassword,
+  invalidPhone,
+  invalidVerificationCode,
+  invalidEmail,
+  emailInUse,
+  phoneInUse,
+  error,
+}
+
+enum SubmitStatus {
+  notSubmitted,
+  submitted,
+  submitError,
+}
+
 final authProvider = StateNotifierProvider<AuthStateNotifier, AuthState>((ref) {
-  // final authService = ref.watch(authServiceProvider);
-  return AuthStateNotifier(AuthService.instance);
+  return
+      //  AuthNotifierTest(ref, AuthService.instance);
+      AuthStateNotifier(ref, AuthService.instance);
 });
+
+final _submittedProvider =
+    StateProvider<SubmitStatus>((ref) => SubmitStatus.notSubmitted);
 
 class AuthStateNotifier extends StateNotifier<AuthState>
     with InputValidationMixin {
-  AuthStateNotifier(this._authService) : super(AuthState.waiting);
+  AuthStateNotifier(this.ref, this._authService) : super(AuthState.waiting) {
+    final submitStatus = ref.read(_submittedProvider);
+    _authService.firebaseAuth.authStateChanges().listen((user) {
+      if (_authService.isAuthenticated() &&
+          submitStatus != SubmitStatus.submitted) {
+        trySubmitData(
+          name: user!.displayName!,
+          phone: user.phoneNumber!,
+          email: user.email!,
+          uid: user.uid,
+        );
+      } else {
+        resetState();
+      }
+    });
+  }
 
   final AuthService _authService;
+
+  StateNotifierProviderRef<AuthStateNotifier, AuthState> ref;
 
   String _name = '';
   String _phone = '';
@@ -23,6 +65,9 @@ class AuthStateNotifier extends StateNotifier<AuthState>
   String _smsCode = '';
   set smsCode(String code) => _smsCode = code;
   late String _verificationId;
+
+  ///Check if user data has been submitted to the server
+  SubmitStatus get submitted => ref.watch(_submittedProvider);
 
   String get last2Digits => _phone.substring(_phone.length - 2, _phone.length);
 
@@ -86,6 +131,30 @@ class AuthStateNotifier extends StateNotifier<AuthState>
     }
   }
 
+  Future<void> trySubmitData({
+    required String name,
+    required String phone,
+    required String email,
+    required String uid,
+  }) async {
+    bool submitted = await _authService.dataSubmitted();
+
+    int retryCount = 0;
+
+    while (!submitted && retryCount++ < 5) {
+      submitted = await _authService.submitUserData(
+        name: name,
+        phone: phone,
+        email: email,
+        uid: uid,
+      );
+    }
+    ref.read(_submittedProvider.state).update(
+          (state) =>
+              submitted ? SubmitStatus.submitted : SubmitStatus.submitError,
+        );
+  }
+
   Future<void> _completeProfile(
     String email,
     String password,
@@ -96,18 +165,8 @@ class AuthStateNotifier extends StateNotifier<AuthState>
 
     switch (completeResponse) {
       case AuthResponse.success:
-        print('Verfication completed');
-        final user = _authService.user;
-        final result = await _authService.submitUserData(
-          name: user.displayName!,
-          phone: user.phoneNumber!,
-          email: user.email!,
-          uid: user.uid,
-        );
-        //TODO: check this
-        state = result == AuthResponse.success
-            ? AuthState.waiting //AuthState.authenticated
-            : AuthState.error;
+        debugPrint('Verfication completed');
+        state = AuthState.waiting;
         break;
       case AuthResponse.weakPassword:
         state = AuthState.invalidPassword;
@@ -136,7 +195,6 @@ class AuthStateNotifier extends StateNotifier<AuthState>
           smsCode: _smsCode,
         );
     final response = await _authService.verifyNumber(credential);
-    // await Future.delayed(Duration(seconds: 2));
 
     switch (response) {
       case AuthResponse.success:
@@ -162,7 +220,6 @@ class AuthStateNotifier extends StateNotifier<AuthState>
 
   Future<void> signupUser({required void Function() onCodeSent}) async {
     state = AuthState.loading;
-    print('Signing up user');
 
     if (await _authService.emailInUse(_email)) {
       state = AuthState.emailInUse;
@@ -186,31 +243,20 @@ class AuthStateNotifier extends StateNotifier<AuthState>
     );
   }
 
-  // void signoutUser() {
-  //   resetState();
-  //   authService.signoutUser();
-  // }
+  void signoutUser() {
+    // resetState();
+    _authService.signoutUser();
+  }
 
   void resetState() {
     _email = '';
     _name = '';
     _password = '';
     _phone = '';
-    state = AuthState.waiting;
+    smsCode = '';
+    
+    if (mounted) {
+      state = AuthState.waiting;
+    }
   }
-}
-
-enum AuthState {
-  waiting,
-  loading,
-  verifying,
-  // authenticated,
-  noSuchEmail,
-  invalidPassword,
-  invalidPhone,
-  invalidVerificationCode,
-  invalidEmail,
-  emailInUse,
-  phoneInUse,
-  error,
 }

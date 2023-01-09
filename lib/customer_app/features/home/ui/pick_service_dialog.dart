@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:handees/customer_app/features/payments/ui/widgets/payment_methods.dart';
 import 'package:handees/routes/routes.dart';
 import 'package:handees/theme/theme.dart';
 
@@ -16,12 +17,12 @@ class PickServiceDialog extends StatelessWidget {
           const SliverList(
             delegate: SliverChildListDelegate.fixed(
               [
-                PaymentMethods(),
+                _PaymentMethodsWidget(),
                 Divider(
                   height: 32.0,
                   thickness: 8.0,
                 ),
-                WorkDurationWidget(),
+                _WorkDurationWidget(),
               ],
             ),
           ),
@@ -51,20 +52,8 @@ class PickServiceDialog extends StatelessWidget {
   }
 }
 
-class PaymentMethods extends StatefulWidget {
-  const PaymentMethods({Key? key}) : super(key: key);
-
-  final paymentCards = const [
-    "**** 9847",
-    "**** 9235",
-  ];
-
-  @override
-  State<PaymentMethods> createState() => _PaymentMethodsState();
-}
-
-class _PaymentMethodsState extends State<PaymentMethods> {
-  var _value = 'cash';
+class _PaymentMethodsWidget extends StatelessWidget {
+  const _PaymentMethodsWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -78,58 +67,20 @@ class _PaymentMethodsState extends State<PaymentMethods> {
             style: Theme.of(context).textTheme.titleMedium,
           ),
         ),
-        ListTile(
-          dense: true,
-          title: const Text('Cash / Bank Transfer'),
-          leading: const Icon(Icons.money),
-          trailing: Radio<String>(
-            value: 'cash',
-            groupValue: _value,
-            onChanged: (value) {
-              setState(() {
-                _value = value!;
-              });
-            },
-          ),
-        ),
-        for (String card in widget.paymentCards)
-          ListTile(
-            dense: true,
-            title: Text(card),
-            leading: const Icon(Icons.credit_card),
-            trailing: Radio<String>(
-              value: card,
-              groupValue: _value,
-              onChanged: (value) {
-                setState(() {
-                  _value = value!;
-                });
-              },
-            ),
-          ),
-        InkWell(
-          onTap: () {
-            Navigator.of(context).pushNamed(CustomerAppRoutes.addCard);
-          },
-          child: const ListTile(
-            dense: true,
-            title: Text('Add debit / credit card'),
-            leading: Icon(Icons.add_card),
-          ),
-        )
+        PaymentMethods(),
       ],
     );
   }
 }
 
-class WorkDurationWidget extends StatefulWidget {
-  const WorkDurationWidget({Key? key}) : super(key: key);
+class _WorkDurationWidget extends StatefulWidget {
+  const _WorkDurationWidget({Key? key}) : super(key: key);
 
   @override
-  State<WorkDurationWidget> createState() => _WorkDurationWidgetState();
+  State<_WorkDurationWidget> createState() => _WorkDurationWidgetState();
 }
 
-class _WorkDurationWidgetState extends State<WorkDurationWidget> {
+class _WorkDurationWidgetState extends State<_WorkDurationWidget> {
   WorkDuration _workDuration = WorkDuration.oneTime;
 
   @override

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:handees/routes/routes.dart';
 import 'package:handees/theme/theme.dart';
 import 'package:handees/utils/utils.dart';
 
 import '../../providers/auth_provider.dart';
+
+final _obscureTextProvider = StateProvider<bool>((ref) {
+  return true;
+});
 
 class SigninScreen extends ConsumerWidget with InputValidationMixin {
   SigninScreen({
@@ -15,10 +18,6 @@ class SigninScreen extends ConsumerWidget with InputValidationMixin {
   final void Function() onSwapScreen;
 
   final _formGlobalKey = GlobalKey<FormState>();
-
-  final _obscureTextProvider = StateProvider<bool>((ref) {
-    return true;
-  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -106,7 +105,7 @@ class SigninScreen extends ConsumerWidget with InputValidationMixin {
                                     onPressed: () {
                                       ref
                                           .read(_obscureTextProvider.state)
-                                          .update((state) => state = !state);
+                                          .update((state) => !state);
                                     },
                                   ),
                                 ),

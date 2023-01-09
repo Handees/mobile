@@ -3,20 +3,21 @@ import 'package:flutter/services.dart';
 import 'package:flutter_paystack/flutter_paystack.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/customer_app/features/payments/providers/add_card_provider.dart';
+import 'package:handees/res/constants.dart';
 import 'package:handees/theme/theme.dart';
 
 class AddCardScreen extends ConsumerWidget {
   AddCardScreen({super.key});
 
-  final publicKey = 'pk_test_b5719f814c430f6723ab0467246b39796ef405b6';
-  final plugin = PaystackPlugin();
+  final plugin = PaystackPlugin()
+    ..initialize(
+      publicKey: AppConstants.paystackPublicKey,
+    );
 
   final _formGlobalKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    plugin.initialize(publicKey: publicKey);
-
     final model = ref.watch(addCardProvider.notifier);
     final state = ref.watch(addCardProvider);
 

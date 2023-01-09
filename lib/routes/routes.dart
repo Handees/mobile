@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:handees/customer_app/features/auth/ui/auth_screen.dart';
 import 'package:handees/customer_app/features/chat/ui/chat_screen.dart';
 import 'package:handees/customer_app/features/payments/ui/add_card_screen.dart';
-import 'package:handees/customer_app/features/payments/ui/payments.dart';
-import 'package:handees/customer_app/features/auth/ui/screens/signin_screen.dart';
-import 'package:handees/customer_app/features/auth/ui/screens/signup_screen.dart';
+import 'package:handees/customer_app/features/payments/ui/payments_screen.dart';
 import 'package:handees/customer_app/features/auth/ui/screens/verify_screen.dart';
 import 'package:handees/customer_app/features/history/ui/history_screen.dart';
 import 'package:handees/customer_app/features/home/ui/home_screen.dart';
@@ -74,9 +72,10 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            Navigator.of(context).popUntil((route) => route.isFirst);
+            Navigator.of(context).popUntil((route) {
+              return (route.settings.name ?? "") != AuthRoutes.verify;
+            });
           });
-          print("Woah");
           return snapshot.hasData
               ? const HomeScreen()
               : Theme(
@@ -148,6 +147,11 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       throw Exception('Unknown route: ${settings.name}');
   }
   return page != null
-      ? MaterialPageRoute(builder: (context) => page!)
+      ? MaterialPageRoute(
+          builder: (context) => page!,
+          settings: RouteSettings(
+            name: settings.name,
+          ),
+        )
       : pageRoute!;
 }

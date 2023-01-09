@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
-import 'package:handees/res/constants.dart';
 import 'package:handees/res/uri.dart';
 import 'package:http/http.dart' as http;
 
@@ -29,13 +28,22 @@ class AuthService {
 
   bool isAuthenticated() =>
       firebaseAuth.currentUser != null &&
+      firebaseAuth.currentUser!.email != null &&
       firebaseAuth.currentUser!.email!.isNotEmpty;
 
-  Future<bool> userExists() async {
-    final response = await http.get(
-      AppUris.userDataUri(user.uid),
-    );
-    return response.statusCode == 404;
+  Future<bool> dataSubmitted() async {
+    try {
+      final response = await http.get(
+        AppUris.userDataUri(user.uid),
+      );
+
+      print('Check Data submit ${response.body}');
+      print('Check Data submit code${response.statusCode}');
+      return response.statusCode != 404;
+    } on Exception catch (e) {
+      debugPrint('Data submit error $e');
+      return false;
+    }
   }
 
   Future<bool> emailInUse(String email) async {
@@ -142,7 +150,10 @@ class AuthService {
     }
   }
 
-  Future<AuthResponse> submitUserData({
+  ///Sends an HTTP POST request to submit user data
+  ///
+  ///Returns true if data was submitted successfully and false otherwise
+  Future<bool> submitUserData({
     required String name,
     required String phone,
     required String email,
@@ -170,18 +181,20 @@ class AuthService {
       final response = await future;
       print("Submit user data response ${response.body}");
 
+      print("Submit user data response code ${response.statusCode}");
+
       //TODO: Error handling
 
-      if (response.statusCode == 200) {
-        return AuthResponse.success;
+      if (response.statusCode > 200 && response.statusCode < 400) {
+        return true;
       } else {
-        return AuthResponse.submitError;
+        return false;
         //TODO what if it fails password is still there
       }
     } on Exception catch (e) {
       print('Got error $e');
       debugPrint(e.toString());
-      return AuthResponse.submitError;
+      return false;
     }
   }
 
@@ -253,5 +266,4 @@ enum AuthResponse {
   invalidEmail,
   invalidPhone,
   invalidVerificationCode,
-  submitError,
 }

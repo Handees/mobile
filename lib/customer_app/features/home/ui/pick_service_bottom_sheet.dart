@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:handees/customer_app/models/job_category.dart';
+import 'package:handees/customer_app/services/booking_service.dart';
 import 'package:handees/routes/routes.dart';
 import 'package:handees/theme/theme.dart';
 
@@ -57,6 +58,8 @@ class PickServiceBottomSheet extends StatelessWidget {
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () async {
+                // BookingService.instance.bookService(category);
+
                 final res = await Navigator.of(context)
                     .pushNamed(CustomerAppRoutes.pickService);
                 print(res);

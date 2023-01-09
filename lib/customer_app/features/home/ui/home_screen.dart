@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+<<<<<<< HEAD
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+=======
+import 'package:handees/customer_app/features/auth/providers/auth_provider.dart';
+>>>>>>> e1ea510b942263af873e653f3495dbb6d9028841
 import 'package:handees/customer_app/features/home/providers/home_provider.dart';
 import 'package:handees/customer_app/features/test/test.dart';
 import 'package:handees/customer_app/features/tracker/ui/tracking_screen.dart';
-import 'package:handees/customer_app/models/job_category.dart';
 import 'package:handees/customer_app/services/auth_service.dart';
 
 import 'package:handees/res/shapes.dart';
 import 'package:handees/routes/routes.dart';
+import 'package:handees/shared/widgets/circle_fadeout_loader.dart';
 import 'package:handees/theme/theme.dart';
 import 'package:handees/shared/widgets/custom_delegate.dart';
 // import 'package:http/http.dart';
@@ -26,7 +30,8 @@ class HomeScreen extends ConsumerWidget {
     const horizontalPadding = 16.0;
     // const drawerItemHeight = 56.0;
 
-    // final authModel = ref.watch(authProvider.notifier);
+    final authModel = ref.watch(authProvider.notifier);
+    final submitStatus = ref.watch(userDataStatusProvider);
 
     final name = ref.watch(nameProvider);
     final categories = ref.watch(categoryProvider);

@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
 import 'package:handees/customer_app/features/chat/models/message_model.dart';
 import 'package:riverpod/riverpod.dart';
 
@@ -38,8 +37,6 @@ class MessagesNotifier extends StateNotifier<List<MessageModel>> {
 
   void _addMessage(MessageModel message) {
     state = [...state, message];
-    print('added pleads');
-    print('added shs');
   }
 
   void sendMessage(String message) {
@@ -51,7 +48,6 @@ class MessagesNotifier extends StateNotifier<List<MessageModel>> {
       ),
     );
   }
-  // TODO add other methods, such as "removeTodo", ...
 }
 
 final messagesProvider =

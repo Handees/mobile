@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:handees/customer_app/features/auth/ui/screens/verify_screen.dart';
 import 'package:handees/routes/routes.dart';
 import 'package:handees/theme/theme.dart';
 import 'package:handees/utils/utils.dart';
 
 import '../../providers/auth_provider.dart';
 import '../widgets/phone_proceed_dialog.dart';
+
+final _obscureTextProvider = StateProvider<bool>((ref) {
+  return true;
+});
 
 class SignupScreen extends ConsumerWidget with InputValidationMixin {
   SignupScreen({
@@ -17,10 +20,6 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
   final void Function() onSwapScreen;
 
   final _formGlobalKey = GlobalKey<FormState>();
-
-  final _obscureTextProvider = StateProvider<bool>((ref) {
-    return true;
-  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -50,19 +49,11 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
       case AuthState.error:
         Future.microtask(
           () => ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
+            const SnackBar(
               content: Text('An error occured'),
             ),
           ),
         );
-        break;
-        // case AuthState.authenticated:
-        //   Future.microtask(
-        //     () => Navigator.of(context).pushNamedAndRemoveUntil(
-        //       CustomerAppRoutes.home,
-        //       (route) => false,
-        //     ),
-        //   );
         break;
       default:
     }
@@ -146,9 +137,6 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
                                   icon: Icon(
                                     obscureText ? Icons.abc : Icons.password,
                                   ),
-                                  // color: obscureText
-                                  //     ? Theme.of(context).unselectedWidgetColor
-                                  //     : null,
                                   onPressed: () {
                                     ref
                                         .read(_obscureTextProvider.state)
@@ -214,7 +202,7 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
                                   return PhoneProceedDialog(
                                     onProceed: () {
                                       Navigator.of(context).pop();
-                                      print('Sign up user');
+                                      debugPrint('Sign up user');
                                       model.signupUser(
                                         onCodeSent: () => Navigator.of(context)
                                             .pushNamed(AuthRoutes.verify),
