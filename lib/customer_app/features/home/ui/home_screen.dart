@@ -5,14 +5,11 @@ import 'package:handees/customer_app/features/auth/providers/auth_provider.dart'
 import 'package:handees/customer_app/features/home/providers/home_provider.dart';
 import 'package:handees/customer_app/features/test/test.dart';
 import 'package:handees/customer_app/features/tracker/ui/tracking_screen.dart';
-import 'package:handees/customer_app/services/auth_service.dart';
 
 import 'package:handees/res/shapes.dart';
 import 'package:handees/routes/routes.dart';
 import 'package:handees/shared/widgets/circle_fadeout_loader.dart';
 import 'package:handees/theme/theme.dart';
-import 'package:handees/shared/widgets/custom_delegate.dart';
-// import 'package:http/http.dart';
 
 import 'location_picker.dart';
 import 'pick_service_bottom_sheet.dart';
@@ -37,7 +34,6 @@ class HomeScreen extends ConsumerWidget {
       body: Stack(
         children: [
           Scaffold(
-            // backgroundColor: Theme.of(context).colorScheme.background,
             drawer: Drawer(
               child: CustomScrollView(
                 slivers: [
@@ -216,7 +212,7 @@ class HomeScreen extends ConsumerWidget {
                     sliver: SliverPersistentHeader(
                       // pinned: true,
                       floating: true,
-                      delegate: CustomDelegate(
+                      delegate: _CustomDelegate(
                         height: 64.0,
                         child: const LocationPicker(),
                       ),
@@ -224,7 +220,7 @@ class HomeScreen extends ConsumerWidget {
                   ),
                   SliverPersistentHeader(
                     pinned: true,
-                    delegate: CustomDelegate(
+                    delegate: _CustomDelegate(
                       height: 144.0,
                       shape: const RoundedRectangleBorder(),
                       elevation: 0,
@@ -463,62 +459,49 @@ class _SearchWidgetState extends State<SearchWidget> {
   }
 }
 
-// class TrackerBottomSheet extends StatelessWidget {
-//   const TrackerBottomSheet({Key? key}) : super(key: key);
+class _CustomDelegate extends SliverPersistentHeaderDelegate {
+  _CustomDelegate({
+    required this.height,
+    required this.child,
+    this.shape = Shapes.bigShape,
+    this.padding = const EdgeInsets.symmetric(
+      vertical: 16,
+    ),
+    this.elevation = 4.0,
+  });
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.symmetric(
-//         vertical: 8,
-//         horizontal: 16,
-//       ),
-//       child: Column(
-//         mainAxisSize: MainAxisSize.min,
-//         children: [
-//           Container(
-//             width: 56,
-//             height: 4,
-//             decoration: BoxDecoration(
-//               borderRadius: BorderRadius.circular(4),
-//               color: Theme.of(context).colorScheme.secondaryContainer,
-//             ),
-//           ),
-//           const ServiceCard(
-//             serviceName: 'Hair Stylist',
-//             icon: const Icon(Icons.abc),
-//             iconBackground: Colors.orange,
-//             artisanCount: 13,
-//           ),
-//           Text(
-//             'While you wait, you can reach out to them to'
-//             'confirm the  details of the service you need.',
-//             style: Theme.of(context).textTheme.bodyMedium,
-//           ),
-//           Row(
-//             children: [
-//               Expanded(
-//                 child: ElevatedButton(
-//                   onPressed: () {},
-//                   child: const Text('Call'),
-//                   style: Theme.of(context)
-//                       .extension<ButtonThemeExtensions>()
-//                       ?.filled,
-//                 ),
-//               ),
-//               Expanded(
-//                 child: ElevatedButton(
-//                   onPressed: () {},
-//                   child: const Text('Message'),
-//                   style: Theme.of(context)
-//                       .extension<ButtonThemeExtensions>()
-//                       ?.tonal,
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
+  final double height;
+  final Widget child;
+  final ShapeBorder shape;
+  final EdgeInsets padding;
+  final double elevation;
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return Material(
+      child: Padding(
+        padding: padding,
+        child: Material(
+          elevation: elevation,
+          shape: shape,
+          clipBehavior: Clip.hardEdge,
+          // color: Colors.transparent,
+          shadowColor: Theme.of(context).colorScheme.shadow,
+          child: child,
+        ),
+      ),
+    );
+  }
+
+  @override
+  double get maxExtent => height + padding.vertical;
+
+  @override
+  double get minExtent => height + padding.vertical;
+
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
+    return false;
+  }
+}

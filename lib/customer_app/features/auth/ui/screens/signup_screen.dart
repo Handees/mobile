@@ -133,9 +133,6 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
                                     icon: Icon(
                                       obscureText ? Icons.abc : Icons.password,
                                     ),
-                                    // color: obscureText
-                                    //     ? Theme.of(context).unselectedWidgetColor
-                                    //     : null,
                                     onPressed: () {
                                       ref
                                           .read(_obscureTextProvider.state)

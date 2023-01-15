@@ -130,14 +130,6 @@ class _InProgressBottomSheetState extends State<InProgressBottomSheet>
                         ),
                       ),
                     ),
-                    // child: Container(
-                    //   width: 56,
-                    //   height: 8,
-                    //   decoration: BoxDecoration(
-                    //     borderRadius: BorderRadius.circular(4),
-                    //     color: Theme.of(context).colorScheme.primaryContainer,
-                    //   ),
-                    // ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 8.0),

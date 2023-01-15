@@ -49,6 +49,7 @@ dependencies:
   firebase_app_check: ^0.1.1+2
   flutter_paystack: ^1.0.6
   http: ^0.13.5
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:

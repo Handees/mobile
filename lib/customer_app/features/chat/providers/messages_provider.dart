@@ -1,7 +1,7 @@
 import 'dart:math';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/customer_app/features/chat/models/message_model.dart';
-import 'package:riverpod/riverpod.dart';
 
 class MessagesNotifier extends StateNotifier<List<MessageModel>> {
   MessagesNotifier() : super([]);

@@ -4,7 +4,6 @@ import 'package:handees/customer_app/services/places_service.dart';
 
 final suggestionsProvider =
     StateNotifierProvider<SuggestionsNotifier, List<PlaceModel>>((ref) {
-  // final placesService = ref.watch(placeServiceProvider);
   return SuggestionsNotifier();
 });
 

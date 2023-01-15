@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class MessageModel {
   final String message;
   final DateTime time;
@@ -9,5 +11,8 @@ class MessageModel {
     required this.senderId,
   });
 
+  //TODO: compare with uid
   bool get isUser => senderId == 'a';
+
+  String get formattedString => DateFormat.Hm().format(time);
 }

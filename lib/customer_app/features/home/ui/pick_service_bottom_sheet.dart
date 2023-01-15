@@ -58,8 +58,6 @@ class PickServiceBottomSheet extends StatelessWidget {
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () async {
-                // BookingService.instance.bookService(category);
-
                 final res = await Navigator.of(context)
                     .pushNamed(CustomerAppRoutes.pickService);
                 print(res);

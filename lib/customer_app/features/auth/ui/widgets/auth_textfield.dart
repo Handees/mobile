@@ -23,7 +23,6 @@ class AuthTextField extends FormField<String> {
           autovalidateMode: autovalidateMode,
           builder: (FormFieldState<String> state) {
             return TextField(
-              // onEditingComplete: onEditingComplete,
               onChanged: (value) {
                 state.didChange(value);
               },
@@ -31,9 +30,6 @@ class AuthTextField extends FormField<String> {
               obscureText: obscureText,
               textCapitalization: textCapitalization,
               keyboardType: keyboardType,
-              // cursorColor: HandeeColors.white,
-              // style: const TextStyle(color: HandeeColors.white),
-
               decoration: InputDecoration(
                 errorText: "Error",
                 labelText: labelText,

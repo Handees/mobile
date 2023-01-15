@@ -18,38 +18,18 @@ class TrackingScreen extends StatefulWidget {
 }
 
 class _TrackingScreenState extends State<TrackingScreen> {
-  var _trackingState = TrackingState.loading;
-  var progress = 0;
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
-    Future.delayed(const Duration(seconds: 300)).then((value) {
-      if (mounted) {
-        setState(() {
-          _trackingState = TrackingState.inProgress;
-        });
-      }
-    });
-    //.then((value) {
-    //   Future.delayed(const Duration(seconds: 20)).then((value) => {
-    //         if (mounted)
-    //           {
-    //             setState(() {
-    //               _trackingState = TrackingState.arrived;
-    //             })
-    //           }
-    //       });
-    // });
   }
 
   @override
   Widget build(BuildContext context) {
     late final Widget bottomSheet;
+    final trackingState = TrackingState.inProgress;
 
-    switch (_trackingState) {
+    switch (trackingState) {
       case TrackingState.loading:
         bottomSheet = const LoadingBottomSheet();
         break;
@@ -75,7 +55,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
         shadowColor: Colors.black,
         child: bottomSheet,
       ),
-      body: _trackingState == TrackingState.loading
+      body: trackingState == TrackingState.loading
           ? const Center(
               child: Padding(
                 padding: EdgeInsets.only(bottom: 48.0),

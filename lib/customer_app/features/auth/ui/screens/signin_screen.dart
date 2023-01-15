@@ -24,20 +24,9 @@ class SigninScreen extends ConsumerWidget with InputValidationMixin {
     final model = ref.watch(authProvider.notifier);
     final authState = ref.watch(authProvider);
 
-    // print('signingstate $authState');
-
     final emailError = authState == AuthState.noSuchEmail
         ? 'No account exists with this email'
         : null;
-
-    // if (authState == AuthState.authenticated) {
-    //   Future.microtask(
-    //     () => Navigator.of(context).pushNamedAndRemoveUntil(
-    //       CustomerAppRoutes.home,
-    //       (route) => false,
-    //     ),
-    //   );
-    // }
 
     return Scaffold(
       body: SafeArea(
