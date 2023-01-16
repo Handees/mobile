@@ -7,6 +7,7 @@ final _textTheme = GoogleFonts.cabinTextTheme(const TextTheme());
 const _lightColorScheme = ColorScheme.light(
   primary: Color.fromRGBO(20, 22, 28, 1),
   onPrimary: Colors.white,
+  tertiary: Color.fromRGBO(243, 248, 254, 1),
   onSecondary: Color.fromRGBO(20, 22, 28, 1),
   secondary: Color.fromRGBO(235, 237, 240, 1),
   brightness: Brightness.light,
