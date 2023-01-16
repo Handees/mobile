@@ -30,26 +30,24 @@ class SigninScreen extends ConsumerWidget with InputValidationMixin {
 
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 16.0,
-            vertical: 24.0,
-          ),
-          child: CustomScrollView(
-            slivers: [
-              SliverFillRemaining(
-                hasScrollBody: false,
+        child: CustomScrollView(
+          slivers: [
+            SliverFillRemaining(
+              hasScrollBody: false,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                  vertical: 24.0,
+                ),
                 child: Column(
                   children: [
                     const Spacer(flex: 4),
-                    Align(
+                    Container(
                       alignment: Alignment.centerLeft,
-                      child: SizedBox(
-                        width: 220,
-                        child: Text(
-                          'Welcome back!',
-                          style: Theme.of(context).textTheme.headlineMedium,
-                        ),
+                      padding: EdgeInsets.symmetric(vertical: 8.0),
+                      child: Text(
+                        'Welcome back!',
+                        style: Theme.of(context).textTheme.headlineMedium,
                       ),
                     ),
                     const Spacer(flex: 3),
@@ -105,10 +103,13 @@ class SigninScreen extends ConsumerWidget with InputValidationMixin {
                       ),
                     ),
                     const Spacer(flex: 6),
-                    Text(
-                      'Sign in with',
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Theme.of(context).unselectedWidgetColor),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'Sign in with',
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: Theme.of(context).unselectedWidgetColor),
+                      ),
                     ),
                     const Spacer(),
                     Row(
@@ -120,23 +121,26 @@ class SigninScreen extends ConsumerWidget with InputValidationMixin {
                       ],
                     ),
                     const Spacer(flex: 2),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          'Don\'t have an account? ',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium
-                              ?.copyWith(
-                                  color:
-                                      Theme.of(context).unselectedWidgetColor),
-                        ),
-                        InkWell(
-                          onTap: onSwapScreen,
-                          child: const Text('Sign up'),
-                        ),
-                      ],
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            'Don\'t have an account? ',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                    color: Theme.of(context)
+                                        .unselectedWidgetColor),
+                          ),
+                          InkWell(
+                            onTap: onSwapScreen,
+                            child: const Text('Sign up'),
+                          ),
+                        ],
+                      ),
                     ),
                     const Spacer(flex: 2),
                     SizedBox(
@@ -162,8 +166,8 @@ class SigninScreen extends ConsumerWidget with InputValidationMixin {
                   ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
