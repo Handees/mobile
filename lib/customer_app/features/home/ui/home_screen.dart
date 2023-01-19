@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:handees/customer_app/features/auth/providers/auth_provider.dart';
 import 'package:handees/customer_app/features/home/providers/home_provider.dart';
 import 'package:handees/customer_app/features/test/test.dart';
@@ -10,10 +9,7 @@ import 'package:handees/customer_app/services/auth_service.dart';
 
 import 'package:handees/res/shapes.dart';
 import 'package:handees/routes/routes.dart';
-import 'package:handees/shared/widgets/circle_fadeout_loader.dart';
 import 'package:handees/theme/theme.dart';
-import 'package:handees/shared/widgets/custom_delegate.dart';
-// import 'package:http/http.dart';
 
 import 'location_picker.dart';
 import 'pick_service_bottom_sheet.dart';
@@ -238,7 +234,7 @@ class HomeScreen extends ConsumerWidget {
                   sliver: SliverPersistentHeader(
                     // pinned: true,
                     floating: true,
-                    delegate: CustomDelegate(
+                    delegate: _CustomDelegate(
                       height: 64.0,
                       child: const LocationPicker(),
                     ),
@@ -246,7 +242,7 @@ class HomeScreen extends ConsumerWidget {
                 ),
                 SliverPersistentHeader(
                   pinned: true,
-                  delegate: CustomDelegate(
+                  delegate: _CustomDelegate(
                     height: 144.0,
                     shape: const RoundedRectangleBorder(),
                     elevation: 0,
@@ -456,5 +452,52 @@ class _SearchWidgetState extends State<SearchWidget> {
               ),
       ),
     );
+  }
+}
+
+class _CustomDelegate extends SliverPersistentHeaderDelegate {
+  _CustomDelegate({
+    required this.height,
+    required this.child,
+    this.shape = Shapes.bigShape,
+    this.padding = const EdgeInsets.symmetric(
+      vertical: 16,
+    ),
+    this.elevation = 4.0,
+  });
+
+  final double height;
+  final Widget child;
+  final ShapeBorder shape;
+  final EdgeInsets padding;
+  final double elevation;
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return Material(
+      child: Padding(
+        padding: padding,
+        child: Material(
+          elevation: elevation,
+          shape: shape,
+          clipBehavior: Clip.hardEdge,
+          // color: Colors.transparent,
+          shadowColor: Theme.of(context).colorScheme.shadow,
+          child: child,
+        ),
+      ),
+    );
+  }
+
+  @override
+  double get maxExtent => height + padding.vertical;
+
+  @override
+  double get minExtent => height + padding.vertical;
+
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
+    return false;
   }
 }

@@ -3,10 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:handees/res/shapes.dart';
 
 final _textTheme = GoogleFonts.cabinTextTheme(const TextTheme());
-// .copyWith(
-//     // titleMedium: TextStyle(fontSize: 18),
-//     // labelLarge: TextStyle(fontSize: 16),
-// );
 
 const _lightColorScheme = ColorScheme.light(
   primary: Color.fromRGBO(20, 22, 28, 1),
@@ -20,8 +16,6 @@ const _lightColorScheme = ColorScheme.light(
 const _authColorScheme = ColorScheme.dark(
   primary: Colors.white,
   onPrimary: Colors.black,
-  // primaryContainer: Colors.white,
-  // onPrimaryContainer: Colors.black,
   brightness: Brightness.dark,
 );
 
@@ -103,18 +97,6 @@ final authTheme = _buildTheme(_authColorScheme).copyWith(
   inputDecorationTheme: _buildInputDecorationTheme(_authColorScheme).copyWith(
     border: const OutlineInputBorder(),
     filled: false,
-    // enabledBorder: OutlineInputBorder(
-    //   borderSide: BorderSide(
-    //     width: 2.0,
-    //     color: authColorScheme.onBackground,
-    //   ),
-    // ),
-    // errorBorder: OutlineInputBorder(
-    //   borderSide: BorderSide(
-    //     width: 2.0,
-    //     color: authColorScheme.error,
-    //   ),
-    // ),
   ),
 );
 
