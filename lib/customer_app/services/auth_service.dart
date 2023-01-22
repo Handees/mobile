@@ -26,10 +26,12 @@ class AuthService {
   String get token => _token;
   // void updateToken(String token) => _token = token;
 
-  bool isAuthenticated() =>
-      firebaseAuth.currentUser != null &&
+  bool isAuthenticated() => firebaseAuth.currentUser != null;
+  bool isProfileComplete() =>
       firebaseAuth.currentUser!.email != null &&
-      firebaseAuth.currentUser!.email!.isNotEmpty;
+      firebaseAuth.currentUser!.email!.isNotEmpty &&
+      firebaseAuth.currentUser!.displayName != null &&
+      firebaseAuth.currentUser!.displayName!.isNotEmpty;
 
   Future<bool> dataSubmitted() async {
     try {
@@ -107,12 +109,10 @@ class AuthService {
   ) async {
     final user = firebaseAuth.currentUser!;
 
-    print('Completing profile');
-
     try {
       await user.updatePassword(password);
-      await user.updateEmail(email);
       await user.updateDisplayName(name);
+      await user.updateEmail(email);
 
       return AuthResponse.success;
     } on FirebaseAuthException catch (e) {

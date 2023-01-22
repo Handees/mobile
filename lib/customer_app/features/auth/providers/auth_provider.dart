@@ -38,8 +38,10 @@ class AuthStateNotifier extends StateNotifier<AuthState>
     with InputValidationMixin {
   AuthStateNotifier(this.ref, this._authService) : super(AuthState.waiting) {
     final submitStatus = ref.read(_submittedProvider);
-    _authService.firebaseAuth.authStateChanges().listen((user) {
+
+    _authService.firebaseAuth.userChanges().listen((user) {
       if (_authService.isAuthenticated() &&
+          _authService.isProfileComplete() &&
           submitStatus != SubmitStatus.submitted) {
         trySubmitData(
           name: user!.displayName!,
@@ -47,8 +49,6 @@ class AuthStateNotifier extends StateNotifier<AuthState>
           email: user.email!,
           uid: user.uid,
         );
-      } else {
-        resetState();
       }
     });
   }
@@ -155,11 +155,7 @@ class AuthStateNotifier extends StateNotifier<AuthState>
         );
   }
 
-  Future<void> _completeProfile(
-    String email,
-    String password,
-    String name,
-  ) async {
+  Future<void> _completeProfile() async {
     final completeResponse =
         await _authService.completeProfile(_email, _password, _name);
 
@@ -194,11 +190,12 @@ class AuthStateNotifier extends StateNotifier<AuthState>
           verificationId: _verificationId,
           smsCode: _smsCode,
         );
+
     final response = await _authService.verifyNumber(credential);
 
     switch (response) {
       case AuthResponse.success:
-        _completeProfile(_email, _password, _name);
+        _completeProfile();
 
         break;
       case AuthResponse.phoneInUse:

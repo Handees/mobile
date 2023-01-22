@@ -7,7 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:handees/routes/routes.dart';
+import 'package:handees/routes/customer_app/router.dart';
+import 'package:handees/routes/routers.dart';
 
 import 'firebase_options.dart';
 import 'theme/theme.dart';
@@ -65,7 +66,8 @@ class MyApp extends StatelessWidget {
       title: 'Handees',
       theme: lightTheme,
       // darkTheme: darkTheme,
-      onGenerateRoute: onGenerateRoute,
+
+      onGenerateRoute: customerAppRouter,
     );
   }
 }

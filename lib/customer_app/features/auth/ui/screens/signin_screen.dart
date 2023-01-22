@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:handees/routes/auth/routes.dart';
 import 'package:handees/theme/theme.dart';
 import 'package:handees/utils/utils.dart';
 
@@ -12,10 +13,7 @@ final _obscureTextProvider = StateProvider<bool>((ref) {
 class SigninScreen extends ConsumerWidget with InputValidationMixin {
   SigninScreen({
     Key? key,
-    required this.onSwapScreen,
   }) : super(key: key);
-
-  final void Function() onSwapScreen;
 
   final _formGlobalKey = GlobalKey<FormState>();
 
@@ -136,7 +134,8 @@ class SigninScreen extends ConsumerWidget with InputValidationMixin {
                                         .unselectedWidgetColor),
                           ),
                           InkWell(
-                            onTap: onSwapScreen,
+                            onTap: () => Navigator.of(context)
+                                .pushReplacementNamed(AuthRoutes.signup),
                             child: const Text('Sign up'),
                           ),
                         ],

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:handees/routes/routes.dart';
+import 'package:handees/routes/auth/routes.dart';
 import 'package:handees/theme/theme.dart';
 import 'package:handees/utils/utils.dart';
 
@@ -14,10 +14,7 @@ final _obscureTextProvider = StateProvider<bool>((ref) {
 class SignupScreen extends ConsumerWidget with InputValidationMixin {
   SignupScreen({
     Key? key,
-    required this.onSwapScreen,
   }) : super(key: key);
-
-  final void Function() onSwapScreen;
 
   final _formGlobalKey = GlobalKey<FormState>();
 
@@ -87,34 +84,37 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
                         children: [
                           const SizedBox(height: 16),
                           TextFormField(
+                            textCapitalization: TextCapitalization.words,
+                            keyboardType: TextInputType.name,
+                            onSaved: model.onNameSaved,
+                            validator: model.nameValidator,
                             decoration: const InputDecoration(
                               labelText: 'Name',
                               hintText: 'John',
                             ),
-                            textCapitalization: TextCapitalization.words,
-                            onSaved: model.onNameSaved,
-                            validator: model.nameValidator,
                           ),
                           const SizedBox(height: 24),
                           TextFormField(
+                            keyboardType: TextInputType.phone,
+                            onSaved: model.onPhoneSaved,
+                            validator: model.phoneValidator,
                             decoration: InputDecoration(
                                 labelText: 'Phone',
                                 hintText: '+2348123456789',
                                 errorText: phoneError
                                 // icon: CircleAvatar(),
                                 ),
-                            onSaved: model.onPhoneSaved,
-                            validator: model.phoneValidator,
                           ),
                           const SizedBox(height: 24),
                           TextFormField(
+                            keyboardType: TextInputType.emailAddress,
+                            onSaved: model.onEmailSaved,
+                            validator: model.emailValidator,
                             decoration: InputDecoration(
                               labelText: 'Email',
                               hintText: 'example123@examples.com',
                               errorText: emailError,
                             ),
-                            onSaved: model.onEmailSaved,
-                            validator: model.emailValidator,
                           ),
                           const SizedBox(height: 24),
                           Consumer(
@@ -123,6 +123,7 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
                                   ref.watch(_obscureTextProvider);
 
                               return TextFormField(
+                                keyboardType: TextInputType.visiblePassword,
                                 decoration: InputDecoration(
                                   labelText: 'Password',
                                   hintText: '••••••••••••',
@@ -140,14 +141,6 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
                                           .update((state) => !state);
                                     },
                                   ),
-                                  // color: obscureText
-                                  //     ? Theme.of(context).unselectedWidgetColor
-                                  //     : null,
-                                  // onPressed: () {
-                                  //   ref
-                                  //       .read(_obscureTextProvider.state)
-                                  //       .update((state) => !state);
-                                  // },
                                 ),
                                 obscureText: ref.watch(_obscureTextProvider),
                                 onSaved: model.onPasswordSaved,
@@ -193,7 +186,8 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
                                 ),
                           ),
                           InkWell(
-                            onTap: onSwapScreen,
+                            onTap: () => Navigator.of(context)
+                                .pushReplacementNamed(AuthRoutes.signin),
                             child: const Text('Sign in'),
                           ),
                         ],
@@ -216,7 +210,7 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
                                   builder: (ctx) {
                                     return PhoneProceedDialog(
                                       onProceed: () {
-                                        Navigator.of(context).pop();
+                                        Navigator.of(ctx).pop();
                                         model.signupUser(
                                           onCodeSent: () =>
                                               Navigator.of(context)
