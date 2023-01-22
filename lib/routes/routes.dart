@@ -60,14 +60,6 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
   MaterialPageRoute? pageRoute;
   switch (settings.name) {
     case '/':
-      // final isAuth = FirebaseAuth.instance.currentUser != null &&
-      //     FirebaseAuth.instance.currentUser!.email!.isNotEmpty;
-      // page = isAuth
-      //     ? const HomeScreen()
-      //     : Theme(
-      //         data: authTheme,
-      //         child: SigninScreen(),
-      //       );
       page = StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
@@ -85,18 +77,6 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
         },
       );
       break;
-    // case AuthRoutes.signin:
-    //   page = Theme(
-    //     data: authTheme,
-    //     child: SigninScreen(),
-    //   );
-    //   break;
-    // case AuthRoutes.signup:
-    //   page = Theme(
-    //     data: authTheme,
-    //     child: SignupScreen(),
-    //   );
-    //   break;
     case AuthRoutes.verify:
       page = Theme(
         data: authTheme,
@@ -141,8 +121,6 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
         fullscreenDialog: true,
       );
       break;
-    //Artisan routes
-
     default:
       throw Exception('Unknown route: ${settings.name}');
   }

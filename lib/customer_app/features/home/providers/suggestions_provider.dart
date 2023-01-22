@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:handees/customer_app/features/home/models/place_model.dart';
+import 'package:handees/customer_app/models/place_model.dart';
 import 'package:handees/customer_app/services/places_service.dart';
 
 final suggestionsProvider =
