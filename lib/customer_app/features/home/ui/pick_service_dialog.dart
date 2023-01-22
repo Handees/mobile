@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:handees/customer_app/features/payments/ui/widgets/payment_methods.dart';
-import 'package:handees/routes/routes.dart';
 import 'package:handees/theme/theme.dart';
 
 enum WorkDuration { oneTime, contract }
