@@ -254,7 +254,7 @@ class AuthStateNotifier extends StateNotifier<AuthState>
     _password = '';
     _phone = '';
     smsCode = '';
-    
+
     if (mounted) {
       state = AuthState.waiting;
     }

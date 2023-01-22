@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/customer_app/features/auth/providers/auth_provider.dart';
 import 'package:handees/customer_app/features/home/providers/home_provider.dart';
+import 'package:handees/customer_app/features/home/ui/swap_app_bottom_sheet.dart';
+import 'package:handees/customer_app/features/home/ui/swap_button.dart';
 import 'package:handees/customer_app/features/test/test.dart';
 import 'package:handees/customer_app/features/tracker/ui/tracking_screen.dart';
 import 'package:handees/customer_app/services/auth_service.dart';
@@ -82,25 +84,21 @@ class HomeScreen extends ConsumerWidget {
                                       Theme.of(context).textTheme.titleMedium,
                                 ),
                                 const Spacer(),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    debugPrint("Swap button pressed");
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    minimumSize: Size.zero,
-                                    padding: const EdgeInsets.all(5),
-                                    shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(5),
-                                      ),
-                                    ),
-                                    backgroundColor:
-                                        Theme.of(context).colorScheme.onPrimary,
-                                  ),
-                                  child: const Icon(
-                                    Icons.swap_horiz,
-                                  ),
-                                )
+                                SwapButton(() {
+                                  showModalBottomSheet(
+                                      context: context,
+                                      isScrollControlled: true,
+                                      builder: (sheetCtx) {
+                                        return Padding(
+                                          padding: EdgeInsets.only(
+                                            bottom: MediaQuery.of(sheetCtx)
+                                                .viewInsets
+                                                .bottom,
+                                          ),
+                                          child: const SwapAppBottomSheet(),
+                                        );
+                                      });
+                                })
                               ],
                             ),
                           ),
@@ -279,7 +277,7 @@ class HomeScreen extends ConsumerWidget {
                                 });
                           },
                           child: Padding(
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                               vertical: 8.0,
                               horizontal: horizontalPadding,
                             ),

@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:handees/artisan_app/features/home/home.dart';
 import 'package:handees/customer_app/features/auth/ui/auth_screen.dart';
 import 'package:handees/customer_app/features/chat/ui/chat_screen.dart';
 import 'package:handees/customer_app/features/payments/ui/add_card_screen.dart';
@@ -113,6 +114,9 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       break;
     case CustomerAppRoutes.verifyCode:
       page = const VerifyCodeScreen();
+      break;
+    case ArtisanAppRoutes.home:
+      page = const ArtisanHomeScreen();
       break;
 
     case CustomerAppRoutes.pickService:
