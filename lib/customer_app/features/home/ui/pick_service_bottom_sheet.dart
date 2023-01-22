@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:handees/customer_app/models/job_category.dart';
+import 'package:handees/customer_app/models/jobs/job_category.dart';
 import 'package:handees/customer_app/services/booking_service.dart';
 import 'package:handees/routes/routes.dart';
 import 'package:handees/theme/theme.dart';

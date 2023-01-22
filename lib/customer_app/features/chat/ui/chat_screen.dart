@@ -1,8 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:handees/customer_app/features/chat/models/message_model.dart';
+import 'package:handees/customer_app/models/chat/message_model.dart';
 import 'package:handees/res/shapes.dart';
 import 'package:intl/intl.dart';
 
@@ -82,25 +83,30 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
 
                       return Column(
                         crossAxisAlignment: isUser
-                            ? CrossAxisAlignment.start
-                            : CrossAxisAlignment.end,
+                            ? CrossAxisAlignment.end
+                            : CrossAxisAlignment.start,
                         children: [
                           Container(
                             padding: const EdgeInsets.symmetric(
                               horizontal: 16.0,
                               vertical: 8.0,
                             ),
-                            margin: const EdgeInsets.symmetric(vertical: 2.0),
+                            margin: EdgeInsets.only(
+                              top: 2.0,
+                              bottom: 2.0,
+                              left: isUser ? 32.0 : 0.0,
+                              right: isUser ? 0.0 : 32.0,
+                            ),
                             decoration: BoxDecoration(
                               borderRadius: (Shapes.smallShape.borderRadius
                                       as BorderRadius)
                                   .copyWith(
-                                topLeft: isUser ? Radius.zero : null,
-                                topRight: !isUser ? Radius.zero : null,
+                                topLeft: !isUser ? Radius.zero : null,
+                                topRight: isUser ? Radius.zero : null,
                               ),
                               color: isUser
-                                  ? Theme.of(context).colorScheme.secondary
-                                  : Theme.of(context).colorScheme.primary,
+                                  ? Theme.of(context).colorScheme.primary
+                                  : Theme.of(context).colorScheme.secondary,
                             ),
                             child: Text(
                               messages[index].message,
@@ -111,10 +117,10 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                                     color: isUser
                                         ? Theme.of(context)
                                             .colorScheme
-                                            .onSecondary
+                                            .onPrimary
                                         : Theme.of(context)
                                             .colorScheme
-                                            .onPrimary,
+                                            .onSecondary,
                                   ),
                             ),
                           ),
@@ -147,6 +153,10 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
               child: TextField(
                 controller: _textController,
                 onSubmitted: (_) => _onSubmit(),
+                keyboardType: TextInputType.multiline,
+                textCapitalization: TextCapitalization.sentences,
+                minLines: 1,
+                maxLines: 4,
                 decoration: InputDecoration(
                   hintText: 'Type a message',
                   suffixIcon: IconButton(

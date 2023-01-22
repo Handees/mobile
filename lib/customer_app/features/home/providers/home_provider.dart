@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/customer_app/features/auth/providers/auth_provider.dart';
-import 'package:handees/customer_app/models/job_category.dart';
+import 'package:handees/customer_app/models/jobs/job_category.dart';
 import 'package:handees/customer_app/services/auth_service.dart';
 
 final nameProvider = Provider<String>((ref) {
