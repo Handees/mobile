@@ -3,7 +3,7 @@ import 'package:handees/res/constants.dart';
 abstract class AppUris {
   static final customerSocketUri = Uri.http(
     AppConstants.url,
-    '/cutomer',
+    '/customer',
   );
 
   static final artisanSocketUri = Uri.http(

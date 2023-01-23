@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/routes/auth/routes.dart';
+import 'package:handees/routes/customer_app/routes.dart';
 import 'package:handees/theme/theme.dart';
 import 'package:handees/utils/utils.dart';
 
@@ -25,6 +26,13 @@ class SigninScreen extends ConsumerWidget with InputValidationMixin {
     final emailError = authState == AuthState.noSuchEmail
         ? 'No account exists with this email'
         : null;
+
+    if (authState == AuthState.authenticated) {
+      Future.microtask(
+        () => Navigator.of(context, rootNavigator: true)
+            .pushReplacementNamed(CustomerAppRoutes.home),
+      );
+    }
 
     return Scaffold(
       body: SafeArea(

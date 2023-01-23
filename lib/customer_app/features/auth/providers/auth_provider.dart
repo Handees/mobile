@@ -8,7 +8,7 @@ enum AuthState {
   waiting,
   loading,
   verifying,
-  // authenticated,
+  authenticated,
   noSuchEmail,
   invalidPassword,
   invalidPhone,
@@ -115,7 +115,7 @@ class AuthStateNotifier extends StateNotifier<AuthState>
 
     switch (response) {
       case AuthResponse.success:
-        state = AuthState.waiting; // AuthState.authenticated;
+        state = AuthState.authenticated; // AuthState.authenticated;
         break;
       case AuthResponse.incorrectPassword:
         state = AuthState.invalidPassword;
@@ -124,7 +124,7 @@ class AuthStateNotifier extends StateNotifier<AuthState>
         state = AuthState.noSuchEmail;
         break;
       case AuthResponse.unknownError:
-        state = AuthState.waiting;
+        state = AuthState.error;
         break;
       default:
         state = AuthState.waiting;
@@ -162,7 +162,7 @@ class AuthStateNotifier extends StateNotifier<AuthState>
     switch (completeResponse) {
       case AuthResponse.success:
         debugPrint('Verfication completed');
-        state = AuthState.waiting;
+        state = AuthState.authenticated;
         break;
       case AuthResponse.weakPassword:
         state = AuthState.invalidPassword;
@@ -174,7 +174,7 @@ class AuthStateNotifier extends StateNotifier<AuthState>
         state = AuthState.invalidEmail;
         break;
       case AuthResponse.unknownError:
-        state = AuthState.waiting;
+        state = AuthState.error;
         break;
       default:
         state = AuthState.waiting;
@@ -208,7 +208,7 @@ class AuthStateNotifier extends StateNotifier<AuthState>
         state = AuthState.invalidVerificationCode;
         break;
       case AuthResponse.unknownError:
-        state = AuthState.waiting;
+        state = AuthState.error;
         break;
       default:
         state = AuthState.waiting;
@@ -241,7 +241,7 @@ class AuthStateNotifier extends StateNotifier<AuthState>
   }
 
   void signoutUser() {
-    // resetState();
+    resetState();
     _authService.signoutUser();
   }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/routes/auth/routes.dart';
+import 'package:handees/routes/customer_app/routes.dart';
 import 'package:handees/theme/theme.dart';
 import 'package:handees/utils/utils.dart';
 
@@ -50,6 +51,12 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
               content: Text('An error occured'),
             ),
           ),
+        );
+        break;
+      case AuthState.authenticated:
+        Future.microtask(
+          () => Navigator.of(context, rootNavigator: true)
+              .pushReplacementNamed(CustomerAppRoutes.home),
         );
         break;
       default:

@@ -3,10 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/customer_app/features/auth/providers/auth_provider.dart';
 
-import 'package:handees/customer_app/features/test/test.dart';
 import 'package:handees/customer_app/features/tracker/ui/tracking_screen.dart';
 import 'package:handees/customer_app/services/auth_service.dart';
 import 'package:handees/res/shapes.dart';
+import 'package:handees/routes/auth/routes.dart';
 import 'package:handees/routes/customer_app/routes.dart';
 import 'package:handees/shared/widgets/circle_fadeout_loader.dart';
 import 'package:handees/theme/theme.dart';
@@ -136,19 +136,9 @@ class HomeScreen extends ConsumerWidget {
                           const Divider(),
                           ListTile(
                             onTap: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) {
-                                  return const Test();
-                                },
-                              ));
-                            },
-                            leading: const Icon(Icons.handyman),
-                            title: const Text('Test'),
-                          ),
-                          const Divider(),
-                          ListTile(
-                            onTap: () {
-                              AuthService.instance.signoutUser();
+                              ref.watch(authProvider.notifier).signoutUser();
+                              Navigator.of(context, rootNavigator: true)
+                                  .pushReplacementNamed(AuthRoutes.root);
                             },
                             leading: const Icon(Icons.help_outline_outlined),
                             title: const Text('FAQ'),

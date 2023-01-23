@@ -1,4 +1,6 @@
 abstract class CustomerAppRoutes {
+  static const String root = home;
+
   static const String home = '/customer/home';
   static const String pickService = '/customer/pick-service';
   static const String tracking = '/customer/tracking';
