@@ -70,4 +70,5 @@ const jobCategories = [
   _JobCategories.hairStylist,
   _JobCategories.housekeeping,
   _JobCategories.laundry,
+  _JobCategories.barber,
 ];

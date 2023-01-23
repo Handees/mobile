@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/customer_app/features/auth/providers/auth_provider.dart';
-
+import 'package:handees/customer_app/features/home/providers/home_provider.dart';
 import 'package:handees/customer_app/features/tracker/ui/tracking_screen.dart';
 import 'package:handees/customer_app/services/auth_service.dart';
 import 'package:handees/res/shapes.dart';
@@ -11,7 +11,6 @@ import 'package:handees/routes/customer_app/routes.dart';
 import 'package:handees/shared/widgets/circle_fadeout_loader.dart';
 import 'package:handees/theme/theme.dart';
 
-import '../providers/home_provider.dart';
 import 'location_picker.dart';
 import 'pick_service_bottom_sheet.dart';
 import 'service_card.dart';
