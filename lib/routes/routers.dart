@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:handees/artisan_app/features/complete_profile/complete_profile.dart';
+import 'package:handees/artisan_app/features/home/home.dart';
 import 'package:handees/customer_app/services/auth_service.dart';
 import 'package:handees/routes/artisan_app/routes.dart';
 import 'package:handees/shared/widgets/navigator.dart';
@@ -30,9 +32,9 @@ final mainRouter = NavRouter(
       case CustomerAppRoutes.root:
         router = _customerAppRouter;
         break;
-      // case ArtisanAppRoutes.root:
-      //   router = ;
-      //   break;
+      case ArtisanAppRoutes.root:
+        router = _artisanAppRouter;
+        break;
       default:
     }
 
@@ -137,21 +139,24 @@ final _artisanAppRouter = NavRouter(
   onGenerateRoute: (RouteSettings settings) {
     Widget? page;
 
-    print('ArtisanAppRouter working  ${settings.name}');
+    debugPrint('ArtisanAppRouter working  ${settings.name}');
 
     switch (settings.name) {
-      case '/':
+      case "/":
       case ArtisanAppRoutes.root:
-      case ArtisanAppRoutes.home:
-        page = Container();
+        page = const ArtisanHomeScreen();
         break;
-      case AuthRoutes.signup:
-        page = SignupScreen();
+      case ArtisanAppRoutes.basicInfo:
+        page = const ProfileScreen();
         break;
-      case AuthRoutes.verify:
-        page = VerifyScreen();
+      case ArtisanAppRoutes.completeProfile:
+        page = const ArtisanCompleteProfileScreen();
+        break;
+      case ArtisanAppRoutes.documentUpload:
+        page = const HistoryScreen();
         break;
       default:
+        throw Exception('Unknown route: ${settings.name}');
     }
 
     return MaterialPageRoute(

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/customer_app/features/auth/providers/auth_provider.dart';
 import 'package:handees/customer_app/features/home/providers/home_provider.dart';
+import 'package:handees/customer_app/features/home/ui/swap_app_bottom_sheet.dart';
 import 'package:handees/customer_app/features/tracker/ui/tracking_screen.dart';
 import 'package:handees/customer_app/services/auth_service.dart';
 import 'package:handees/res/shapes.dart';
@@ -84,7 +85,21 @@ class HomeScreen extends ConsumerWidget {
                                     const Spacer(),
                                     ElevatedButton(
                                       onPressed: () {
-                                        debugPrint("Swap button pressed");
+                                        showModalBottomSheet(
+                                            context: context,
+                                            isScrollControlled: true,
+                                            builder: (sheetCtx) {
+                                              return Padding(
+                                                padding: EdgeInsets.only(
+                                                  bottom:
+                                                      MediaQuery.of(sheetCtx)
+                                                          .viewInsets
+                                                          .bottom,
+                                                ),
+                                                child:
+                                                    const SwapAppBottomSheet(),
+                                              );
+                                            });
                                       },
                                       style: ElevatedButton.styleFrom(
                                         minimumSize: Size.zero,

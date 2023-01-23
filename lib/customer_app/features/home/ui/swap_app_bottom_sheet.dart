@@ -57,7 +57,7 @@ class SwapAppBottomSheet extends StatelessWidget {
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () async {
-                final res = await Navigator.of(context)
+                final res = await Navigator.of(context, rootNavigator: true)
                     .pushNamed(ArtisanAppRoutes.home);
                 print(res);
               },
