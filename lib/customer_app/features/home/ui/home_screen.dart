@@ -209,7 +209,8 @@ class HomeScreen extends ConsumerWidget {
                     SliverToBoxAdapter(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: horizontalPadding),
+                          horizontal: horizontalPadding,
+                        ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -286,7 +287,7 @@ class HomeScreen extends ConsumerWidget {
                                     });
                               },
                               child: Padding(
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                   vertical: 8.0,
                                   horizontal: horizontalPadding,
                                 ),

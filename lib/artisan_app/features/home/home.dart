@@ -39,15 +39,7 @@ class _ArtisanHomeScreenState extends State<ArtisanHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text("Home Screen"),
-              _widgetOptions[_selectedIndex]
-            ],
-          ),
-        ),
+        body: _widgetOptions[_selectedIndex],
         bottomNavigationBar: BottomTabNavBar(_selectedIndex, _onItemTapped));
   }
 }
