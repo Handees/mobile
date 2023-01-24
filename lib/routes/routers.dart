@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:handees/artisan_app/features/complete_profile/complete_profile.dart';
+import 'package:handees/artisan_app/features/complete_profile/ui/basic_info.dart';
+import 'package:handees/artisan_app/features/complete_profile/ui/document_upload.dart';
+import 'package:handees/artisan_app/features/complete_profile/ui/handee_details.dart';
+import 'package:handees/artisan_app/features/complete_profile/ui/payment_details.dart';
 import 'package:handees/artisan_app/features/home/home.dart';
 import 'package:handees/customer_app/services/auth_service.dart';
 import 'package:handees/routes/artisan_app/routes.dart';
@@ -146,14 +150,20 @@ final _artisanAppRouter = NavRouter(
       case ArtisanAppRoutes.root:
         page = const ArtisanHomeScreen();
         break;
-      case ArtisanAppRoutes.basicInfo:
-        page = const ProfileScreen();
-        break;
       case ArtisanAppRoutes.completeProfile:
-        page = const ArtisanCompleteProfileScreen();
+        page = ArtisanCompleteProfileScreen();
+        break;
+      case ArtisanAppRoutes.basicInfo:
+        page = const BasicInfoScreen();
         break;
       case ArtisanAppRoutes.documentUpload:
-        page = const HistoryScreen();
+        page = const DocumentUploadScreen();
+        break;
+      case ArtisanAppRoutes.handeeDetails:
+        page = const HandeeDetailsScreen();
+        break;
+      case ArtisanAppRoutes.paymentDetails:
+        page = const PaymentDetailsScreen();
         break;
       default:
         throw Exception('Unknown route: ${settings.name}');

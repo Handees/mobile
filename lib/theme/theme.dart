@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:handees/res/shapes.dart';
 
-final _textTheme = GoogleFonts.cabinTextTheme(TextTheme(
-    titleMedium: _textTheme.titleMedium!.copyWith(
-  fontWeight: FontWeight.bold,
-)));
+final _textTheme = GoogleFonts.cabinTextTheme(const TextTheme());
 
 const _lightColorScheme = ColorScheme.light(
   primary: Color.fromRGBO(20, 22, 28, 1),

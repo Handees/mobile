@@ -5,7 +5,10 @@ abstract class ArtisanAppRoutes {
   static const String basicInfo = '/artisan/complete-profile/basic-info';
   static const String documentUpload =
       '/artisan/complete-profile/document-upload';
-  // static const String completeProfile = '/form/complete-profile';
+  static const String handeeDetails =
+      '/artisan/complete-profile/handee-details';
+  static const String paymentDetails =
+      '/artisan/complete-profile/payment-details';
 
   static const String home = '/artisan/home';
 }

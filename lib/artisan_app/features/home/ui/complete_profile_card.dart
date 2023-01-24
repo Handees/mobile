@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:handees/routes/artisan_app/routes.dart';
 
 class CompleteProfileCard extends StatelessWidget {
   const CompleteProfileCard({super.key});
@@ -50,7 +51,10 @@ class CompleteProfileCard extends StatelessWidget {
             Align(
               alignment: Alignment.bottomRight,
               child: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context)
+                      .pushNamed(ArtisanAppRoutes.completeProfile);
+                },
                 icon: const Icon(
                   Icons.arrow_forward,
                 ),
