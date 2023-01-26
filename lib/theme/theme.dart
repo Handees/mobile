@@ -2,13 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:handees/res/shapes.dart';
 
+import 'theme_extensions.dart';
+
+export 'theme_extensions.dart';
+
 final _textTheme = GoogleFonts.cabinTextTheme(
   TextTheme(
     titleMedium: Typography.blackRedwoodCity.titleMedium!.copyWith(
-      fontWeight: FontWeight.bold,
+      fontWeight: FontWeight.w600,
     ),
     titleLarge: Typography.blackRedwoodCity.titleLarge!.copyWith(
       fontWeight: FontWeight.bold,
+    ),
+    bodyLarge: TextStyle(
+      fontSize: 20.0,
+      height: 1.2,
+    ),
+    bodyMedium: TextStyle(
+      fontSize: 16.0,
+      height: 1.25,
+    ),
+    bodySmall: TextStyle(
+      fontSize: 12.0,
+      height: 0.75,
     ),
   ),
 );
@@ -32,8 +48,6 @@ const _authColorScheme = ColorScheme.dark(
 final _darkColorScheme = ColorScheme.dark(
   primary: const Color.fromARGB(255, 97, 97, 97),
   onPrimary: Colors.white,
-  // primaryContainer: Color.fromARGB(255, 97, 97, 97),
-  // onPrimaryContainer: Colors.white,
   background: ThemeData.dark().scaffoldBackgroundColor,
   brightness: Brightness.dark,
 );
@@ -111,38 +125,3 @@ final authTheme = _buildTheme(_authColorScheme).copyWith(
     filled: false,
   ),
 );
-
-@immutable
-class ButtonThemeExtensions extends ThemeExtension<ButtonThemeExtensions> {
-  const ButtonThemeExtensions({
-    required this.filled,
-    required this.tonal,
-  });
-
-  final ButtonStyle? filled;
-  final ButtonStyle? tonal;
-
-  @override
-  ButtonThemeExtensions copyWith({ButtonStyle? filled, ButtonStyle? tonal}) {
-    return ButtonThemeExtensions(
-      filled: filled ?? this.filled,
-      tonal: tonal ?? this.tonal,
-    );
-  }
-
-  @override
-  ButtonThemeExtensions lerp(
-      ThemeExtension<ButtonThemeExtensions>? other, double t) {
-    if (other is! ButtonThemeExtensions) {
-      return this;
-    }
-    return ButtonThemeExtensions(
-      filled: ButtonStyle.lerp(filled, other.filled, t),
-      tonal: ButtonStyle.lerp(tonal, other.tonal, t),
-    );
-  }
-
-  // Optional
-  @override
-  String toString() => 'MyColors(brandColor: $filled, danger: $tonal)';
-}
