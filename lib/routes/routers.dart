@@ -3,7 +3,9 @@ import 'package:handees/artisan_app/features/auth/ui/complete_profile/screens/co
 import 'package:handees/artisan_app/features/auth/ui/complete_profile/screens/basic_info.dart';
 import 'package:handees/artisan_app/features/auth/ui/complete_profile/screens/document_upload.dart';
 import 'package:handees/artisan_app/features/auth/ui/complete_profile/screens/handee_details.dart';
+import 'package:handees/artisan_app/features/auth/ui/complete_profile/screens/passport_photograph.dart';
 import 'package:handees/artisan_app/features/auth/ui/complete_profile/screens/payment_details.dart';
+import 'package:handees/artisan_app/features/auth/ui/complete_profile/screens/valid_id.dart';
 import 'package:handees/artisan_app/features/home/home.artisan.dart';
 import 'package:handees/customer_app/services/auth_service.dart';
 import 'package:handees/routes/artisan_app/routes.dart';
@@ -157,13 +159,19 @@ final _artisanAppRouter = NavRouter(
         page = BasicInfoScreen();
         break;
       case ArtisanAppRoutes.documentUpload:
-        page = const DocumentUploadScreen();
+        page = DocumentUploadScreen();
         break;
       case ArtisanAppRoutes.handeeDetails:
         page = const HandeeDetailsScreen();
         break;
       case ArtisanAppRoutes.paymentDetails:
         page = const PaymentDetailsScreen();
+        break;
+      case ArtisanAppRoutes.validId:
+        page = const ValidIDScreen();
+        break;
+      case ArtisanAppRoutes.passportPhotograph:
+        page = const PasspportPhotographScreen();
         break;
       default:
         throw Exception('Unknown route: ${settings.name}');
