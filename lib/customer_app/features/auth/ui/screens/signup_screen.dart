@@ -78,7 +78,7 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
                     const Spacer(flex: 4),
                     Container(
                       alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.only(top: 16.0, bottom: 4.0),
+                      padding: const EdgeInsets.only(top: 16.0, bottom: 4.0),
                       child: Text(
                         'Let\'s get you signed up',
                         style: Theme.of(context).textTheme.headlineMedium,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:handees/artisan_app/features/complete_profile/ui/complete_profile_link_card.dart';
-import 'package:handees/artisan_app/features/home/ui/complete_profile_card.dart';
+import 'package:handees/artisan_app/features/auth/ui/complete_profile/widgets/complete_profile_link_card.dart';
+import 'package:handees/artisan_app/features/home/widgets/complete_profile_card.dart';
 import 'package:handees/customer_app/models/complete_profile_link_model.dart';
 import 'package:handees/routes/artisan_app/routes.dart';
 

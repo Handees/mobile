@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:handees/artisan_app/features/home/ui/complete_profile_card.dart';
-import 'package:handees/artisan_app/features/home/ui/profile_header.dart';
-import 'package:handees/artisan_app/features/home/ui/user_stats_container.dart';
+import 'package:handees/artisan_app/features/home/widgets/complete_profile_card.dart';
+import 'package:handees/artisan_app/features/home/widgets/profile_header.dart';
+import 'package:handees/artisan_app/features/home/widgets/user_stats_container.dart';
 
 class HomeNavScreen extends StatelessWidget {
   const HomeNavScreen({super.key});

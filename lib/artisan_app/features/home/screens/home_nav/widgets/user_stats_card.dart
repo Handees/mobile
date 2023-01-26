@@ -23,7 +23,6 @@ class UserStatsCard extends StatelessWidget {
           title,
           style: Theme.of(context).textTheme.titleMedium!.copyWith(
                 color: titleColor,
-                fontWeight: FontWeight.bold,
               ),
         ),
       ),

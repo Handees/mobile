@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:handees/artisan_app/features/home/ui/user_stats_card.dart';
+import 'package:handees/artisan_app/features/home/widgets/user_stats_card.dart';
 
 class UserStatsContainer extends StatelessWidget {
   const UserStatsContainer({super.key});

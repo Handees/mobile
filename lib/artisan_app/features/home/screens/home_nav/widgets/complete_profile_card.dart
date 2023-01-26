@@ -41,7 +41,10 @@ class CompleteProfileCard extends StatelessWidget {
                 widthFactor: 0.8,
                 child: Text(
                   "Complete your profile by providing the necessary information required and start earning money in no time!",
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(color: const Color(0xff949494)),
                 ),
               ),
             ),

@@ -2,7 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:handees/res/shapes.dart';
 
-final _textTheme = GoogleFonts.cabinTextTheme(const TextTheme());
+final _textTheme = GoogleFonts.cabinTextTheme(
+  TextTheme(
+    titleMedium: Typography.blackRedwoodCity.titleMedium!.copyWith(
+      fontWeight: FontWeight.bold,
+    ),
+    titleLarge: Typography.blackRedwoodCity.titleLarge!.copyWith(
+      fontWeight: FontWeight.bold,
+    ),
+  ),
+);
 
 const _lightColorScheme = ColorScheme.light(
   primary: Color.fromRGBO(20, 22, 28, 1),
@@ -75,15 +84,17 @@ ThemeData _buildTheme(ColorScheme colorScheme) => ThemeData.from(
       extensions: [
         ButtonThemeExtensions(
           filled: ElevatedButton.styleFrom(
-            foregroundColor: colorScheme.onPrimary,
-            backgroundColor: colorScheme.primary,
-          ).copyWith(
+                  foregroundColor: colorScheme.onPrimary,
+                  backgroundColor: colorScheme.primary,
+                  textStyle: _textTheme.titleMedium)
+              .copyWith(
             elevation: ButtonStyleButton.allOrNull(0.0),
           ),
           tonal: ElevatedButton.styleFrom(
-            foregroundColor: colorScheme.onSecondaryContainer,
-            backgroundColor: colorScheme.secondaryContainer,
-          ).copyWith(
+                  foregroundColor: colorScheme.onSecondaryContainer,
+                  backgroundColor: colorScheme.secondaryContainer,
+                  textStyle: _textTheme.titleMedium)
+              .copyWith(
             elevation: ButtonStyleButton.allOrNull(0.0),
           ),
         )

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:handees/artisan_app/features/complete_profile/complete_profile.dart';
-import 'package:handees/artisan_app/features/complete_profile/ui/basic_info.dart';
-import 'package:handees/artisan_app/features/complete_profile/ui/document_upload.dart';
-import 'package:handees/artisan_app/features/complete_profile/ui/handee_details.dart';
-import 'package:handees/artisan_app/features/complete_profile/ui/payment_details.dart';
-import 'package:handees/artisan_app/features/home/home.dart';
+import 'package:handees/artisan_app/features/auth/ui/complete_profile/screens/complete_profile.dart';
+import 'package:handees/artisan_app/features/auth/ui/complete_profile/screens/basic_info.dart';
+import 'package:handees/artisan_app/features/auth/ui/complete_profile/screens/document_upload.dart';
+import 'package:handees/artisan_app/features/auth/ui/complete_profile/screens/handee_details.dart';
+import 'package:handees/artisan_app/features/auth/ui/complete_profile/screens/payment_details.dart';
+import 'package:handees/artisan_app/features/home/home.artisan.dart';
 import 'package:handees/customer_app/services/auth_service.dart';
 import 'package:handees/routes/artisan_app/routes.dart';
 import 'package:handees/shared/widgets/navigator.dart';
@@ -26,7 +26,7 @@ final mainRouter = NavRouter(
       case '/':
         router =
             authService.isAuthenticated() && authService.isProfileComplete()
-                ? _customerAppRouter
+                ? _artisanAppRouter
                 : _authRouter;
         break;
       case AuthRoutes.root:
@@ -154,7 +154,7 @@ final _artisanAppRouter = NavRouter(
         page = ArtisanCompleteProfileScreen();
         break;
       case ArtisanAppRoutes.basicInfo:
-        page = const BasicInfoScreen();
+        page = BasicInfoScreen();
         break;
       case ArtisanAppRoutes.documentUpload:
         page = const DocumentUploadScreen();
