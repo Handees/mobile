@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:handees/customer_app/models/complete_profile_link_model.dart';
+import 'package:handees/artisan_app/complete_profile_link_model.dart';
 
 class CompleteProfileLinkCard extends StatelessWidget {
   const CompleteProfileLinkCard(this.completeProfileLink, {super.key});
