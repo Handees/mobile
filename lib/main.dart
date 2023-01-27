@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:handees/data/user/user_repository.dart';
 import 'package:handees/routes/auth/routes.dart';
 import 'package:handees/routes/customer_app/routes.dart';
 import 'package:handees/routes/routers.dart';
@@ -62,7 +63,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    debugPrint("App staarted printing");
+    UserRepository().fetchUserData().then(
+      (value) {
+        print('Got user data ${value.name}');
+      },
+    );
 
     return MaterialApp(
       title: 'Handees',

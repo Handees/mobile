@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:handees/service_state.dart';
+import 'package:handees/ui/widgets/service_state.dart';
 
 class HistoryTile extends StatefulWidget {
   const HistoryTile({

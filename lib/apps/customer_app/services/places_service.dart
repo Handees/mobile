@@ -1,13 +1,12 @@
 import 'dart:convert';
 
 import 'package:handees/data/places/place_model.dart';
+import 'package:handees/data/places/places_repository.dart';
 import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart';
 import 'package:uuid/uuid.dart';
 // import 'package:geocoding/geocoding.dart';
 // import 'package:uuid/uuid.dart';
-
-const kMapsApiKey = 'AIzaSyARglR29MXnF774yULbD_4h3xYBj0vIHfk';
 
 // final placeServiceProvider =
 //     Provider<PlacesService>((ref) => PlacesService._());
@@ -17,62 +16,19 @@ class PlacesService {
   static final PlacesService _instance = PlacesService._();
   static PlacesService get instance => _instance;
 
+  final placesRepository = PlacesRepository();
+
   final sessionToken = const Uuid().v4();
   final geolocatorInstance = GeolocatorPlatform.instance;
   // final geocodingInstance = GeocodingPlatform.instance;
   bool serviceEnabled = false;
 
   /// Get Predictions based on the specified input
-  Future<List<PlaceModel>> getPredictions(String input) async {
-    final request = Uri.https(
-      'maps.googleapis.com',
-      '/maps/api/place/autocomplete/json',
-      {
-        'input': input,
-        // 'types': 'geocode', //necessary?
-        'components': 'country:ng', //Localize?
-        'key': kMapsApiKey,
-        'sessionToken': sessionToken,
-      },
-    );
+  Future<List<PlaceModel>> getPredictions(String input) =>
+      placesRepository.getPredictions(input, sessionToken);
 
-    final response = await http.get(request);
-
-    final json = jsonDecode(response.body);
-
-    //return list of prediction results
-    final result = (json['predictions'] as List).map<PlaceModel>((e) {
-      final model = PlaceModel.fromJson(e);
-      print(model);
-
-      return model;
-    }).toList();
-
-    return result;
-  }
-
-  Future<String> getLocation(String id) async {
-    final request = Uri.https(
-      'maps.googleapis.com',
-      '/maps/api/place/details/json',
-      {
-        'place_id': id,
-        'fields': 'formatted_address,geometry',
-        'key': kMapsApiKey,
-        'sessionToken': sessionToken,
-      },
-    );
-
-    final response = await http.get(request);
-
-    final json = jsonDecode(response.body);
-    print(json);
-
-    //return list of prediction results
-    final result = json['candidates'];
-
-    return result.toString();
-  }
+  Future<String> getLocation(String id) =>
+      placesRepository.getLocation(id, sessionToken);
 
   /// Determine the current position of the device.
   ///
