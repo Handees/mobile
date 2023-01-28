@@ -8,11 +8,11 @@ import 'package:uuid/uuid.dart';
 import 'package:handees/res/constants.dart';
 
 class PlacesRepository {
-  static PlacesRepository _instance = PlacesRepository._();
+  static PlacesRepository? _instance;
   PlacesRepository._();
 
   factory PlacesRepository() {
-    return _instance;
+    return _instance ??= PlacesRepository._();
   }
 
   /// Get Predictions based on the specified input

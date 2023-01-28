@@ -4,20 +4,19 @@ import 'package:handees/data/user/datasources/remote.dart';
 import 'package:handees/data/user/models/user.dart';
 
 class UserRepository {
-  static UserRepository _instance = UserRepository._();
+  static UserRepository? _instance;
 
   UserRepository._();
 
   factory UserRepository() {
-    return _instance;
+    return _instance ??= UserRepository._();
   }
 
   final remote = UserRemoteDataSource();
   final local = UserLocalDataSource();
 
   Future<User> fetchUserData() async {
-    await Future.delayed(Duration(seconds: 10));
-    final localData = local.fetchUserData();
+    final localData = await local.fetchUserData();
 
     if (localData != null) {
       print('From local');

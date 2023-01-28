@@ -1,24 +1,17 @@
-import 'dart:io';
-
 import 'package:handees/data/user/models/user_db_model.dart';
 import 'package:hive/hive.dart';
 
 class UserLocalDataSource {
-  late Box userBox;
+  final Future<Box> _userBoxFuture;
 
-  UserLocalDataSource() {
-    init();
-  }
+  UserLocalDataSource() : _userBoxFuture = Hive.openBox('user');
 
-  Future<void> init() async {
-    userBox = await Hive.openBox('user');
-  }
-
-  void storeUserData({
+  Future<void> storeUserData({
     required String name,
     required String phone,
     required String email,
-  }) {
+  }) async {
+    final userBox = await _userBoxFuture;
     userBox.putAll({
       'name': name,
       'phone': phone,
@@ -26,8 +19,8 @@ class UserLocalDataSource {
     });
   }
 
-  UserDbModel? fetchUserData() {
-    print('FEtching  local is open ${userBox.isOpen}');
+  Future<UserDbModel?> fetchUserData() async {
+    final userBox = await _userBoxFuture;
 
     if (!userBox.isOpen) return null;
 

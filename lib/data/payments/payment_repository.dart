@@ -7,12 +7,11 @@ import 'package:handees/res/uri.dart';
 import 'package:http/http.dart' as http;
 
 class PaymentRepository {
-  static PaymentRepository? _instance = PaymentRepository._();
+  static PaymentRepository? _instance;
   PaymentRepository._();
 
   factory PaymentRepository() {
-    _instance ??= PaymentRepository();
-    return _instance!;
+    return _instance ??= PaymentRepository._();
   }
 
   Future<String> getAccessCode({

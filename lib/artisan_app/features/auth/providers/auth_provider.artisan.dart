@@ -27,18 +27,13 @@ final artisanAuthProvider =
     StateNotifierProvider<ArtisanAuthStateNotifier, ArtisanAuthState>((ref) {
   return
       //  AuthNotifierTest(ref, AuthService.instance);
-      ArtisanAuthStateNotifier(ref, ref.watch(authServiceProvider));
+      ArtisanAuthStateNotifier(ref.watch(authServiceProvider));
 });
-
-final _submittedProvider =
-    StateProvider<SubmitStatus>((ref) => SubmitStatus.notSubmitted);
 
 class ArtisanAuthStateNotifier extends StateNotifier<ArtisanAuthState>
     with InputValidationMixin {
-  ArtisanAuthStateNotifier(this.ref, this._authService)
+  ArtisanAuthStateNotifier(this._authService)
       : super(ArtisanAuthState.waiting) {
-    final submitStatus = ref.read(_submittedProvider);
-
     // _authService.firebaseAuth.userChanges().listen((user) {
     //   if (_authService.isAuthenticated() &&
     //       _authService.isProfileComplete() &&
@@ -54,8 +49,6 @@ class ArtisanAuthStateNotifier extends StateNotifier<ArtisanAuthState>
   }
 
   final AuthService _authService;
-
-  StateNotifierProviderRef<ArtisanAuthStateNotifier, ArtisanAuthState> ref;
 
   String _firstName = '';
   String _lastName = '';
