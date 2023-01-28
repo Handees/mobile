@@ -68,12 +68,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    UserRepository().fetchUserData().then(
-      (value) {
-        print('Got user data ${value.name}');
-      },
-    );
-
     return MaterialApp(
       title: 'Handees',
       theme: lightTheme,
