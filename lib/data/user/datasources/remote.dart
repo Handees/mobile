@@ -21,7 +21,8 @@ class UserRemoteDataSource {
         final decodedJson = jsonDecode(response.body);
         return UserApiModel.fromJson(decodedJson['data']);
       default:
-        throw Exception('UserRemoteDataSource get error');
+        throw Exception(
+            'UserRemoteDataSource get error: ${response.statusCode} ');
     }
   }
 
@@ -32,8 +33,6 @@ class UserRemoteDataSource {
     required String uid,
     required String token,
   }) async {
-    print('Submittin user data');
-
     final future = http.post(
       AppUris.addNewUserUri,
       headers: {

@@ -1,11 +1,8 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:handees/data/chat/message_model.dart';
 import 'package:handees/res/shapes.dart';
-import 'package:intl/intl.dart';
 
 import '../providers/messages_provider.dart';
 
@@ -169,20 +166,6 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
           ),
         ],
       ),
-      // bottomSheet: Padding(
-      //   padding: const EdgeInsets.all(16.0),
-      //   child: TextField(
-      //     controller: _textController,
-      //     onSubmitted: (_) => _onSubmit(),
-      //     decoration: InputDecoration(
-      //       hintText: 'Type a message',
-      //       suffixIcon: IconButton(
-      //         icon: const Icon(Icons.send),
-      //         onPressed: _onSubmit,
-      //       ),
-      //     ),
-      //   ),
-      // ),
     );
   }
 }

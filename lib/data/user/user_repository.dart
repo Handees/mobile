@@ -15,6 +15,8 @@ class UserRepository {
   final remote = UserRemoteDataSource();
   final local = UserLocalDataSource();
 
+  Future<bool> localDataExitst() => local.isDataStored;
+
   Future<User> fetchUserData() async {
     final localData = await local.fetchUserData();
 

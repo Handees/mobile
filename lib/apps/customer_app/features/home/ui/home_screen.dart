@@ -7,8 +7,8 @@ import 'package:handees/apps/customer_app/features/home/ui/swap_app_bottom_sheet
 import 'package:handees/apps/customer_app/features/tracker/ui/tracking_screen.dart';
 import 'package:handees/apps/customer_app/services/auth_service.dart';
 import 'package:handees/res/shapes.dart';
-import 'package:handees/routes/auth/routes.dart';
-import 'package:handees/routes/customer_app/routes.dart';
+import 'package:handees/routes/routes.dart';
+import 'package:handees/routes/routes.dart';
 import 'package:handees/ui/widgets/circle_fadeout_loader.dart';
 import 'package:handees/theme/theme.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:handees/res/shapes.dart';
-import 'package:handees/routes/customer_app/routes.dart';
+import 'package:handees/routes/routes.dart';
 import 'package:handees/theme/theme.dart';
 
 class InProgressBottomSheet extends StatefulWidget {

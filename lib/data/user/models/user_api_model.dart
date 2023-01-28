@@ -6,7 +6,7 @@ class UserApiModel {
   final artisanProfile; //TODO: Should be typed
   final List bookings;
   final List cards; //TODO: Should be typed
-  final String created_at;
+  final String createAt;
   final String email;
   final bool isArtisan;
   final bool isEmailVerified;
@@ -22,7 +22,7 @@ class UserApiModel {
         artisanProfile = json['artisan_profile'],
         bookings = json['bookings'],
         cards = json['cards'],
-        created_at = json['created_at'],
+        createAt = json['created_at'],
         email = json['email'],
         isArtisan = json['is_artisan'],
         isEmailVerified = json['is_email_verified'],

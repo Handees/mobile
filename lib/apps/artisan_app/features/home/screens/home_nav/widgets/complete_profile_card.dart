@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import 'package:handees/routes/artisan_app/routes.dart';
+import 'package:handees/routes/routes.dart';
 
 class CompleteProfileCard extends StatelessWidget {
   const CompleteProfileCard({super.key});

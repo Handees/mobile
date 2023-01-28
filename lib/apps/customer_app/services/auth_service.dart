@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,10 +16,6 @@ class AuthService {
     });
   }
 
-  // static final AuthService _instance = AuthService._();
-  // static AuthService get instance => _instance;
-
-  // late String _verificationId;
   final FirebaseAuth firebaseAuth;
   final UserRepository userRepository;
 
@@ -31,7 +24,6 @@ class AuthService {
   late String _token;
 
   String get token => _token;
-  // void updateToken(String token) => _token = token;
 
   static bool isAuthenticated() => FirebaseAuth.instance.currentUser != null;
   static bool isProfileComplete() =>
@@ -41,13 +33,12 @@ class AuthService {
       FirebaseAuth.instance.currentUser!.displayName!.isNotEmpty;
 
   Future<bool> dataSubmitted() async {
+    if (await userRepository.local.isDataStored) return true;
     try {
       final response = await http.get(
         AppUris.userDataUri(user.uid),
       );
 
-      print('Check Data submit ${response.body}');
-      print('Check Data submit code${response.statusCode}');
       return response.statusCode != 404;
     } on Exception catch (e) {
       debugPrint('Data submit error $e');
@@ -173,35 +164,13 @@ class AuthService {
     print('Submittin user data');
 
     try {
-      final future = http.post(
-        AppUris.addNewUserUri,
-        headers: {
-          HttpHeaders.contentTypeHeader: 'application/json',
-          'access-token': token,
-        },
-        body: jsonEncode(
-          {
-            'name': name,
-            // 'telephone': phone,
-            'email': email,
-            'user_id': uid,
-          },
-        ),
+      return await userRepository.submitUserData(
+        name: name,
+        phone: phone,
+        email: email,
+        uid: uid,
+        token: token,
       );
-
-      final response = await future;
-      print("Submit user data response ${response.body}");
-
-      print("Submit user data response code ${response.statusCode}");
-
-      //TODO: Error handling
-
-      if (response.statusCode > 200 && response.statusCode < 400) {
-        return true;
-      } else {
-        return false;
-        //TODO what if it fails password is still there
-      }
     } on Exception catch (e) {
       print('Got error $e');
       debugPrint(e.toString());

@@ -6,6 +6,8 @@ class UserLocalDataSource {
 
   UserLocalDataSource() : _userBoxFuture = Hive.openBox('user');
 
+  Future<bool> get isDataStored async => (await _userBoxFuture).isNotEmpty;
+
   Future<void> storeUserData({
     required String name,
     required String phone,
