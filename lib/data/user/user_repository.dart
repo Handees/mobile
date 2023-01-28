@@ -19,14 +19,12 @@ class UserRepository {
     final localData = await local.fetchUserData();
 
     if (localData != null) {
-      print('From local');
       return User(name: localData.name);
     } else {
       final remoteData = await remote
           .fetchUserData(firebase.FirebaseAuth.instance.currentUser!.uid);
       local.storeUserData(
           email: remoteData.email, name: remoteData.name, phone: '1234');
-      print('From remote');
       return User(name: remoteData.name);
     }
   }
