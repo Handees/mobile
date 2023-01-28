@@ -11,14 +11,7 @@ class UserLocalDataSource {
   }
 
   Future<void> init() async {
-    Hive.init(Directory.current.path);
-
-    print('box exists ${await Hive.boxExists('user')}');
-    if (await Hive.boxExists('user')) {
-      userBox = await Hive.openBox('user');
-    } else {
-      userBox = await Hive.openBox('user');
-    }
+    userBox = await Hive.openBox('user');
   }
 
   void storeUserData({
@@ -34,7 +27,11 @@ class UserLocalDataSource {
   }
 
   UserDbModel? fetchUserData() {
-    if (userBox.isOpen) return null;
+    print('FEtching  local is open ${userBox.isOpen}');
+
+    if (!userBox.isOpen) return null;
+
+    print('getting local');
 
     return UserDbModel(
       name: userBox.get('name'),

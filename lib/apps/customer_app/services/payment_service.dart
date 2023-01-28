@@ -1,18 +1,28 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/data/payments/payment_repository.dart';
+import 'package:handees/data/user/user_repository.dart';
+
+final paymentServiceProvider = Provider<PaymentService>((ref) {
+  return PaymentService._(PaymentRepository(), UserRepository());
+});
 
 class PaymentService {
-  PaymentService._();
-  static final PaymentService _instance = PaymentService._();
-  static PaymentService get instance => _instance;
+  PaymentService._(this.paymentRepository, this.userRepository);
 
-  final paymentRepository = PaymentRepository();
-
-  final firebaseAuth = FirebaseAuth.instance;
+  final UserRepository userRepository;
+  final PaymentRepository paymentRepository;
 
   Future<String> accessCodeRequest({
     required String email,
     required int amount,
-  }) =>
-      paymentRepository.accessCodeRequest(email: email, amount: amount);
+  }) async {
+    try {
+      return await paymentRepository.getAccessCode(
+          email: email, amount: amount);
+    } on Exception {
+      // TODO
+      rethrow;
+    }
+  }
 }

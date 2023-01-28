@@ -27,7 +27,7 @@ final artisanAuthProvider =
     StateNotifierProvider<ArtisanAuthStateNotifier, ArtisanAuthState>((ref) {
   return
       //  AuthNotifierTest(ref, AuthService.instance);
-      ArtisanAuthStateNotifier(ref, AuthService.instance);
+      ArtisanAuthStateNotifier(ref, ref.watch(authServiceProvider));
 });
 
 final _submittedProvider =

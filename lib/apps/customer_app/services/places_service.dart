@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/data/places/place_model.dart';
 import 'package:handees/data/places/places_repository.dart';
 import 'package:http/http.dart' as http;
@@ -8,15 +9,13 @@ import 'package:uuid/uuid.dart';
 // import 'package:geocoding/geocoding.dart';
 // import 'package:uuid/uuid.dart';
 
-// final placeServiceProvider =
-//     Provider<PlacesService>((ref) => PlacesService._());
+final placesServiceProvider =
+    Provider<PlacesService>((ref) => PlacesService._(PlacesRepository()));
 
 class PlacesService {
-  PlacesService._();
-  static final PlacesService _instance = PlacesService._();
-  static PlacesService get instance => _instance;
+  PlacesService._(this.placesRepository);
 
-  final placesRepository = PlacesRepository();
+  final PlacesRepository placesRepository;
 
   final sessionToken = const Uuid().v4();
   final geolocatorInstance = GeolocatorPlatform.instance;

@@ -3,21 +3,28 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:handees/data/user/user_repository.dart';
 import 'package:handees/res/uri.dart';
 import 'package:http/http.dart' as http;
 
+final authServiceProvider = Provider<AuthService>((ref) {
+  return AuthService._(FirebaseAuth.instance, UserRepository());
+});
+
 class AuthService {
-  AuthService._() {
+  AuthService._(this.firebaseAuth, this.userRepository) {
     FirebaseAuth.instance.idTokenChanges().listen((user) {
       user?.getIdToken().then((value) => _token = value);
     });
   }
 
-  static final AuthService _instance = AuthService._();
-  static AuthService get instance => _instance;
+  // static final AuthService _instance = AuthService._();
+  // static AuthService get instance => _instance;
 
   // late String _verificationId;
-  final firebaseAuth = FirebaseAuth.instance;
+  final FirebaseAuth firebaseAuth;
+  final UserRepository userRepository;
 
   User get user => firebaseAuth.currentUser!;
 
@@ -26,12 +33,12 @@ class AuthService {
   String get token => _token;
   // void updateToken(String token) => _token = token;
 
-  bool isAuthenticated() => firebaseAuth.currentUser != null;
-  bool isProfileComplete() =>
-      firebaseAuth.currentUser!.email != null &&
-      firebaseAuth.currentUser!.email!.isNotEmpty &&
-      firebaseAuth.currentUser!.displayName != null &&
-      firebaseAuth.currentUser!.displayName!.isNotEmpty;
+  static bool isAuthenticated() => FirebaseAuth.instance.currentUser != null;
+  static bool isProfileComplete() =>
+      FirebaseAuth.instance.currentUser!.email != null &&
+      FirebaseAuth.instance.currentUser!.email!.isNotEmpty &&
+      FirebaseAuth.instance.currentUser!.displayName != null &&
+      FirebaseAuth.instance.currentUser!.displayName!.isNotEmpty;
 
   Future<bool> dataSubmitted() async {
     try {
@@ -102,6 +109,10 @@ class AuthService {
     }
   }
 
+  ///Updates additional data on firebase authentication profile such as name,
+  ///email and password
+  ///
+  ///Returns corresponding AuthResponse
   Future<AuthResponse> completeProfile(
     String email,
     String password,
@@ -150,7 +161,7 @@ class AuthService {
     }
   }
 
-  ///Sends an HTTP POST request to submit user data
+  ///Submit user data to the server
   ///
   ///Returns true if data was submitted successfully and false otherwise
   Future<bool> submitUserData({

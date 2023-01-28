@@ -22,12 +22,11 @@ final mainRouter = NavRouter(
     NavRouter? router;
 
     print('MainRouter working  ${settings.name}');
-    final authService = AuthService.instance;
 
     switch (settings.name) {
       case '/':
         router =
-            authService.isAuthenticated() && authService.isProfileComplete()
+            AuthService.isAuthenticated() && AuthService.isProfileComplete()
                 ? _customerAppRouter
                 : _authRouter;
         break;

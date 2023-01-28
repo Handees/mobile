@@ -9,24 +9,19 @@ import 'package:http/http.dart' as http;
 
 class UserRemoteDataSource {
   Future<UserApiModel> fetchUserData(String uid) async {
-    try {
-      final response = await http.get(
-        AppUris.userDataUri(uid),
-      );
+    final response = await http.get(
+      AppUris.userDataUri(uid),
+    );
 
-      print('UserRemoteDataSource ${response.body}');
-      print('UserRemoteDataSource ${response.statusCode}');
+    print('UserRemoteDataSource response ${response.body}');
+    print('UserRemoteDataSource code ${response.statusCode}');
 
-      switch (response.statusCode) {
-        case 200:
-          final decodedJson = jsonDecode(response.body);
-          return UserApiModel.fromJson(decodedJson['data']);
-        default:
-          throw Exception('UserRemoteDataSource get error');
-      }
-    } on Exception catch (e) {
-      debugPrint('UserRemoteDataSource get error $e');
-      rethrow;
+    switch (response.statusCode) {
+      case 200:
+        final decodedJson = jsonDecode(response.body);
+        return UserApiModel.fromJson(decodedJson['data']);
+      default:
+        throw Exception('UserRemoteDataSource get error');
     }
   }
 
@@ -39,37 +34,31 @@ class UserRemoteDataSource {
   }) async {
     print('Submittin user data');
 
-    try {
-      final future = http.post(
-        AppUris.addNewUserUri,
-        headers: {
-          HttpHeaders.contentTypeHeader: 'application/json',
-          'access-token': token,
+    final future = http.post(
+      AppUris.addNewUserUri,
+      headers: {
+        HttpHeaders.contentTypeHeader: 'application/json',
+        'access-token': token,
+      },
+      body: jsonEncode(
+        {
+          'name': name,
+          // 'telephone': phone,
+          'email': email,
+          'user_id': uid,
         },
-        body: jsonEncode(
-          {
-            'name': name,
-            // 'telephone': phone,
-            'email': email,
-            'user_id': uid,
-          },
-        ),
-      );
+      ),
+    );
 
-      final response = await future;
-      print("Submit user data response ${response.body}");
+    final response = await future;
+    print("Submit user data response ${response.body}");
 
-      print("Submit user data response code ${response.statusCode}");
+    print("Submit user data response code ${response.statusCode}");
 
-      //TODO: Error handling
-      if (response.statusCode > 200 && response.statusCode < 400) {
-        return true;
-      } else {
-        return false;
-      }
-    } on Exception catch (e) {
-      print('Got error $e');
-      debugPrint(e.toString());
+    //TODO: Error handling
+    if (response.statusCode > 200 && response.statusCode < 400) {
+      return true;
+    } else {
       return false;
     }
   }

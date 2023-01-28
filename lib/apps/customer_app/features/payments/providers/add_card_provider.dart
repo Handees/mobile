@@ -7,15 +7,16 @@ import 'package:handees/utils/utils.dart';
 final addCardProvider =
     StateNotifierProvider<AddCardStateNotifier, bool>((ref) {
   // final authService = ref.watch(authServiceProvider);
-  return AddCardStateNotifier();
+  return AddCardStateNotifier(
+      ref.watch(paymentServiceProvider), ref.watch(authServiceProvider));
 });
 
 class AddCardStateNotifier extends StateNotifier<bool>
     with InputValidationMixin {
-  AddCardStateNotifier() : super(true);
+  AddCardStateNotifier(this._paymentService, this._authService) : super(true);
 
-  final PaymentService _paymentService = PaymentService.instance;
-  final AuthService _authService = AuthService.instance;
+  final PaymentService _paymentService;
+  final AuthService _authService;
 
   late String _cardNumber;
   late String _cvv;

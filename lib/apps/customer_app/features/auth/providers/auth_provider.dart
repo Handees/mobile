@@ -28,7 +28,7 @@ enum SubmitStatus {
 final authProvider = StateNotifierProvider<AuthStateNotifier, AuthState>((ref) {
   return
       //  AuthNotifierTest(ref, AuthService.instance);
-      AuthStateNotifier(ref, AuthService.instance);
+      AuthStateNotifier(ref, ref.watch(authServiceProvider));
 });
 
 final _submittedProvider =
@@ -40,8 +40,8 @@ class AuthStateNotifier extends StateNotifier<AuthState>
     final submitStatus = ref.read(_submittedProvider);
 
     _authService.firebaseAuth.userChanges().listen((user) {
-      if (_authService.isAuthenticated() &&
-          _authService.isProfileComplete() &&
+      if (AuthService.isAuthenticated() &&
+          AuthService.isProfileComplete() &&
           submitStatus != SubmitStatus.submitted) {
         trySubmitData(
           name: user!.displayName!,

@@ -7,33 +7,36 @@ import 'package:handees/res/uri.dart';
 import 'package:http/http.dart' as http;
 
 class PaymentRepository {
-  Future<String> accessCodeRequest({
+  static PaymentRepository? _instance = PaymentRepository._();
+  PaymentRepository._();
+
+  factory PaymentRepository() {
+    _instance ??= PaymentRepository();
+    return _instance!;
+  }
+
+  Future<String> getAccessCode({
     required String email,
     required int amount,
   }) async {
     String token = await FirebaseAuth.instance.currentUser!.getIdToken();
 
-    try {
-      final response = await http.post(
-        AppUris.paymentsUri,
-        headers: {
-          HttpHeaders.contentTypeHeader: 'application/json',
-          'access-token': token,
+    final response = await http.post(
+      AppUris.paymentsUri,
+      headers: {
+        HttpHeaders.contentTypeHeader: 'application/json',
+        'access-token': token,
+      },
+      body: jsonEncode(
+        {
+          'email': email,
+          'amount': amount,
         },
-        body: jsonEncode(
-          {
-            'email': email,
-            'amount': amount,
-          },
-        ),
-      );
+      ),
+    );
 
-      debugPrint('AccessCode request response: ${response.body}');
+    debugPrint('AccessCode request response: ${response.body}');
 
-      return jsonDecode(response.body)['data']['access_code'];
-    } on Exception {
-      // TODO
-      rethrow;
-    }
+    return jsonDecode(response.body)['data']['access_code'];
   }
 }

@@ -8,6 +8,13 @@ import 'package:uuid/uuid.dart';
 import 'package:handees/res/constants.dart';
 
 class PlacesRepository {
+  static PlacesRepository _instance = PlacesRepository._();
+  PlacesRepository._();
+
+  factory PlacesRepository() {
+    return _instance;
+  }
+
   /// Get Predictions based on the specified input
   Future<List<PlaceModel>> getPredictions(
       String input, String sessionToken) async {

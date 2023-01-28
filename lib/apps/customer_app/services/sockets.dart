@@ -26,9 +26,6 @@ class AppSockets {
     });
   }
 
-  static final AppSockets _instance = AppSockets._();
-  static AppSockets get instance => _instance;
-
   io.Socket customerSocket = io.io(AppUris.customerSocketUri.toString(),
       io.OptionBuilder().setTransports(['websocket']).build());
 

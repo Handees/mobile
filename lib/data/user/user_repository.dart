@@ -4,18 +4,30 @@ import 'package:handees/data/user/datasources/remote.dart';
 import 'package:handees/data/user/models/user.dart';
 
 class UserRepository {
-  final UserRemoteDataSource remote = UserRemoteDataSource();
-  final UserLocalDataSource local = UserLocalDataSource();
+  static UserRepository _instance = UserRepository._();
+
+  UserRepository._();
+
+  factory UserRepository() {
+    return _instance;
+  }
+
+  final remote = UserRemoteDataSource();
+  final local = UserLocalDataSource();
 
   Future<User> fetchUserData() async {
     await Future.delayed(Duration(seconds: 10));
     final localData = local.fetchUserData();
 
     if (localData != null) {
+      print('From local');
       return User(name: localData.name);
     } else {
       final remoteData = await remote
           .fetchUserData(firebase.FirebaseAuth.instance.currentUser!.uid);
+      local.storeUserData(
+          email: remoteData.email, name: remoteData.name, phone: '1234');
+      print('From remote');
       return User(name: remoteData.name);
     }
   }

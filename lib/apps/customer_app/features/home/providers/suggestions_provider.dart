@@ -4,13 +4,13 @@ import 'package:handees/apps/customer_app/services/places_service.dart';
 
 final suggestionsProvider =
     StateNotifierProvider<SuggestionsNotifier, List<PlaceModel>>((ref) {
-  return SuggestionsNotifier();
+  return SuggestionsNotifier(ref.watch(placesServiceProvider));
 });
 
 class SuggestionsNotifier extends StateNotifier<List<PlaceModel>> {
-  SuggestionsNotifier() : super([]);
+  SuggestionsNotifier(this.placesService) : super([]);
 
-  final placesService = PlacesService.instance;
+  final placesService;
 
   void getSuggestions(String query) async {
     state = await placesService.getPredictions(query);

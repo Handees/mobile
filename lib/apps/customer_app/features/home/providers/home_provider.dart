@@ -5,7 +5,7 @@ import 'package:handees/apps/customer_app/services/auth_service.dart';
 
 final nameProvider = Provider<String>((ref) {
   //TODO: probably get all user details
-  return AuthService.instance.user.displayName ?? "";
+  return ref.watch(authServiceProvider).user.displayName ?? "";
 });
 
 final categoryProvider = Provider<List<JobCategory>>((ref) {
