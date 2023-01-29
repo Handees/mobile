@@ -7,7 +7,7 @@ import 'package:handees/apps/artisan_app/features/auth/ui/complete_profile/scree
 import 'package:handees/apps/artisan_app/features/auth/ui/complete_profile/screens/payment_details.dart';
 import 'package:handees/apps/artisan_app/features/auth/ui/complete_profile/screens/valid_id.dart';
 import 'package:handees/apps/artisan_app/features/home/home.artisan.dart';
-import 'package:handees/apps/customer_app/services/auth_service.dart';
+import 'package:handees/services/auth_service.dart';
 import 'package:handees/ui/widgets/navigator.dart';
 
 import 'package:handees/routes/pages.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:handees/apps/customer_app/services/auth_service.dart';
+import 'package:handees/services/auth_service.dart';
 import 'package:handees/res/shapes.dart';
 import 'package:handees/theme/theme.dart';
 

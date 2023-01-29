@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:handees/apps/customer_app/services/auth_service.dart';
+import 'package:handees/services/auth_service.dart';
 import 'package:handees/utils/utils.dart';
 
 enum AuthState {

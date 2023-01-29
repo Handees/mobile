@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/data/places/place_model.dart';
-import 'package:handees/apps/customer_app/services/places_service.dart';
+import 'package:handees/services/places_service.dart';
 
 final suggestionsProvider =
     StateNotifierProvider<SuggestionsNotifier, List<PlaceModel>>((ref) {
