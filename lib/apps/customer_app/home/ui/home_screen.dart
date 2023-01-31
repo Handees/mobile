@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:handees/apps/customer_app/features/auth/providers/auth_provider.dart';
-import 'package:handees/apps/customer_app/features/home/providers/home_provider.dart';
-import 'package:handees/apps/customer_app/features/home/ui/swap_app_bottom_sheet.dart';
-import 'package:handees/apps/customer_app/features/tracker/ui/tracking_screen.dart';
+import 'package:handees/apps/customer_app/auth/providers/auth_provider.dart';
+import 'package:handees/apps/customer_app/home/providers/home_provider.dart';
+import 'package:handees/apps/customer_app/home/ui/swap_app_bottom_sheet.dart';
+import 'package:handees/apps/customer_app/tracker/ui/tracking_screen.dart';
 import 'package:handees/services/auth_service.dart';
 import 'package:handees/res/shapes.dart';
 import 'package:handees/routes/routes.dart';
