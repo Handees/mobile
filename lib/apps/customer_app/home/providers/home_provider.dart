@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:handees/apps/customer_app/features/auth/providers/auth_provider.dart';
+import 'package:handees/apps/customer_app/auth/providers/auth_provider.dart';
 import 'package:handees/data/handees/job_category.dart';
 import 'package:handees/services/auth_service.dart';
 

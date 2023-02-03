@@ -1,7 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:handees/apps/customer_app/features/home/providers/suggestions_provider.dart';
+import 'package:handees/apps/customer_app/home/providers/suggestions_provider.dart';
 import 'package:handees/res/shapes.dart';
 
 class LocationPicker extends StatelessWidget {
