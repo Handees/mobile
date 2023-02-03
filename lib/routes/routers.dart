@@ -25,7 +25,7 @@ final mainRouter = NavRouter(
       case '/':
         router =
             AuthService.isAuthenticated() && AuthService.isProfileComplete()
-                ? _customerAppRouter
+                ? _artisanAppRouter
                 : _authRouter;
         break;
       case AuthRoutes.root:
@@ -165,7 +165,7 @@ final _artisanAppRouter = NavRouter(
         page = const PaymentDetailsScreen();
         break;
       case ArtisanAppRoutes.validId:
-        page = const ValidIDScreen();
+        page = ValidIDScreen();
         break;
       case ArtisanAppRoutes.passportPhotograph:
         page = const PasspportPhotographScreen();
