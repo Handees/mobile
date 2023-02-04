@@ -2,8 +2,6 @@ import 'dart:convert';
 
 import 'package:handees/data/places/place_model.dart';
 import 'package:http/http.dart' as http;
-import 'package:geolocator/geolocator.dart';
-import 'package:uuid/uuid.dart';
 
 import 'package:handees/res/constants.dart';
 

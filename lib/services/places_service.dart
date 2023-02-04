@@ -1,9 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/data/places/place_model.dart';
 import 'package:handees/data/places/places_repository.dart';
-import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart';
 import 'package:uuid/uuid.dart';
 // import 'package:geocoding/geocoding.dart';

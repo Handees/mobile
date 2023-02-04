@@ -19,7 +19,6 @@ final mainRouter = NavRouter(
   onGenerateRoute: (RouteSettings settings) {
     NavRouter? router;
 
-    print('MainRouter working  ${settings.name}');
 
     switch (settings.name) {
       case '/':
@@ -53,12 +52,10 @@ final _authRouter = NavRouter(
   onGenerateRoute: (RouteSettings settings) {
     Widget? page;
 
-    print('AuthRouter working  ${settings.name}');
 
     switch (settings.name) {
       case '/':
       case AuthRoutes.root:
-      case AuthRoutes.signin:
         page = SigninScreen();
         break;
       case AuthRoutes.signup:
@@ -81,7 +78,6 @@ final _authRouter = NavRouter(
 
 final _customerAppRouter = NavRouter(
   onGenerateRoute: (RouteSettings settings) {
-    print('CustomerAppRouter working  ${settings.name}');
 
     Widget? page;
 
@@ -89,7 +85,6 @@ final _customerAppRouter = NavRouter(
     switch (settings.name) {
       case '/':
       case CustomerAppRoutes.root:
-      case CustomerAppRoutes.home:
         page = const HomeScreen();
         break;
       case CustomerAppRoutes.profile:

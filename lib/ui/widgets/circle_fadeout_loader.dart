@@ -13,7 +13,7 @@ class CircleFadeOutLoader extends StatefulWidget {
   final double size;
 
   @override
-  _CircleFadeOutLoaderState createState() => _CircleFadeOutLoaderState();
+  State<CircleFadeOutLoader> createState() => _CircleFadeOutLoaderState();
 }
 
 class _CircleFadeOutLoaderState extends State<CircleFadeOutLoader>

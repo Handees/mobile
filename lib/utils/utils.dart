@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 mixin InputValidationMixin {
   bool isEmailValid(String email) {
     var pattern = r'^\S+@\S+\.\S+$';

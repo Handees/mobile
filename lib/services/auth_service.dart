@@ -152,7 +152,7 @@ class AuthService {
     }
   }
 
-  ///Submit user data to the server
+  ///Submits user data to the server
   ///
   ///Returns true if data was submitted successfully and false otherwise
   Future<bool> submitUserData({
@@ -161,7 +161,6 @@ class AuthService {
     required String email,
     required String uid,
   }) async {
-    print('Submittin user data');
 
     try {
       return await userRepository.submitUserData(
