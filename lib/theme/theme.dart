@@ -14,15 +14,15 @@ final _textTheme = GoogleFonts.cabinTextTheme(
     titleLarge: Typography.blackRedwoodCity.titleLarge!.copyWith(
       fontWeight: FontWeight.bold,
     ),
-    bodyLarge: TextStyle(
+    bodyLarge: const TextStyle(
       fontSize: 20.0,
       height: 1.2,
     ),
-    bodyMedium: TextStyle(
+    bodyMedium: const TextStyle(
       fontSize: 16.0,
       height: 1.25,
     ),
-    bodySmall: TextStyle(
+    bodySmall: const TextStyle(
       fontSize: 12.0,
       height: 0.75,
     ),
