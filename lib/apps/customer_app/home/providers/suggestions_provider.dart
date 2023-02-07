@@ -10,7 +10,7 @@ final suggestionsProvider =
 class SuggestionsNotifier extends StateNotifier<List<PlaceModel>> {
   SuggestionsNotifier(this.placesService) : super([]);
 
-  final placesService;
+  final PlacesService placesService;
 
   void getSuggestions(String query) async {
     state = await placesService.getPredictions(query);

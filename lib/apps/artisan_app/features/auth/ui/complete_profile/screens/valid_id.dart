@@ -86,8 +86,8 @@ class _ValidIDScreenState extends State<ValidIDScreen> {
           ),
           SliverToBoxAdapter(
             child: Column(
-              children: const [
-                SizedBox(
+              children: [
+                const SizedBox(
                   height: 32.0,
                 ),
                 ImageUpload(),
