@@ -19,12 +19,11 @@ final mainRouter = NavRouter(
   onGenerateRoute: (RouteSettings settings) {
     NavRouter? router;
 
-
     switch (settings.name) {
       case '/':
         router =
             AuthService.isAuthenticated() && AuthService.isProfileComplete()
-                ? _artisanAppRouter
+                ? _customerAppRouter
                 : _authRouter;
         break;
       case AuthRoutes.root:
@@ -52,7 +51,6 @@ final _authRouter = NavRouter(
   onGenerateRoute: (RouteSettings settings) {
     Widget? page;
 
-
     switch (settings.name) {
       case '/':
       case AuthRoutes.root:
@@ -78,7 +76,6 @@ final _authRouter = NavRouter(
 
 final _customerAppRouter = NavRouter(
   onGenerateRoute: (RouteSettings settings) {
-
     Widget? page;
 
     MaterialPageRoute? pageRoute;

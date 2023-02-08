@@ -28,9 +28,9 @@ class ServiceStateWidget extends StatelessWidget {
         super(key: key);
 
   const ServiceStateWidget.canceled({Key? key})
-      : color = const Color.fromARGB(255, 201, 200, 200),
+      : color = const Color.fromARGB(255, 196, 196, 196),
         label = 'Canceled',
-        textColor = const Color.fromARGB(255, 105, 105, 105),
+        textColor = const Color.fromARGB(255, 117, 115, 115),
         super(key: key);
 
   final Color color;
@@ -48,7 +48,10 @@ class ServiceStateWidget extends StatelessWidget {
         shape: Shapes.mediumShape,
         color: color,
       ),
-      child: Text(label),
+      child: Text(
+        label,
+        style: TextStyle(color: textColor),
+      ),
     );
   }
 }
