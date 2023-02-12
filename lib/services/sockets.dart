@@ -13,12 +13,12 @@ class AppSockets {
     customerSocket.onDisconnect((_) => debugPrint('client disconnected'));
     chatSocket.onDisconnect((_) => debugPrint('Chat disconnected'));
 
-    customerSocket.on('msg', (data) {
-      print('Customer update: $data');
+    customerSocket.onAny((event, data) {
+      print('Customer update any: Event($event) $data');
     });
 
-    chatSocket.on('msg', (data) {
-      print('Chat update: $data');
+    chatSocket.onAny((event, data) {
+      print('Chat update any: Event($event) $data');
     });
   }
   static final AppSockets _instance = AppSockets._();

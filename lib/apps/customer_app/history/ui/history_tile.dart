@@ -31,7 +31,6 @@ class HistoryTile extends StatelessWidget {
                 child: Center(
                   child: CircleAvatar(
                     backgroundColor: jobCategory.foregroundColor,
-                    // radius: 16,
                     child: Icon(jobCategory.icon),
                   ),
                 ),

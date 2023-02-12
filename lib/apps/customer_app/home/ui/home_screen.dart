@@ -9,6 +9,7 @@ import 'package:handees/services/auth_service.dart';
 import 'package:handees/res/shapes.dart';
 import 'package:handees/routes/routes.dart';
 import 'package:handees/routes/routes.dart';
+import 'package:handees/apps/customer_app/test.dart';
 import 'package:handees/ui/widgets/circle_fadeout_loader.dart';
 import 'package:handees/theme/theme.dart';
 
@@ -133,6 +134,15 @@ class HomeScreen extends ConsumerWidget {
                                 .pushNamed(CustomerAppRoutes.history),
                             leading: const Icon(Icons.history),
                             title: const Text('History'),
+                          ),
+                          const Divider(),
+                          ListTile(
+                            onTap: () =>
+                                Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => Test(),
+                            )),
+                            leading: const Icon(Icons.history),
+                            title: const Text('Test'),
                           ),
                           const Divider(),
                           ListTile(
