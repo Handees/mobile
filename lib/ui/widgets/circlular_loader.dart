@@ -1,36 +1,83 @@
-// import 'package:flutter/material.dart';
+import 'dart:math';
 
-// class CircularLoader extends StatelessWidget {
-//   const CircularLoader({super.key});
+import 'package:flutter/material.dart';
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return CustomPaint(
-//       size: Size(300, 200),
-//       painter: LinePainter(),
+class CircularLoader extends StatefulWidget {
+  const CircularLoader(this.color, {super.key});
 
-//     );
-//   }
-// }
+  final Color color;
 
-// class LinePainter extends CustomPainter {
-//   @override
-//   void paint(Canvas canvas, Size size) {
-//     var paint = Paint()
-//       ..color = Colors.teal
-//       ..strokeWidth = 15;
+  @override
+  State<CircularLoader> createState() => _CircularLoaderState();
+}
 
-//     Offset start = Offset(0, size.height / 2);
-//     Offset end = Offset(size.width, size.height / 2);
+class _CircularLoaderState extends State<CircularLoader>
+    with TickerProviderStateMixin {
+  late AnimationController _animationController;
 
-//     canvas.drawLine(start, end, paint);
-    
+  @override
+  void initState() {
+    super.initState();
 
-//     canvas.drawCircle(start, 25.0, paint);
-//   }
+    _animationController = AnimationController(
+      vsync: this,
+      lowerBound: 0,
+      upperBound: pi * 2,
+      duration: const Duration(milliseconds: 1500),
+    )
+      ..repeat(reverse: false)
+      ..addListener(() {
+        setState(() {});
+      });
+  }
 
-//   @override
-//   bool shouldRepaint(CustomPainter oldDelegate) {
-//     return false;
-//   }
-// }
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Transform.rotate(
+      angle: _animationController.value,
+      child: CustomPaint(
+        size: Size(56, 56),
+        painter: LinePainter(widget.color),
+      ),
+    );
+  }
+}
+
+class LinePainter extends CustomPainter {
+  LinePainter(this.color);
+
+  final Color color;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final radius = size.height / 2;
+    final center = Offset(size.width / 2, size.height / 2);
+
+    final rect = Rect.fromCircle(center: center, radius: radius);
+
+    final gradient = SweepGradient(colors: [color, color.withOpacity(0.0)]);
+
+    var paint = Paint()
+      ..style = PaintingStyle.stroke
+      ..shader = gradient.createShader(rect)
+      // ..color = Colors.teal
+      ..strokeWidth = 2;
+
+    // canvas.drawArc(rect, 0, 3.147, true, paint);
+    canvas.drawPath(
+      Path()..addArc(rect, 0, pi * 2),
+      paint,
+    );
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return false;
+  }
+}

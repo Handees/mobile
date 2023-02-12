@@ -12,6 +12,8 @@ import 'package:handees/routes/routes.dart';
 import 'package:handees/apps/customer_app/test.dart';
 import 'package:handees/ui/widgets/circle_fadeout_loader.dart';
 import 'package:handees/theme/theme.dart';
+import 'package:handees/ui/widgets/error_overlay.dart';
+import 'package:handees/ui/widgets/loading_overlay.dart';
 
 import 'location_picker.dart';
 import 'pick_service_bottom_sheet.dart';
@@ -322,33 +324,35 @@ class HomeScreen extends ConsumerWidget {
                 ),
               ),
             ),
-            if (submitStatus != SubmitStatus.submitted)
-              Container(
-                // width: double.infinity,
-                alignment: Alignment.center,
-                color: Colors.black54,
+            // if (submitStatus != SubmitStatus.submitted)
+            IgnorePointer(
+              ignoring: submitStatus == SubmitStatus.submitted ? true : false,
+              child: AnimatedOpacity(
+                duration: Duration(milliseconds: 200),
+                opacity: submitStatus != SubmitStatus.submitted ? 1 : 0,
                 child: Container(
-                  decoration: ShapeDecoration(
-                    shape: Shapes.mediumShape,
-                    color: Theme.of(context).colorScheme.surface,
+                  // width: double.infinity,
+                  alignment: Alignment.center,
+                  color: Colors.black54,
+                  child: AnimatedScale(
+                    duration: Duration(milliseconds: 150),
+                    scale: submitStatus != SubmitStatus.submitted ? 1 : 0,
+                    child: submitStatus != SubmitStatus.submitError
+                        ? LoadingOverlay()
+                        : ErrorOverlay(),
                   ),
-                  padding: EdgeInsets.all(32.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      submitStatus == SubmitStatus.notSubmitted
-                          ? CircleFadeOutLoader(
-                              size: 100,
-                            )
-                          : CircleAvatar(
-                              radius: 50, backgroundColor: Colors.red),
-                      Text(submitStatus == SubmitStatus.notSubmitted
-                          ? 'Finalizing'
-                          : 'Error'),
-                    ],
-                  ),
+
+                  // AnimatedCrossFade(
+                  //   duration: Duration(milliseconds: 300),
+                  //   firstChild: LoadingOverlay(),
+                  //   secondChild: ErrorOverlay(),
+                  //   crossFadeState: submitStatus == SubmitStatus.notSubmitted
+                  //       ? CrossFadeState.showFirst
+                  //       : CrossFadeState.showSecond,
+                  // ),
                 ),
               ),
+            ),
           ],
         ),
       ),
