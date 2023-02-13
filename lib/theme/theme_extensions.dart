@@ -32,5 +32,5 @@ class ButtonThemeExtensions extends ThemeExtension<ButtonThemeExtensions> {
 
   // Optional
   @override
-  String toString() => 'MyColors(brandColor: $filled, danger: $tonal)';
+  String toString() => 'ButtonExtension(filled: $filled, tonal: $tonal)';
 }
