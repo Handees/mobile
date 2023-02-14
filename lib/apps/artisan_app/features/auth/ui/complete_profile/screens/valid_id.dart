@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:handees/apps/artisan_app/features/auth/ui/complete_profile/widgets/id_type_card.dart';
 import 'package:handees/apps/artisan_app/features/auth/ui/complete_profile/widgets/image_upload.dart';
+import 'package:handees/theme/theme.dart';
 
 class ValidIDScreen extends StatefulWidget {
   ValidIDScreen({super.key});
@@ -85,13 +86,51 @@ class _ValidIDScreenState extends State<ValidIDScreen> {
             ),
           ),
           SliverToBoxAdapter(
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 32.0,
-                ),
-                ImageUpload(),
-              ],
+            child: SizedBox(
+              height: 520,
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 32.0,
+                  ),
+                  const ImageUpload(),
+                  const Spacer(),
+                  Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: horizontalPadding),
+                    width: double.infinity,
+                    height: 64,
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: Theme.of(context)
+                          .extension<ButtonThemeExtensions>()
+                          ?.filled,
+                      child: const Text('Done'),
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: horizontalPadding),
+                    width: double.infinity,
+                    height: 64,
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: Theme.of(context)
+                          .extension<ButtonThemeExtensions>()
+                          ?.tonal!
+                          .copyWith(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.transparent),
+                          ),
+                      child: const Text(
+                        'Cancel',
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                ],
+              ),
             ),
           ),
         ],

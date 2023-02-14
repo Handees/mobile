@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:handees/apps/artisan_app/features/home/screens/home_nav/widgets/accept_handee_dialog.dart';
 import 'package:handees/apps/artisan_app/features/home/screens/home_nav/widgets/complete_profile_card.dart';
+import 'package:handees/apps/artisan_app/features/home/screens/home_nav/widgets/online_toggle_card.dart';
 import 'package:handees/apps/artisan_app/features/home/screens/home_nav/widgets/profile_header.dart';
 import 'package:handees/apps/artisan_app/features/home/screens/home_nav/widgets/user_stats_container.dart';
 
-class HomeNavScreen extends StatelessWidget {
+class HomeNavScreen extends StatefulWidget {
   const HomeNavScreen({super.key});
 
-  final isPhotoAvailable = false;
+  @override
+  State<HomeNavScreen> createState() => _HomeNavScreenState();
+}
+
+class _HomeNavScreenState extends State<HomeNavScreen> {
+  final isProfileComplete = true;
+
   final double horizontalPadding = 16.0;
+
+  bool isArtisanOnline = false;
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +31,21 @@ class HomeNavScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 48),
-                  ProfileHeader(isPhotoAvailable),
+                  InkWell(
+                      onTap: () => showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return const AcceptHandeeDialog();
+                          }),
+                      child: ProfileHeader(isProfileComplete)),
                   const SizedBox(height: 48),
-                  const CompleteProfileCard(),
+                  isProfileComplete
+                      ? OnlineToggleCard(isArtisanOnline, () {
+                          setState(() {
+                            isArtisanOnline = !isArtisanOnline;
+                          });
+                        })
+                      : const CompleteProfileCard(),
                   const SizedBox(height: 48),
                   const UserStatsContainer(),
                 ],

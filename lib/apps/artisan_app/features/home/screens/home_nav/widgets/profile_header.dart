@@ -1,41 +1,59 @@
 import 'package:flutter/material.dart';
+import 'package:handees/apps/artisan_app/features/home/screens/home_nav/widgets/icon_avatar.dart';
 
 class ProfileHeader extends StatelessWidget {
-  const ProfileHeader(this.isPhotoAvailable, {super.key});
+  const ProfileHeader(this.isProfileComplete, {super.key});
 
-  final bool isPhotoAvailable;
+  final bool isProfileComplete;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.min,
-      children: [
-        isPhotoAvailable // TODO: photoIsAvailable
-            ? const CircleAvatar(
-                radius: 28,
-                // backgroundImage: NetworkImage(
-                // ),
-              )
-            : Container(
-                height: 48,
-                width: 48,
-                decoration: ShapeDecoration(
-                  shape: const CircleBorder(
-                      side: BorderSide(
-                    color: Color(0xffe5e5e5),
-                  )),
-                  color: Theme.of(context).colorScheme.tertiary,
+      children: isProfileComplete
+          ? [
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Color(0xffc4c4c4),
+                    width: 2,
+                  ),
+                  borderRadius: BorderRadius.circular(50),
                 ),
-                child: const Icon(Icons.account_circle),
+                padding: const EdgeInsets.all(4),
+                child: const CircleAvatar(
+                  radius: 24,
+                  backgroundImage: NetworkImage(
+                      "https://fcb-abj-pre.s3.amazonaws.com/img/jugadors/MESSI.jpg"),
+                ),
               ),
-        const SizedBox(width: 16.0),
-        Text(
-          "Hello",
-          style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                fontWeight: FontWeight.bold,
+              //Color(0xffc4c4c4)
+              const SizedBox(width: 16.0),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Hello",
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  Text(
+                    "John Doe",
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ],
               ),
-        ),
-      ],
+              // TODO: Add live handees icon
+            ]
+          : [
+              const IconAvatar(),
+              const SizedBox(width: 16.0),
+              Text(
+                "Hello",
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+            ],
     );
   }
 }
