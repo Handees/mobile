@@ -7,22 +7,22 @@ import 'theme_extensions.dart';
 export 'theme_extensions.dart';
 
 final _textTheme = GoogleFonts.cabinTextTheme(
-  TextTheme(
-    titleMedium: Typography.blackRedwoodCity.titleMedium!.copyWith(
+  const TextTheme(
+    titleMedium: TextStyle(
       fontWeight: FontWeight.w600,
     ),
-    titleLarge: Typography.blackRedwoodCity.titleLarge!.copyWith(
+    titleLarge: TextStyle(
       fontWeight: FontWeight.bold,
     ),
-    bodyLarge: const TextStyle(
+    bodyLarge: TextStyle(
       fontSize: 20.0,
       height: 1.2,
     ),
-    bodyMedium: const TextStyle(
+    bodyMedium: TextStyle(
       fontSize: 16.0,
       height: 1.25,
     ),
-    bodySmall: const TextStyle(
+    bodySmall: TextStyle(
       fontSize: 12.0,
       height: 0.75,
     ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:handees/data/handees/job_category.dart';
 
 import 'history_tile.dart';
 
@@ -9,12 +10,11 @@ class HistoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('History'),
+        title: const Text('Handee history'),
       ),
       body: ListView.builder(
-        itemBuilder: (context, index) => const HistoryTile(
-          icon: Icon(Icons.abc),
-          iconBackground: Colors.orange,
+        itemBuilder: (context, index) => HistoryTile(
+          jobCategory: jobCategories[0],
         ),
       ),
     );

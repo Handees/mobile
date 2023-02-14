@@ -16,7 +16,7 @@ class SuggestionsNotifier extends StateNotifier<List<PlaceModel>> {
     state = await placesService.getPredictions(query);
   }
 
-  void getLoc(String id) async {
+  void getLocation(String id) async {
     await placesService.getLocation(id);
   }
 }

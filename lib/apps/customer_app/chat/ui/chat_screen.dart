@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:handees/data/chat/message_model.dart';
+import 'package:handees/data/chats/message_model.dart';
 import 'package:handees/res/shapes.dart';
 
 import '../providers/messages_provider.dart';

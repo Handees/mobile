@@ -103,7 +103,7 @@ class _LocationPickerOpenedState extends ConsumerState<LocationPickerOpened> {
         itemBuilder: (context, index) {
           return InkWell(
             onTap: () {
-              notifier.getLoc(suggestions[index].id);
+              notifier.getLocation(suggestions[index].id);
             },
             child: Padding(
               padding: const EdgeInsets.all(16.0),
