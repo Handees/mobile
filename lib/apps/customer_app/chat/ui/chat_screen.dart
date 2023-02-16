@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:handees/data/chats/message_model.dart';
+import 'package:handees/data/chats/model/message_model.dart';
 import 'package:handees/res/shapes.dart';
 
 import '../providers/messages_provider.dart';
@@ -21,13 +22,21 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     if (_textController.text.isEmpty) return;
     ref.read(messagesProvider.notifier).sendMessage(_textController.text);
     _textController.clear();
-    _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+    _scrollToBottom();
+  }
+
+  void _scrollToBottom() {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      _scrollController.jumpTo(
+        _scrollController.position.maxScrollExtent,
+      );
+    });
   }
 
   @override
   void initState() {
-    // ref.read(messagesProvider.notifier).clear();
     super.initState();
+    _scrollToBottom();
   }
 
   @override
@@ -38,11 +47,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final model = ref.watch(messagesProvider.notifier);
-
     final messages = ref.watch(messagesProvider);
-
-    print(messages);
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -71,7 +76,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                 padding: const EdgeInsets.only(
                   left: 16.0,
                   right: 16.0,
-                  bottom: 100.0, //TODO: no light?
+                  bottom: 96.0,
                 ),
                 sliver: SliverList(
                   delegate: SliverChildBuilderDelegate(
