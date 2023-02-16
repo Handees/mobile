@@ -74,8 +74,9 @@ ThemeData _buildTheme(ColorScheme colorScheme) => ThemeData.from(
       textTheme: _textTheme,
       useMaterial3: true,
     ).copyWith(
-// dialogTheme: DialogTheme(),
-      appBarTheme: const AppBarTheme().copyWith(centerTitle: true),
+      dividerTheme:
+          DividerThemeData(color: Color.fromRGBO(150, 162, 168, 0.12)),
+      appBarTheme: const AppBarTheme().copyWith(centerTitle: false),
       scaffoldBackgroundColor: colorScheme.background,
       radioTheme: RadioThemeData(
         fillColor: MaterialStateProperty.all(colorScheme.primary),

@@ -424,7 +424,7 @@ class _SearchWidgetState extends State<SearchWidget> {
     return WillPopScope(
       onWillPop: () async {
         print('How');
-        final shouldPop = isFocused;
+        final shouldPop = !isFocused;
 
         WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
         setState(() {
