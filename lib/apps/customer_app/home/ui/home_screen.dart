@@ -6,6 +6,7 @@ import 'package:handees/apps/customer_app/home/providers/home_provider.dart';
 import 'package:handees/apps/customer_app/home/ui/swap_app_bottom_sheet.dart';
 import 'package:handees/apps/customer_app/tracker/ui/tracking_screen.dart';
 import 'package:handees/res/shapes.dart';
+import 'package:handees/res/icons.dart';
 import 'package:handees/routes/routes.dart';
 import 'package:handees/apps/customer_app/test.dart';
 import 'package:handees/theme/theme.dart';
@@ -114,7 +115,7 @@ class HomeScreen extends ConsumerWidget {
                         ),
                         ListTile(
                           onTap: () {},
-                          leading: const Icon(Icons.credit_card),
+                          leading: const Icon(HandeeIcons.payment),
                           title: const Text('Payments'),
                         ),
                         const Divider(),
@@ -143,7 +144,7 @@ class HomeScreen extends ConsumerWidget {
                         const Divider(),
                         ListTile(
                           onTap: () {},
-                          leading: const Icon(Icons.support_agent),
+                          leading: const Icon(HandeeIcons.person_support),
                           title: const Text('Customer Support'),
                         ),
                         const Divider(),
@@ -153,7 +154,7 @@ class HomeScreen extends ConsumerWidget {
                             Navigator.of(context, rootNavigator: true)
                                 .pushReplacementNamed(AuthRoutes.root);
                           },
-                          leading: const Icon(Icons.help_outline_outlined),
+                          leading: const Icon(HandeeIcons.chat_help),
                           title: const Text('FAQ'),
                         ),
                         const Spacer(),

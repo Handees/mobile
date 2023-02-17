@@ -76,7 +76,7 @@ ThemeData _buildTheme(ColorScheme colorScheme) => ThemeData.from(
     ).copyWith(
       dividerTheme:
           DividerThemeData(color: Color.fromRGBO(150, 162, 168, 0.12)),
-      appBarTheme: const AppBarTheme().copyWith(centerTitle: false),
+      appBarTheme: const AppBarTheme().copyWith(centerTitle: true),
       scaffoldBackgroundColor: colorScheme.background,
       radioTheme: RadioThemeData(
         fillColor: MaterialStateProperty.all(colorScheme.primary),
@@ -122,6 +122,7 @@ final darkTheme = _buildTheme(_darkColorScheme);
 
 final authTheme = _buildTheme(_authColorScheme).copyWith(
   inputDecorationTheme: _buildInputDecorationTheme(_authColorScheme).copyWith(
+    labelStyle: _textTheme.bodyMedium,
     border: const OutlineInputBorder(),
     filled: false,
   ),

@@ -22,14 +22,24 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     if (_textController.text.isEmpty) return;
     ref.read(messagesProvider.notifier).sendMessage(_textController.text);
     _textController.clear();
-    _scrollToBottom();
   }
 
   void _scrollToBottom() {
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      _scrollController.jumpTo(
-        _scrollController.position.maxScrollExtent,
-      );
+      _scrollController.animateTo(_scrollController.position.maxScrollExtent,
+          duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+    });
+  }
+
+  ///checks current scroll position to determine whether the controller should
+  ///scroll or not
+  void _checkAndScrollToBottom() {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      if (_scrollController.offset >
+          _scrollController.position.maxScrollExtent - 120) {
+        _scrollController.animateTo(_scrollController.position.maxScrollExtent,
+            duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+      }
     });
   }
 
@@ -48,6 +58,8 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     final messages = ref.watch(messagesProvider);
+
+    _checkAndScrollToBottom();
 
     return Scaffold(
       resizeToAvoidBottomInset: true,

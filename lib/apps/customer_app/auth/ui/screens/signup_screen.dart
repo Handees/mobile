@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:handees/res/icons.dart';
 import 'package:handees/routes/routes.dart';
 import 'package:handees/routes/routes.dart';
 import 'package:handees/theme/theme.dart';
@@ -137,7 +138,9 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
                                   errorText: passwordError,
                                   suffixIcon: IconButton(
                                     icon: Icon(
-                                      obscureText ? Icons.abc : Icons.password,
+                                      obscureText
+                                          ? HandeeIcons.eye_tracking_off
+                                          : HandeeIcons.eye_tracking_on,
                                     ),
                                     // color: obscureText
                                     //     ? Theme.of(context).unselectedWidgetColor
