@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:handees/res/constants.dart';
 import 'package:handees/res/uri.dart';
 import 'package:handees/ui/widgets/circlular_loader.dart';
@@ -79,108 +80,113 @@ class _TestState extends State<Test> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Wrap(
-          runSpacing: 20,
-          spacing: 20,
-          children: [
-            InkWell(
-              onTap: () {
-                customerSocket.emit('close_offer', {
-                  {'booking_id': '9f04dd34-0c9a-48d6-b7a1-d00ab3e12536'}
-                });
-                print('Close');
-              },
-              child: Ink(
-                height: 80,
-                width: 80,
-                color: Colors.blue,
-              ),
-            ),
-            InkWell(
-              onTap: () async {
-                print('submitting');
-                final future = http.post(
-                  Uri.http(
-                    site,
-                    '/api/bookings/',
-                  ),
-                  headers: {
-                    HttpHeaders.contentTypeHeader: 'application/json',
-                    'access-token': token,
-                  },
-                  body: jsonEncode(
-                    {
-                      'lat': 6.517871336509268,
-                      'lon': 3.399740067230001,
-                      'user_id': FirebaseAuth.instance.currentUser!.uid,
-                      'job_category': 'carpentary',
-                    },
-                  ),
-                );
-
-                final response = await future;
-                print(response.body);
-
-                final json = jsonDecode(response.body);
-                bookingId = json['data']['booking_id'];
-
-                customerSocket.emit('booking_update', {
-                  {'booking_id': bookingId}
-                });
-                print(bookingId);
-
-                chatSocket.emit('join_chat', {'booking_id': bookingId});
-                print('joined_chat');
-              },
-              child: Ink(
-                height: 80,
-                width: 80,
-                color: Colors.purple,
-              ),
-            ),
-            TextField(
-              onTap: () {
-                showSucessSnackBar(context);
-              },
-              onSubmitted: (value) {
-                chatSocket.emit('msg', {'msg': value, 'booking_id': bookingId});
-                print('Sent $value to $bookingId');
-              },
-            ),
-            InkWell(
-              onTap: () async {
-                // print(token);
-                // final loc = await PlacesService.instance.determinePosition();
-                final future = http.get(
-                  Uri.https(
-                    site,
-                    '/user/bookings',
-                  ),
-                  headers: {
-                    // HttpHeaders.contentTypeHeader: 'application/json',
-                    'access-token': token,
-                  },
-                );
-
-                final response = await future;
-                print(response.body);
-              },
-              child: Ink(
-                height: 80,
-                width: 80,
-                color: Colors.brown,
-              ),
-            ),
-            InkWell(
-              onTap: () async {},
-              child: Ink(
-                height: 80,
-                width: 80,
-                color: Colors.yellow,
-              ),
-            ),
-          ],
+        child: const GoogleMap(
+          initialCameraPosition: CameraPosition(
+            target: LatLng(12, 15),
+          ),
         ),
+        // Wrap(
+        //   runSpacing: 20,
+        //   spacing: 20,
+        //   children: [
+        //     InkWell(
+        //       onTap: () {
+        //         customerSocket.emit('close_offer', {
+        //           {'booking_id': '9f04dd34-0c9a-48d6-b7a1-d00ab3e12536'}
+        //         });
+        //         print('Close');
+        //       },
+        //       child: Ink(
+        //         height: 80,
+        //         width: 80,
+        //         color: Colors.blue,
+        //       ),
+        //     ),
+        //     InkWell(
+        //       onTap: () async {
+        //         print('submitting');
+        //         final future = http.post(
+        //           Uri.http(
+        //             site,
+        //             '/api/bookings/',
+        //           ),
+        //           headers: {
+        //             HttpHeaders.contentTypeHeader: 'application/json',
+        //             'access-token': token,
+        //           },
+        //           body: jsonEncode(
+        //             {
+        //               'lat': 6.517871336509268,
+        //               'lon': 3.399740067230001,
+        //               'user_id': FirebaseAuth.instance.currentUser!.uid,
+        //               'job_category': 'carpentary',
+        //             },
+        //           ),
+        //         );
+
+        //         final response = await future;
+        //         print(response.body);
+
+        //         final json = jsonDecode(response.body);
+        //         bookingId = json['data']['booking_id'];
+
+        //         customerSocket.emit('booking_update', {
+        //           {'booking_id': bookingId}
+        //         });
+        //         print(bookingId);
+
+        //         chatSocket.emit('join_chat', {'booking_id': bookingId});
+        //         print('joined_chat');
+        //       },
+        //       child: Ink(
+        //         height: 80,
+        //         width: 80,
+        //         color: Colors.purple,
+        //       ),
+        //     ),
+        //     TextField(
+        //       onTap: () {
+        //         showSucessSnackBar(context);
+        //       },
+        //       onSubmitted: (value) {
+        //         chatSocket.emit('msg', {'msg': value, 'booking_id': bookingId});
+        //         print('Sent $value to $bookingId');
+        //       },
+        //     ),
+        //     InkWell(
+        //       onTap: () async {
+        //         // print(token);
+        //         // final loc = await PlacesService.instance.determinePosition();
+        //         final future = http.get(
+        //           Uri.https(
+        //             site,
+        //             '/user/bookings',
+        //           ),
+        //           headers: {
+        //             // HttpHeaders.contentTypeHeader: 'application/json',
+        //             'access-token': token,
+        //           },
+        //         );
+
+        //         final response = await future;
+        //         print(response.body);
+        //       },
+        //       child: Ink(
+        //         height: 80,
+        //         width: 80,
+        //         color: Colors.brown,
+        //       ),
+        //     ),
+        //     InkWell(
+        //       onTap: () async {},
+        //       child: Ink(
+        //         height: 80,
+        //         width: 80,
+        //         color: Colors.yellow,
+        //       ),
+        //     ),
+        //   ],
+        // ),
       ),
     );
   }

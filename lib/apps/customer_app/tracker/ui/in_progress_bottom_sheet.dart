@@ -73,12 +73,8 @@ class _InProgressBottomSheetState extends State<InProgressBottomSheet>
 
   @override
   Widget build(BuildContext context) {
-    print('building');
     return GestureDetector(
       onVerticalDragUpdate: (details) {
-        print(details);
-
-        // temporarilyIgnore();
         setState(() {
           _controllersUpdate(details.delta.dy / 250);
         });
@@ -235,7 +231,7 @@ class _InProgressBottomSheetState extends State<InProgressBottomSheet>
                         children: [
                           Text('ETA $time minutes'),
                           LinearProgressIndicator(
-                            // value: progress / 2000,
+                            value: 400 / 2000,
                             backgroundColor:
                                 Theme.of(context).colorScheme.secondary,
                           ),
