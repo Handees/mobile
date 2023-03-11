@@ -1,6 +1,11 @@
 import 'package:handees/res/constants.dart';
 
 abstract class AppUris {
+  static final rootUri = Uri.http(
+    AppConstants.url,
+    '/',
+  );
+
   static final customerSocketUri = Uri.http(
     AppConstants.url,
     '/customer',

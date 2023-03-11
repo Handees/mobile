@@ -66,7 +66,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Handees',
-      theme: lightTheme,
+      theme: buildTheme(lightColorScheme),
       // darkTheme: darkTheme,
 
       onGenerateRoute: mainRouter.onGenerateRoute,

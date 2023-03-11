@@ -206,7 +206,7 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
                     const Spacer(flex: 2),
                     SizedBox(
                       width: double.infinity,
-                      child: ElevatedButton(
+                      child: FilledButton(
                         onPressed: authState == AuthState.loading
                             ? null
                             : () {
@@ -231,9 +231,6 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
                                   },
                                 );
                               },
-                        style: Theme.of(context)
-                            .extension<ButtonThemeExtensions>()
-                            ?.filled,
                         child: const Text('Sign up'),
                       ),
                     ),

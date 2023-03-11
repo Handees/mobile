@@ -55,14 +55,12 @@ class SwapAppBottomSheet extends StatelessWidget {
           const SizedBox(height: 16.0),
           SizedBox(
             width: double.infinity,
-            child: ElevatedButton(
+            child: FilledButton(
               onPressed: () async {
                 final res = await Navigator.of(context, rootNavigator: true)
                     .pushNamed(ArtisanAppRoutes.home);
                 print(res);
               },
-              style:
-                  Theme.of(context).extension<ButtonThemeExtensions>()?.filled,
               child: const Text('Switch to handee-man'),
             ),
           ),

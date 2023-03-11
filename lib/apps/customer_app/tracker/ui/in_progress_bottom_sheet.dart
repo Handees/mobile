@@ -267,27 +267,21 @@ class _InProgressBottomSheetState extends State<InProgressBottomSheet>
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
-                        child: ElevatedButton(
+                        child: FilledButton(
                           onPressed: () {},
                           child: const Text('Call'),
-                          style: Theme.of(context)
-                              .extension<ButtonThemeExtensions>()
-                              ?.filled,
                         ),
                       ),
                       const SizedBox(width: 16),
                       Expanded(
                         // width: double.infinity,
-                        child: ElevatedButton(
+                        child: FilledButton.tonal(
                           onPressed: () {
                             print('why now');
                             Navigator.of(context)
                                 .pushNamed(CustomerAppRoutes.chat);
                           },
                           child: const Text('Message'),
-                          style: Theme.of(context)
-                              .extension<ButtonThemeExtensions>()
-                              ?.tonal,
                         ),
                       ),
                     ],

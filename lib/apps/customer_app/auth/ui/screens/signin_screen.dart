@@ -155,7 +155,7 @@ class SigninScreen extends ConsumerWidget with InputValidationMixin {
                     const Spacer(flex: 2),
                     SizedBox(
                       width: double.infinity,
-                      child: ElevatedButton(
+                      child: FilledButton(
                         onPressed: authState == AuthState.loading
                             ? null
                             : () {
@@ -165,9 +165,6 @@ class SigninScreen extends ConsumerWidget with InputValidationMixin {
                                 _formGlobalKey.currentState?.save();
                                 model.signinUser();
                               },
-                        style: Theme.of(context)
-                            .extension<ButtonThemeExtensions>()
-                            ?.filled,
                         child: const Text('Sign in'),
                       ),
                     ),

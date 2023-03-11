@@ -132,20 +132,17 @@ class AcceptHandeeDialog extends StatelessWidget {
               child: SizedBox(
                 width: 100,
                 height: 54,
-                child: ElevatedButton(
+                child: FilledButton(
                   onPressed: () {},
-                  style: Theme.of(context)
-                      .extension<ButtonThemeExtensions>()
-                      ?.filled!
-                      .copyWith(
-                        backgroundColor:
-                            MaterialStateProperty.all(const Color(0xff14161c)),
-                        shape: MaterialStateProperty.all(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(35),
-                          ),
-                        ),
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(const Color(0xff14161c)),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(35),
                       ),
+                    ),
+                  ),
                   child: Text(
                     "Accept",
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(

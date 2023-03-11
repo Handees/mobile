@@ -64,11 +64,8 @@ class _PasspportPhotographScreenState extends State<PasspportPhotographScreen> {
                         EdgeInsets.symmetric(horizontal: horizontalPadding),
                     width: double.infinity,
                     height: 64,
-                    child: ElevatedButton(
+                    child: FilledButton(
                       onPressed: () {},
-                      style: Theme.of(context)
-                          .extension<ButtonThemeExtensions>()
-                          ?.filled,
                       child: const Text('Done'),
                     ),
                   ),
@@ -78,15 +75,8 @@ class _PasspportPhotographScreenState extends State<PasspportPhotographScreen> {
                         EdgeInsets.symmetric(horizontal: horizontalPadding),
                     width: double.infinity,
                     height: 64,
-                    child: ElevatedButton(
+                    child: TextButton(
                       onPressed: () {},
-                      style: Theme.of(context)
-                          .extension<ButtonThemeExtensions>()
-                          ?.tonal!
-                          .copyWith(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.transparent),
-                          ),
                       child: const Text(
                         'Cancel',
                       ),

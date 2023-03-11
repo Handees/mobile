@@ -30,10 +30,8 @@ class PhoneProceedDialog extends StatelessWidget {
           const SizedBox(height: 24),
           SizedBox(
             width: double.infinity,
-            child: ElevatedButton(
+            child: FilledButton(
               onPressed: onProceed,
-              style:
-                  Theme.of(context).extension<ButtonThemeExtensions>()?.filled,
               child: const Text('Continue'),
             ),
           ),
