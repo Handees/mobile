@@ -34,6 +34,8 @@ const lightColorScheme = ColorScheme.light(
   onPrimary: Colors.white,
   tertiary: Color.fromRGBO(243, 248, 254, 1),
   onSecondary: Color.fromRGBO(20, 22, 28, 1),
+  errorContainer: Color.fromRGBO(255, 234, 234, 1),
+  error: Color.fromRGBO(249, 22, 22, 1),
   //background: Color.fromRGBO(20, 22, 28, 0.1),
   secondary: Color.fromRGBO(235, 237, 240, 1),
   brightness: Brightness.light,

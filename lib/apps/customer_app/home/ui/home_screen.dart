@@ -148,11 +148,7 @@ class HomeScreen extends ConsumerWidget {
                         ),
                         const Divider(),
                         ListTile(
-                          onTap: () {
-                            ref.watch(authProvider.notifier).signoutUser();
-                            Navigator.of(context, rootNavigator: true)
-                                .pushReplacementNamed(AuthRoutes.root);
-                          },
+                          onTap: () {},
                           leading: const Icon(HandeeIcons.chat_help),
                           title: const Text('FAQ'),
                         ),
