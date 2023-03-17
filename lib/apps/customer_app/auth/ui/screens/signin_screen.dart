@@ -100,7 +100,7 @@ class SigninScreen extends ConsumerWidget with InputValidationMixin {
                                         : null,
                                     onPressed: () {
                                       ref
-                                          .read(_obscureTextProvider.state)
+                                          .read(_obscureTextProvider.notifier)
                                           .update((state) => !state);
                                     },
                                   ),

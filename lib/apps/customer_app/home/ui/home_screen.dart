@@ -25,7 +25,7 @@ class HomeScreen extends ConsumerWidget {
 
     final submitStatus = ref.watch(userDataStatusProvider);
 
-    final name = ref.watch(nameProvider);
+    final name = ref.watch(userDataProvider).name;
     final categories = ref.watch(categoryProvider);
 
     return Scaffold(

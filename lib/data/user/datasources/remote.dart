@@ -42,7 +42,7 @@ class UserRemoteDataSource {
       body: jsonEncode(
         {
           'name': name,
-          // 'telephone': phone,
+          'telephone': phone,
           'email': email,
           'user_id': uid,
         },
@@ -55,7 +55,43 @@ class UserRemoteDataSource {
     print("Submit user data response code ${response.statusCode}");
 
     //TODO: Error handling
-    if (response.statusCode > 200 && response.statusCode < 400) {
+    if (response.statusCode >= 200 && response.statusCode < 400) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> updateUserData({
+    required String name,
+    required String phone,
+    required String email,
+    required String uid,
+    required String token,
+  }) async {
+    final future = http.patch(
+      AppUris.addNewUserUri,
+      headers: {
+        HttpHeaders.contentTypeHeader: 'application/json',
+        'access-token': token,
+      },
+      body: jsonEncode(
+        {
+          'name': name,
+          'telephone': phone,
+          'email': email,
+          'user_id': uid,
+        },
+      ),
+    );
+
+    final response = await future;
+    print("Submit user data response ${response.body}");
+
+    print("Submit user data response code ${response.statusCode}");
+
+    //TODO: Error handling
+    if (response.statusCode >= 200 && response.statusCode < 400) {
       return true;
     } else {
       return false;

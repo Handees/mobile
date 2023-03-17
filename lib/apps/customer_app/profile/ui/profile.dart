@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:handees/apps/customer_app/home/providers/home_provider.dart';
+import 'package:handees/apps/customer_app/profile/providers/profile_provider.dart';
+import 'package:handees/data/user/models/user.dart';
 import 'package:handees/res/icons.dart';
+import 'package:handees/routes/routes.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(userDataProvider);
+    final addresses = user.addresses;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),
@@ -27,17 +35,19 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 16.0),
                   _ProfileTile(
+                    onTap: () => Navigator.of(context)
+                        .pushNamed(CustomerAppRoutes.editPrimary),
                     leadingIcon: Icon(Icons.account_circle),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Eje Sapawanwundme',
+                          user.name,
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                         SizedBox(height: 4.0),
                         Text(
-                          '+23481999000364',
+                          user.phone,
                         ),
                       ],
                     ),
@@ -49,9 +59,11 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 16.0),
                   _ProfileTile(
+                    onTap: () => Navigator.of(context)
+                        .pushNamed(CustomerAppRoutes.editEmail),
                     leadingIcon: Icon(Icons.mail),
                     child: Text(
-                      'dome2k@gmail.com',
+                      user.email,
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
@@ -61,19 +73,23 @@ class ProfileScreen extends StatelessWidget {
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   SizedBox(height: 8.0),
-                  for (int i = 0; i < 2; ++i)
+                  for (int i = 0; i < addresses.length; ++i)
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 16.0),
                       child: _ProfileTile(
+                        onTap: () => Navigator.of(context)
+                            .pushNamed(CustomerAppRoutes.editAddress),
                         leadingIcon: Icon(Icons.book_rounded),
                         child: Text(
-                          '24/7 Garri Avenue',
+                          addresses[i],
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ),
                     ),
                   SizedBox(height: 16.0),
                   _ProfileTile(
+                    onTap: () => Navigator.of(context)
+                        .pushNamed(CustomerAppRoutes.editAddress),
                     leadingIcon: Icon(Icons.add),
                     child: Text(
                       'Add a new address',
@@ -85,7 +101,11 @@ class ProfileScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 24.0),
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        ref.read(profileProvider.notifier).signoutUser();
+                        Navigator.of(context, rootNavigator: true)
+                            .pushReplacementNamed(AuthRoutes.signin);
+                      },
                       child: Row(
                         children: [
                           CircleAvatar(

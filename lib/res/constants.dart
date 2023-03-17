@@ -1,5 +1,5 @@
 abstract class AppConstants {
-  static const url = '0e57-102-89-33-18.ngrok.io'; //'20.9.22.141:5020';
+  static const url = '20.9.22.141:5020';
 
   static const mapsUrl = 'maps.googleapis.com';
 

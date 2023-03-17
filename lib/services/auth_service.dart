@@ -9,10 +9,24 @@ final authServiceProvider = Provider<AuthService>((ref) {
   return AuthService._(FirebaseAuth.instance, UserRepository());
 });
 
+final tokenProvider = Provider((ref) {
+  return ref.watch(authServiceProvider).token;
+});
+
 class AuthService {
   AuthService._(this.firebaseAuth, this.userRepository) {
-    FirebaseAuth.instance.idTokenChanges().listen((user) {
-      user?.getIdToken().then((value) => _token = value);
+    FirebaseAuth.instance.userChanges().listen((user) {
+      user?.getIdToken().then((value) {
+        _token = value;
+
+        userRepository.updateUserData(
+          name: user.displayName ?? '',
+          phone: user.phoneNumber ?? '',
+          email: user.email ?? '',
+          uid: user.uid,
+          token: _token,
+        );
+      });
     });
   }
 
@@ -104,17 +118,17 @@ class AuthService {
   ///email and password
   ///
   ///Returns corresponding AuthResponse
-  Future<AuthResponse> completeProfile(
-    String email,
-    String password,
-    String name,
-  ) async {
+  Future<AuthResponse> updateFirebaseProfile({
+    String? email,
+    String? password,
+    String? name,
+  }) async {
     final user = firebaseAuth.currentUser!;
 
     try {
-      await user.updatePassword(password);
-      await user.updateDisplayName(name);
-      await user.updateEmail(email);
+      if (password != null) await user.updatePassword(password);
+      if (name != null) await user.updateDisplayName(name);
+      if (email != null) await user.updateEmail(email);
 
       return AuthResponse.success;
     } on FirebaseAuthException catch (e) {
@@ -161,7 +175,6 @@ class AuthService {
     required String email,
     required String uid,
   }) async {
-
     try {
       return await userRepository.submitUserData(
         name: name,
