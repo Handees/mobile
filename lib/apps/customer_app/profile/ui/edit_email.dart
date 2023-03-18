@@ -14,21 +14,7 @@ class EditEmail extends ConsumerWidget {
       appBar: AppBar(
         title: Text('Email'),
       ),
-      body: Center(
-          child: Column(
-        children: [
-          TextField(
-            onSubmitted: (value) {
-              print(value);
-              ref.read(profileProvider.notifier).updateEmail(value);
-            },
-          ),
-          FilledButton(
-            onPressed: () async {},
-            child: Text('Done'),
-          )
-        ],
-      )),
+      body: Placeholder(),
     );
   }
 }
