@@ -47,7 +47,7 @@ class AuthService {
       FirebaseAuth.instance.currentUser!.displayName!.isNotEmpty;
 
   Future<bool> dataSubmitted() async {
-    if (await userRepository.local.isDataStored) return true;
+    // if (await userRepository.local.isDataStored) return true;
     try {
       final response = await http.get(
         AppUris.userDataUri(user.uid),

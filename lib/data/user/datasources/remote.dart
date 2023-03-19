@@ -37,7 +37,7 @@ class UserRemoteDataSource {
       AppUris.addNewUserUri,
       headers: {
         HttpHeaders.contentTypeHeader: 'application/json',
-        'access-token': token,
+        // 'access-token': token,
       },
       body: jsonEncode(
         {
@@ -86,9 +86,9 @@ class UserRemoteDataSource {
     );
 
     final response = await future;
-    print("Submit user data response ${response.body}");
+    print("Patch user data response ${response.body}");
 
-    print("Submit user data response code ${response.statusCode}");
+    print("Patch user data response code ${response.statusCode}");
 
     //TODO: Error handling
     if (response.statusCode >= 200 && response.statusCode < 400) {
