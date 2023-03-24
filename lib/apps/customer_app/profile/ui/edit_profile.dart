@@ -17,7 +17,7 @@ class EditProfile extends StatelessWidget {
         scrolledUnderElevation: 0,
       ),
       body: CustomScrollView(
-        slivers: <Widget>[
+        slivers: [
           SliverToBoxAdapter(
             child: SizedBox(
               height: availableHeight,
@@ -36,13 +36,19 @@ class EditProfile extends StatelessWidget {
                     const SizedBox(height: 24),
                     const _EditProfileTextField(
                         label: 'Phone number', keyboard: TextInputType.phone),
-                    const Spacer(),
+                    // const Spacer(),
+                    const SizedBox(height: 100),
                     SizedBox(
                       width: double.infinity,
                       height: 64,
                       child: FilledButton(
                         onPressed: () {},
-                        child: const Text('Done'),
+                        child: const Text(
+                          'Done',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
                       ),
                     ),
                     const Spacer(),
