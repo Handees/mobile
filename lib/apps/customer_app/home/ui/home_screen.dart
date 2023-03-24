@@ -113,7 +113,8 @@ class HomeScreen extends ConsumerWidget {
                           ),
                         ),
                         ListTile(
-                          onTap: () {},
+                          onTap: () => Navigator.of(context)
+                              .pushNamed(CustomerAppRoutes.payments),
                           leading: const Icon(HandeeIcons.payment),
                           title: const Text('Payments'),
                         ),
