@@ -18,14 +18,15 @@ class EditProfile extends StatelessWidget {
       ),
       body: CustomScrollView(
         slivers: [
-          SliverToBoxAdapter(
-            child: SizedBox(
-              height: availableHeight,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            sliver: SliverToBoxAdapter(
+              child: SizedBox(
+                height: availableHeight,
                 child: Column(
                   children: [
-                    const Spacer(),
+                    // const Spacer(),
+                    const SizedBox(height: 50),
                     const Icon(Icons.account_circle_rounded, size: 80),
                     const SizedBox(height: 41.17),
                     const _EditProfileTextField(
@@ -36,8 +37,8 @@ class EditProfile extends StatelessWidget {
                     const SizedBox(height: 24),
                     const _EditProfileTextField(
                         label: 'Phone number', keyboard: TextInputType.phone),
-                    // const Spacer(),
-                    const SizedBox(height: 100),
+                    const Spacer(flex: 2),
+                    // const SizedBox(height: 125),
                     SizedBox(
                       width: double.infinity,
                       height: 64,
