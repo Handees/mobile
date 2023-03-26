@@ -21,17 +21,20 @@ class EditEmail extends ConsumerWidget {
       ),
       body: CustomScrollView(
         slivers: [
-          SliverToBoxAdapter(
-            child: SizedBox(
-              height: availableHeight,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            sliver: SliverToBoxAdapter(
+              child: SizedBox(
+                height: availableHeight,
                 child: Column(
                   children: [
-                    const SizedBox(height: 83),
+                    const SizedBox(height: 50),
                     // TODO: Fix SVG not displaying in Circle
                     const CircleAvatarWithSvgImage(
                         imagePath: 'assets/svg/email_image.svg'),
+                    //TEST
+                    // const CircleAvatarWithSvgImage(
+                    //     imagePath: 'assets/svg/handee_artisan_home_bg.svg'),
                     const SizedBox(height: 23),
                     const ProfileEditingTextField(
                         keyboard: TextInputType.emailAddress),
@@ -44,8 +47,8 @@ class EditEmail extends ConsumerWidget {
                         color: Theme.of(context).disabledColor,
                       ),
                     ),
-                    // const Spacer(),
-                    const SizedBox(height: 100),
+                    const Spacer(flex: 2),
+                    // const SizedBox(height: 130),
                     SizedBox(
                       width: double.infinity,
                       height: 64,
