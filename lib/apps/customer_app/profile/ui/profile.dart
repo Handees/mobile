@@ -24,20 +24,21 @@ class ProfileScreen extends ConsumerWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(
                 vertical: 16.0,
-                horizontal: 16.0,
+                horizontal: 24.0,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     'SIGNED IN AS',
-                    style: Theme.of(context).textTheme.titleMedium,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: Theme.of(context).disabledColor, fontSize: 14),
                   ),
-                  SizedBox(height: 16.0),
+                  const SizedBox(height: 16.0),
                   _ProfileTile(
                     onTap: () => Navigator.of(context)
                         .pushNamed(CustomerAppRoutes.editPrimary),
-                    leadingIcon: Icon(Icons.account_circle),
+                    leadingIcon: const Icon(Icons.account_circle),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -45,59 +46,61 @@ class ProfileScreen extends ConsumerWidget {
                           user.name,
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
-                        SizedBox(height: 4.0),
+                        const SizedBox(height: 4.0),
                         Text(
                           user.phone,
                         ),
                       ],
                     ),
                   ),
-                  SizedBox(height: 32.0),
+                  const SizedBox(height: 32.0),
                   Text(
                     'EMAIL',
-                    style: Theme.of(context).textTheme.titleMedium,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: Theme.of(context).disabledColor, fontSize: 14),
                   ),
-                  SizedBox(height: 16.0),
+                  const SizedBox(height: 16.0),
                   _ProfileTile(
                     onTap: () => Navigator.of(context)
                         .pushNamed(CustomerAppRoutes.editEmail),
-                    leadingIcon: Icon(Icons.mail),
+                    leadingIcon: const Icon(Icons.mail),
                     child: Text(
                       user.email,
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
-                  SizedBox(height: 32.0),
+                  const SizedBox(height: 32.0),
                   Text(
                     'ADDRESS',
-                    style: Theme.of(context).textTheme.titleMedium,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: Theme.of(context).disabledColor, fontSize: 14),
                   ),
-                  SizedBox(height: 8.0),
+                  const SizedBox(height: 8.0),
                   for (int i = 0; i < addresses.length; ++i)
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 16.0),
                       child: _ProfileTile(
                         onTap: () => Navigator.of(context)
                             .pushNamed(CustomerAppRoutes.editAddress),
-                        leadingIcon: Icon(Icons.book_rounded),
+                        leadingIcon: const Icon(Icons.book_rounded),
                         child: Text(
                           addresses[i],
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ),
                     ),
-                  SizedBox(height: 16.0),
+                  const SizedBox(height: 16.0),
                   _ProfileTile(
                     onTap: () => Navigator.of(context)
                         .pushNamed(CustomerAppRoutes.editAddress),
-                    leadingIcon: Icon(Icons.add),
+                    leadingIcon: const Icon(Icons.add),
+                    trailing: null,
                     child: Text(
                       'Add a new address',
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
-                    trailing: null,
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 24.0),
                     child: InkWell(
@@ -110,13 +113,13 @@ class ProfileScreen extends ConsumerWidget {
                         children: [
                           CircleAvatar(
                             radius: 28.0,
-                            child: Icon(Icons.exit_to_app_rounded),
                             backgroundColor:
                                 Theme.of(context).colorScheme.errorContainer,
                             foregroundColor:
                                 Theme.of(context).colorScheme.error,
+                            child: Icon(Icons.exit_to_app_rounded),
                           ),
-                          SizedBox(width: 8.0),
+                          const SizedBox(width: 8.0),
                           Text(
                             'Sign out',
                             style: Theme.of(context)
@@ -142,7 +145,6 @@ class ProfileScreen extends ConsumerWidget {
 
 class _ProfileTile extends StatelessWidget {
   const _ProfileTile({
-    super.key,
     required this.leadingIcon,
     required this.child,
     this.trailing = const SizedBox.square(
@@ -163,16 +165,16 @@ class _ProfileTile extends StatelessWidget {
       onTap: onTap,
       child: Row(
         children: [
-          SizedBox(width: 16.0),
+          const SizedBox(width: 16.0),
           CircleAvatar(
             radius: 28.0,
-            child: leadingIcon,
             backgroundColor: Theme.of(context).colorScheme.tertiary,
             foregroundColor: Theme.of(context).colorScheme.primary,
+            child: leadingIcon,
           ),
-          SizedBox(width: 20.0),
+          const SizedBox(width: 20.0),
           Expanded(child: child),
-          SizedBox(width: 8.0),
+          const SizedBox(width: 8.0),
           if (trailing != null) trailing!,
         ],
       ),
