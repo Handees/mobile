@@ -5,108 +5,64 @@ class EditProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
-
-    final availableHeight = (mediaQuery.size.height -
-        AppBar().preferredSize.height -
-        mediaQuery.padding.top);
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),
         scrolledUnderElevation: 0,
       ),
-      body: CustomScrollView(
-        slivers: [
-          SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            sliver: SliverToBoxAdapter(
-              child: SizedBox(
-                height: availableHeight,
-                child: Column(
-                  children: [
-                    // const Spacer(),
-                    const SizedBox(height: 50),
-                    const Icon(Icons.account_circle_rounded, size: 80),
-                    const SizedBox(height: 41.17),
-                    const _EditProfileTextField(
-                      label: 'Name',
-                      keyboard: TextInputType.name,
-                    ),
-                    const SizedBox(height: 24),
-                    const _EditProfileTextField(
-                        label: 'Phone number', keyboard: TextInputType.phone),
-                    const Spacer(flex: 2),
-                    // const SizedBox(height: 125),
-                    SizedBox(
-                      width: double.infinity,
-                      height: 64,
-                      child: FilledButton(
-                        onPressed: () {},
-                        child: const Text(
-                          'Done',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const Spacer(),
-                  ],
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: Column(
+          children: [
+            // const Spacer(),
+            const SizedBox(height: 50),
+            const Icon(Icons.account_circle_rounded, size: 80),
+            const SizedBox(height: 41.17),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Name',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Theme.of(context).disabledColor,
+                  ),
                 ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _EditProfileTextField extends StatelessWidget {
-  const _EditProfileTextField({
-    required this.label,
-    required this.keyboard,
-  });
-
-  final String label;
-  final TextInputType keyboard;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 14,
-            color: Theme.of(context).disabledColor,
-          ),
-        ),
-        const SizedBox(height: 4),
-        TextFormField(
-          keyboardType: keyboard,
-          decoration: InputDecoration(
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 15,
-              vertical: 15,
-            ),
-            suffixIcon: Container(
-              margin: const EdgeInsets.only(right: 2),
-              child: IconButton(
-                highlightColor: Colors.transparent,
-                icon: const Icon(
-                  Icons.clear,
-                  size: 25,
-                  color: Colors.grey,
+                const SizedBox(height: 4),
+                const TextField(
+                  keyboardType: TextInputType.name,
                 ),
+                const SizedBox(height: 24),
+                Text(
+                  'Phone number',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Theme.of(context).disabledColor,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                const TextField(keyboardType: TextInputType.phone),
+              ],
+            ),
+            const Spacer(flex: 2),
+            // const SizedBox(height: 125),
+            SizedBox(
+              width: double.infinity,
+              height: 64,
+              child: FilledButton(
                 onPressed: () {},
+                child: const Text(
+                  'Done',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
               ),
             ),
-          ),
-        )
-      ],
+            const Spacer(),
+          ],
+        ),
+      ),
     );
   }
 }
