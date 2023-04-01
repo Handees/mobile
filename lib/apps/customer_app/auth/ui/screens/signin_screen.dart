@@ -67,7 +67,7 @@ class SigninScreen extends ConsumerWidget with InputValidationMixin {
                             onSaved: model.onEmailSaved,
                             validator: model.emailValidator,
                             decoration: InputDecoration(
-                              hintText: 'Phone or email',
+                              hintText: 'Email',
                               errorText: emailError,
                             ),
                           ),

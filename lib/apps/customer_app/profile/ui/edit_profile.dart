@@ -30,10 +30,9 @@ class EditProfile extends StatelessWidget {
                     const Icon(Icons.account_circle_rounded, size: 80),
                     const SizedBox(height: 41.17),
                     const _EditProfileTextField(
-                        label: 'First name', keyboard: TextInputType.name),
-                    const SizedBox(height: 24),
-                    const _EditProfileTextField(
-                        label: 'Last name', keyboard: TextInputType.name),
+                      label: 'Name',
+                      keyboard: TextInputType.name,
+                    ),
                     const SizedBox(height: 24),
                     const _EditProfileTextField(
                         label: 'Phone number', keyboard: TextInputType.phone),
