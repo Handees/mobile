@@ -14,6 +14,10 @@ final tokenProvider = Provider((ref) {
 });
 
 class AuthService {
+//TODO test should remove;
+  static AuthService test =
+      AuthService._(FirebaseAuth.instance, UserRepository());
+
   AuthService._(this.firebaseAuth, this.userRepository) {
     FirebaseAuth.instance.userChanges().listen((user) {
       user?.getIdToken().then((value) {
