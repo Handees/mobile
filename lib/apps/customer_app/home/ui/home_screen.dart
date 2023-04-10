@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:handees/apps/customer_app/auth/providers/auth_provider.dart';
+
 import 'package:handees/apps/customer_app/home/providers/home_provider.dart';
 import 'package:handees/apps/customer_app/home/ui/swap_app_bottom_sheet.dart';
-import 'package:handees/apps/customer_app/test.dart';
 import 'package:handees/apps/customer_app/tracker/ui/tracking_screen.dart';
 import 'package:handees/res/shapes.dart';
 import 'package:handees/res/icons.dart';
@@ -23,7 +22,7 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     const horizontalPadding = 16.0;
 
-    final submitStatus = ref.watch(userDataStatusProvider);
+    // final submitStatus = ref.watch(userDataStatusProvider);
 
     final name = ref.watch(userDataProvider).name;
     final categories = ref.watch(categoryProvider);
@@ -306,34 +305,34 @@ class HomeScreen extends ConsumerWidget {
             ),
           ),
           // if (submitStatus != SubmitStatus.submitted)
-          IgnorePointer(
-            ignoring: submitStatus == SubmitStatus.submitted ? true : false,
-            child: AnimatedOpacity(
-              duration: Duration(milliseconds: 200),
-              opacity: submitStatus != SubmitStatus.submitted ? 1 : 0,
-              child: Container(
-                // width: double.infinity,
-                alignment: Alignment.center,
-                color: Colors.black54,
-                child: AnimatedScale(
-                  duration: Duration(milliseconds: 150),
-                  scale: submitStatus != SubmitStatus.submitted ? 1 : 0,
-                  child: submitStatus != SubmitStatus.submitError
-                      ? LoadingOverlay()
-                      : ErrorOverlay(),
-                ),
+          // IgnorePointer(
+          //   ignoring: submitStatus == SubmitStatus.submitted ? true : false,
+          //   child: AnimatedOpacity(
+          //     duration: Duration(milliseconds: 200),
+          //     opacity: submitStatus != SubmitStatus.submitted ? 1 : 0,
+          //     child: Container(
+          //       // width: double.infinity,
+          //       alignment: Alignment.center,
+          //       color: Colors.black54,
+          //       child: AnimatedScale(
+          //         duration: Duration(milliseconds: 150),
+          //         scale: submitStatus != SubmitStatus.submitted ? 1 : 0,
+          //         child: submitStatus != SubmitStatus.submitError
+          //             ? LoadingOverlay()
+          //             : ErrorOverlay(),
+          //       ),
 
-                // AnimatedCrossFade(
-                //   duration: Duration(milliseconds: 300),
-                //   firstChild: LoadingOverlay(),
-                //   secondChild: ErrorOverlay(),
-                //   crossFadeState: submitStatus == SubmitStatus.notSubmitted
-                //       ? CrossFadeState.showFirst
-                //       : CrossFadeState.showSecond,
-                // ),
-              ),
-            ),
-          ),
+          //       // AnimatedCrossFade(
+          //       //   duration: Duration(milliseconds: 300),
+          //       //   firstChild: LoadingOverlay(),
+          //       //   secondChild: ErrorOverlay(),
+          //       //   crossFadeState: submitStatus == SubmitStatus.notSubmitted
+          //       //       ? CrossFadeState.showFirst
+          //       //       : CrossFadeState.showSecond,
+          //       // ),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

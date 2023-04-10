@@ -1,12 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:handees/services/auth_service.dart';
-import 'package:handees/theme/theme.dart';
+
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-import '../../providers/auth_provider.dart';
 import '../../viewmodels/signup_viewmodel.dart';
 
 class VerifyScreen extends StatelessWidget {

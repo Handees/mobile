@@ -105,9 +105,9 @@ class ProfileScreen extends ConsumerWidget {
                     padding: const EdgeInsets.symmetric(vertical: 24.0),
                     child: InkWell(
                       onTap: () {
-                        ref.read(profileProvider.notifier).signoutUser();
-                        Navigator.of(context, rootNavigator: true)
-                            .pushReplacementNamed(AuthRoutes.signin);
+                        // ref.read(profileProvider.notifier).signoutUser();
+                        // Navigator.of(context, rootNavigator: true)
+                        //     .pushReplacementNamed(AuthRoutes.signin);
                       },
                       child: Row(
                         children: [
