@@ -3,65 +3,70 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/res/icons.dart';
 import 'package:handees/routes/routes.dart';
 import 'package:handees/routes/routes.dart';
+import 'package:handees/services/auth_service.dart';
 import 'package:handees/theme/theme.dart';
 import 'package:handees/utils/utils.dart';
 
 import '../../providers/auth_provider.dart';
+import '../../viewmodels/signup_viewmodel.dart';
 import '../widgets/phone_proceed_dialog.dart';
 
 final _obscureTextProvider = StateProvider<bool>((ref) {
   return true;
 });
 
-class SignupScreen extends ConsumerWidget with InputValidationMixin {
+class SignupScreen extends StatelessWidget {
   SignupScreen({
     Key? key,
   }) : super(key: key);
 
   final _formGlobalKey = GlobalKey<FormState>();
 
+  final model = SignupNotifier(AuthService.test);
+  final _obscureTextNotifier = ValueNotifier(true);
+
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final model = ref.watch(authProvider.notifier);
-    final authState = ref.watch(authProvider);
+  Widget build(BuildContext context) {
+    // final model = ref.watch(authProvider.notifier);
+    // final authState = ref.watch(authProvider);
 
-    String? phoneError;
-    String? emailError;
-    String? passwordError;
+    // String? phoneError;
+    // String? emailError;
+    // String? passwordError;
 
-    switch (authState) {
-      case AuthState.invalidPhone:
-        phoneError = 'Not a valid phone number';
-        break;
-      case AuthState.phoneInUse:
-        phoneError = 'An account already exists with this phone number';
-        break;
-      case AuthState.emailInUse:
-        emailError = 'An account already exists with this email';
-        break;
-      case AuthState.invalidPassword:
-        passwordError = 'Password too weak';
-        break;
-      case AuthState.invalidEmail:
-        emailError = 'Not a valid email';
-        break;
-      case AuthState.error:
-        Future.microtask(
-          () => ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('An error occured'),
-            ),
-          ),
-        );
-        break;
-      case AuthState.authenticated:
-        Future.microtask(
-          () => Navigator.of(context, rootNavigator: true)
-              .pushReplacementNamed(CustomerAppRoutes.home),
-        );
-        break;
-      default:
-    }
+    // switch (authState) {
+    //   case AuthState.invalidPhone:
+    //     phoneError = 'Not a valid phone number';
+    //     break;
+    //   case AuthState.phoneInUse:
+    //     phoneError = 'An account already exists with this phone number';
+    //     break;
+    //   case AuthState.emailInUse:
+    //     emailError = 'An account already exists with this email';
+    //     break;
+    //   case AuthState.invalidPassword:
+    //     passwordError = 'Password too weak';
+    //     break;
+    //   case AuthState.invalidEmail:
+    //     emailError = 'Not a valid email';
+    //     break;
+    //   case AuthState.error:
+    //     Future.microtask(
+    //       () => ScaffoldMessenger.of(context).showSnackBar(
+    //         const SnackBar(
+    //           content: Text('An error occured'),
+    //         ),
+    //       ),
+    //     );
+    //     break;
+    //   case AuthState.authenticated:
+    //     Future.microtask(
+    //       () => Navigator.of(context, rootNavigator: true)
+    //           .pushReplacementNamed(CustomerAppRoutes.home),
+    //     );
+    //     break;
+    //   default:
+    // }
 
     return Scaffold(
       body: SafeArea(
@@ -109,7 +114,7 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
                             decoration: InputDecoration(
                                 labelText: 'Phone',
                                 hintText: '+2348123456789',
-                                errorText: phoneError
+                                errorText: model.phoneError
                                 // icon: CircleAvatar(),
                                 ),
                           ),
@@ -121,7 +126,7 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
                             decoration: InputDecoration(
                               labelText: 'Email',
                               hintText: 'example123@examples.com',
-                              errorText: emailError,
+                              errorText: model.emailError,
                             ),
                           ),
                           const SizedBox(height: 24),
@@ -135,7 +140,7 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
                                 decoration: InputDecoration(
                                   labelText: 'Password',
                                   hintText: '••••••••••••',
-                                  errorText: passwordError,
+                                  errorText: model.passwordError,
                                   suffixIcon: IconButton(
                                     icon: Icon(
                                       obscureText
@@ -207,7 +212,7 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
                     SizedBox(
                       width: double.infinity,
                       child: FilledButton(
-                        onPressed: authState == AuthState.loading
+                        onPressed: model.loading
                             ? null
                             : () {
                                 if (!_formGlobalKey.currentState!.validate()) {

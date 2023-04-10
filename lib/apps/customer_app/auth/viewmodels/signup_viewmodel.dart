@@ -13,6 +13,8 @@ class SignupNotifier extends ChangeNotifier with InputValidationMixin {
   String _email = '';
   String _password = '';
 
+  String get last2Digits => _phone.substring(_phone.length - 2, _phone.length);
+
   String _smsCode = '';
   set smsCode(String code) => _smsCode = code;
   late String _verificationId;
@@ -24,7 +26,7 @@ class SignupNotifier extends ChangeNotifier with InputValidationMixin {
   String? get passwordError => _passwordError;
 
   String? _phoneError;
-  String? get phonE => _phoneError;
+  String? get phoneError => _phoneError;
 
   bool _loading = false;
   bool get loading => _loading;
@@ -143,7 +145,10 @@ class SignupNotifier extends ChangeNotifier with InputValidationMixin {
     notifyListeners();
   }
 
-  Future<void> signupUser({required void Function() onCodeSent}) async {
+  Future<void> signupUser({
+    required void Function() onCodeSent,
+    required void Function() onVerificationComplete,
+  }) async {
     _loading = true;
     notifyListeners();
     if (await _authService.emailInUse(_email)) {
@@ -154,12 +159,11 @@ class SignupNotifier extends ChangeNotifier with InputValidationMixin {
     _authService.signupWithPhone(
       phone: _phone,
       onCodeSent: (verificationId, forceResendingToken) {
-        //TODO //state = AuthState.verifying;
         _verificationId = verificationId;
         onCodeSent();
       },
       onVerifcationComplete: (phoneAuthCredential) {
-        // _verifyNumber(phoneAuthCredential: phoneAuthCredential);
+        _verifyNumber(phoneAuthCredential: phoneAuthCredential);
       },
       onVerificationFailed: (error) {
         debugPrint('Phone verification failed with error $error');
