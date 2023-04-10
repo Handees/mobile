@@ -28,6 +28,9 @@ class SignupNotifier extends ChangeNotifier with InputValidationMixin {
   String? _phoneError;
   String? get phoneError => _phoneError;
 
+  bool _verificationCodeError = false;
+  bool get verificationCodeError => _verificationCodeError;
+
   bool _loading = false;
   bool get loading => _loading;
 
@@ -111,6 +114,7 @@ class SignupNotifier extends ChangeNotifier with InputValidationMixin {
     required void Function() onUnknownError,
   }) async {
     _loading = true;
+    resetErrors();
     notifyListeners();
     PhoneAuthCredential credential = phoneAuthCredential ??
         PhoneAuthProvider.credential(
@@ -122,7 +126,7 @@ class SignupNotifier extends ChangeNotifier with InputValidationMixin {
 
     switch (response) {
       case AuthResponse.success:
-        _completeProfile(onSuccess: () {}, onUnknownError: () {});
+        _completeProfile(onSuccess: onSuccess, onUnknownError: onUnknownError);
 
         break;
       case AuthResponse.phoneInUse:
@@ -132,8 +136,7 @@ class SignupNotifier extends ChangeNotifier with InputValidationMixin {
         _phoneError = 'Not a valid phone number';
         break;
       case AuthResponse.invalidVerificationCode:
-        //TODO
-        // state = AuthState.invalidVerificationCode;
+        _verificationCodeError = true;
         break;
       case AuthResponse.unknownError:
         onUnknownError();
@@ -146,29 +149,67 @@ class SignupNotifier extends ChangeNotifier with InputValidationMixin {
   }
 
   Future<void> signupUser({
-    required void Function() onCodeSent,
+    required void Function({required void Function() onVerifyNumber})
+        onCodeSent,
     required void Function() onVerificationComplete,
+    required void Function() onUnkownError,
   }) async {
     _loading = true;
+    void resetErrors() {
+      _emailError = null;
+      _passwordError = null;
+    }
+
     notifyListeners();
+
     if (await _authService.emailInUse(_email)) {
       _emailError = 'An account already exists with this email';
+      print(_emailError);
+      _loading = false;
+      notifyListeners();
       return;
     }
 
-    _authService.signupWithPhone(
+    await _authService.signupWithPhone(
       phone: _phone,
       onCodeSent: (verificationId, forceResendingToken) {
         _verificationId = verificationId;
-        onCodeSent();
+        onCodeSent(
+          onVerifyNumber: () {
+            print("Let's try");
+            verifyNumber(
+              onSuccess: onVerificationComplete,
+              onUnknownError: onUnkownError,
+            );
+          },
+        );
+
+        _loading = false;
+        notifyListeners();
       },
       onVerifcationComplete: (phoneAuthCredential) {
-        _verifyNumber(phoneAuthCredential: phoneAuthCredential);
+        _verifyNumber(
+          phoneAuthCredential: phoneAuthCredential,
+          onSuccess: onVerificationComplete,
+          onUnknownError: onUnkownError,
+        );
+
+        _loading = false;
+        notifyListeners();
       },
       onVerificationFailed: (error) {
         debugPrint('Phone verification failed with error $error');
-        // state = AuthState.error;
+        onUnkownError();
+        _loading = false;
+        notifyListeners();
       },
     );
+  }
+
+  void resetErrors() {
+    _emailError = null;
+    _passwordError = null;
+    _phoneError = null;
+    _verificationCodeError = false;
   }
 }

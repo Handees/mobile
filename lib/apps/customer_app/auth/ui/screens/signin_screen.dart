@@ -76,14 +76,11 @@ class SigninScreen extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(height: 24),
-                                ValueListenableBuilder(
+                                ValueListenableBuilder<bool>(
                                   valueListenable: _obscureTextNotifier,
-                                  builder: (context, ref, child) {
-                                    final obscureText =
-                                        _obscureTextNotifier.value;
+                                  builder: (context, obscureText, child) {
                                     return TextFormField(
                                       obscureText: obscureText,
-                                      // onChanged: (_) => model.resetState(),
                                       onSaved: viewModel.onPasswordSaved,
                                       validator: viewModel.passwordValidator,
                                       decoration: InputDecoration(

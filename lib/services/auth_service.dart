@@ -231,15 +231,15 @@ class AuthService {
     }
   }
 
-  void signupWithPhone({
+  Future<void> signupWithPhone({
     required String phone,
     required void Function(String verificationId, int? forceResendingToken)
         onCodeSent,
     required void Function(PhoneAuthCredential phoneAuthCredential)
         onVerifcationComplete,
     required void Function(FirebaseAuthException error) onVerificationFailed,
-  }) {
-    FirebaseAuth.instance.verifyPhoneNumber(
+  }) async {
+    await FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: phone,
       verificationCompleted: onVerifcationComplete,
       verificationFailed: onVerificationFailed,
