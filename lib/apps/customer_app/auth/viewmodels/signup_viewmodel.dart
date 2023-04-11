@@ -102,12 +102,6 @@ class SignupNotifier extends ChangeNotifier with InputValidationMixin {
     notifyListeners();
   }
 
-  void verifyNumber({
-    required void Function() onSuccess,
-    required void Function() onUnknownError,
-  }) =>
-      _verifyNumber(onSuccess: onSuccess, onUnknownError: onUnknownError);
-
   Future<void> _verifyNumber({
     PhoneAuthCredential? phoneAuthCredential,
     required void Function() onSuccess,
@@ -177,7 +171,7 @@ class SignupNotifier extends ChangeNotifier with InputValidationMixin {
         onCodeSent(
           onVerifyNumber: () {
             print("Let's try");
-            verifyNumber(
+            _verifyNumber(
               onSuccess: onVerificationComplete,
               onUnknownError: onUnkownError,
             );

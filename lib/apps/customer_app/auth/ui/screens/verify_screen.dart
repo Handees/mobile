@@ -21,9 +21,6 @@ class VerifyScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     const verticalMargin = 24.0;
 
-    // final model = ref.watch(authProvider.notifier);
-    // final authState = ref.watch(authProvider);
-
     return AnimatedBuilder(
         animation: model,
         builder: (context, _) {

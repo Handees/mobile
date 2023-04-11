@@ -8,10 +8,6 @@ final userDataProvider =
   return UserDataNotifier(ref.watch(userDataServiceProvider));
 });
 
-final categoryProvider = Provider<List<JobCategory>>((ref) {
-  return jobCategories;
-});
-
 // final userDataStatusProvider = Provider<SubmitStatus>((ref) {
 //   return ref.watch(authProvider.notifier).submitted;
 // });

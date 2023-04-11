@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/apps/customer_app/home/providers/home_provider.dart';
 import 'package:handees/apps/customer_app/home/ui/swap_app_bottom_sheet.dart';
 import 'package:handees/apps/customer_app/tracker/ui/tracking_screen.dart';
+import 'package:handees/data/handees/job_category.dart';
 import 'package:handees/res/shapes.dart';
 import 'package:handees/res/icons.dart';
 import 'package:handees/routes/routes.dart';
@@ -25,7 +26,7 @@ class HomeScreen extends ConsumerWidget {
     // final submitStatus = ref.watch(userDataStatusProvider);
 
     final name = ref.watch(userDataProvider).name;
-    final categories = ref.watch(categoryProvider);
+    const categories = jobCategories;
 
     return Scaffold(
       // resizeToAvoidBottomInset: true,
