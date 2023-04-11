@@ -13,7 +13,7 @@ class VerifyScreen extends StatelessWidget {
   final StreamController<ErrorAnimationType> errorController =
       StreamController<ErrorAnimationType>();
 
-  final SignupNotifier model;
+  final SignupViewmodel model;
 
   final void Function() verifyNumber;
 

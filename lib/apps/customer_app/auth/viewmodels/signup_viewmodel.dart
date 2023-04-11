@@ -3,8 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:handees/services/auth_service.dart';
 import 'package:handees/utils/utils.dart';
 
-class SignupNotifier extends ChangeNotifier with InputValidationMixin {
-  SignupNotifier(this._authService);
+class SignupViewmodel extends ChangeNotifier with InputValidationMixin {
+  SignupViewmodel(this._authService);
 
   final AuthService _authService;
 

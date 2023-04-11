@@ -12,7 +12,7 @@ class SigninScreen extends StatelessWidget {
 
   final _formGlobalKey = GlobalKey<FormState>();
 
-  final viewModel = SigninNotifier(AuthService.instance);
+  final viewModel = SigninViewmodel(AuthService.instance);
   final _obscureTextNotifier = ValueNotifier(true);
 
   @override

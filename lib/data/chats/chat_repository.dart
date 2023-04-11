@@ -71,7 +71,7 @@ class TestChatRepository implements ChatRepository {
     _simulateMessages();
   }
 
-  final _controller = StreamController<List<MessageModel>>();
+  final _controller = StreamController<List<MessageModel>>.broadcast();
 
   void _simulateMessages() async {
     while (true) {

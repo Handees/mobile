@@ -8,7 +8,7 @@ final addCardProvider =
     StateNotifierProvider<AddCardStateNotifier, bool>((ref) {
   // final authService = ref.watch(authServiceProvider);
   return AddCardStateNotifier(
-      ref.watch(paymentServiceProvider), ref.watch(authServiceProvider));
+      ref.watch(paymentServiceProvider), AuthService.instance);
 });
 
 class AddCardStateNotifier extends StateNotifier<bool>
