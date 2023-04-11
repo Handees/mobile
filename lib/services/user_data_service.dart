@@ -9,6 +9,8 @@ final userDataServiceProvider = Provider<UserDataService>((ref) {
 class UserDataService {
   UserDataService._(this.userRepository);
 
+  static final instance = UserDataService._(UserRepository());
+
   final UserRepository userRepository;
 
   Future<bool> updateUserData({

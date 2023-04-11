@@ -73,7 +73,7 @@ class LocationPickerOpened extends StatefulWidget {
 class _LocationPickerOpenedState extends State<LocationPickerOpened> {
   final _textFocusNode = FocusNode();
 
-  final viewModel = FindLocationViewModel(PlacesService.test);
+  final viewModel = FindLocationViewModel(PlacesService.instance);
 
   @override
   void initState() {

@@ -11,6 +11,8 @@ final chatServiceProvider = Provider<ChatService>((ref) {
 class ChatService {
   ChatService._(this.chatRepository);
 
+  static final instance = ChatService._(TestChatRepository());
+
   final ChatRepository chatRepository;
 
   void sendMessage(String message, String bookingId) =>

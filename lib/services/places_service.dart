@@ -10,11 +10,9 @@ final placesServiceProvider =
     Provider<PlacesService>((ref) => PlacesService._(PlacesRepository()));
 
 class PlacesService {
-//TODO: another test
-
-  static final test = PlacesService._(PlacesRepository());
-
   PlacesService._(this.placesRepository);
+
+  static final instance = PlacesService._(PlacesRepository());
 
   final PlacesRepository placesRepository;
 

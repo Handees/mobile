@@ -5,34 +5,25 @@ import 'package:handees/data/user/user_repository.dart';
 import 'package:handees/res/uri.dart';
 import 'package:http/http.dart' as http;
 
-final authServiceProvider = Provider<AuthService>((ref) {
-  return AuthService._(FirebaseAuth.instance, UserRepository());
-});
-
-final tokenProvider = Provider((ref) {
-  return ref.watch(authServiceProvider).token;
-});
-
 class AuthService {
-//TODO test should remove;
-  static AuthService test =
-      AuthService._(FirebaseAuth.instance, UserRepository());
-
   AuthService._(this.firebaseAuth, this.userRepository) {
-    FirebaseAuth.instance.userChanges().listen((user) {
+    FirebaseAuth.instance.idTokenChanges().listen((user) {
       user?.getIdToken().then((value) {
         _token = value;
 
-        userRepository.updateUserData(
-          name: user.displayName ?? '',
-          phone: user.phoneNumber ?? '',
-          email: user.email ?? '',
-          uid: user.uid,
-          token: _token,
-        );
+        // userRepository.updateUserData(
+        //   name: user.displayName ?? '',
+        //   phone: user.phoneNumber ?? '',
+        //   email: user.email ?? '',
+        //   uid: user.uid,
+        //   token: _token,
+        // );
       });
     });
   }
+
+  static final instance =
+      AuthService._(FirebaseAuth.instance, UserRepository());
 
   final FirebaseAuth firebaseAuth;
   final UserRepository userRepository;

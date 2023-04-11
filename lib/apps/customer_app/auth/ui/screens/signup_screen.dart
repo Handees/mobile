@@ -16,7 +16,7 @@ class SignupScreen extends StatelessWidget {
 
   final _formGlobalKey = GlobalKey<FormState>();
 
-  final viewModel = SignupNotifier(AuthService.test);
+  final viewModel = SignupNotifier(AuthService.instance);
 
   final _obscureTextNotifier = ValueNotifier(true);
 
