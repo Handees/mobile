@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:handees/res/icons.dart';
 import 'package:handees/routes/routes.dart';
 import 'package:handees/routes/routes.dart';
 import 'package:handees/theme/theme.dart';
@@ -66,7 +67,7 @@ class SigninScreen extends ConsumerWidget with InputValidationMixin {
                             onSaved: model.onEmailSaved,
                             validator: model.emailValidator,
                             decoration: InputDecoration(
-                              hintText: 'Phone or email',
+                              hintText: 'Email',
                               errorText: emailError,
                             ),
                           ),
@@ -89,7 +90,9 @@ class SigninScreen extends ConsumerWidget with InputValidationMixin {
                                           : null,
                                   suffixIcon: IconButton(
                                     icon: Icon(
-                                      obscureText ? Icons.abc : Icons.password,
+                                      obscureText
+                                          ? HandeeIcons.eye_tracking_off
+                                          : HandeeIcons.eye_tracking_on,
                                     ),
                                     color: obscureText
                                         ? Theme.of(context)
@@ -97,7 +100,7 @@ class SigninScreen extends ConsumerWidget with InputValidationMixin {
                                         : null,
                                     onPressed: () {
                                       ref
-                                          .read(_obscureTextProvider.state)
+                                          .read(_obscureTextProvider.notifier)
                                           .update((state) => !state);
                                     },
                                   ),
@@ -152,7 +155,7 @@ class SigninScreen extends ConsumerWidget with InputValidationMixin {
                     const Spacer(flex: 2),
                     SizedBox(
                       width: double.infinity,
-                      child: ElevatedButton(
+                      child: FilledButton(
                         onPressed: authState == AuthState.loading
                             ? null
                             : () {
@@ -162,9 +165,6 @@ class SigninScreen extends ConsumerWidget with InputValidationMixin {
                                 _formGlobalKey.currentState?.save();
                                 model.signinUser();
                               },
-                        style: Theme.of(context)
-                            .extension<ButtonThemeExtensions>()
-                            ?.filled,
                         child: const Text('Sign in'),
                       ),
                     ),

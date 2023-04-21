@@ -25,7 +25,7 @@ class _RootNavigatorState extends State<RootNavigator> {
       ),
       onWillPop: () async {
         final navigator = widget.router.navigatorKey.currentState!;
-        if (navigator.canPop() || !await navigator.maybePop()) {
+        if (navigator.canPop() || await navigator.maybePop()) {
           navigator.maybePop();
         } else {
           SystemNavigator.pop();

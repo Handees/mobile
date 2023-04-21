@@ -4,11 +4,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/apps/customer_app/auth/providers/auth_provider.dart';
 import 'package:handees/apps/customer_app/home/providers/home_provider.dart';
 import 'package:handees/apps/customer_app/home/ui/swap_app_bottom_sheet.dart';
+import 'package:handees/apps/customer_app/test.dart';
 import 'package:handees/apps/customer_app/tracker/ui/tracking_screen.dart';
 import 'package:handees/res/shapes.dart';
+import 'package:handees/res/icons.dart';
 import 'package:handees/routes/routes.dart';
-import 'package:handees/apps/customer_app/test.dart';
-import 'package:handees/theme/theme.dart';
 import 'package:handees/ui/widgets/error_overlay.dart';
 import 'package:handees/ui/widgets/loading_overlay.dart';
 
@@ -25,7 +25,7 @@ class HomeScreen extends ConsumerWidget {
 
     final submitStatus = ref.watch(userDataStatusProvider);
 
-    final name = ref.watch(nameProvider);
+    final name = ref.watch(userDataProvider).name;
     final categories = ref.watch(categoryProvider);
 
     return Scaffold(
@@ -113,8 +113,9 @@ class HomeScreen extends ConsumerWidget {
                           ),
                         ),
                         ListTile(
-                          onTap: () {},
-                          leading: const Icon(Icons.credit_card),
+                          onTap: () => Navigator.of(context)
+                              .pushNamed(CustomerAppRoutes.payments),
+                          leading: const Icon(HandeeIcons.payment),
                           title: const Text('Payments'),
                         ),
                         ListTile(
@@ -123,6 +124,16 @@ class HomeScreen extends ConsumerWidget {
                           leading: const Icon(Icons.history),
                           title: const Text('History'),
                         ),
+                        // const Divider(),
+                        // ListTile(
+                        //   onTap: () =>
+                        //       Navigator.of(context).push(MaterialPageRoute(
+                        //     builder: (context) => Test(),
+                        //   )),
+                        //   leading: const Icon(Icons.history),
+                        //   title: const Text('Test'),
+                        // ),
+                        const Divider(),
                         ListTile(
                           onTap: () => Navigator.of(context)
                               .pushNamed(CustomerAppRoutes.settings),
@@ -132,7 +143,7 @@ class HomeScreen extends ConsumerWidget {
                         const Divider(),
                         ListTile(
                           onTap: () {},
-                          leading: const Icon(Icons.support_agent),
+                          leading: const Icon(HandeeIcons.person_support),
                           title: const Text('Customer Support'),
                         ),
                         ListTile(
@@ -154,10 +165,7 @@ class HomeScreen extends ConsumerWidget {
                           width: double.infinity,
                           child: Padding(
                             padding: const EdgeInsets.all(16.0),
-                            child: ElevatedButton(
-                              style: Theme.of(context)
-                                  .extension<ButtonThemeExtensions>()
-                                  ?.filled,
+                            child: FilledButton(
                               onPressed: () {},
                               child: const Text(
                                 'Become a Handee Man',
@@ -417,7 +425,7 @@ class _SearchWidgetState extends State<SearchWidget> {
     return WillPopScope(
       onWillPop: () async {
         print('How');
-        final shouldPop = isFocused;
+        final shouldPop = !isFocused;
 
         WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
         setState(() {
@@ -536,7 +544,6 @@ class _CustomDelegate extends SliverPersistentHeaderDelegate {
           elevation: elevation,
           shape: shape,
           clipBehavior: Clip.hardEdge,
-          // color: Colors.transparent,
           shadowColor: Theme.of(context).colorScheme.shadow,
           child: child,
         ),

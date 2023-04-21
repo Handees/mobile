@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:handees/data/chats/message_model.dart';
+import 'package:handees/data/chats/model/message_model.dart';
 import 'package:handees/res/shapes.dart';
 
 import '../providers/messages_provider.dart';
@@ -21,13 +22,31 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     if (_textController.text.isEmpty) return;
     ref.read(messagesProvider.notifier).sendMessage(_textController.text);
     _textController.clear();
-    _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+  }
+
+  void _scrollToBottom() {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      _scrollController.animateTo(_scrollController.position.maxScrollExtent,
+          duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+    });
+  }
+
+  ///checks current scroll position to determine whether the controller should
+  ///scroll or not
+  void _checkAndScrollToBottom() {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      if (_scrollController.offset >
+          _scrollController.position.maxScrollExtent - 120) {
+        _scrollController.animateTo(_scrollController.position.maxScrollExtent,
+            duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+      }
+    });
   }
 
   @override
   void initState() {
-    // ref.read(messagesProvider.notifier).clear();
     super.initState();
+    _scrollToBottom();
   }
 
   @override
@@ -38,11 +57,9 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final model = ref.watch(messagesProvider.notifier);
-
     final messages = ref.watch(messagesProvider);
 
-    print(messages);
+    _checkAndScrollToBottom();
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -71,7 +88,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                 padding: const EdgeInsets.only(
                   left: 16.0,
                   right: 16.0,
-                  bottom: 100.0, //TODO: no light?
+                  bottom: 96.0,
                 ),
                 sliver: SliverList(
                   delegate: SliverChildBuilderDelegate(

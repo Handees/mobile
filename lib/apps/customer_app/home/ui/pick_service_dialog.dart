@@ -33,13 +33,10 @@ class PickServiceDialog extends StatelessWidget {
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(
                     horizontal: 16.0, vertical: 24.0),
-                child: ElevatedButton(
+                child: FilledButton(
                   onPressed: () {
                     Navigator.of(context).pop('test');
                   },
-                  style: Theme.of(context)
-                      .extension<ButtonThemeExtensions>()
-                      ?.filled,
                   child: const Text('Proceed'),
                 ),
               ),

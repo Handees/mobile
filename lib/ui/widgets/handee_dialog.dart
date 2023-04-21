@@ -66,8 +66,7 @@ Future<T?> showHandeeDialog<T>(
         if (content != null) content,
         Padding(
           padding: const EdgeInsets.symmetric(vertical: verticalPadding),
-          child: ElevatedButton(
-            style: Theme.of(context).extension<ButtonThemeExtensions>()?.filled,
+          child: FilledButton(
             onPressed: () {},
             child: Text(
               positiveButtonText,
@@ -77,9 +76,7 @@ Future<T?> showHandeeDialog<T>(
         if (negativeButtonText != null)
           Padding(
             padding: const EdgeInsets.symmetric(vertical: verticalPadding),
-            child: ElevatedButton(
-              style:
-                  Theme.of(context).extension<ButtonThemeExtensions>()?.tonal,
+            child: FilledButton.tonal(
               onPressed: () {},
               child: Text(
                 negativeButtonText,

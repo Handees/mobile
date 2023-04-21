@@ -100,7 +100,7 @@ class AddCardScreen extends ConsumerWidget {
                 const Spacer(),
                 SizedBox(
                   width: double.infinity,
-                  child: ElevatedButton(
+                  child: FilledButton(
                     onPressed: () async {
                       _formGlobalKey.currentState?.save();
 
@@ -110,9 +110,6 @@ class AddCardScreen extends ConsumerWidget {
                       print('Response $response');
                       // Use the response
                     },
-                    style: Theme.of(context)
-                        .extension<ButtonThemeExtensions>()
-                        ?.filled,
                     child: const Text('Done'),
                   ),
                 ),

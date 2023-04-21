@@ -8,6 +8,9 @@ import 'package:handees/apps/artisan_app/features/auth/ui/complete_profile/scree
 import 'package:handees/apps/artisan_app/features/auth/ui/complete_profile/screens/valid_id.dart';
 import 'package:handees/apps/artisan_app/features/chat/ui/screens/chat_screen.dart';
 import 'package:handees/apps/artisan_app/features/home/home.artisan.dart';
+import 'package:handees/apps/customer_app/profile/ui/edit_address.dart';
+import 'package:handees/apps/customer_app/profile/ui/edit_email.dart';
+import 'package:handees/apps/customer_app/profile/ui/edit_profile.dart';
 import 'package:handees/routes/pages.dart';
 import 'package:handees/services/auth_service.dart';
 import 'package:handees/ui/widgets/navigator.dart';
@@ -111,6 +114,15 @@ final _customerAppRouter = NavRouter(
         break;
       case CustomerAppRoutes.verifyCode:
         page = const VerifyCodeScreen();
+        break;
+      case CustomerAppRoutes.editEmail:
+        page = const EditEmail();
+        break;
+      case CustomerAppRoutes.editAddress:
+        page = const EditAddress();
+        break;
+      case CustomerAppRoutes.editPrimary:
+        page = const EditProfile();
         break;
 
       case CustomerAppRoutes.pickService:

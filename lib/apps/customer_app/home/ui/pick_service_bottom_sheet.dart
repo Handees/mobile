@@ -56,7 +56,7 @@ class PickServiceBottomSheet extends StatelessWidget {
           const SizedBox(height: 16.0),
           SizedBox(
             width: double.infinity,
-            child: ElevatedButton(
+            child: FilledButton(
               onPressed: () async {
                 final res = await Navigator.of(context)
                     .pushNamed(CustomerAppRoutes.pickService);
@@ -66,8 +66,6 @@ class PickServiceBottomSheet extends StatelessWidget {
                   Navigator.of(context).pushNamed(CustomerAppRoutes.tracking);
                 }
               },
-              style:
-                  Theme.of(context).extension<ButtonThemeExtensions>()?.filled,
               child: const Text('Proceed'),
             ),
           ),

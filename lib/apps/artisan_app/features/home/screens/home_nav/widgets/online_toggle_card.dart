@@ -22,30 +22,25 @@ class OnlineToggleCard extends StatelessWidget {
               ? SizedBox(
                   width: double.infinity,
                   height: 64,
-                  child: ElevatedButton(
+                  child: FilledButton(
                     onPressed: setOnline,
-                    style: Theme.of(context)
-                        .extension<ButtonThemeExtensions>()
-                        ?.filled!
-                        .copyWith(
-                          backgroundColor: MaterialStateProperty.all(
-                              const Color(0xffa8dadc)),
-                        ),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(
+                        const Color(0xffa8dadc),
+                      ),
+                    ),
                     child: const Text("YOU'RE ONLINE"),
                   ),
                 )
               : SizedBox(
                   width: double.infinity,
                   height: 64,
-                  child: ElevatedButton(
+                  child: FilledButton(
                     onPressed: setOnline,
-                    style: Theme.of(context)
-                        .extension<ButtonThemeExtensions>()
-                        ?.filled!
-                        .copyWith(
-                          backgroundColor: MaterialStateProperty.all(
-                              const Color(0xff14161c)),
-                        ),
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(const Color(0xff14161c)),
+                    ),
                     child: const Text('GO ONLINE'),
                   ),
                 )

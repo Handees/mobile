@@ -11,4 +11,15 @@ class UserDbModel {
     required this.email,
     required this.phone,
   });
+
+  UserDbModel copyWith({
+    required String? name,
+    required String? email,
+    required String? phone,
+  }) =>
+      UserDbModel(
+        name: name ?? this.name,
+        email: email ?? this.email,
+        phone: phone ?? this.phone,
+      );
 }

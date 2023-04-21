@@ -149,15 +149,15 @@ class AuthStateNotifier extends StateNotifier<AuthState>
         uid: uid,
       );
     }
-    ref.read(_submittedProvider.state).update(
+    ref.read(_submittedProvider.notifier).update(
           (state) =>
               submitted ? SubmitStatus.submitted : SubmitStatus.submitError,
         );
   }
 
   Future<void> _completeProfile() async {
-    final completeResponse =
-        await _authService.completeProfile(_email, _password, _name);
+    final completeResponse = await _authService.updateFirebaseProfile(
+        email: _email, password: _password, name: _name);
 
     switch (completeResponse) {
       case AuthResponse.success:

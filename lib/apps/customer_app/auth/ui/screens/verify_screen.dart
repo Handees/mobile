@@ -84,13 +84,10 @@ class VerifyScreen extends ConsumerWidget {
             const SizedBox(height: verticalMargin),
             SizedBox(
               width: double.infinity,
-              child: ElevatedButton(
+              child: FilledButton(
                 onPressed: authState == AuthState.loading
                     ? null
                     : () => model.verifyNumber(),
-                style: Theme.of(context)
-                    .extension<ButtonThemeExtensions>()
-                    ?.filled,
                 child: const Text('Verify and Create Account'),
               ),
             ),

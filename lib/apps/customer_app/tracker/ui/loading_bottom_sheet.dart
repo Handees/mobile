@@ -71,10 +71,8 @@ class LoadingBottomSheet extends StatelessWidget {
           SizedBox(height: 16.0),
           SizedBox(
             width: double.infinity,
-            child: ElevatedButton(
+            child: FilledButton(
               onPressed: () {},
-              style:
-                  Theme.of(context).extension<ButtonThemeExtensions>()?.filled,
               child: CircularProgressIndicator(
                 color: Theme.of(context).colorScheme.onPrimary,
                 strokeWidth: 2,

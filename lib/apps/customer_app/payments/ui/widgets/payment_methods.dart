@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:handees/res/icons.dart';
 
 import 'package:handees/routes/routes.dart';
 
@@ -25,7 +26,10 @@ class _PaymentMethodsState extends State<PaymentMethods> {
         ListTile(
           dense: true,
           title: const Text('Cash / Bank Transfer'),
-          leading: const Icon(Icons.money),
+          leading: const Icon(
+            HandeeIcons.money,
+            size: 16.0,
+          ),
           trailing: Radio<String>(
             value: 'cash',
             groupValue: _value,
@@ -40,7 +44,7 @@ class _PaymentMethodsState extends State<PaymentMethods> {
           ListTile(
             dense: true,
             title: Text(card),
-            leading: const Icon(Icons.credit_card),
+            leading: const Icon(HandeeIcons.payment),
             trailing: Radio<String>(
               value: card,
               groupValue: _value,
@@ -58,7 +62,7 @@ class _PaymentMethodsState extends State<PaymentMethods> {
           child: const ListTile(
             dense: true,
             title: Text('Add debit / credit card'),
-            leading: Icon(Icons.add_card),
+            leading: Icon(Icons.add),
           ),
         )
       ],

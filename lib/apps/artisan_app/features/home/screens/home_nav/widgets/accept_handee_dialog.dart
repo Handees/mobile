@@ -125,18 +125,19 @@ class AcceptHandeeDialog extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () =>
                       Navigator.of(context).pushNamed(ArtisanAppRoutes.chat),
-                  style: Theme.of(context)
-                      .extension<ButtonThemeExtensions>()
-                      ?.filled!
-                      .copyWith(
-                        backgroundColor:
-                            MaterialStateProperty.all(const Color(0xff14161c)),
-                        shape: MaterialStateProperty.all(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(35),
-                          ),
-                        ),
-                      ),
+                  // style: Theme.of(context)
+                  //     .extension<ButtonThemeEx>()
+                  //     ?.filled!
+                  //     .copyWith(
+                  //       backgroundColor:
+                  //           MaterialStateProperty.all(const Color(0xff14161c)),
+                  //       shape: MaterialStateProperty.all(
+                  //         RoundedRectangleBorder(
+                  //           borderRadius: BorderRadius.circular(35),
+
+                  //     ),
+                  //   ),
+                  // ),
                   child: Text(
                     "Accept",
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(

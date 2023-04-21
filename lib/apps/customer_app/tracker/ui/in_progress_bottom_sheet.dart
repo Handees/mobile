@@ -73,12 +73,8 @@ class _InProgressBottomSheetState extends State<InProgressBottomSheet>
 
   @override
   Widget build(BuildContext context) {
-    print('building');
     return GestureDetector(
       onVerticalDragUpdate: (details) {
-        print(details);
-
-        // temporarilyIgnore();
         setState(() {
           _controllersUpdate(details.delta.dy / 250);
         });
@@ -235,7 +231,7 @@ class _InProgressBottomSheetState extends State<InProgressBottomSheet>
                         children: [
                           Text('ETA $time minutes'),
                           LinearProgressIndicator(
-                            // value: progress / 2000,
+                            value: 400 / 2000,
                             backgroundColor:
                                 Theme.of(context).colorScheme.secondary,
                           ),
@@ -271,27 +267,21 @@ class _InProgressBottomSheetState extends State<InProgressBottomSheet>
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
-                        child: ElevatedButton(
+                        child: FilledButton(
                           onPressed: () {},
                           child: const Text('Call'),
-                          style: Theme.of(context)
-                              .extension<ButtonThemeExtensions>()
-                              ?.filled,
                         ),
                       ),
                       const SizedBox(width: 16),
                       Expanded(
                         // width: double.infinity,
-                        child: ElevatedButton(
+                        child: FilledButton.tonal(
                           onPressed: () {
                             print('why now');
                             Navigator.of(context)
                                 .pushNamed(CustomerAppRoutes.chat);
                           },
                           child: const Text('Message'),
-                          style: Theme.of(context)
-                              .extension<ButtonThemeExtensions>()
-                              ?.tonal,
                         ),
                       ),
                     ],

@@ -29,11 +29,13 @@ final _textTheme = GoogleFonts.cabinTextTheme(
   ),
 );
 
-const _lightColorScheme = ColorScheme.light(
+const lightColorScheme = ColorScheme.light(
   primary: Color.fromRGBO(20, 22, 28, 1),
   onPrimary: Colors.white,
   tertiary: Color.fromRGBO(243, 248, 254, 1),
   onSecondary: Color.fromRGBO(20, 22, 28, 1),
+  errorContainer: Color.fromRGBO(255, 234, 234, 1),
+  error: Color.fromRGBO(249, 22, 22, 1),
   //background: Color.fromRGBO(20, 22, 28, 0.1),
   secondary: Color.fromRGBO(235, 237, 240, 1),
   brightness: Brightness.light,
@@ -45,7 +47,7 @@ const _authColorScheme = ColorScheme.dark(
   brightness: Brightness.dark,
 );
 
-final _darkColorScheme = ColorScheme.dark(
+final darkColorScheme = ColorScheme.dark(
   primary: const Color.fromARGB(255, 97, 97, 97),
   onPrimary: Colors.white,
   background: ThemeData.dark().scaffoldBackgroundColor,
@@ -69,17 +71,20 @@ InputDecorationTheme _buildInputDecorationTheme(ColorScheme colorScheme) =>
       filled: true,
     );
 
-ThemeData _buildTheme(ColorScheme colorScheme) => ThemeData.from(
+ThemeData buildTheme(ColorScheme colorScheme) => ThemeData.from(
       colorScheme: colorScheme,
       textTheme: _textTheme,
       useMaterial3: true,
     ).copyWith(
-// dialogTheme: DialogTheme(),
+      dividerTheme:
+          DividerThemeData(color: Color.fromRGBO(150, 162, 168, 0.12)),
       appBarTheme: const AppBarTheme().copyWith(centerTitle: true),
       scaffoldBackgroundColor: colorScheme.background,
       radioTheme: RadioThemeData(
         fillColor: MaterialStateProperty.all(colorScheme.primary),
       ),
+
+      filledButtonTheme: FilledButtonThemeData(style: _buttonStyle),
       elevatedButtonTheme: ElevatedButtonThemeData(style: _buttonStyle),
       outlinedButtonTheme: OutlinedButtonThemeData(style: _buttonStyle),
       textButtonTheme: TextButtonThemeData(style: _buttonStyle),
@@ -95,32 +100,29 @@ ThemeData _buildTheme(ColorScheme colorScheme) => ThemeData.from(
         // elevation: 8,
         behavior: SnackBarBehavior.floating,
       ),
-      extensions: [
-        ButtonThemeExtensions(
-          filled: ElevatedButton.styleFrom(
-                  foregroundColor: colorScheme.onPrimary,
-                  backgroundColor: colorScheme.primary,
-                  textStyle: _textTheme.titleMedium)
-              .copyWith(
-            elevation: ButtonStyleButton.allOrNull(0.0),
-          ),
-          tonal: ElevatedButton.styleFrom(
-                  foregroundColor: colorScheme.onSecondaryContainer,
-                  backgroundColor: colorScheme.secondaryContainer,
-                  textStyle: _textTheme.titleMedium)
-              .copyWith(
-            elevation: ButtonStyleButton.allOrNull(0.0),
-          ),
-        )
-      ],
+      // extensions: [
+      //   ButtonThemeExtensions(
+      //     filled: ElevatedButton.styleFrom(
+      //             foregroundColor: colorScheme.onPrimary,
+      //             backgroundColor: colorScheme.primary,
+      //             textStyle: _textTheme.titleMedium)
+      //         .copyWith(
+      //       elevation: ButtonStyleButton.allOrNull(0.0),
+      //     ),
+      //     tonal: ElevatedButton.styleFrom(
+      //             foregroundColor: colorScheme.onSecondaryContainer,
+      //             backgroundColor: colorScheme.secondaryContainer,
+      //             textStyle: _textTheme.titleMedium)
+      //         .copyWith(
+      //       elevation: ButtonStyleButton.allOrNull(0.0),
+      //     ),
+      //   )
+      // ],
     );
 
-final lightTheme = _buildTheme(_lightColorScheme);
-
-final darkTheme = _buildTheme(_darkColorScheme);
-
-final authTheme = _buildTheme(_authColorScheme).copyWith(
+final authTheme = buildTheme(_authColorScheme).copyWith(
   inputDecorationTheme: _buildInputDecorationTheme(_authColorScheme).copyWith(
+    labelStyle: _textTheme.bodyMedium,
     border: const OutlineInputBorder(),
     filled: false,
   ),

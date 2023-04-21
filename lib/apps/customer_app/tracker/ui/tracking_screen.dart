@@ -63,8 +63,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
       //           child: CircleFadeOutLoader(),
       //         ),
       //       )
-      //     :
-      //     const GoogleMap(
+      //     : const GoogleMap(
       //         initialCameraPosition: CameraPosition(
       //           target: LatLng(12, 15),
       //         ),
@@ -99,24 +98,18 @@ class ArrivedBottomSheet extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
-                child: ElevatedButton(
+                child: FilledButton(
                   onPressed: () {},
-                  style: Theme.of(context)
-                      .extension<ButtonThemeExtensions>()
-                      ?.filled,
                   child: const Text('Call'),
                 ),
               ),
               const SizedBox(width: 16),
               Expanded(
                 // width: double.infinity,
-                child: ElevatedButton(
+                child: FilledButton.tonal(
                   onPressed: () {
                     Navigator.of(context).pushNamed(CustomerAppRoutes.chat);
                   },
-                  style: Theme.of(context)
-                      .extension<ButtonThemeExtensions>()
-                      ?.tonal,
                   child: const Text('Message'),
                 ),
               ),

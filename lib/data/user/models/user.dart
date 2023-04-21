@@ -1,8 +1,17 @@
 import 'package:flutter/foundation.dart';
 
 @immutable
-class User {
+class UserModel {
   final String name;
+  final String phone;
+  final String email;
 
-  const User({required this.name});
+  final List<String> addresses;
+
+  const UserModel({
+    required this.name,
+    required this.phone,
+    required this.email,
+    required this.addresses,
+  });
 }
