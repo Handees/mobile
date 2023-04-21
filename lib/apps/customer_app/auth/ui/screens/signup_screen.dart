@@ -95,10 +95,13 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
                             keyboardType: TextInputType.name,
                             onSaved: model.onNameSaved,
                             validator: model.nameValidator,
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                               labelText: 'Name',
+                              labelStyle:
+                                  Theme.of(context).textTheme.bodyMedium,
                               hintText: 'John',
                             ),
+                            style: Theme.of(context).textTheme.bodyMedium,
                           ),
                           const SizedBox(height: 24),
                           TextFormField(
@@ -106,11 +109,13 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
                             onSaved: model.onPhoneSaved,
                             validator: model.phoneValidator,
                             decoration: InputDecoration(
-                                labelText: 'Phone',
-                                hintText: '+2348123456789',
-                                errorText: phoneError
-                                // icon: CircleAvatar(),
-                                ),
+                              labelText: 'Phone',
+                              hintText: '+2348123456789',
+                              errorText: phoneError,
+                              labelStyle:
+                                  Theme.of(context).textTheme.bodyMedium,
+                            ),
+                            style: Theme.of(context).textTheme.bodyMedium,
                           ),
                           const SizedBox(height: 24),
                           TextFormField(
@@ -120,8 +125,11 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
                             decoration: InputDecoration(
                               labelText: 'Email',
                               hintText: 'example123@examples.com',
+                              labelStyle:
+                                  Theme.of(context).textTheme.bodyMedium,
                               errorText: emailError,
                             ),
+                            style: Theme.of(context).textTheme.bodyMedium,
                           ),
                           const SizedBox(height: 24),
                           Consumer(
@@ -135,6 +143,8 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
                                   labelText: 'Password',
                                   hintText: '••••••••••••',
                                   errorText: passwordError,
+                                  labelStyle:
+                                      Theme.of(context).textTheme.bodyMedium,
                                   suffixIcon: IconButton(
                                     icon: Icon(
                                       obscureText ? Icons.abc : Icons.password,
@@ -152,6 +162,7 @@ class SignupScreen extends ConsumerWidget with InputValidationMixin {
                                 obscureText: ref.watch(_obscureTextProvider),
                                 onSaved: model.onPasswordSaved,
                                 validator: model.passwordValidator,
+                                style: Theme.of(context).textTheme.bodyMedium,
                               );
                             },
                           ),

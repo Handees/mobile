@@ -55,6 +55,8 @@ dependencies:
   image_picker: ^0.8.6+1
   firebase_storage: ^11.0.10
   flutter_svg: ^2.0.0+1
+  holding_gesture: ^1.1.0
+
 
 dev_dependencies:
   flutter_test:

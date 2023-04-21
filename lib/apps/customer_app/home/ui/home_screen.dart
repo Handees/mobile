@@ -117,23 +117,12 @@ class HomeScreen extends ConsumerWidget {
                           leading: const Icon(Icons.credit_card),
                           title: const Text('Payments'),
                         ),
-                        const Divider(),
                         ListTile(
                           onTap: () => Navigator.of(context)
                               .pushNamed(CustomerAppRoutes.history),
                           leading: const Icon(Icons.history),
                           title: const Text('History'),
                         ),
-                        const Divider(),
-                        ListTile(
-                          onTap: () =>
-                              Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => Test(),
-                          )),
-                          leading: const Icon(Icons.history),
-                          title: const Text('Test'),
-                        ),
-                        const Divider(),
                         ListTile(
                           onTap: () => Navigator.of(context)
                               .pushNamed(CustomerAppRoutes.settings),
@@ -146,15 +135,19 @@ class HomeScreen extends ConsumerWidget {
                           leading: const Icon(Icons.support_agent),
                           title: const Text('Customer Support'),
                         ),
-                        const Divider(),
+                        ListTile(
+                          onTap: () {},
+                          leading: const Icon(Icons.help_outline_outlined),
+                          title: const Text('FAQ'),
+                        ),
                         ListTile(
                           onTap: () {
                             ref.watch(authProvider.notifier).signoutUser();
                             Navigator.of(context, rootNavigator: true)
                                 .pushReplacementNamed(AuthRoutes.root);
                           },
-                          leading: const Icon(Icons.help_outline_outlined),
-                          title: const Text('FAQ'),
+                          leading: const Icon(Icons.logout),
+                          title: const Text('Sign Out'),
                         ),
                         const Spacer(),
                         SizedBox(

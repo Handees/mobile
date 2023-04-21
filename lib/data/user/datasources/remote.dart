@@ -61,4 +61,23 @@ class UserRemoteDataSource {
       return false;
     }
   }
+
+  Future<dynamic> getArtisanData(String token) async {
+    final future = http.get(AppUris.addNewUserUri, headers: {
+      HttpHeaders.contentTypeHeader: 'application/json',
+      'access-token': token,
+    });
+
+    final response = await future;
+    print("Get artisan data response ${response.body}");
+
+    print("Get artisan data response code ${response.statusCode}");
+
+    //TODO: Error handling
+    if (response.statusCode > 200 && response.statusCode < 400) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

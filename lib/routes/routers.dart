@@ -6,6 +6,7 @@ import 'package:handees/apps/artisan_app/features/auth/ui/complete_profile/scree
 import 'package:handees/apps/artisan_app/features/auth/ui/complete_profile/screens/passport_photograph.dart';
 import 'package:handees/apps/artisan_app/features/auth/ui/complete_profile/screens/payment_details.dart';
 import 'package:handees/apps/artisan_app/features/auth/ui/complete_profile/screens/valid_id.dart';
+import 'package:handees/apps/artisan_app/features/chat/ui/screens/chat_screen.dart';
 import 'package:handees/apps/artisan_app/features/home/home.artisan.dart';
 import 'package:handees/routes/pages.dart';
 import 'package:handees/services/auth_service.dart';
@@ -18,7 +19,6 @@ import 'routes.dart';
 final mainRouter = NavRouter(
   onGenerateRoute: (RouteSettings settings) {
     NavRouter? router;
-
     switch (settings.name) {
       case '/':
         router =
@@ -161,6 +161,9 @@ final _artisanAppRouter = NavRouter(
         break;
       case ArtisanAppRoutes.passportPhotograph:
         page = const PasspportPhotographScreen();
+        break;
+      case ArtisanAppRoutes.chat:
+        page = const ArtisanChatScreen();
         break;
       default:
         throw Exception('Unknown route: ${settings.name}');
