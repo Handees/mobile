@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 import 'package:handees/routes/routers.dart';
 
@@ -50,8 +49,6 @@ void main() async {
     if (stack is stack_trace.Chain) return stack.toTrace().vmTrace;
     return stack;
   };
-
-  await Hive.initFlutter();
 
   // FirebaseAppCheck.
   await FirebaseAppCheck.instance.activate();

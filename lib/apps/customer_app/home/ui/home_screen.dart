@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:handees/apps/customer_app/home/providers/home_provider.dart';
 import 'package:handees/apps/customer_app/home/ui/swap_app_bottom_sheet.dart';
 import 'package:handees/apps/customer_app/tracker/ui/tracking_screen.dart';
 import 'package:handees/data/handees/job_category.dart';
 import 'package:handees/res/shapes.dart';
 import 'package:handees/res/icons.dart';
 import 'package:handees/routes/routes.dart';
-import 'package:handees/ui/widgets/error_overlay.dart';
-import 'package:handees/ui/widgets/loading_overlay.dart';
+import 'package:handees/services/user_data_service.dart';
 
+import '../viewmodels/home_viewmodel.dart';
 import 'location_picker.dart';
 import 'pick_service_bottom_sheet.dart';
 import 'service_card.dart';
@@ -23,9 +22,11 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     const horizontalPadding = 16.0;
 
+    final viewModel = HomeViewModel(UserDataService.instance);
+
     // final submitStatus = ref.watch(userDataStatusProvider);
 
-    final name = ref.watch(userDataProvider).name;
+    final name = viewModel.name;
     const categories = jobCategories;
 
     return Scaffold(
@@ -69,11 +70,16 @@ class HomeScreen extends ConsumerWidget {
                                           child: Icon(Icons.account_circle),
                                         ),
                                   const SizedBox(width: 16.0),
-                                  Text(
-                                    name,
-                                    style:
-                                        Theme.of(context).textTheme.titleMedium,
-                                  ),
+                                  AnimatedBuilder(
+                                      animation: viewModel,
+                                      builder: (context, snapshot) {
+                                        return Text(
+                                          name,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleMedium,
+                                        );
+                                      }),
                                   const Spacer(),
                                   ElevatedButton(
                                     onPressed: () {

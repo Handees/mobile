@@ -75,7 +75,7 @@ class TestChatRepository implements ChatRepository {
 
   void _simulateMessages() async {
     while (true) {
-      print("Simulating");
+      print("Simulating, has listeners ${_controller.hasListener}");
       await Future.delayed(
           Duration(seconds: _rand.nextInt(5 + _rand.nextInt(25))));
 

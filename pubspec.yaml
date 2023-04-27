@@ -43,15 +43,12 @@ dependencies:
   firebase: ^9.0.3
   flutter_riverpod: ^2.0.2
   pin_code_fields: ^7.4.0
-  shared_preferences: ^2.0.15
   uuid: ^3.0.6
   animations: ^2.0.7
   firebase_app_check: ^0.1.1+2
   flutter_paystack: ^1.0.6
   http: ^0.13.5
   intl: ^0.17.0
-  hive: ^2.2.3
-  hive_flutter: ^1.1.0
   image_picker: ^0.8.6+1
   firebase_storage: ^11.0.10
   flutter_svg: ^2.0.0+1

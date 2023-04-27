@@ -17,20 +17,6 @@ class SigninScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final model = ref.watch(authProvider.notifier);
-    // final authState = ref.watch(authProvider);
-
-    // final emailError = authState == AuthState.noSuchEmail
-    //     ? 'No account exists with this email'
-    //     : null;
-
-    // if (authState == AuthState.authenticated) {
-    //   Future.microtask(
-    //     () => Navigator.of(context, rootNavigator: true)
-    //         .pushReplacementNamed(CustomerAppRoutes.home),
-    //   );
-    // }
-
     return AnimatedBuilder(
         animation: viewModel,
         builder: (context, child) {

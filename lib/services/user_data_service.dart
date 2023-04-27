@@ -13,18 +13,18 @@ class UserDataService {
 
   final UserRepository userRepository;
 
-  Future<bool> updateUserData({
-    required String name,
-    required String phone,
-    required String email,
-    required String uid,
-    required String token,
-  }) async {
-    return userRepository.updateUserData(
-        name: name, phone: phone, email: email, uid: uid, token: token);
-  }
+  // Future<bool> updateUserData({
+  //   required String name,
+  //   required String phone,
+  //   required String email,
+  //   required String uid,
+  //   required String token,
+  // }) async {
+  //   return userRepository.updateUserData(
+  //       name: name, phone: phone, email: email, uid: uid, token: token);
+  // }
 
-  Future<UserModel> getUserData() => userRepository.fetchUserData();
+  // Future<UserModel> getUserData() => userRepository.fetchUserData();
 
-  Stream<UserModel> listentoUserData() => userRepository.listenToUserData();
+  // Stream<UserModel> listentoUserData() => userRepository.listenToUserData();
 }

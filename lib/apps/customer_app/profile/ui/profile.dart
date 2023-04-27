@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:handees/apps/customer_app/home/providers/home_provider.dart';
-import 'package:handees/apps/customer_app/profile/providers/profile_provider.dart';
 import 'package:handees/data/user/models/user.dart';
-import 'package:handees/res/icons.dart';
 import 'package:handees/routes/routes.dart';
 
 class ProfileScreen extends ConsumerWidget {
@@ -11,7 +8,12 @@ class ProfileScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(userDataProvider);
+    final user = UserModel(
+      name: 'name',
+      phone: 'phone',
+      email: 'email',
+      addresses: [],
+    );
     final addresses = user.addresses;
 
     return Scaffold(
