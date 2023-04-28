@@ -1,32 +1,19 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/data/user/user_repository.dart';
-import 'package:handees/res/uri.dart';
-import 'package:http/http.dart' as http;
 
 class AuthService {
-  AuthService._(this.firebaseAuth, this.userRepository) {
+  AuthService._(this.firebaseAuth) {
     FirebaseAuth.instance.idTokenChanges().listen((user) {
       user?.getIdToken().then((value) {
         _token = value;
-
-        // userRepository.updateUserData(
-        //   name: user.displayName ?? '',
-        //   phone: user.phoneNumber ?? '',
-        //   email: user.email ?? '',
-        //   uid: user.uid,
-        //   token: _token,
-        // );
       });
     });
   }
 
-  static final instance =
-      AuthService._(FirebaseAuth.instance, UserRepository());
+  static final instance = AuthService._(FirebaseAuth.instance);
 
   final FirebaseAuth firebaseAuth;
-  final UserRepository userRepository;
 
   User get user => firebaseAuth.currentUser!;
 
@@ -40,20 +27,6 @@ class AuthService {
       FirebaseAuth.instance.currentUser!.email!.isNotEmpty &&
       FirebaseAuth.instance.currentUser!.displayName != null &&
       FirebaseAuth.instance.currentUser!.displayName!.isNotEmpty;
-
-  Future<bool> dataSubmitted() async {
-    // if (await userRepository.local.isDataStored) return true;
-    try {
-      final response = await http.get(
-        AppUris.userDataUri(user.uid),
-      );
-
-      return response.statusCode != 404;
-    } on Exception catch (e) {
-      debugPrint('Data submit error $e');
-      return false;
-    }
-  }
 
   Future<bool> emailInUse(String email) async {
     try {
@@ -158,30 +131,6 @@ class AuthService {
       final message = 'Auth Execption: $e';
       debugPrint(message);
       return AuthResponse.unknownError;
-    }
-  }
-
-  ///Submits user data to the server
-  ///
-  ///Returns true if data was submitted successfully and false otherwise
-  Future<bool> submitUserData({
-    required String name,
-    required String phone,
-    required String email,
-    required String uid,
-  }) async {
-    try {
-      return await userRepository.submitUserData(
-        name: name,
-        phone: phone,
-        email: email,
-        uid: uid,
-        token: token,
-      );
-    } on Exception catch (e) {
-      print('Got error $e');
-      debugPrint(e.toString());
-      return false;
     }
   }
 
