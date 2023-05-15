@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:handees/data/user/models/user_api_model.dart';
 import 'package:handees/res/uri.dart';
 

@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/apps/customer_app/home/providers/home_provider.dart';
 import 'package:handees/apps/customer_app/profile/providers/profile_provider.dart';
-import 'package:handees/data/user/models/user.dart';
-import 'package:handees/res/icons.dart';
 import 'package:handees/routes/routes.dart';
 
 class ProfileScreen extends ConsumerWidget {
@@ -117,7 +115,7 @@ class ProfileScreen extends ConsumerWidget {
                                 Theme.of(context).colorScheme.errorContainer,
                             foregroundColor:
                                 Theme.of(context).colorScheme.error,
-                            child: Icon(Icons.exit_to_app_rounded),
+                            child: const Icon(Icons.exit_to_app_rounded),
                           ),
                           const SizedBox(width: 8.0),
                           Text(

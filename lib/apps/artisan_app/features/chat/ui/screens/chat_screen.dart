@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/apps/artisan_app/features/chat/providers/messages_provider.dart';
 
-import 'package:handees/data/chats/message_model.dart';
+import 'package:handees/data/chats/model/message_model.dart';
 import 'package:handees/res/shapes.dart';
 
 class ArtisanChatScreen extends ConsumerStatefulWidget {
@@ -52,15 +52,15 @@ class _ArtisanChatScreenState extends ConsumerState<ArtisanChatScreen> {
           CustomScrollView(
             controller: _scrollController,
             slivers: [
-              SliverAppBar(),
+              const SliverAppBar(),
               SliverToBoxAdapter(
                 child: Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
-                        children: const [
+                        children: [
                           CircleAvatar(
                             backgroundImage: NetworkImage(
                                 "https://library.sportingnews.com/styles/crop_style_16_9_mobile_2x/s3/2022-09/Kylian%20Mbappe%20PSG%20042922%20169.jpg?itok=Rvhq8X-s"),

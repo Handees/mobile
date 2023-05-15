@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:handees/services/auth_service.dart';
 import 'package:handees/res/shapes.dart';
-import 'package:handees/theme/theme.dart';
 
 class LoadingBottomSheet extends StatelessWidget {
   const LoadingBottomSheet({Key? key}) : super(key: key);
@@ -24,7 +22,7 @@ class LoadingBottomSheet extends StatelessWidget {
               color: Theme.of(context).colorScheme.secondary,
             ),
           ),
-          SizedBox(height: 16.0),
+          const SizedBox(height: 16.0),
           SizedBox(
             // height: 96,
             width: double.infinity,
@@ -37,7 +35,7 @@ class LoadingBottomSheet extends StatelessWidget {
                   ),
                   height: 72,
                   width: 72,
-                  child: Center(
+                  child: const Center(
                     child: CircleAvatar(
                       backgroundColor: Colors.orange,
                       child: Icon(Icons.abc),
@@ -60,15 +58,15 @@ class LoadingBottomSheet extends StatelessWidget {
                     ),
                   ],
                 ),
-                Spacer(),
+                const Spacer(),
                 IconButton(
                   onPressed: () {},
-                  icon: Icon(Icons.close),
+                  icon: const Icon(Icons.close),
                 )
               ],
             ),
           ),
-          SizedBox(height: 16.0),
+          const SizedBox(height: 16.0),
           SizedBox(
             width: double.infinity,
             child: FilledButton(
@@ -79,7 +77,7 @@ class LoadingBottomSheet extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 8.0),
+          const SizedBox(height: 8.0),
         ],
       ),
     );

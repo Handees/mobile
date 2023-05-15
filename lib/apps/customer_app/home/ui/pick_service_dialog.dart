@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:handees/apps/customer_app/payments/ui/widgets/payment_methods.dart';
-import 'package:handees/theme/theme.dart';
 
 enum WorkDuration { oneTime, contract }
 
@@ -49,7 +48,7 @@ class PickServiceDialog extends StatelessWidget {
 }
 
 class _PaymentMethodsWidget extends StatelessWidget {
-  const _PaymentMethodsWidget({super.key});
+  const _PaymentMethodsWidget();
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +62,7 @@ class _PaymentMethodsWidget extends StatelessWidget {
             style: Theme.of(context).textTheme.titleMedium,
           ),
         ),
-        PaymentMethods(),
+        const PaymentMethods(),
       ],
     );
   }

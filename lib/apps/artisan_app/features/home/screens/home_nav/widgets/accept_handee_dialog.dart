@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:handees/apps/artisan_app/features/home/screens/home_nav/widgets/icon_avatar.dart';
 import 'package:handees/routes/routes.dart';
-import 'package:handees/theme/theme.dart';
 
 class AcceptHandeeDialog extends StatelessWidget {
   const AcceptHandeeDialog({super.key});

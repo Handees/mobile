@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/apps/customer_app/auth/providers/auth_provider.dart';
 import 'package:handees/data/handees/job_category.dart';
 import 'package:handees/data/user/models/user.dart';
-import 'package:handees/services/auth_service.dart';
 import 'package:handees/services/user_data_service.dart';
 
 final userDataProvider =
@@ -20,7 +19,7 @@ final userDataStatusProvider = Provider<SubmitStatus>((ref) {
 
 class UserDataNotifier extends StateNotifier<UserModel> {
   UserDataNotifier(this._userDataService)
-      : super(UserModel(name: '', phone: '', email: '', addresses: [])) {
+      : super(const UserModel(name: '', phone: '', email: '', addresses: [])) {
     refreshData();
   }
 

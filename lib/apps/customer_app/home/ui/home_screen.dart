@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/apps/customer_app/auth/providers/auth_provider.dart';
 import 'package:handees/apps/customer_app/home/providers/home_provider.dart';
 import 'package:handees/apps/customer_app/home/ui/swap_app_bottom_sheet.dart';
-import 'package:handees/apps/customer_app/test.dart';
 import 'package:handees/apps/customer_app/tracker/ui/tracking_screen.dart';
 import 'package:handees/res/shapes.dart';
 import 'package:handees/res/icons.dart';
@@ -52,7 +51,7 @@ class HomeScreen extends ConsumerWidget {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   false // TODO: photoIsAvailable
-                                      ? CircleAvatar(
+                                      ? const CircleAvatar(
                                           radius: 28,
                                           // backgroundImage: NetworkImage(
                                           // ),
@@ -61,12 +60,12 @@ class HomeScreen extends ConsumerWidget {
                                           height: 48,
                                           width: 48,
                                           decoration: ShapeDecoration(
-                                            shape: CircleBorder(),
+                                            shape: const CircleBorder(),
                                             color: Theme.of(context)
                                                 .colorScheme
                                                 .tertiary,
                                           ),
-                                          child: Icon(Icons.account_circle),
+                                          child: const Icon(Icons.account_circle),
                                         ),
                                   const SizedBox(width: 16.0),
                                   Text(
@@ -179,8 +178,8 @@ class HomeScreen extends ConsumerWidget {
                 ],
               ),
             ),
-            bottomNavigationBar: Padding(
-              padding: const EdgeInsets.only(
+            bottomNavigationBar: const Padding(
+              padding: EdgeInsets.only(
                 bottom: horizontalPadding,
                 left: horizontalPadding,
                 right: horizontalPadding,
@@ -316,18 +315,18 @@ class HomeScreen extends ConsumerWidget {
           IgnorePointer(
             ignoring: submitStatus == SubmitStatus.submitted ? true : false,
             child: AnimatedOpacity(
-              duration: Duration(milliseconds: 200),
+              duration: const Duration(milliseconds: 200),
               opacity: submitStatus != SubmitStatus.submitted ? 1 : 0,
               child: Container(
                 // width: double.infinity,
                 alignment: Alignment.center,
                 color: Colors.black54,
                 child: AnimatedScale(
-                  duration: Duration(milliseconds: 150),
+                  duration: const Duration(milliseconds: 150),
                   scale: submitStatus != SubmitStatus.submitted ? 1 : 0,
                   child: submitStatus != SubmitStatus.submitError
-                      ? LoadingOverlay()
-                      : ErrorOverlay(),
+                      ? const LoadingOverlay()
+                      : const ErrorOverlay(),
                 ),
 
                 // AnimatedCrossFade(

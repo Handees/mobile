@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/apps/artisan_app/features/auth/providers/auth_provider.artisan.dart';
 import 'package:handees/apps/artisan_app/features/auth/ui/complete_profile/widgets/custom_text_form_field.artisan.dart';
-import 'package:handees/theme/theme.dart';
 import 'package:handees/utils/utils.dart';
 
 class BasicInfoScreen extends ConsumerWidget with InputValidationMixin {
@@ -40,7 +39,7 @@ class BasicInfoScreen extends ConsumerWidget with InputValidationMixin {
                       style: Theme.of(context)
                           .textTheme
                           .bodyMedium!
-                          .copyWith(color: Color(0xff949494)),
+                          .copyWith(color: const Color(0xff949494)),
                     ),
                     const SizedBox(
                       height: 16.0,

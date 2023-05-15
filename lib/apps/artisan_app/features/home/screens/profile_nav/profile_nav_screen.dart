@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:handees/apps/artisan_app/features/home/screens/home_nav/widgets/complete_profile_card.dart';
-import 'package:handees/apps/artisan_app/features/home/screens/home_nav/widgets/profile_header.dart';
-import 'package:handees/apps/artisan_app/features/home/screens/home_nav/widgets/user_stats_container.dart';
 
 class ProfileNavScreen extends StatelessWidget {
   const ProfileNavScreen({super.key});

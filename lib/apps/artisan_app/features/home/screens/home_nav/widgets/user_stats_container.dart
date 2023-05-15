@@ -7,12 +7,12 @@ class UserStatsContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       children: <Widget>[
-        const UserStatsCard("EARNINGS", Color(0xff4579bd), Color(0xffdae5eb)),
-        const SizedBox(height: 16.0),
+        UserStatsCard("EARNINGS", Color(0xff4579bd), Color(0xffdae5eb)),
+        SizedBox(height: 16.0),
         Row(
-          children: const <Widget>[
+          children: <Widget>[
             Flexible(
               child: UserStatsCard(
                   "RATINGS", Color(0xfff1c644), Color(0xfffcf4da)),

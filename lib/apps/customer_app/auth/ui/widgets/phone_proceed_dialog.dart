@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:handees/res/shapes.dart';
-import 'package:handees/theme/theme.dart';
 
 class PhoneProceedDialog extends StatelessWidget {
   const PhoneProceedDialog({

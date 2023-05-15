@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/res/icons.dart';
 import 'package:handees/routes/routes.dart';
-import 'package:handees/routes/routes.dart';
-import 'package:handees/theme/theme.dart';
 import 'package:handees/utils/utils.dart';
 
 import '../../providers/auth_provider.dart';
@@ -121,9 +119,9 @@ class SigninScreen extends ConsumerWidget with InputValidationMixin {
                       ),
                     ),
                     const Spacer(),
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: const [
+                      children: [
                         CircleAvatar(radius: 24.0),
                         CircleAvatar(radius: 24.0),
                         CircleAvatar(radius: 24.0),

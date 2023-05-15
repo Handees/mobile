@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:handees/theme/theme_extensions.dart';
 
 Future<T?> showHandeeDialog<T>(
   BuildContext context, {

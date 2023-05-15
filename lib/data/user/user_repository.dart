@@ -25,7 +25,7 @@ class UserRepository {
 
     return UserModel(
       name: localData!.name,
-      addresses: [],
+      addresses: const [],
       email: localData.email,
       phone: localData.phone,
     );
@@ -36,7 +36,7 @@ class UserRepository {
             name: model.name,
             phone: model.phone,
             email: model.email,
-            addresses: [],
+            addresses: const [],
           ));
 
   Future<void> refreshData() async {

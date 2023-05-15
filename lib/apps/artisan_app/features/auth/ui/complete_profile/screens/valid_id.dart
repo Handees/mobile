@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:handees/apps/artisan_app/features/auth/ui/complete_profile/widgets/id_type_card.dart';
 import 'package:handees/apps/artisan_app/features/auth/ui/complete_profile/widgets/image_upload.dart';
-import 'package:handees/theme/theme.dart';
 
 class ValidIDScreen extends StatefulWidget {
-  ValidIDScreen({super.key});
+  const ValidIDScreen({super.key});
 
   @override
   State<ValidIDScreen> createState() => _ValidIDScreenState();

@@ -15,7 +15,7 @@ class ProfileHeader extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: Color(0xffc4c4c4),
+                    color: const Color(0xffc4c4c4),
                     width: 2,
                   ),
                   borderRadius: BorderRadius.circular(50),

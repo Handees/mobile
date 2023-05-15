@@ -27,7 +27,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   void _scrollToBottom() {
     SchedulerBinding.instance.addPostFrameCallback((_) {
       _scrollController.animateTo(_scrollController.position.maxScrollExtent,
-          duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+          duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
     });
   }
 
@@ -38,7 +38,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       if (_scrollController.offset >
           _scrollController.position.maxScrollExtent - 120) {
         _scrollController.animateTo(_scrollController.position.maxScrollExtent,
-            duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+            duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
       }
     });
   }

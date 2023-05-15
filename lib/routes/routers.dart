@@ -169,7 +169,7 @@ final _artisanAppRouter = NavRouter(
         page = const PaymentDetailsScreen();
         break;
       case ArtisanAppRoutes.validId:
-        page = ValidIDScreen();
+        page = const ValidIDScreen();
         break;
       case ArtisanAppRoutes.passportPhotograph:
         page = const PasspportPhotographScreen();

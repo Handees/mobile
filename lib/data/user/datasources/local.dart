@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:handees/data/user/models/user_db_model.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -47,7 +46,7 @@ class UserLocalDataSource {
   Stream<UserDbModel> listenToUserData() {
     final controller = StreamController<UserDbModel>();
 
-    var user = UserDbModel(name: '', email: '', phone: '');
+    var user = const UserDbModel(name: '', email: '', phone: '');
 
     _userBoxFuture.then((box) {
       box.watch().listen((event) {
