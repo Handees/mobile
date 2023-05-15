@@ -1,25 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:handees/apps/artisan_app/features/auth/ui/complete_profile/widgets/id_type_card.dart';
-import 'package:handees/apps/artisan_app/features/auth/ui/complete_profile/widgets/image_upload.dart';
+import 'package:handees/apps/artisan_app/auth/ui/complete_profile/widgets/image_upload.dart';
 
-class ValidIDScreen extends StatefulWidget {
-  const ValidIDScreen({super.key});
+class PasspportPhotographScreen extends StatefulWidget {
+  const PasspportPhotographScreen({super.key});
 
   @override
-  State<ValidIDScreen> createState() => _ValidIDScreenState();
+  State<PasspportPhotographScreen> createState() =>
+      _PasspportPhotographScreenState();
 }
 
-class _ValidIDScreenState extends State<ValidIDScreen> {
+class _PasspportPhotographScreenState extends State<PasspportPhotographScreen> {
   final double horizontalPadding = 16.0;
-
-  final List<String> _idTypes = [
-    "National ID",
-    "Drivers' License",
-    "Voters' Card",
-    "International Passport"
-  ];
-
-  int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +25,7 @@ class _ValidIDScreenState extends State<ValidIDScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Valid ID",
+                    "Passport Photograph",
                     style: Theme.of(context)
                         .textTheme
                         .titleLarge!
@@ -44,7 +35,7 @@ class _ValidIDScreenState extends State<ValidIDScreen> {
                     height: 8.0,
                   ),
                   Text(
-                    "Please kindly upload any of the valid means of identification specified below",
+                    "Please kindly upload your profile picture",
                     style: Theme.of(context)
                         .textTheme
                         .bodyMedium!
@@ -54,33 +45,6 @@ class _ValidIDScreenState extends State<ValidIDScreen> {
                     height: 16.0,
                   ),
                 ],
-              ),
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: EdgeInsets.only(left: horizontalPadding),
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width - horizontalPadding,
-                height: 40,
-                child: ListView.separated(
-                  itemCount: _idTypes.length,
-                  scrollDirection: Axis.horizontal,
-                  separatorBuilder: (ctx, idx) => const SizedBox(width: 8.0),
-                  itemBuilder: (BuildContext ctx, int index) {
-                    return InkWell(
-                      onTap: (() {
-                        setState(() {
-                          _selectedIndex = index;
-                        });
-                      }),
-                      child: IDTypeCard(
-                        _idTypes[index],
-                        index == _selectedIndex,
-                      ),
-                    );
-                  },
-                ),
               ),
             ),
           ),

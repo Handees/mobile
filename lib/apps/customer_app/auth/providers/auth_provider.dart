@@ -40,12 +40,16 @@ class AuthStateNotifier extends StateNotifier<AuthState>
     final submitStatus = ref.read(_submittedProvider);
 
     _authService.firebaseAuth.userChanges().listen((user) {
+      if (user != null) {
+        print('${user.displayName} here');
+      }
+
       if (AuthService.isAuthenticated() &&
           AuthService.isProfileComplete() &&
           submitStatus != SubmitStatus.submitted) {
         trySubmitData(
           name: user!.displayName!,
-          phone: user.phoneNumber!,
+          phone: user.phoneNumber ?? "",
           email: user.email!,
           uid: user.uid,
         );
@@ -142,6 +146,8 @@ class AuthStateNotifier extends StateNotifier<AuthState>
     int retryCount = 0;
 
     while (!submitted && retryCount++ < 5) {
+      print(submitted);
+      print(retryCount);
       submitted = await _authService.submitUserData(
         name: name,
         phone: phone,

@@ -1,16 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:handees/apps/artisan_app/features/auth/ui/complete_profile/widgets/image_upload.dart';
+import 'package:handees/apps/artisan_app/auth/ui/complete_profile/widgets/id_type_card.dart';
+import 'package:handees/apps/artisan_app/auth/ui/complete_profile/widgets/image_upload.dart';
 
-class PasspportPhotographScreen extends StatefulWidget {
-  const PasspportPhotographScreen({super.key});
+class ValidIDScreen extends StatefulWidget {
+  const ValidIDScreen({super.key});
 
   @override
-  State<PasspportPhotographScreen> createState() =>
-      _PasspportPhotographScreenState();
+  State<ValidIDScreen> createState() => _ValidIDScreenState();
 }
 
-class _PasspportPhotographScreenState extends State<PasspportPhotographScreen> {
+class _ValidIDScreenState extends State<ValidIDScreen> {
   final double horizontalPadding = 16.0;
+
+  final List<String> _idTypes = [
+    "National ID",
+    "Drivers' License",
+    "Voters' Card",
+    "International Passport"
+  ];
+
+  int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +34,7 @@ class _PasspportPhotographScreenState extends State<PasspportPhotographScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Passport Photograph",
+                    "Valid ID",
                     style: Theme.of(context)
                         .textTheme
                         .titleLarge!
@@ -35,7 +44,7 @@ class _PasspportPhotographScreenState extends State<PasspportPhotographScreen> {
                     height: 8.0,
                   ),
                   Text(
-                    "Please kindly upload your profile picture",
+                    "Please kindly upload any of the valid means of identification specified below",
                     style: Theme.of(context)
                         .textTheme
                         .bodyMedium!
@@ -45,6 +54,33 @@ class _PasspportPhotographScreenState extends State<PasspportPhotographScreen> {
                     height: 16.0,
                   ),
                 ],
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: EdgeInsets.only(left: horizontalPadding),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width - horizontalPadding,
+                height: 40,
+                child: ListView.separated(
+                  itemCount: _idTypes.length,
+                  scrollDirection: Axis.horizontal,
+                  separatorBuilder: (ctx, idx) => const SizedBox(width: 8.0),
+                  itemBuilder: (BuildContext ctx, int index) {
+                    return InkWell(
+                      onTap: (() {
+                        setState(() {
+                          _selectedIndex = index;
+                        });
+                      }),
+                      child: IDTypeCard(
+                        _idTypes[index],
+                        index == _selectedIndex,
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
           ),

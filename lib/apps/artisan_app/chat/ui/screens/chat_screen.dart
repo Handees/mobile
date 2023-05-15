@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:handees/apps/artisan_app/features/chat/providers/messages_provider.dart';
+import 'package:handees/apps/artisan_app/chat/providers/messages_provider.dart';
 
 import 'package:handees/data/chats/model/message_model.dart';
 import 'package:handees/res/shapes.dart';

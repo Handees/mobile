@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:handees/apps/customer_app/auth/providers/auth_provider.dart';
 import 'package:handees/data/user/user_repository.dart';
 import 'package:handees/res/uri.dart';
 import 'package:http/http.dart' as http;
