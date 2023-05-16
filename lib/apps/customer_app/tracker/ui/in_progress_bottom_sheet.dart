@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:handees/res/shapes.dart';
 import 'package:handees/routes/routes.dart';
-import 'package:handees/theme/theme.dart';
 
 class InProgressBottomSheet extends StatefulWidget {
   const InProgressBottomSheet({Key? key}) : super(key: key);
@@ -199,7 +198,7 @@ class _InProgressBottomSheetState extends State<InProgressBottomSheet>
                                 height: 72,
                                 width: 72,
                                 child: const Center(
-                                  child: const CircleAvatar(
+                                  child: CircleAvatar(
                                     backgroundColor: Colors.orange,
                                     child: Icon(Icons.abc),
                                   ),
@@ -212,7 +211,7 @@ class _InProgressBottomSheetState extends State<InProgressBottomSheet>
                             children: [
                               const SizedBox(
                                 width: 64,
-                                child: const Icon(Icons.money),
+                                child: Icon(Icons.money),
                               ),
                               const SizedBox(width: 16),
                               Text(

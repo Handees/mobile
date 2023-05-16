@@ -20,6 +20,7 @@ abstract class ArtisanAppRoutes {
       '/artisan/complete-profile/handee-details';
   static const String paymentDetails =
       '/artisan/complete-profile/payment-details';
+  static const String chat = '/artisan/home/chat';
 
   static const String home = '/artisan/home';
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:handees/apps/artisan_app/features/home/screens/home_nav/widgets/icon_avatar.dart';
+import 'package:handees/apps/artisan_app/home/screens/home_nav/widgets/icon_avatar.dart';
 
 class ProfileHeader extends StatelessWidget {
   const ProfileHeader(this.isProfileComplete, {super.key});
@@ -15,7 +15,7 @@ class ProfileHeader extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: Color(0xffc4c4c4),
+                    color: const Color(0xffc4c4c4),
                     width: 2,
                   ),
                   borderRadius: BorderRadius.circular(50),

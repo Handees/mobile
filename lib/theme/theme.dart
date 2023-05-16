@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:handees/res/shapes.dart';
 
-import 'theme_extensions.dart';
 
 export 'theme_extensions.dart';
 
@@ -77,7 +76,7 @@ ThemeData buildTheme(ColorScheme colorScheme) => ThemeData.from(
       useMaterial3: true,
     ).copyWith(
       dividerTheme:
-          DividerThemeData(color: Color.fromRGBO(150, 162, 168, 0.12)),
+          const DividerThemeData(color: Color.fromRGBO(150, 162, 168, 0.12)),
       appBarTheme: const AppBarTheme().copyWith(centerTitle: true),
       scaffoldBackgroundColor: colorScheme.background,
       radioTheme: RadioThemeData(

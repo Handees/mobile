@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:handees/res/shapes.dart';
 import 'package:handees/routes/routes.dart';
-import 'package:handees/theme/theme.dart';
-import 'package:handees/ui/widgets/circle_fadeout_loader.dart';
 
 import 'in_progress_bottom_sheet.dart';
 import 'loading_bottom_sheet.dart';
@@ -28,7 +25,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
   @override
   Widget build(BuildContext context) {
     late final Widget bottomSheet;
-    final trackingState = TrackingState.inProgress;
+    const trackingState = TrackingState.inProgress;
 
     switch (trackingState) {
       case TrackingState.loading:

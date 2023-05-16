@@ -63,10 +63,10 @@ class _ImageUploadState extends ConsumerState<ImageUpload> {
               ),
               child: _selectedImage != null
                   ? null
-                  : Center(
+                  : const Center(
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
-                        children: const [
+                        children: [
                           Icon(
                             Icons.cloud_upload,
                             size: 50,
@@ -85,9 +85,9 @@ class _ImageUploadState extends ConsumerState<ImageUpload> {
             ),
           ),
           const SizedBox(height: 8.0),
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
+            children: [
               Text(
                 "0 of 1 uploaded",
                 style: TextStyle(
@@ -108,10 +108,10 @@ class _ImageUploadState extends ConsumerState<ImageUpload> {
               color: const Color(0xffa8dadc),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
+            child: const Padding(
+              padding: EdgeInsets.all(16.0),
               child: Row(
-                children: const [
+                children: [
                   Icon(
                     Icons.picture_as_pdf,
                     color: Color(0xffffffff),

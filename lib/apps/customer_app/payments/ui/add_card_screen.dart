@@ -4,7 +4,6 @@ import 'package:flutter_paystack/flutter_paystack.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/apps/customer_app/payments/providers/add_card_provider.dart';
 import 'package:handees/res/constants.dart';
-import 'package:handees/theme/theme.dart';
 
 class AddCardScreen extends ConsumerWidget {
   AddCardScreen({super.key});

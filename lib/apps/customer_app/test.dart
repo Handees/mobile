@@ -3,13 +3,9 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:handees/res/constants.dart';
 import 'package:handees/res/uri.dart';
-import 'package:handees/ui/widgets/circlular_loader.dart';
-import 'package:handees/ui/widgets/error_overlay.dart';
 import 'package:handees/ui/widgets/handee_snackbar.dart';
-import 'package:handees/ui/widgets/loading_overlay.dart';
 import 'package:http/http.dart' as http;
 import 'package:socket_io_client/socket_io_client.dart' as io;
 

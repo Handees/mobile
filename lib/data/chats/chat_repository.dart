@@ -92,7 +92,7 @@ class TestChatRepository implements ChatRepository {
     String message = '';
 
     for (int i = 0; i < wordCount; ++i) {
-      message += _words[_rand.nextInt(_words.length)] + ' ';
+      message += '${_words[_rand.nextInt(_words.length)]} ';
     }
 
     return MessageModel(

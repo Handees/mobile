@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:handees/theme/theme.dart';
 
 class OnlineToggleCard extends StatelessWidget {
   const OnlineToggleCard(this.isOnline, this.setOnline, {super.key});

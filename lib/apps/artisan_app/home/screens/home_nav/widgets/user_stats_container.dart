@@ -1,18 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:handees/apps/artisan_app/features/home/screens/home_nav/widgets/user_stats_card.dart';
+import 'package:handees/apps/artisan_app/home/screens/home_nav/widgets/user_stats_card.dart';
 
 class UserStatsContainer extends StatelessWidget {
   const UserStatsContainer({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       children: <Widget>[
-        const UserStatsCard("EARNINGS", Color(0xff4579bd), Color(0xffdae5eb)),
-        const SizedBox(height: 16.0),
+        UserStatsCard("EARNINGS", Color(0xff4579bd), Color(0xffdae5eb)),
+        SizedBox(height: 16.0),
         Row(
-          children: const <Widget>[
+          children: <Widget>[
             Flexible(
               child: UserStatsCard(
                   "RATINGS", Color(0xfff1c644), Color(0xfffcf4da)),

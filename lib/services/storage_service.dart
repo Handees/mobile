@@ -30,7 +30,7 @@ class StorageService {
     try {
       await imageRef.putFile(file);
       return await imageRef.getDownloadURL();
-    } on FirebaseException catch (e) {
+    } on FirebaseException {
       return "";
     }
   }

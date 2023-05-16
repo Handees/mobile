@@ -42,7 +42,7 @@ class _CircularLoaderState extends State<CircularLoader>
     return Transform.rotate(
       angle: _animationController.value,
       child: CustomPaint(
-        size: Size(56, 56),
+        size: const Size(56, 56),
         painter: LinePainter(widget.color),
       ),
     );

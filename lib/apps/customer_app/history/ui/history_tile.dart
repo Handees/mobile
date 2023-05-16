@@ -47,7 +47,7 @@ class HistoryTile extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  ServiceStateWidget.canceled(),
+                  const ServiceStateWidget.canceled(),
                   Text(
                     '4th Jan 2022',
                     style: Theme.of(context).textTheme.labelSmall,

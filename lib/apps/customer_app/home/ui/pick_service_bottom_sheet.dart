@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:handees/data/handees/job_category.dart';
 import 'package:handees/routes/routes.dart';
-import 'package:handees/theme/theme.dart';
 
 import 'service_card.dart';
 

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:handees/apps/artisan_app/features/auth/ui/complete_profile/screens/complete_profile.dart';
-import 'package:handees/apps/artisan_app/features/auth/ui/complete_profile/screens/basic_info.dart';
-import 'package:handees/apps/artisan_app/features/auth/ui/complete_profile/screens/document_upload.dart';
-import 'package:handees/apps/artisan_app/features/auth/ui/complete_profile/screens/handee_details.dart';
-import 'package:handees/apps/artisan_app/features/auth/ui/complete_profile/screens/passport_photograph.dart';
-import 'package:handees/apps/artisan_app/features/auth/ui/complete_profile/screens/payment_details.dart';
-import 'package:handees/apps/artisan_app/features/auth/ui/complete_profile/screens/valid_id.dart';
-import 'package:handees/apps/artisan_app/features/home/home.artisan.dart';
+import 'package:handees/apps/artisan_app/auth/ui/complete_profile/screens/complete_profile.dart';
+import 'package:handees/apps/artisan_app/auth/ui/complete_profile/screens/basic_info.dart';
+import 'package:handees/apps/artisan_app/auth/ui/complete_profile/screens/document_upload.dart';
+import 'package:handees/apps/artisan_app/auth/ui/complete_profile/screens/handee_details.dart';
+import 'package:handees/apps/artisan_app/auth/ui/complete_profile/screens/passport_photograph.dart';
+import 'package:handees/apps/artisan_app/auth/ui/complete_profile/screens/payment_details.dart';
+import 'package:handees/apps/artisan_app/auth/ui/complete_profile/screens/valid_id.dart';
+import 'package:handees/apps/artisan_app/chat/ui/screens/chat_screen.dart';
+import 'package:handees/apps/artisan_app/home/home.artisan.dart';
 import 'package:handees/apps/customer_app/profile/ui/edit_address.dart';
 import 'package:handees/apps/customer_app/profile/ui/edit_email.dart';
 import 'package:handees/apps/customer_app/profile/ui/edit_profile.dart';
@@ -21,7 +22,6 @@ import 'routes.dart';
 final mainRouter = NavRouter(
   onGenerateRoute: (RouteSettings settings) {
     NavRouter? router;
-
     switch (settings.name) {
       case '/':
         router =
@@ -169,10 +169,13 @@ final _artisanAppRouter = NavRouter(
         page = const PaymentDetailsScreen();
         break;
       case ArtisanAppRoutes.validId:
-        page = ValidIDScreen();
+        page = const ValidIDScreen();
         break;
       case ArtisanAppRoutes.passportPhotograph:
         page = const PasspportPhotographScreen();
+        break;
+      case ArtisanAppRoutes.chat:
+        page = const ArtisanChatScreen();
         break;
       default:
         throw Exception('Unknown route: ${settings.name}');

@@ -7,7 +7,7 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Settings'),
+        title: const Text('Settings'),
       ),
       body: ListView(
         children: [
@@ -43,7 +43,7 @@ class SettingsTile extends StatelessWidget {
                 'Title',
                 style: Theme.of(context).textTheme.titleMedium,
               ),
-              Text('Subtitle'),
+              const Text('Subtitle'),
             ],
           ),
         ),

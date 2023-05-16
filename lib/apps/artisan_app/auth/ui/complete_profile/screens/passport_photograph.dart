@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:handees/apps/artisan_app/features/auth/ui/complete_profile/widgets/image_upload.dart';
-import 'package:handees/theme/theme.dart';
+import 'package:handees/apps/artisan_app/auth/ui/complete_profile/widgets/image_upload.dart';
 
 class PasspportPhotographScreen extends StatefulWidget {
   const PasspportPhotographScreen({super.key});

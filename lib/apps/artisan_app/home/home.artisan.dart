@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:handees/apps/artisan_app/features/home/screens/profile_nav/profile_nav_screen.dart';
-import 'package:handees/apps/artisan_app/features/home/widgets/bottom_nav_bar.dart';
-import 'package:handees/apps/artisan_app/features/home/screens/home_nav/home_nav_screen.dart';
+import 'package:handees/apps/artisan_app/home/screens/profile_nav/profile_nav_screen.dart';
+import 'package:handees/apps/artisan_app/home/widgets/bottom_nav_bar.dart';
+import 'package:handees/apps/artisan_app/home/screens/home_nav/home_nav_screen.dart';
 
 class ArtisanHomeScreen extends StatefulWidget {
   const ArtisanHomeScreen({super.key});

@@ -12,12 +12,12 @@ class LoadingOverlay extends StatelessWidget {
         shape: Shapes.mediumShape,
         color: Theme.of(context).colorScheme.primary,
       ),
-      padding: EdgeInsets.symmetric(vertical: 32.0, horizontal: 48.0),
+      padding: const EdgeInsets.symmetric(vertical: 32.0, horizontal: 48.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           CircularLoader(Theme.of(context).colorScheme.secondary),
-          SizedBox(height: 16.0),
+          const SizedBox(height: 16.0),
           Text(
             'Finalizing',
             style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
@@ -25,6 +25,5 @@ class LoadingOverlay extends StatelessWidget {
         ],
       ),
     );
-    ;
   }
 }
