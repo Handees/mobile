@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:handees/apps/customer_app/auth/providers/auth_provider.dart';
-import 'package:handees/apps/customer_app/home/providers/home_provider.dart';
+
 import 'package:handees/apps/customer_app/home/ui/swap_app_bottom_sheet.dart';
 import 'package:handees/apps/customer_app/tracker/ui/tracking_screen.dart';
+import 'package:handees/data/handees/job_category.dart';
 import 'package:handees/res/shapes.dart';
 import 'package:handees/res/icons.dart';
 import 'package:handees/routes/routes.dart';
-import 'package:handees/ui/widgets/error_overlay.dart';
-import 'package:handees/ui/widgets/loading_overlay.dart';
+import 'package:handees/services/user_data_service.dart';
 
+import '../viewmodels/home_viewmodel.dart';
 import 'location_picker.dart';
 import 'pick_service_bottom_sheet.dart';
 import 'service_card.dart';
@@ -22,10 +22,12 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     const horizontalPadding = 16.0;
 
-    final submitStatus = ref.watch(userDataStatusProvider);
+    final viewModel = HomeViewModel(UserDataService.instance);
 
-    final name = ref.watch(userDataProvider).name;
-    final categories = ref.watch(categoryProvider);
+    // final submitStatus = ref.watch(userDataStatusProvider);
+
+    final name = viewModel.name;
+    const categories = jobCategories;
 
     return Scaffold(
       // resizeToAvoidBottomInset: true,
@@ -51,7 +53,7 @@ class HomeScreen extends ConsumerWidget {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   false // TODO: photoIsAvailable
-                                      ? const CircleAvatar(
+                                      ? CircleAvatar(
                                           radius: 28,
                                           // backgroundImage: NetworkImage(
                                           // ),
@@ -60,19 +62,24 @@ class HomeScreen extends ConsumerWidget {
                                           height: 48,
                                           width: 48,
                                           decoration: ShapeDecoration(
-                                            shape: const CircleBorder(),
+                                            shape: CircleBorder(),
                                             color: Theme.of(context)
                                                 .colorScheme
                                                 .tertiary,
                                           ),
-                                          child: const Icon(Icons.account_circle),
+                                          child: Icon(Icons.account_circle),
                                         ),
                                   const SizedBox(width: 16.0),
-                                  Text(
-                                    name,
-                                    style:
-                                        Theme.of(context).textTheme.titleMedium,
-                                  ),
+                                  AnimatedBuilder(
+                                      animation: viewModel,
+                                      builder: (context, snapshot) {
+                                        return Text(
+                                          name,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleMedium,
+                                        );
+                                      }),
                                   const Spacer(),
                                   ElevatedButton(
                                     onPressed: () {
@@ -117,6 +124,7 @@ class HomeScreen extends ConsumerWidget {
                           leading: const Icon(HandeeIcons.payment),
                           title: const Text('Payments'),
                         ),
+                        const Divider(),
                         ListTile(
                           onTap: () => Navigator.of(context)
                               .pushNamed(CustomerAppRoutes.history),
@@ -145,19 +153,11 @@ class HomeScreen extends ConsumerWidget {
                           leading: const Icon(HandeeIcons.person_support),
                           title: const Text('Customer Support'),
                         ),
+                        const Divider(),
                         ListTile(
                           onTap: () {},
-                          leading: const Icon(Icons.help_outline_outlined),
+                          leading: const Icon(HandeeIcons.chat_help),
                           title: const Text('FAQ'),
-                        ),
-                        ListTile(
-                          onTap: () {
-                            ref.watch(authProvider.notifier).signoutUser();
-                            Navigator.of(context, rootNavigator: true)
-                                .pushReplacementNamed(AuthRoutes.root);
-                          },
-                          leading: const Icon(Icons.logout),
-                          title: const Text('Sign Out'),
                         ),
                         const Spacer(),
                         SizedBox(
@@ -178,8 +178,8 @@ class HomeScreen extends ConsumerWidget {
                 ],
               ),
             ),
-            bottomNavigationBar: const Padding(
-              padding: EdgeInsets.only(
+            bottomNavigationBar: Padding(
+              padding: const EdgeInsets.only(
                 bottom: horizontalPadding,
                 left: horizontalPadding,
                 right: horizontalPadding,
@@ -312,34 +312,34 @@ class HomeScreen extends ConsumerWidget {
             ),
           ),
           // if (submitStatus != SubmitStatus.submitted)
-          IgnorePointer(
-            ignoring: submitStatus == SubmitStatus.submitted ? true : false,
-            child: AnimatedOpacity(
-              duration: const Duration(milliseconds: 200),
-              opacity: submitStatus != SubmitStatus.submitted ? 1 : 0,
-              child: Container(
-                // width: double.infinity,
-                alignment: Alignment.center,
-                color: Colors.black54,
-                child: AnimatedScale(
-                  duration: const Duration(milliseconds: 150),
-                  scale: submitStatus != SubmitStatus.submitted ? 1 : 0,
-                  child: submitStatus != SubmitStatus.submitError
-                      ? const LoadingOverlay()
-                      : const ErrorOverlay(),
-                ),
+          // IgnorePointer(
+          //   ignoring: submitStatus == SubmitStatus.submitted ? true : false,
+          //   child: AnimatedOpacity(
+          //     duration: Duration(milliseconds: 200),
+          //     opacity: submitStatus != SubmitStatus.submitted ? 1 : 0,
+          //     child: Container(
+          //       // width: double.infinity,
+          //       alignment: Alignment.center,
+          //       color: Colors.black54,
+          //       child: AnimatedScale(
+          //         duration: Duration(milliseconds: 150),
+          //         scale: submitStatus != SubmitStatus.submitted ? 1 : 0,
+          //         child: submitStatus != SubmitStatus.submitError
+          //             ? LoadingOverlay()
+          //             : ErrorOverlay(),
+          //       ),
 
-                // AnimatedCrossFade(
-                //   duration: Duration(milliseconds: 300),
-                //   firstChild: LoadingOverlay(),
-                //   secondChild: ErrorOverlay(),
-                //   crossFadeState: submitStatus == SubmitStatus.notSubmitted
-                //       ? CrossFadeState.showFirst
-                //       : CrossFadeState.showSecond,
-                // ),
-              ),
-            ),
-          ),
+          //       // AnimatedCrossFade(
+          //       //   duration: Duration(milliseconds: 300),
+          //       //   firstChild: LoadingOverlay(),
+          //       //   secondChild: ErrorOverlay(),
+          //       //   crossFadeState: submitStatus == SubmitStatus.notSubmitted
+          //       //       ? CrossFadeState.showFirst
+          //       //       : CrossFadeState.showSecond,
+          //       // ),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

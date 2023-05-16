@@ -1,16 +1,12 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/data/places/place_model.dart';
 import 'package:handees/data/places/places_repository.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:uuid/uuid.dart';
-// import 'package:geocoding/geocoding.dart';
-// import 'package:uuid/uuid.dart';
-
-final placesServiceProvider =
-    Provider<PlacesService>((ref) => PlacesService._(PlacesRepository()));
 
 class PlacesService {
   PlacesService._(this.placesRepository);
+
+  static final instance = PlacesService._(PlacesRepository());
 
   final PlacesRepository placesRepository;
 

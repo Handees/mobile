@@ -16,6 +16,8 @@ abstract class ImageType {
 class StorageService {
   StorageService._(this.firebaseStorage);
 
+  static final instance = StorageService._(FirebaseStorage.instance);
+
   final FirebaseStorage firebaseStorage;
 
   Future<String> uploadImage(

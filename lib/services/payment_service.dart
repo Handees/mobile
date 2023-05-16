@@ -10,6 +10,9 @@ final paymentServiceProvider = Provider<PaymentService>((ref) {
 class PaymentService {
   PaymentService._(this.paymentRepository, this.userRepository);
 
+  static final instance =
+      PaymentService._(PaymentRepository(), UserRepository());
+
   final UserRepository userRepository;
   final PaymentRepository paymentRepository;
 

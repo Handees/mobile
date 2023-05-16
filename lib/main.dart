@@ -1,13 +1,13 @@
 import 'dart:io';
 
 import 'package:firebase_app_check/firebase_app_check.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 import 'package:handees/routes/routers.dart';
 
@@ -49,8 +49,6 @@ void main() async {
     if (stack is stack_trace.Chain) return stack.toTrace().vmTrace;
     return stack;
   };
-
-  await Hive.initFlutter();
 
   // FirebaseAppCheck.
   await FirebaseAppCheck.instance.activate();

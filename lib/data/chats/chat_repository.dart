@@ -71,11 +71,11 @@ class TestChatRepository implements ChatRepository {
     _simulateMessages();
   }
 
-  final _controller = StreamController<List<MessageModel>>();
+  final _controller = StreamController<List<MessageModel>>.broadcast();
 
   void _simulateMessages() async {
     while (true) {
-      print("Simulating");
+      print("Simulating, has listeners ${_controller.hasListener}");
       await Future.delayed(
           Duration(seconds: _rand.nextInt(5 + _rand.nextInt(25))));
 

@@ -62,9 +62,9 @@ final _authRouter = NavRouter(
       case AuthRoutes.signup:
         page = SignupScreen();
         break;
-      case AuthRoutes.verify:
-        page = VerifyScreen();
-        break;
+      // case AuthRoutes.verify:
+      //   page = VerifyScreen();
+      //   break;
       default:
     }
 
