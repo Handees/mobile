@@ -11,7 +11,7 @@ class PaymentsScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Payment methods'),
       ),
-      body: const Column(
+      body: Column(
         children: [
           PaymentMethods(),
         ],

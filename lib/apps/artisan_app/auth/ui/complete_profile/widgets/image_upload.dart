@@ -63,7 +63,7 @@ class _ImageUploadState extends ConsumerState<ImageUpload> {
               ),
               child: _selectedImage != null
                   ? null
-                  : const Center(
+                  : Center(
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -85,7 +85,7 @@ class _ImageUploadState extends ConsumerState<ImageUpload> {
             ),
           ),
           const SizedBox(height: 8.0),
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
@@ -108,7 +108,7 @@ class _ImageUploadState extends ConsumerState<ImageUpload> {
               color: const Color(0xffa8dadc),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: const Padding(
+            child: Padding(
               padding: EdgeInsets.all(16.0),
               child: Row(
                 children: [
