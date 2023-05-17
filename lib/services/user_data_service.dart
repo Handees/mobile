@@ -27,6 +27,15 @@ class UserDataService {
   //       name: name, phone: phone, email: email, uid: uid, token: token);
   // }
 
+  String getName() {
+    if (firebaseAuth.currentUser != null &&
+        firebaseAuth.currentUser!.displayName != null) {
+      return firebaseAuth.currentUser!.displayName!;
+    } else {
+      return "";
+    }
+  }
+
   Future<bool> dataSubmitted() async {
     // if (await userRepository.local.isDataStored) return true;
     final user = FirebaseAuth.instance.currentUser;

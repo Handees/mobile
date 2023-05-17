@@ -1,16 +1,27 @@
-# handees
+# Handees Mobile App
 
-A new Flutter project.
+## Design Pattern
 
-## Getting Started
+This project uses the MVVM pattern.
 
-This project is a starting point for a Flutter application.
+## Project Structure
 
-A few resources to get you started if this is your first Flutter project:
+Under lib/apps, you have 2 apps, one for the customer and the other for the artisan.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Each app has a number of folders under it that can be seen as features
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+For each feature, you would have two folders
+
+- 'ui': This is where all user interface files are to be placed. It should be split into screens and widgets if need be.
+- 'providers': This folder contains the viewmodels based on the mvvm pattern but for convenience, they are being called providers here.
+
+## Naming Convention
+
+All files should be named based on their type to allow for easier searching e.g
+
+- Home Screen - 'home.screen.dart'
+- Chat Provider - 'chat.provider.dart'
+
+## State Management
+
+The state management library being used is Riverpod. To understand how this project utilizes it, go through this [article](https://blog.logrocket.com/statenotifier-improving-state-change-notifiers-flutter/)

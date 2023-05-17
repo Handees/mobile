@@ -1,26 +1,25 @@
-import 'package:flutter/foundation.dart';
-import 'package:handees/data/handees/job_category.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/services/user_data_service.dart';
 
-class HomeViewModel extends ChangeNotifier {
-  HomeViewModel(this._userDataService) {
-    // refreshData();
+final nameProvider = StateNotifierProvider<NameStateNotifier, String>(
+    (ref) => NameStateNotifier(UserDataService.instance));
 
-    // _userDataService.listentoUserData().listen((event) {
+class NameStateNotifier extends StateNotifier<String> {
+  final UserDataService _userDataService;
+  NameStateNotifier(this._userDataService) : super("") {
+    _name = _userDataService.getName();
+  }
+
+  String _name = "";
+  String get name => _name;
+}
+
+// _userDataService.listentoUserData().listen((event) {
     //   _name = event.name;
     //   notifyListeners();
     // });
-  }
-  final UserDataService _userDataService;
 
-  String _name = '';
-  String get name => _name;
-
-  List get ongoingHandee => throw UnimplementedError();
-
-  List<JobCategory> get categories => jobCategories;
-
-  // Future<void> updateUserData({
+// Future<void> updateUserData({
   //   required String name,
   //   required String phone,
   //   required String email,
@@ -41,4 +40,3 @@ class HomeViewModel extends ChangeNotifier {
   //     notifyListeners();
   //   });
   // }
-}
