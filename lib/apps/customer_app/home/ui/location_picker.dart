@@ -1,7 +1,8 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:handees/apps/customer_app/home/providers/find_location.provider.dart';
 
-import 'package:handees/apps/customer_app/home/viewmodels/find_location_viewmodel.dart';
 import 'package:handees/res/shapes.dart';
 import 'package:handees/services/places_service.dart';
 
@@ -63,17 +64,16 @@ class LocationPickerClosed extends StatelessWidget {
   }
 }
 
-class LocationPickerOpened extends StatefulWidget {
+class LocationPickerOpened extends ConsumerStatefulWidget {
   const LocationPickerOpened({super.key});
 
   @override
-  State<LocationPickerOpened> createState() => _LocationPickerOpenedState();
+  ConsumerState<LocationPickerOpened> createState() =>
+      _LocationPickerOpenedState();
 }
 
-class _LocationPickerOpenedState extends State<LocationPickerOpened> {
+class _LocationPickerOpenedState extends ConsumerState<LocationPickerOpened> {
   final _textFocusNode = FocusNode();
-
-  final viewModel = FindLocationViewModel(PlacesService.instance);
 
   @override
   void initState() {
@@ -89,36 +89,32 @@ class _LocationPickerOpenedState extends State<LocationPickerOpened> {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-        animation: viewModel,
-        builder: (context, _) {
-          final notifier = viewModel;
-          final suggestions = viewModel.suggestions;
+    final suggestions = ref.watch(findLocationProvider);
+    final findLocationStateNotifier = ref.watch(findLocationProvider.notifier);
 
-          return Scaffold(
-            appBar: AppBar(
-              // backgroundColor: Theme.of(context).colorScheme.primary,
-              // centerTitle: true,
-              title: TextField(
-                focusNode: _textFocusNode,
-                onChanged: notifier.getSuggestions,
-              ),
-            ),
-            body: ListView.builder(
-              itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: () {
-                    notifier.getLocation(suggestions[index].id);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Text(suggestions[index].description),
-                  ),
-                );
-              },
-              itemCount: suggestions.length,
+    return Scaffold(
+      appBar: AppBar(
+        // backgroundColor: Theme.of(context).colorScheme.primary,
+        // centerTitle: true,
+        title: TextField(
+          focusNode: _textFocusNode,
+          onChanged: findLocationStateNotifier.getSuggestions,
+        ),
+      ),
+      body: ListView.builder(
+        itemBuilder: (context, index) {
+          return InkWell(
+            onTap: () {
+              findLocationStateNotifier.getLocation(suggestions[index].id);
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(suggestions[index].description),
             ),
           );
-        });
+        },
+        itemCount: suggestions.length,
+      ),
+    );
   }
 }

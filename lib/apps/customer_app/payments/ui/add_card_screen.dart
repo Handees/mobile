@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_paystack/flutter_paystack.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:handees/apps/customer_app/payments/providers/add_card_provider.dart';
+import 'package:handees/apps/customer_app/payments/providers/add_card.provider.dart';
 import 'package:handees/res/constants.dart';
 
 class AddCardScreen extends ConsumerWidget {

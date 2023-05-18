@@ -1,11 +1,5 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:handees/data/payments/payment_repository.dart';
 import 'package:handees/data/user/user_repository.dart';
-
-final paymentServiceProvider = Provider<PaymentService>((ref) {
-  return PaymentService._(PaymentRepository(), UserRepository());
-});
 
 class PaymentService {
   PaymentService._(this.paymentRepository, this.userRepository);
