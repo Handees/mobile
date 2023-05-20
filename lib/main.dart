@@ -9,10 +9,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'package:handees/routes/routers.dart';
+import 'package:handees/shared/routes/routers.dart';
 
 import 'firebase_options.dart';
-import 'theme/theme.dart';
+import 'shared/theme/theme.dart';
 
 import 'package:stack_trace/stack_trace.dart' as stack_trace;
 
