@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 @immutable
-class UserApiModel {
+class ApiUserModel {
   final List addresses;
   final artisanProfile; //TODO: Should be typed
   final List bookings;
@@ -17,7 +17,7 @@ class UserApiModel {
   final String telephone;
   final String userId;
 
-  UserApiModel.fromJson(Map<String, dynamic> json)
+  ApiUserModel.fromJson(Map<String, dynamic> json)
       : addresses = json['addresses'],
         artisanProfile = json['artisan_profile'],
         bookings = json['bookings'],
@@ -32,4 +32,20 @@ class UserApiModel {
         signUpDate = json['sign_up_date'],
         telephone = json['telephone'] ?? '',
         userId = json['user_id'];
+
+  ApiUserModel.empty()
+      : addresses = [],
+        artisanProfile = null,
+        bookings = [],
+        cards = [],
+        createAt = "",
+        email = "",
+        isArtisan = false,
+        isEmailVerified = false,
+        name = "",
+        payments = [],
+        ratings = [],
+        signUpDate = "",
+        telephone = "",
+        userId = "";
 }

@@ -8,7 +8,7 @@ class ProfileScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = UserModel(
+    const user = UserModel(
       name: 'name',
       phone: 'phone',
       email: 'email',
@@ -119,7 +119,7 @@ class ProfileScreen extends ConsumerWidget {
                                 Theme.of(context).colorScheme.errorContainer,
                             foregroundColor:
                                 Theme.of(context).colorScheme.error,
-                            child: Icon(Icons.exit_to_app_rounded),
+                            child: const Icon(Icons.exit_to_app_rounded),
                           ),
                           const SizedBox(width: 8.0),
                           Text(

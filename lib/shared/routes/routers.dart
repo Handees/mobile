@@ -8,11 +8,13 @@ import 'package:handees/apps/artisan_app/features/auth/ui/screens/payment_detail
 import 'package:handees/apps/artisan_app/features/auth/ui/screens/valid_id.dart';
 import 'package:handees/apps/artisan_app/features/chat/ui/screens/chat_screen.dart';
 import 'package:handees/apps/artisan_app/features/home/home.artisan.dart';
+import 'package:handees/apps/customer_app/features/artisan_switch/ui/screens/artisan_switch.screen.dart';
 import 'package:handees/apps/customer_app/features/profile/ui/edit_address.dart';
 import 'package:handees/apps/customer_app/features/profile/ui/edit_email.dart';
 import 'package:handees/apps/customer_app/features/profile/ui/edit_profile.dart';
 import 'package:handees/shared/routes/pages.dart';
 import 'package:handees/shared/services/auth_service.dart';
+import 'package:handees/shared/services/user_data_service.dart';
 import 'package:handees/shared/ui/widgets/navigator.dart';
 
 import 'package:handees/shared/theme/theme.dart';
@@ -22,13 +24,18 @@ import 'routes.dart';
 final mainRouter = NavRouter(
   onGenerateRoute: (RouteSettings settings) {
     NavRouter? router;
+    print(settings.name);
     switch (settings.name) {
       case '/':
-        router =
-            AuthService.isAuthenticated() && AuthService.isProfileComplete()
-                ? _customerAppRouter
-                : _authRouter;
-        break;
+        {
+          router = AuthService.isAuthenticated() &&
+                  AuthService.isProfileComplete() &&
+                  UserDataService.instance.doesUserExist
+              ? _customerAppRouter
+              : _authRouter;
+          break;
+        }
+
       case AuthRoutes.root:
         router = _authRouter;
 
@@ -123,6 +130,9 @@ final _customerAppRouter = NavRouter(
         break;
       case CustomerAppRoutes.editPrimary:
         page = const EditProfile();
+        break;
+      case CustomerAppRoutes.artisanSwitch:
+        page = const ArtisanSwitchScreen();
         break;
 
       case CustomerAppRoutes.pickService:

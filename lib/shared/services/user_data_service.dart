@@ -1,59 +1,48 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:handees/shared/data/user/models/user.dart';
+import 'package:handees/shared/data/user/models/api_user.model.dart';
 import 'package:handees/shared/data/user/user_repository.dart';
 import 'package:handees/shared/res/uri.dart';
+import 'package:handees/shared/services/auth_service.dart';
 
 import 'package:http/http.dart' as http;
 
 class UserDataService {
-  UserDataService._(this.userRepository, this.firebaseAuth);
+  final AuthService authService;
+  final UserRepository userRepository;
+  UserDataService._(this.userRepository, this.authService);
 
   static final instance =
-      UserDataService._(UserRepository(), FirebaseAuth.instance);
+      UserDataService._(UserRepository(), AuthService.instance);
 
-  final FirebaseAuth firebaseAuth;
-  final UserRepository userRepository;
+  bool _doesUserExist = false;
 
-  // Future<bool> updateUserData({
-  //   required String name,
-  //   required String phone,
-  //   required String email,
-  //   required String uid,
-  //   required String token,
-  // }) async {
-  //   return userRepository.updateUserData(
-  //       name: name, phone: phone, email: email, uid: uid, token: token);
-  // }
+  bool get doesUserExist => _doesUserExist;
 
-  String getName() {
-    if (firebaseAuth.currentUser != null &&
-        firebaseAuth.currentUser!.displayName != null) {
-      return firebaseAuth.currentUser!.displayName!;
-    } else {
-      return "";
-    }
-  }
-
-  Future<bool> dataSubmitted() async {
-    // if (await userRepository.local.isDataStored) return true;
-    final user = FirebaseAuth.instance.currentUser;
-    if (user == null) return false;
-
+  Future<ApiUserModel?> getUser() async {
     try {
-      final response = await http.get(
-        AppUris.userDataUri(user.uid),
-      );
-
-      return response.statusCode != 404;
-    } on Exception catch (e) {
-      debugPrint('Data submit error $e');
-      return false;
+      final user = await userRepository.remote.fetchUserData(authService.token);
+      _doesUserExist = true;
+      return user;
+    } catch (e) {
+      print(e);
     }
+    return null;
   }
 
-  // Future<UserModel> getUserData() => userRepository.fetchUserData();
-
-  // Stream<UserModel> listentoUserData() => userRepository.listenToUserData();
+  Future<bool> submitUser() async {
+    try {
+      final user = AuthService.instance.user;
+      final isUserSubmitted = await userRepository.remote.submitUserData(
+          name: user.displayName!,
+          phone: user.phoneNumber ?? "080756",
+          email: user.email!,
+          uid: user.uid,
+          token: AuthService.instance.token);
+      return isUserSubmitted;
+    } catch (e) {
+      print(e);
+    }
+    return false;
+  }
 }

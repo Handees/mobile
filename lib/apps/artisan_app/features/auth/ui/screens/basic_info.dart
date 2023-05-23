@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/apps/artisan_app/features/auth/providers/auth_provider.artisan.dart';
-import 'package:handees/apps/artisan_app/features/auth/ui/widgets/custom_text_form_field.artisan.dart';
+import 'package:handees/shared/ui/widgets/custom_text_form_field.dart';
 import 'package:handees/shared/utils/utils.dart';
 
 class BasicInfoScreen extends ConsumerWidget with InputValidationMixin {

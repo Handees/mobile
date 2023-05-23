@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:handees/apps/customer_app/features/auth/viewmodels/signin_viewmodel.dart';
 import 'package:handees/shared/res/icons.dart';
 import 'package:handees/shared/routes/routes.dart';
 import 'package:handees/shared/services/auth_service.dart';
 
-class SigninScreen extends StatelessWidget {
+class SigninScreen extends ConsumerWidget {
   SigninScreen({
     Key? key,
   }) : super(key: key);
@@ -16,7 +17,9 @@ class SigninScreen extends StatelessWidget {
   final _obscureTextNotifier = ValueNotifier(true);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    viewModel.ref = ref;
+
     return AnimatedBuilder(
         animation: viewModel,
         builder: (context, child) {
@@ -103,9 +106,9 @@ class SigninScreen extends StatelessWidget {
                             ),
                           ),
                           const Spacer(),
-                          Row(
+                          const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: const [
+                            children: [
                               CircleAvatar(radius: 24.0),
                               CircleAvatar(radius: 24.0),
                               CircleAvatar(radius: 24.0),
@@ -157,7 +160,15 @@ class SigninScreen extends StatelessWidget {
                                           },
                                           onUnknownError: () {});
                                     },
-                              child: const Text('Sign in'),
+                              child: viewModel.loading
+                                  ? const SizedBox(
+                                      height: 30,
+                                      width: 30,
+                                      child: CircularProgressIndicator(
+                                        color: Colors.black,
+                                      ),
+                                    )
+                                  : const Text('Sign in'),
                             ),
                           ),
                           const Spacer(flex: 1),

@@ -1,7 +1,4 @@
-import 'dart:async';
 
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:handees/shared/data/user/models/user_db_model.dart';
 
 class UserLocalDataSource {
   // final Future<Box> _userBoxFuture;

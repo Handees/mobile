@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatelessWidget {
-  const CustomTextFormField(
-      {required this.hintText,
-      required this.onSaved,
-      this.validator,
-      super.key});
+  const CustomTextFormField({
+    required this.hintText,
+    required this.onSaved,
+    this.textInputType = TextInputType.text,
+    this.validator,
+    super.key,
+  });
 
   final String hintText;
+  final TextInputType textInputType;
   final void Function(String?)? onSaved;
   final String? Function(String?)? validator;
 
@@ -15,14 +18,14 @@ class CustomTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       textCapitalization: TextCapitalization.words,
-      keyboardType: TextInputType.name,
+      keyboardType: textInputType,
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
               color: const Color(0xff949494),
             ),
         fillColor: const Color(0xffffffff),
-        border: const OutlineInputBorder(
+        enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(
             color: Color(0xffe5e5e5),
           ),

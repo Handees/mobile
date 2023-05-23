@@ -2,23 +2,32 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
 class AuthService {
+  static final instance = AuthService._(FirebaseAuth.instance);
+  final FirebaseAuth firebaseAuth;
+
   AuthService._(this.firebaseAuth) {
-    FirebaseAuth.instance.idTokenChanges().listen((user) {
+    firebaseAuth.idTokenChanges().listen((user) {
       user?.getIdToken().then((value) {
         _token = value;
       });
     });
   }
 
-  static final instance = AuthService._(FirebaseAuth.instance);
-
-  final FirebaseAuth firebaseAuth;
-
   User get user => firebaseAuth.currentUser!;
 
   late String _token;
 
   String get token => _token;
+
+  Future<void> getToken() async {
+    final User? user = firebaseAuth.currentUser;
+    final idToken = await user?.getIdToken();
+
+    // idToken in the line should never be null
+    if (idToken != null) {
+      _token = idToken;
+    }
+  }
 
   static bool isAuthenticated() => FirebaseAuth.instance.currentUser != null;
   static bool isProfileComplete() =>
@@ -187,7 +196,10 @@ class AuthService {
     );
   }
 
-  void signoutUser() => firebaseAuth.signOut();
+  void signoutUser(void Function() cb) async {
+    await firebaseAuth.signOut();
+    cb();
+  }
 }
 
 enum AuthResponse {

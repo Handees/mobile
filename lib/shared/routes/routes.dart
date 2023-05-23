@@ -40,6 +40,7 @@ abstract class CustomerAppRoutes {
   static const String editEmail = '/customer/profile/edit-email';
   static const String editAddress = '/customer/profile/edit-address';
   static const String editPrimary = '/customer/profile/edit-primary';
+  static const String artisanSwitch = '/customer/artisan-switch';
 
   static const String payments = '/customer/payments';
   static const String addCard = '/customer/payments/add-card';

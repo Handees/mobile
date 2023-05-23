@@ -1,23 +1,23 @@
 import 'package:flutter/cupertino.dart';
 
 @immutable
-class UserDbModel {
+class FirebaseUserModel {
   final String name;
   final String phone;
   final String email;
 
-  const UserDbModel({
+  const FirebaseUserModel({
     required this.name,
     required this.email,
     required this.phone,
   });
 
-  UserDbModel copyWith({
+  FirebaseUserModel copyWith({
     required String? name,
     required String? email,
     required String? phone,
   }) =>
-      UserDbModel(
+      FirebaseUserModel(
         name: name ?? this.name,
         email: email ?? this.email,
         phone: phone ?? this.phone,
