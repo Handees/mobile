@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/apps/customer_app/features/home/providers/find_location.provider.dart';
 
 import 'package:handees/shared/res/shapes.dart';
-import 'package:handees/apps/customer_app/services/places_service.customer.dart';
 
 class LocationPicker extends StatelessWidget {
   const LocationPicker({super.key});

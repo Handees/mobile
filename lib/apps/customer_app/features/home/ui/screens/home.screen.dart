@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:handees/apps/customer_app/features/home/ui/swap_app_bottom_sheet.dart';
+import 'package:handees/apps/customer_app/features/home/ui/widgets/swap_app_bottom_sheet.dart';
 import 'package:handees/apps/customer_app/features/tracker/ui/tracking_screen.dart';
 import 'package:handees/shared/data/handees/job_category.dart';
 import 'package:handees/shared/res/shapes.dart';
 import 'package:handees/shared/res/icons.dart';
 import 'package:handees/shared/routes/routes.dart';
-import 'package:handees/shared/services/user_data_service.dart';
+import 'package:handees/shared/services/auth_service.dart';
 
-import '../providers/home.provider.dart';
-import 'location_picker.dart';
-import 'pick_service_bottom_sheet.dart';
-import 'service_card.dart';
+import '../../providers/home.provider.dart';
+import '../widgets/location_picker.dart';
+import '../widgets/pick_service_bottom_sheet.dart';
+import '../widgets/service_card.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -22,7 +22,7 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     const horizontalPadding = 16.0;
 
-    final name = ref.watch(nameProvider);
+    final user = ref.watch(userProvider);
     const categories = jobCategories;
 
     return Scaffold(
@@ -49,7 +49,7 @@ class HomeScreen extends ConsumerWidget {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   false // TODO: photoIsAvailable
-                                      ? CircleAvatar(
+                                      ? const CircleAvatar(
                                           radius: 28,
                                           // backgroundImage: NetworkImage(
                                           // ),
@@ -58,16 +58,17 @@ class HomeScreen extends ConsumerWidget {
                                           height: 48,
                                           width: 48,
                                           decoration: ShapeDecoration(
-                                            shape: CircleBorder(),
+                                            shape: const CircleBorder(),
                                             color: Theme.of(context)
                                                 .colorScheme
                                                 .tertiary,
                                           ),
-                                          child: Icon(Icons.account_circle),
+                                          child:
+                                              const Icon(Icons.account_circle),
                                         ),
                                   const SizedBox(width: 16.0),
                                   Text(
-                                    name,
+                                    user.name,
                                     style:
                                         Theme.of(context).textTheme.titleMedium,
                                   ),
@@ -122,15 +123,6 @@ class HomeScreen extends ConsumerWidget {
                           leading: const Icon(Icons.history),
                           title: const Text('History'),
                         ),
-                        // const Divider(),
-                        // ListTile(
-                        //   onTap: () =>
-                        //       Navigator.of(context).push(MaterialPageRoute(
-                        //     builder: (context) => Test(),
-                        //   )),
-                        //   leading: const Icon(Icons.history),
-                        //   title: const Text('Test'),
-                        // ),
                         const Divider(),
                         ListTile(
                           onTap: () => Navigator.of(context)
@@ -150,18 +142,15 @@ class HomeScreen extends ConsumerWidget {
                           leading: const Icon(HandeeIcons.chat_help),
                           title: const Text('FAQ'),
                         ),
-                        const Spacer(),
-                        SizedBox(
-                          width: double.infinity,
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: FilledButton(
-                              onPressed: () {},
-                              child: const Text(
-                                'Become a Handee Man',
-                              ),
-                            ),
-                          ),
+                        const Divider(),
+                        ListTile(
+                          onTap: () {
+                            AuthService.instance.signoutUser(() =>
+                                Navigator.of(context, rootNavigator: true)
+                                    .pushReplacementNamed(AuthRoutes.root));
+                          },
+                          leading: const Icon(Icons.exit_to_app),
+                          title: const Text('Sign Out'),
                         ),
                       ],
                     ),
@@ -169,8 +158,8 @@ class HomeScreen extends ConsumerWidget {
                 ],
               ),
             ),
-            bottomNavigationBar: Padding(
-              padding: const EdgeInsets.only(
+            bottomNavigationBar: const Padding(
+              padding: EdgeInsets.only(
                 bottom: horizontalPadding,
                 left: horizontalPadding,
                 right: horizontalPadding,
@@ -204,7 +193,7 @@ class HomeScreen extends ConsumerWidget {
                         children: [
                           const SizedBox(height: 8),
                           Text(
-                            'Hello $name',
+                            'Hello ${user.name}',
                             style: Theme.of(context)
                                 .textTheme
                                 .titleLarge
@@ -302,35 +291,6 @@ class HomeScreen extends ConsumerWidget {
               ),
             ),
           ),
-          // if (submitStatus != SubmitStatus.submitted)
-          // IgnorePointer(
-          //   ignoring: submitStatus == SubmitStatus.submitted ? true : false,
-          //   child: AnimatedOpacity(
-          //     duration: Duration(milliseconds: 200),
-          //     opacity: submitStatus != SubmitStatus.submitted ? 1 : 0,
-          //     child: Container(
-          //       // width: double.infinity,
-          //       alignment: Alignment.center,
-          //       color: Colors.black54,
-          //       child: AnimatedScale(
-          //         duration: Duration(milliseconds: 150),
-          //         scale: submitStatus != SubmitStatus.submitted ? 1 : 0,
-          //         child: submitStatus != SubmitStatus.submitError
-          //             ? LoadingOverlay()
-          //             : ErrorOverlay(),
-          //       ),
-
-          //       // AnimatedCrossFade(
-          //       //   duration: Duration(milliseconds: 300),
-          //       //   firstChild: LoadingOverlay(),
-          //       //   secondChild: ErrorOverlay(),
-          //       //   crossFadeState: submitStatus == SubmitStatus.notSubmitted
-          //       //       ? CrossFadeState.showFirst
-          //       //       : CrossFadeState.showSecond,
-          //       // ),
-          //     ),
-          //   ),
-          // ),
         ],
       ),
     );

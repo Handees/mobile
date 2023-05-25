@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:handees/apps/customer_app/features/home/ui/swap_button.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:handees/apps/customer_app/features/home/providers/home.provider.dart';
+import 'package:handees/apps/customer_app/features/home/ui/widgets/swap_button.dart';
 import 'package:handees/shared/routes/routes.dart';
 
-class SwapAppBottomSheet extends StatelessWidget {
+class SwapAppBottomSheet extends ConsumerWidget {
   const SwapAppBottomSheet({
     Key? key,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: 8,
@@ -56,9 +58,15 @@ class SwapAppBottomSheet extends StatelessWidget {
             width: double.infinity,
             child: FilledButton(
               onPressed: () async {
-                final res = await Navigator.of(context, rootNavigator: true)
-                    .pushNamed(ArtisanAppRoutes.home);
-                print(res);
+                final user = ref.read(userProvider);
+                if (user.isArtisan) {
+                  await Navigator.of(context, rootNavigator: true)
+                      .pushReplacementNamed(ArtisanAppRoutes.home);
+                } else {
+                  await Navigator.of(
+                    context,
+                  ).pushNamed(CustomerAppRoutes.artisanSwitch);
+                }
               },
               child: const Text('Switch to handee-man'),
             ),

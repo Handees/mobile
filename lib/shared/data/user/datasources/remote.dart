@@ -1,27 +1,72 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:handees/shared/data/user/models/user_api_model.dart';
+import 'package:handees/shared/data/user/models/api_user.model.dart';
 import 'package:handees/shared/res/uri.dart';
 
 import 'package:http/http.dart' as http;
 
 class UserRemoteDataSource {
-  Future<UserApiModel> fetchUserData(String uid) async {
-    final response = await http.get(
-      AppUris.userDataUri(uid),
-    );
+  Future<ApiUserModel> fetchUserData(String token) async {
+    final response = await http.get(AppUris.userDataUri, headers: {
+      'access-token': token,
+    });
 
-    print('UserRemoteDataSource response ${response.body}');
-    print('UserRemoteDataSource code ${response.statusCode}');
+    print('fetchUserData response ${response.body}');
+    print('fetchUserData code ${response.statusCode}');
 
     switch (response.statusCode) {
       case 200:
         final decodedJson = jsonDecode(response.body);
-        return UserApiModel.fromJson(decodedJson['data']);
+        return ApiUserModel.fromJson(decodedJson['data']);
+      case 404:
+        throw 'User not found';
       default:
-        throw Exception(
-            'UserRemoteDataSource get error: ${response.statusCode} ');
+        throw Exception('fetchUserData get error: ${response.statusCode} ');
+    }
+  }
+
+  Future<bool> submitArtisanData({
+    required String uid,
+    required int hourlyRate,
+    required String jobCategory,
+    required String jobTitle,
+    required String token,
+  }) async {
+    final future = http.post(AppUris.addNewArtisanUri,
+        headers: {
+          HttpHeaders.contentTypeHeader: 'application/json',
+          'access-token': token,
+        },
+        body: jsonEncode({
+          "user_profile_id": uid,
+          "hourly_rate": hourlyRate,
+          "job_category": jobCategory,
+          "job_title": jobTitle,
+        }));
+    print(AppUris.addNewArtisanUri);
+    print(token);
+    print({
+      "user_profile_id": uid,
+      "hourly_rate": hourlyRate,
+      "job_category": jobCategory,
+      "job_title": jobTitle,
+    });
+    late final http.Response response;
+    try {
+      response = await future;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+
+    print('submitArtisanData response ${response.body}');
+    print('submitArtisanData code ${response.statusCode}');
+
+    if (response.statusCode >= 200 && response.statusCode < 400) {
+      return true;
+    } else {
+      return false;
     }
   }
 
@@ -36,7 +81,7 @@ class UserRemoteDataSource {
       AppUris.addNewUserUri,
       headers: {
         HttpHeaders.contentTypeHeader: 'application/json',
-        // 'access-token': token,
+        'access-token': token,
       },
       body: jsonEncode(
         {

@@ -26,6 +26,11 @@ abstract class AppUris {
     '/api/user/',
   );
 
+  static final addNewArtisanUri = Uri.http(
+    AppConstants.url,
+    '/api/user/artisan/',
+  );
+
   static final bookServiceUri = Uri.http(
     AppConstants.url,
     '/api/bookings/',
@@ -36,8 +41,8 @@ abstract class AppUris {
     '/api/payments/',
   );
 
-  static Uri userDataUri(String uid) => Uri.http(
-        AppConstants.url,
-        '/api/user/$uid',
-      );
+  static Uri userDataUri = Uri.http(
+    AppConstants.url,
+    '/api/user/signin',
+  );
 }

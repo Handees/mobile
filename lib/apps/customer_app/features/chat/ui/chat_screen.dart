@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/apps/customer_app/features/chat/providers/chat.provider.dart';
 import 'package:handees/shared/data/chats/model/message_model.dart';
 import 'package:handees/shared/res/shapes.dart';
-import 'package:handees/apps/customer_app/services/chat_service.customer.dart';
 
 class ChatScreen extends ConsumerStatefulWidget {
   const ChatScreen({Key? key}) : super(key: key);

@@ -1,42 +1,18 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:handees/shared/data/user/models/api_user.model.dart';
 import 'package:handees/shared/services/user_data_service.dart';
 
-final nameProvider = StateNotifierProvider<NameStateNotifier, String>(
-    (ref) => NameStateNotifier(UserDataService.instance));
+final userProvider = StateNotifierProvider<UserStateNotifier, ApiUserModel>(
+    (ref) => UserStateNotifier(UserDataService.instance));
 
-class NameStateNotifier extends StateNotifier<String> {
+class UserStateNotifier extends StateNotifier<ApiUserModel> {
   final UserDataService _userDataService;
-  NameStateNotifier(this._userDataService) : super("") {
-    _name = _userDataService.getName();
+  UserStateNotifier(this._userDataService) : super(ApiUserModel.empty());
+
+  Future<void> getUserObject() async {
+    final user = await _userDataService.getUser();
+    if (user != null) {
+      state = user;
+    }
   }
-
-  String _name = "";
-  String get name => _name;
 }
-
-// _userDataService.listentoUserData().listen((event) {
-    //   _name = event.name;
-    //   notifyListeners();
-    // });
-
-// Future<void> updateUserData({
-  //   required String name,
-  //   required String phone,
-  //   required String email,
-  //   required String uid,
-  //   required String token,
-  // }) async {
-  //   final result = await _userDataService.updateUserData(
-  //       name: name, phone: phone, email: email, uid: uid, token: token);
-  //   // if (result) {
-  //   //   refreshData();
-  //   // }
-  // }
-
-  // void refreshData() {
-  //   _userDataService.getUserData().then((value) {
-  //     _name = value.name;
-  //     print('Got name ${name}');
-  //     notifyListeners();
-  //   });
-  // }

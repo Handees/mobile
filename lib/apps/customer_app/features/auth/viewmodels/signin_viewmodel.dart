@@ -1,5 +1,8 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:handees/apps/customer_app/features/home/providers/home.provider.dart';
 import 'package:handees/shared/services/auth_service.dart';
+import 'package:handees/shared/services/user_data_service.dart';
 import 'package:handees/shared/utils/utils.dart';
 
 class SigninViewmodel extends ChangeNotifier with InputValidationMixin {
@@ -18,6 +21,8 @@ class SigninViewmodel extends ChangeNotifier with InputValidationMixin {
 
   bool _loading = false;
   bool get loading => _loading;
+
+  WidgetRef? ref;
 
   void onEmailSaved(String? email) => _email = email!;
   void onPasswordSaved(String? password) => _password = password!;
@@ -38,6 +43,32 @@ class SigninViewmodel extends ChangeNotifier with InputValidationMixin {
     return 'Invalid password';
   }
 
+  Future<void> checkIfUserExists(Function callback, int depth) async {
+    if (ref != null) {
+      final userNotifier = ref!.read(userProvider.notifier);
+      await userNotifier.getUserObject();
+
+      final user = ref!.read(userProvider);
+
+      if (user.name.isNotEmpty) {
+        callback();
+      } else {
+        // the depth is the number of times we want to retry submitting the user
+        // but the user will be fetched depth + 1 times as we have to fetch for every submit user attempt
+        if (depth == 0) return;
+
+        // User is not on DB so register them
+        final isUserSubmitted = await UserDataService.instance.submitUser();
+
+        // if user was still not submitted successfully
+        if (!isUserSubmitted) return;
+
+        // otherwise try to get the user object again
+        checkIfUserExists(callback, depth - 1);
+      }
+    }
+  }
+
   Future<void> signinUser({
     required void Function() onSuccess,
     required void Function() onUnknownError,
@@ -50,7 +81,7 @@ class SigninViewmodel extends ChangeNotifier with InputValidationMixin {
 
     switch (response) {
       case AuthResponse.success:
-        onSuccess();
+        await checkIfUserExists(onSuccess, 1);
         break;
       case AuthResponse.incorrectPassword:
         _passwordError = 'Incorrect password';
