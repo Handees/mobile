@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:handees/apps/customer_app/features/home/providers/home.provider.dart';
-import 'package:handees/apps/customer_app/features/home/ui/widgets/swap_button.dart';
-import 'package:handees/shared/routes/routes.dart';
 
-class SwapAppBottomSheet extends ConsumerWidget {
-  const SwapAppBottomSheet({
-    Key? key,
-  }) : super(key: key);
+class CustomBottomSheet extends StatelessWidget {
+  final Widget? leading;
+  final String title;
+  final String text;
+  // cta = Call To Action
+  final String ctaText;
+  final void Function()? onPressCta;
+  const CustomBottomSheet({
+    required this.title,
+    required this.text,
+    required this.ctaText,
+    required this.onPressCta,
+    this.leading,
+    super.key,
+  });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: 8,
@@ -28,15 +35,16 @@ class SwapAppBottomSheet extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 16.0),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: SwapButton(() {}),
-          ),
+          if (leading != null)
+            Align(
+              alignment: Alignment.centerLeft,
+              child: leading,
+            ),
           const SizedBox(height: 8.0),
           Align(
             alignment: Alignment.topLeft,
             child: Text(
-              "Switch Apps",
+              title,
               style: Theme.of(context)
                   .textTheme
                   .titleMedium
@@ -47,7 +55,7 @@ class SwapAppBottomSheet extends ConsumerWidget {
           Align(
             alignment: Alignment.topLeft,
             child: Text(
-              "Are you sure you would like to switch to the handee-man app?",
+              text,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: Theme.of(context).unselectedWidgetColor,
                   ),
@@ -57,18 +65,8 @@ class SwapAppBottomSheet extends ConsumerWidget {
           SizedBox(
             width: double.infinity,
             child: FilledButton(
-              onPressed: () async {
-                final user = ref.read(userProvider);
-                if (user.isArtisan) {
-                  await Navigator.of(context, rootNavigator: true)
-                      .pushReplacementNamed(ArtisanAppRoutes.home);
-                } else {
-                  await Navigator.of(
-                    context,
-                  ).pushNamed(CustomerAppRoutes.artisanSwitch);
-                }
-              },
-              child: const Text('Switch to handee-man'),
+              onPressed: onPressCta,
+              child: Text(ctaText),
             ),
           ),
           const SizedBox(height: 8.0),

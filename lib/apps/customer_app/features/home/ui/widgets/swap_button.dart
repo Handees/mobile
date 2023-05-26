@@ -17,7 +17,7 @@ class SwapButton extends StatelessWidget {
             Radius.circular(5),
           ),
         ),
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.onPrimary,
       ),
       child: const Icon(
         Icons.swap_horiz,

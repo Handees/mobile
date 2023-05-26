@@ -8,7 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:handees/apps/customer_app/features/home/providers/home.provider.dart';
+import 'package:handees/apps/customer_app/features/home/providers/home.customer.provider.dart';
 
 import 'package:handees/shared/routes/routers.dart';
 import 'package:handees/shared/services/auth_service.dart';
@@ -83,6 +83,8 @@ class MyApp extends ConsumerWidget {
       userNotifier.getUserObject().then((_) {
         FlutterNativeSplash.remove();
       });
+    } else {
+      FlutterNativeSplash.remove();
     }
 
     return MaterialApp(

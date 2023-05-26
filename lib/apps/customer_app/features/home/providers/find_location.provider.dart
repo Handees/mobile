@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/shared/data/places/place_model.dart';
-import 'package:handees/apps/customer_app/services/places_service.customer.dart';
+import 'package:handees/shared/services/places_service.dart';
 
 final findLocationProvider =
     StateNotifierProvider<FindLocationStateNotifier, List<PlaceModel>>(
@@ -18,6 +18,6 @@ class FindLocationStateNotifier extends StateNotifier<List<PlaceModel>> {
   }
 
   void getLocation(String id) async {
-    await _placesService.getLocation(id);
+    await _placesService.getLocation();
   }
 }

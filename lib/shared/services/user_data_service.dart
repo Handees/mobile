@@ -21,6 +21,10 @@ class UserDataService {
 
   Future<ApiUserModel?> getUser() async {
     try {
+      if (!authService.doesTokenExist()) {
+        await authService.getToken();
+      }
+
       final user = await userRepository.remote.fetchUserData(authService.token);
       _doesUserExist = true;
       return user;
