@@ -56,7 +56,7 @@ class _ArtisanChatScreenState extends ConsumerState<ArtisanChatScreen> {
               SliverToBoxAdapter(
                 child: Column(
                   children: [
-                    const Padding(
+                    Padding(
                       padding: EdgeInsets.symmetric(horizontal: 16.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
