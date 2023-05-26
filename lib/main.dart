@@ -8,7 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:handees/apps/customer_app/features/home/providers/home.provider.dart';
+import 'package:handees/apps/customer_app/features/home/providers/home.customer.provider.dart';
 
 import 'package:handees/shared/routes/routers.dart';
 import 'package:handees/shared/services/auth_service.dart';
@@ -41,14 +41,15 @@ void main() async {
     statusBarColor: Colors.transparent, // status bar color
   ));
 
-  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  WidgetsFlutterBinding.ensureInitialized();
 
   FlutterError.demangleStackTrace = (StackTrace stack) {
     if (stack is stack_trace.Trace) return stack.vmTrace;
     if (stack is stack_trace.Chain) return stack.toTrace().vmTrace;
     return stack;
   };
+
+  final container = ProviderContainer();
 
   // All async calls that must be made to allow the app function properly should be put here
 
@@ -65,26 +66,21 @@ void main() async {
   // Get the firebase user object token
   await AuthService.instance.getToken();
 
-  // Fetch the user object from the backend
-  await UserDataService.instance.getUser();
+  // Fetch the user object from the backend if a user exists
+  if (AuthService.isAuthenticated()) {
+    await container.read(userProvider.notifier).getUserObject();
+  }
 
   // END
-  runApp(const ProviderScope(child: MyApp()));
+  runApp(UncontrolledProviderScope(container: container, child: const MyApp()));
 }
 
-class MyApp extends ConsumerWidget {
+class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final userNotifier = ref.read(userProvider.notifier);
-    if (AuthService.isAuthenticated()) {
-      userNotifier.getUserObject().then((_) {
-        FlutterNativeSplash.remove();
-      });
-    }
-
+  Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Handees',

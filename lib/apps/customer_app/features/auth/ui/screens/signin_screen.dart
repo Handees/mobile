@@ -106,7 +106,7 @@ class SigninScreen extends ConsumerWidget {
                             ),
                           ),
                           const Spacer(),
-                          const Row(
+                          Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               CircleAvatar(radius: 24.0),
