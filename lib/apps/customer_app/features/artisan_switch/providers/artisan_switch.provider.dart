@@ -82,7 +82,7 @@ class ArtisanSwitchStateNotifier extends StateNotifier<ArtisanSwitchState> {
     state = ArtisanSwitchState.loading;
 
     try {
-      final response = await _userRepository.remote.submitArtisanData(
+      final response = await _userRepository.submitArtisanData(
         uid: _authService.user.uid,
         hourlyRate: _hourlyRate,
         jobCategory: _ref.read(jobCategoryProvider).id,

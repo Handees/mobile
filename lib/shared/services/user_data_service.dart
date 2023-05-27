@@ -25,7 +25,7 @@ class UserDataService {
         await authService.getToken();
       }
 
-      final user = await userRepository.remote.fetchUserData(authService.token);
+      final user = await userRepository.fetchUserData(authService.token);
       _doesUserExist = true;
       return user;
     } catch (e) {
@@ -37,7 +37,7 @@ class UserDataService {
   Future<bool> submitUser() async {
     try {
       final user = AuthService.instance.user;
-      final isUserSubmitted = await userRepository.remote.submitUserData(
+      final isUserSubmitted = await userRepository.submitUserData(
           name: user.displayName!,
           phone: user.phoneNumber ?? "080756",
           email: user.email!,
