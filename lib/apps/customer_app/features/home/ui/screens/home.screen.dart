@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:handees/apps/customer_app/features/home/ui/widgets/swap_app_bottom_sheet.dart';
+import 'package:handees/apps/customer_app/features/home/ui/widgets/swap_button.dart';
 import 'package:handees/apps/customer_app/features/tracker/ui/tracking_screen.dart';
 import 'package:handees/shared/data/handees/job_category.dart';
 import 'package:handees/shared/res/shapes.dart';
 import 'package:handees/shared/res/icons.dart';
 import 'package:handees/shared/routes/routes.dart';
 import 'package:handees/shared/services/auth_service.dart';
+import 'package:handees/shared/ui/widgets/custom_bottom_sheet.dart';
 
-import '../../providers/home.provider.dart';
+import '../../providers/home.customer.provider.dart';
 import '../widgets/location_picker.dart';
 import '../widgets/pick_service_bottom_sheet.dart';
 import '../widgets/service_card.dart';
@@ -73,38 +74,43 @@ class HomeScreen extends ConsumerWidget {
                                         Theme.of(context).textTheme.titleMedium,
                                   ),
                                   const Spacer(),
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      showModalBottomSheet(
-                                          context: context,
-                                          isScrollControlled: true,
-                                          builder: (sheetCtx) {
-                                            return Padding(
-                                              padding: EdgeInsets.only(
-                                                bottom: MediaQuery.of(sheetCtx)
-                                                    .viewInsets
-                                                    .bottom,
-                                              ),
-                                              child: const SwapAppBottomSheet(),
-                                            );
-                                          });
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      minimumSize: Size.zero,
-                                      padding: const EdgeInsets.all(5),
-                                      shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(5),
-                                        ),
-                                      ),
-                                      backgroundColor: Theme.of(context)
-                                          .colorScheme
-                                          .onPrimary,
-                                    ),
-                                    child: const Icon(
-                                      Icons.swap_horiz,
-                                    ),
-                                  )
+                                  SwapButton(() {
+                                    showModalBottomSheet(
+                                      context: context,
+                                      isScrollControlled: true,
+                                      builder: (sheetCtx) {
+                                        return Padding(
+                                          padding: EdgeInsets.only(
+                                            bottom: MediaQuery.of(sheetCtx)
+                                                .viewInsets
+                                                .bottom,
+                                          ),
+                                          child: CustomBottomSheet(
+                                            title: 'Switch Apps',
+                                            text:
+                                                "Are you sure you would like to switch to the artisan app?",
+                                            ctaText: "Switch to Artisan",
+                                            leading: SwapButton(() {}),
+                                            onPressCta: () async {
+                                              final user =
+                                                  ref.read(userProvider);
+                                              if (user.isArtisan) {
+                                                await Navigator.of(context,
+                                                        rootNavigator: true)
+                                                    .pushReplacementNamed(
+                                                        ArtisanAppRoutes.home);
+                                              } else {
+                                                await Navigator.of(
+                                                  context,
+                                                ).pushNamed(CustomerAppRoutes
+                                                    .artisanSwitch);
+                                              }
+                                            },
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  })
                                 ],
                               ),
                             ),

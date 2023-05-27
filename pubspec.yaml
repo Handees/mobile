@@ -52,7 +52,8 @@ dependencies:
   firebase_storage: ^11.2.1
   flutter_svg: ^2.0.5
   holding_gesture: ^1.1.0
-  flutter_native_splash: ^2.2.19
+  flutter_native_splash: ^2.3.0
+  location: ^4.2.0
 
 dev_dependencies:
   flutter_test:

@@ -15,7 +15,7 @@ class AuthService {
 
   User get user => firebaseAuth.currentUser!;
 
-  late String _token;
+  String _token = "";
 
   String get token => _token;
 
@@ -27,6 +27,10 @@ class AuthService {
     if (idToken != null) {
       _token = idToken;
     }
+  }
+
+  bool doesTokenExist() {
+    return _token.isNotEmpty;
   }
 
   static bool isAuthenticated() => FirebaseAuth.instance.currentUser != null;
