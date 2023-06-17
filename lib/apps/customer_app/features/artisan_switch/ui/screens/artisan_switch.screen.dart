@@ -171,7 +171,7 @@ class _JobCategoryDropdownState extends ConsumerState<JobCategoryDropdown> {
 
     return DropdownButton(
         value: jobCategory,
-        items: jobCategories
+        items: JobCategory.values
             .map<DropdownMenuItem<JobCategory>>(
               (iJobCategory) => DropdownMenuItem<JobCategory>(
                 value: iJobCategory,

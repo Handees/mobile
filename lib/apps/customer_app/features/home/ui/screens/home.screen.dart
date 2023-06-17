@@ -24,7 +24,7 @@ class HomeScreen extends ConsumerWidget {
     const horizontalPadding = 16.0;
 
     final user = ref.watch(userProvider);
-    const categories = jobCategories;
+    const categories = JobCategory.values;
 
     return Scaffold(
       // resizeToAvoidBottomInset: true,

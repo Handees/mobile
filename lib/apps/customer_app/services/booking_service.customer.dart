@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:handees/apps/customer_app/services/sockets/sockets.dart';
+import 'package:handees/shared/data/handees/job_category.dart';
 import 'package:handees/shared/res/constants.dart';
 
 import 'package:http/http.dart' as http;
@@ -16,6 +18,9 @@ class BookingService {
 
   void bookService({
     required String token,
+    required double lat,
+    required double lon,
+    required JobCategory category,
     required void Function(String bookingId) onBooked,
   }) async {
     final future = http.post(
@@ -29,10 +34,10 @@ class BookingService {
       },
       body: jsonEncode(
         {
-          'lat': 6.517871336509268,
-          'lon': 3.399740067230001,
+          'lat': lat,
+          'lon': lon,
           // 'user_id': FirebaseAuth.instance.currentUser!.uid,
-          'job_category': 'carpentry',
+          'job_category': category.id,
         },
       ),
     );

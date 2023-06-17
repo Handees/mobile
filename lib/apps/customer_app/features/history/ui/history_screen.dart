@@ -14,7 +14,7 @@ class HistoryScreen extends StatelessWidget {
       ),
       body: ListView.builder(
         itemBuilder: (context, index) => HistoryTile(
-          jobCategory: jobCategories[0],
+          jobCategory: JobCategory.values[index],
         ),
       ),
     );
