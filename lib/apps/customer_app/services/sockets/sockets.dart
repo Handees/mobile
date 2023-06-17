@@ -35,38 +35,14 @@ class AppSockets {
     customerSocket.disconnect();
   }
 
-  void connectChat() => chatSocket.connect();
-  void disconnectChat() => chatSocket.disconnect();
-  void emitChatEvent(String event, dynamic data) {
-    if (chatSocket.disconnected) throw const SocketException.closed();
-    chatSocket.emit(event, data);
-  }
+  //TODO: Needed?
+  // void connectChat() => chatSocket.connect();
+  // void disconnectChat() => chatSocket.disconnect();
+  // void emitChatEvent(String event, dynamic data) {
+  //   if (chatSocket.disconnected) throw const SocketException.closed();
+  //   chatSocket.emit(event, data);
+  // }
 
-  Stream<T> onChatEvent<T>(String event) {
-    if (chatSocket.disconnected) throw const SocketException.closed();
-
-    final controller = StreamController<T>();
-
-    chatSocket.on(event, (data) {
-      print(data);
-      controller.add(data);
-    });
-
-    return controller.stream;
-  }
-
-  void connectCustomer() => customerSocket.connect();
-  void disconnectCustomer() => customerSocket.connect();
-  Stream<T> onCustomerEvent<T>(String event) {
-    if (customerSocket.disconnected) throw const SocketException.closed();
-
-    final controller = StreamController<T>();
-
-    customerSocket.on(event, (data) {
-      print(data);
-      controller.add(data);
-    });
-
-    return controller.stream;
-  }
+  // void connectCustomer() => customerSocket.connect();
+  // void disconnectCustomer() => customerSocket.connect();
 }

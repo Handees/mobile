@@ -3,8 +3,10 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:handees/apps/customer_app/services/booking_service.customer.dart';
 import 'package:handees/shared/res/constants.dart';
 import 'package:handees/shared/res/uri.dart';
+import 'package:handees/shared/services/auth_service.dart';
 import 'package:handees/shared/ui/widgets/handee_snackbar.dart';
 import 'package:http/http.dart' as http;
 import 'package:socket_io_client/socket_io_client.dart' as io;
@@ -20,10 +22,14 @@ class _TestState extends State<Test> {
   // Future<void> submit() async {
 
   final site = AppConstants.url;
-  late String token;
+  // late String token;
 
-  io.Socket rootSocket = io.io(AppUris.rootUri.toString(),
-      io.OptionBuilder().setTransports(['websocket']).build());
+  io.Socket rootSocket = io.io(
+    AppUris.rootUri.toString(),
+    io.OptionBuilder()
+        .setAuth({'access_token': AuthService.instance.token}).setTransports(
+            ['websocket']).build(),
+  );
 
 // Dart client
   // io.Socket customerSocket = io.io(
@@ -35,6 +41,13 @@ class _TestState extends State<Test> {
   io.Socket chatSocket = io.io(AppUris.chatSocketUri.toString(),
       io.OptionBuilder().setTransports(['websocket']).build());
 
+  final customerSocket = io.io(
+    AppUris.customerSocketUri.toString(),
+    io.OptionBuilder()
+        .setAuth({'access_token': AuthService.instance.token}).setTransports(
+            ['websocket']).build(),
+  );
+
   String? bookingId;
   String? artisanId;
 
@@ -42,20 +55,10 @@ class _TestState extends State<Test> {
   void initState() {
     print("Uri is ${AppUris.customerSocketUri.toString()}");
 
-    FirebaseAuth.instance.currentUser!.getIdToken().then((value) {
-      token = value;
+    customerSocket.connect();
 
-      final customerSocket = io.io(
-        AppUris.customerSocketUri.toString(),
-        io.OptionBuilder().setAuth({'access-token': token}).setTransports(
-            ['websocket']).build(),
-      );
-
-      customerSocket.connect();
-
-      customerSocket.onAny((event, data) {
-        print('Customer update hany: Event($event) $data');
-      });
+    customerSocket.onAny((event, data) {
+      print('Customer update hany: Event($event) $data');
     });
 
     // rootSocket.connect();
@@ -99,13 +102,7 @@ class _TestState extends State<Test> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child:
-            //    const GoogleMap(
-            //     initialCameraPosition: CameraPosition(
-            //       target: LatLng(12, 15),
-            //     ),
-            //   ),
-            Wrap(
+        child: Wrap(
           runSpacing: 20,
           spacing: 20,
           children: [
@@ -124,39 +121,15 @@ class _TestState extends State<Test> {
             ),
             InkWell(
               onTap: () async {
-                print('submitting');
-                final future = http.post(
-                  Uri.http(
-                    site,
-                    '/api/bookings/',
-                  ),
-                  headers: {
-                    HttpHeaders.contentTypeHeader: 'application/json',
-                    'access-token': token,
+                BookingService.instance.bookService(
+                  token: AuthService.instance.token,
+                  onBooked: (bookingId) {
+                    print(bookingId);
+
+                    chatSocket.emit('join_chat', {'booking_id': bookingId});
+                    print('joined_chat');
                   },
-                  body: jsonEncode(
-                    {
-                      'lat': 6.517871336509268,
-                      'lon': 3.399740067230001,
-                      'user_id': FirebaseAuth.instance.currentUser!.uid,
-                      'job_category': 'carpentary',
-                    },
-                  ),
                 );
-
-                final response = await future;
-                print(response.body);
-
-                final json = jsonDecode(response.body);
-                bookingId = json['data']['booking_id'];
-
-                // customerSocket.emit('booking_update', {
-                //   {'booking_id': bookingId}
-                // });
-                print(bookingId);
-
-                chatSocket.emit('join_chat', {'booking_id': bookingId});
-                print('joined_chat');
               },
               child: Ink(
                 height: 80,
@@ -172,40 +145,6 @@ class _TestState extends State<Test> {
                 chatSocket.emit('msg', {'msg': value, 'booking_id': bookingId});
                 print('Sent $value to $bookingId');
               },
-            ),
-            InkWell(
-              onTap: () async {
-                // print(token);
-                // final loc = await PlacesService.instance.determinePosition();
-                final future = http.get(
-                  Uri.https(
-                    site,
-                    '/user/bookings',
-                  ),
-                  headers: {
-                    // HttpHeaders.contentTypeHeader: 'application/json',
-                    'access-token': token,
-                  },
-                );
-
-                final response = await future;
-                print(response.body);
-              },
-              child: Ink(
-                height: 80,
-                width: 80,
-                color: Colors.brown,
-              ),
-            ),
-            InkWell(
-              onTap: () async {
-                chatSocket.emit('msg', {'msg': 'test'});
-              },
-              child: Ink(
-                height: 80,
-                width: 80,
-                color: Colors.yellow,
-              ),
             ),
           ],
         ),

@@ -5,6 +5,7 @@ import 'package:handees/apps/customer_app/features/auth/viewmodels/signin_viewmo
 import 'package:handees/shared/res/icons.dart';
 import 'package:handees/shared/routes/routes.dart';
 import 'package:handees/shared/services/auth_service.dart';
+import 'package:handees/shared/services/user_data_service.dart';
 
 class SigninScreen extends ConsumerWidget {
   SigninScreen({
@@ -13,7 +14,8 @@ class SigninScreen extends ConsumerWidget {
 
   final _formGlobalKey = GlobalKey<FormState>();
 
-  final viewModel = SigninViewmodel(AuthService.instance);
+  final viewModel =
+      SigninViewmodel(AuthService.instance, UserDataService.instance);
   final _obscureTextNotifier = ValueNotifier(true);
 
   @override
