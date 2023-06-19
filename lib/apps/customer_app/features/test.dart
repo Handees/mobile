@@ -111,10 +111,25 @@ class _TestState extends State<Test> {
           children: [
             InkWell(
               onTap: () {
-                // customerSocket.emit('close_offer', {
-                //   {'booking_id': '9f04dd34-0c9a-48d6-b7a1-d00ab3e12536'}
-                // });
-                // print('Close');
+                BookingService.instance.confirmJobDetails(
+                  bookingId: '960103e8a91e4b8ca28b93fac0767936',
+                  isContract: false,
+                  settlementType: "NEGOTIATION",
+                  settlementAmount: 550.0,
+                  duration: 4,
+                  durationUnit: "days",
+                );
+
+                customerSocket.emit('confirm_job_details', {
+                  'bookingId': bookingId,
+                  'is_contract': false,
+                  'settlement': {
+                    'type': 'NEGOTIATION',
+                    'amount': 550.0,
+                  },
+                  'duration': 4,
+                  'duration_unit': 'days',
+                });
               },
               child: Ink(
                 height: 80,
@@ -129,6 +144,15 @@ class _TestState extends State<Test> {
                   onBooked: (bookingId) {
                     print(bookingId);
 
+                    BookingService.instance.confirmJobDetails(
+                      bookingId: bookingId,
+                      isContract: true,
+                      settlementType: "negotiation",
+                      settlementAmount: 0.0,
+                      duration: 2,
+                      durationUnit: "days",
+                    );
+
                     chatSocket.emit('join_chat', {'booking_id': bookingId});
                     print('joined_chat');
                   },
@@ -142,15 +166,6 @@ class _TestState extends State<Test> {
                 width: 80,
                 color: Colors.purple,
               ),
-            ),
-            TextField(
-              onTap: () {
-                showSucessSnackBar(context);
-              },
-              onSubmitted: (value) {
-                chatSocket.emit('msg', {'msg': value, 'booking_id': bookingId});
-                print('Sent $value to $bookingId');
-              },
             ),
           ],
         ),

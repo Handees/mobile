@@ -62,6 +62,7 @@ class BookingService {
     required int duration,
     required String durationUnit,
   }) {
+    print('Sbmitting');
     _sockets.customerSocket.emit('confirm_job_details', {
       'bookingId': bookingId,
       'is_contract': isContract,
