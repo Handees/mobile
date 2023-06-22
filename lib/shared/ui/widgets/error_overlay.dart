@@ -12,7 +12,7 @@ class ErrorOverlay extends StatelessWidget {
         color: Theme.of(context).colorScheme.surface,
       ),
       padding: const EdgeInsets.all(32.0),
-      child: Column(
+      child: const Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           CircleAvatar(radius: 50, backgroundColor: Colors.red),

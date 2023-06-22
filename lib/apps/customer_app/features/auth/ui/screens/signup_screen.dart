@@ -137,7 +137,7 @@ class SignupScreen extends StatelessWidget {
                             ),
                           ),
                           const Spacer(),
-                          Row(
+                          const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               CircleAvatar(radius: 24.0),
