@@ -5,14 +5,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:handees/apps/customer_app/features/home/providers/home.customer.provider.dart';
 
 import 'package:handees/shared/routes/routers.dart';
 import 'package:handees/shared/services/auth_service.dart';
-import 'package:handees/shared/services/user_data_service.dart';
 
 import 'firebase_options.dart';
 import 'shared/theme/theme.dart';
