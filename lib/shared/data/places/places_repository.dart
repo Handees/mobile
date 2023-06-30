@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:handees/shared/data/places/place_model.dart';
+import 'package:handees/shared/utils/utils.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:handees/shared/res/constants.dart';
@@ -35,7 +36,7 @@ class PlacesRepository {
     //return list of prediction results
     final result = (json['predictions'] as List).map<PlaceModel>((e) {
       final model = PlaceModel.fromJson(e);
-      print(model);
+      dPrint(model);
 
       return model;
     }).toList();
@@ -58,7 +59,7 @@ class PlacesRepository {
     final response = await http.get(request);
 
     final json = jsonDecode(response.body);
-    print(json);
+    dPrint(json);
 
     //return list of prediction results
     final result = json['candidates'];

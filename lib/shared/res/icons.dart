@@ -16,25 +16,25 @@ class HandeeIcons {
       IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData chat =
       IconData(0xe806, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData eye_tracking_off =
+  static const IconData eyeTrackingOff =
       IconData(0xe807, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData eye_tracking_on =
+  static const IconData eyeTrackingOn =
       IconData(0xe808, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData home =
       IconData(0xe809, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData location_filled =
+  static const IconData locationFilled =
       IconData(0xe80a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData location_outlined =
+  static const IconData locationOutlined =
       IconData(0xe80b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData payment =
       IconData(0xe80c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData person_accounts =
+  static const IconData personAccounts =
       IconData(0xe80d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData hair_brush =
+  static const IconData hairBrush =
       IconData(0xe80f, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData person_support =
+  static const IconData personSupport =
       IconData(0xe810, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData chat_help =
+  static const IconData chatHelp =
       IconData(0xe811, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData laundry =
       IconData(0xe812, fontFamily: _kFontFam, fontPackage: _kFontPkg);

@@ -37,7 +37,7 @@ abstract class _JobCategories {
     name: "Hair Styling",
     id: "hair styling",
     dbId: 3,
-    icon: HandeeIcons.hair_brush,
+    icon: HandeeIcons.hairBrush,
     foregroundColor: Color.fromRGBO(55, 61, 121, 1),
   );
   static const clothing = JobCategory._(
@@ -98,7 +98,6 @@ abstract class _JobCategories {
   );
 }
 
-//TODO: probably should be somewhere else
 const jobCategories = [
   _JobCategories.laundry,
   _JobCategories.carpentry,

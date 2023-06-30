@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:handees/shared/res/uri.dart';
+import 'package:handees/shared/utils/utils.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
 class AppSockets {
@@ -14,11 +15,11 @@ class AppSockets {
     chatSocket.onDisconnect((_) => debugPrint('Chat disconnected'));
 
     customerSocket.onAny((event, data) {
-      print('Customer update any: Event($event) $data');
+      dPrint('Customer update any: Event($event) $data');
     });
 
     chatSocket.onAny((event, data) {
-      print('Chat update any: Event($event) $data');
+      dPrint('Chat update any: Event($event) $data');
     });
   }
   static final AppSockets _instance = AppSockets._();
@@ -48,7 +49,7 @@ class AppSockets {
     final controller = StreamController<T>();
 
     chatSocket.on(event, (data) {
-      print(data);
+      dPrint(data);
       controller.add(data);
     });
 
@@ -63,7 +64,7 @@ class AppSockets {
     final controller = StreamController<T>();
 
     customerSocket.on(event, (data) {
-      print(data);
+      dPrint(data);
       controller.add(data);
     });
 

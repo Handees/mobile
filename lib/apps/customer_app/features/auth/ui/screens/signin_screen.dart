@@ -73,8 +73,8 @@ class SigninScreen extends ConsumerWidget {
                                         suffixIcon: IconButton(
                                           icon: Icon(
                                             obscureText
-                                                ? HandeeIcons.eye_tracking_off
-                                                : HandeeIcons.eye_tracking_on,
+                                                ? HandeeIcons.eyeTrackingOff
+                                                : HandeeIcons.eyeTrackingOn,
                                           ),
                                           color: obscureText
                                               ? Theme.of(context)

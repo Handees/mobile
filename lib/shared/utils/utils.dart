@@ -1,3 +1,5 @@
+import 'package:handees/shared/utils/logger.dart';
+
 mixin InputValidationMixin {
   bool isEmailValid(String email) {
     var pattern = r'^\S+@\S+\.\S+$';
@@ -21,6 +23,14 @@ mixin InputValidationMixin {
 
     return regex.hasMatch(number);
   }
+}
+
+void dPrint(dynamic message) {
+  MyLogger.instance.logger.d(message);
+}
+
+void ePrint(dynamic message) {
+  MyLogger.instance.logger.e(message);
 }
 
 // void showSnackBar(BuildContext context, String message) {

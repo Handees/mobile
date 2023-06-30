@@ -18,13 +18,14 @@ import 'package:handees/shared/services/user_data_service.dart';
 import 'package:handees/shared/ui/widgets/navigator.dart';
 
 import 'package:handees/shared/theme/theme.dart';
+import 'package:handees/shared/utils/utils.dart';
 
 import 'routes.dart';
 
 final mainRouter = NavRouter(
   onGenerateRoute: (RouteSettings settings) {
     NavRouter? router;
-    print(settings.name);
+    dPrint(settings.name);
     switch (settings.name) {
       case '/':
         {

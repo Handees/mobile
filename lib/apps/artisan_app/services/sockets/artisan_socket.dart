@@ -28,11 +28,11 @@ class ArtisanSocketNotifier extends StateNotifier<io.Socket>
               .build(),
         )) {
     state.onAny((event, data) {
-      print('Artisan update any: Event($event) $data');
+      dPrint('Artisan update any: Event($event) $data');
     });
-    state.onDisconnect((_) => print("Socket Disconnected"));
+    state.onDisconnect((_) => dPrint("Socket Disconnected"));
     state.onConnect((_) async {
-      print("Socket Connected");
+      dPrint("Socket Connected");
 
       // When socket first connects, immediately send the user's current location
 
@@ -45,7 +45,7 @@ class ArtisanSocketNotifier extends StateNotifier<io.Socket>
   void disconnectArtisan() => state.disconnect();
 
   void updateArtisanLocation(LocationData location) {
-    print(
+    dPrint(
         "lat:${location.latitude} , lon:${location.longitude} emitted through sockets");
     state.emit(
       ArtisanSocketEvents.locationUpdate,
@@ -59,12 +59,12 @@ class ArtisanSocketNotifier extends StateNotifier<io.Socket>
   }
 
   Stream<T> onArtisanEvent<T>(String event) {
-    if (state!.disconnected) throw const SocketException.closed();
+    if (state.disconnected) throw const SocketException.closed();
 
     final controller = StreamController<T>();
 
     state.on(event, (data) {
-      print(data);
+      dPrint(data);
       controller.add(data);
     });
 

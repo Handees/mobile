@@ -4,6 +4,7 @@ import 'package:flutter_paystack/flutter_paystack.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/apps/customer_app/features/payments/providers/add_card.provider.dart';
 import 'package:handees/shared/res/constants.dart';
+import 'package:handees/shared/utils/utils.dart';
 
 class AddCardScreen extends ConsumerWidget {
   AddCardScreen({super.key});
@@ -18,7 +19,6 @@ class AddCardScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final model = ref.watch(addCardProvider.notifier);
-    final state = ref.watch(addCardProvider);
 
     return Scaffold(
       body: Padding(
@@ -106,7 +106,7 @@ class AddCardScreen extends ConsumerWidget {
                       final response = await plugin.chargeCard(context,
                           charge: await model.getCharge());
 
-                      print('Response $response');
+                      dPrint('Response $response');
                       // Use the response
                     },
                     child: const Text('Done'),

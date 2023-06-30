@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:handees/shared/data/handees/job_category.dart';
 import 'package:handees/shared/routes/routes.dart';
+import 'package:handees/shared/utils/utils.dart';
 
 import 'service_card.dart';
 
@@ -59,7 +60,7 @@ class PickServiceBottomSheet extends StatelessWidget {
               onPressed: () async {
                 final res = await Navigator.of(context)
                     .pushNamed(CustomerAppRoutes.pickService);
-                print(res);
+                dPrint(res);
 
                 if (res != null) {
                   Navigator.of(context).pushNamed(CustomerAppRoutes.tracking);

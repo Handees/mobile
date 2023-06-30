@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:handees/apps/artisan_app/features/home/ui/screens/home_nav/widgets/icon_avatar.dart';
 import 'package:handees/apps/customer_app/features/home/ui/widgets/swap_button.dart';
 import 'package:handees/shared/routes/routes.dart';
 import 'package:handees/shared/services/auth_service.dart';

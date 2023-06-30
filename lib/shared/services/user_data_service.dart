@@ -1,11 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:handees/shared/data/user/models/api_user.model.dart';
 import 'package:handees/shared/data/user/user_repository.dart';
-import 'package:handees/shared/res/uri.dart';
 import 'package:handees/shared/services/auth_service.dart';
-
-import 'package:http/http.dart' as http;
+import 'package:handees/shared/utils/utils.dart';
 
 class UserDataService {
   final AuthService authService;
@@ -29,7 +25,7 @@ class UserDataService {
       _doesUserExist = true;
       return user;
     } catch (e) {
-      print(e);
+      ePrint(e);
     }
     return null;
   }
@@ -45,7 +41,7 @@ class UserDataService {
           token: AuthService.instance.token);
       return isUserSubmitted;
     } catch (e) {
-      print(e);
+      ePrint(e);
     }
     return false;
   }

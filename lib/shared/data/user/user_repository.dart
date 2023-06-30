@@ -1,4 +1,3 @@
-import 'package:handees/shared/data/user/datasources/local.dart';
 import 'package:handees/shared/data/user/datasources/remote.dart';
 
 import 'models/api_user.model.dart';
@@ -13,7 +12,6 @@ class UserRepository {
   }
 
   final _remote = UserRemoteDataSource();
-  final _local = UserLocalDataSource();
 
   Future<ApiUserModel> fetchUserData(String token) {
     return _remote.fetchUserData(token);

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:handees/shared/res/constants.dart';
 import 'package:handees/shared/res/uri.dart';
 import 'package:handees/shared/ui/widgets/handee_snackbar.dart';
+import 'package:handees/shared/utils/utils.dart';
 import 'package:http/http.dart' as http;
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
@@ -40,8 +41,6 @@ class _TestState extends State<Test> {
 
   @override
   void initState() {
-    print("Uri is ${AppUris.customerSocketUri.toString()}");
-
     FirebaseAuth.instance.currentUser!.getIdToken().then((value) {
       token = value;
 
@@ -54,16 +53,14 @@ class _TestState extends State<Test> {
       customerSocket.connect();
 
       customerSocket.onAny((event, data) {
-        print('Customer update hany: Event($event) $data');
+        dPrint('Customer update any: Event($event) $data');
       });
     });
 
     // rootSocket.connect();
     rootSocket.onAny((event, data) {
-      print('Root update any: Event($event) $data');
+      dPrint('Root update any: Event($event) $data');
     });
-
-    print('try connect');
 
     chatSocket.connect();
 
@@ -75,7 +72,7 @@ class _TestState extends State<Test> {
     // });
     // socket.on('event', (data) => print('Event $data'));
     // customerSocket.onDisconnect((_) => print('client disconnected'));
-    chatSocket.onDisconnect((_) => print('Chat disconnected'));
+    chatSocket.onDisconnect((_) => debugPrint('Chat disconnected'));
 
     // customerSocket.on('msg', (data) {
     //   print('Customer update: $data');
@@ -84,11 +81,11 @@ class _TestState extends State<Test> {
     // });
 
     chatSocket.on('msg', (data) {
-      print('Chat update: $data');
+      dPrint('Chat update: $data');
     });
 
     chatSocket.onAny((event, data) {
-      print('Chat update any: Event($event) $data');
+      dPrint('Chat update any: Event($event) $data');
     });
 
     super.initState();
@@ -124,7 +121,6 @@ class _TestState extends State<Test> {
             ),
             InkWell(
               onTap: () async {
-                print('submitting');
                 final future = http.post(
                   Uri.http(
                     site,
@@ -145,7 +141,7 @@ class _TestState extends State<Test> {
                 );
 
                 final response = await future;
-                print(response.body);
+                dPrint(response.body);
 
                 final json = jsonDecode(response.body);
                 bookingId = json['data']['booking_id'];
@@ -153,10 +149,8 @@ class _TestState extends State<Test> {
                 // customerSocket.emit('booking_update', {
                 //   {'booking_id': bookingId}
                 // });
-                print(bookingId);
 
                 chatSocket.emit('join_chat', {'booking_id': bookingId});
-                print('joined_chat');
               },
               child: Ink(
                 height: 80,
@@ -170,7 +164,6 @@ class _TestState extends State<Test> {
               },
               onSubmitted: (value) {
                 chatSocket.emit('msg', {'msg': value, 'booking_id': bookingId});
-                print('Sent $value to $bookingId');
               },
             ),
             InkWell(
@@ -189,7 +182,7 @@ class _TestState extends State<Test> {
                 );
 
                 final response = await future;
-                print(response.body);
+                dPrint(response.body);
               },
               child: Ink(
                 height: 80,
