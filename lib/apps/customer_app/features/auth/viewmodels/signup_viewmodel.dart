@@ -1,12 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:handees/shared/services/auth_service.dart';
+import 'package:handees/shared/services/user_data_service.dart';
 import 'package:handees/shared/utils/utils.dart';
 
 class SignupViewmodel extends ChangeNotifier with InputValidationMixin {
-  SignupViewmodel(this._authService);
+  SignupViewmodel(this._authService, this._userDataService);
 
   final AuthService _authService;
+  final UserDataService _userDataService;
 
   String _name = '';
   String _phone = '';
@@ -82,6 +84,7 @@ class SignupViewmodel extends ChangeNotifier with InputValidationMixin {
     switch (completeResponse) {
       case AuthResponse.success:
         debugPrint('Verfication completed');
+        _userDataService.submitUser();
         onSuccess();
         break;
       case AuthResponse.weakPassword:

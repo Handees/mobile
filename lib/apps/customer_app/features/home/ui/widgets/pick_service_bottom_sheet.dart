@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:handees/apps/customer_app/features/test.dart';
 
 import 'package:handees/shared/data/handees/job_category.dart';
 import 'package:handees/shared/routes/routes.dart';
@@ -63,7 +64,15 @@ class PickServiceBottomSheet extends StatelessWidget {
                 dPrint(res);
 
                 if (res != null) {
-                  Navigator.of(context).pushNamed(CustomerAppRoutes.tracking);
+                  // B
+
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) {
+                      return Test();
+                    },
+                  ));
+
+                  // Navigator.of(context).pushNamed(CustomerAppRoutes.tracking);
                 }
               },
               child: const Text('Proceed'),

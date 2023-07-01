@@ -11,7 +11,7 @@ final jobCategoryProvider =
         (ref) => _JobCategoryStateNotifier());
 
 class _JobCategoryStateNotifier extends StateNotifier<JobCategory> {
-  _JobCategoryStateNotifier() : super(jobCategories.first);
+  _JobCategoryStateNotifier() : super(JobCategory.values.first);
 
   void updateJobCategory(JobCategory newJobCategory) {
     state = newJobCategory;
