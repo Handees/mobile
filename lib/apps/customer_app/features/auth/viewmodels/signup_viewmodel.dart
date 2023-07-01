@@ -152,16 +152,12 @@ class SignupViewmodel extends ChangeNotifier with InputValidationMixin {
     required void Function() onUnkownError,
   }) async {
     _loading = true;
-    void resetErrors() {
-      _emailError = null;
-      _passwordError = null;
-    }
 
     notifyListeners();
 
     if (await _authService.emailInUse(_email)) {
       _emailError = 'An account already exists with this email';
-      print(_emailError);
+      dPrint(_emailError);
       _loading = false;
       notifyListeners();
       return;
@@ -173,7 +169,7 @@ class SignupViewmodel extends ChangeNotifier with InputValidationMixin {
         _verificationId = verificationId;
         onCodeSent(
           onVerifyNumber: () {
-            print("Let's try");
+            dPrint("Let's try");
             _verifyNumber(
               onSuccess: onVerificationComplete,
               onUnknownError: onUnkownError,

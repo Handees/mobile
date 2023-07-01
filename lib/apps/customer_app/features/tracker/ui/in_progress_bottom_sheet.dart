@@ -244,12 +244,10 @@ class _InProgressBottomSheetState extends State<InProgressBottomSheet>
             ),
             SizeTransition(
               sizeFactor: _animation,
-              child: Container(
-                child: Divider(
-                  height: 32.0,
-                  thickness: 8.0,
-                  color: Theme.of(context).colorScheme.secondary,
-                ),
+              child: Divider(
+                height: 32.0,
+                thickness: 8.0,
+                color: Theme.of(context).colorScheme.secondary,
               ),
             ),
             Padding(
@@ -276,7 +274,6 @@ class _InProgressBottomSheetState extends State<InProgressBottomSheet>
                         // width: double.infinity,
                         child: FilledButton.tonal(
                           onPressed: () {
-                            print('why now');
                             Navigator.of(context)
                                 .pushNamed(CustomerAppRoutes.chat);
                           },

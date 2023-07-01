@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:handees/shared/data/chats/model/message_model.dart';
+import 'package:handees/shared/utils/utils.dart';
 
 class ChatRepository {
   static ChatRepository? _instance;
@@ -75,13 +76,13 @@ class TestChatRepository implements ChatRepository {
 
   void _simulateMessages() async {
     while (true) {
-      print("Simulating, has listeners ${_controller.hasListener}");
+      dPrint("Simulating, has listeners ${_controller.hasListener}");
       await Future.delayed(
           Duration(seconds: _rand.nextInt(5 + _rand.nextInt(25))));
 
       final message = _generateMessage();
 
-      print('Adding message ${message.message}');
+      dPrint('Adding message ${message.message}');
       _controller.add(messages..add(message));
     }
   }

@@ -6,6 +6,7 @@ import 'package:handees/shared/routes/routes.dart';
 import 'package:handees/shared/services/auth_service.dart';
 import 'package:handees/shared/services/user_data_service.dart';
 import 'package:handees/shared/theme/theme.dart';
+import 'package:handees/shared/utils/utils.dart';
 
 import '../../viewmodels/signup_viewmodel.dart';
 import '../widgets/phone_proceed_dialog.dart';
@@ -103,8 +104,8 @@ class SignupScreen extends StatelessWidget {
                                         suffixIcon: IconButton(
                                           icon: Icon(
                                             obscureText
-                                                ? HandeeIcons.eye_tracking_off
-                                                : HandeeIcons.eye_tracking_on,
+                                                ? HandeeIcons.eyeTrackingOff
+                                                : HandeeIcons.eyeTrackingOn,
                                           ),
                                           color: obscureText
                                               ? Theme.of(context)
@@ -206,7 +207,7 @@ class SignupScreen extends StatelessWidget {
                                                   ),
                                                 ),
                                                 onVerificationComplete: () {
-                                                  print('Complete?');
+                                                  dPrint('Complete?');
                                                   Future.microtask(
                                                     () => Navigator.of(context,
                                                             rootNavigator: true)

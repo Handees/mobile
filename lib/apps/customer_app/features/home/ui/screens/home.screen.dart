@@ -49,24 +49,17 @@ class HomeScreen extends ConsumerWidget {
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  false // TODO: photoIsAvailable
-                                      ? const CircleAvatar(
-                                          radius: 28,
-                                          // backgroundImage: NetworkImage(
-                                          // ),
-                                        )
-                                      : Container(
-                                          height: 48,
-                                          width: 48,
-                                          decoration: ShapeDecoration(
-                                            shape: const CircleBorder(),
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .tertiary,
-                                          ),
-                                          child:
-                                              const Icon(Icons.account_circle),
-                                        ),
+                                  Container(
+                                    height: 48,
+                                    width: 48,
+                                    decoration: ShapeDecoration(
+                                      shape: const CircleBorder(),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .tertiary,
+                                    ),
+                                    child: const Icon(Icons.account_circle),
+                                  ),
                                   const SizedBox(width: 16.0),
                                   Text(
                                     user.name,
@@ -139,13 +132,13 @@ class HomeScreen extends ConsumerWidget {
                         const Divider(),
                         ListTile(
                           onTap: () {},
-                          leading: const Icon(HandeeIcons.person_support),
+                          leading: const Icon(HandeeIcons.personSupport),
                           title: const Text('Customer Support'),
                         ),
                         const Divider(),
                         ListTile(
                           onTap: () {},
-                          leading: const Icon(HandeeIcons.chat_help),
+                          leading: const Icon(HandeeIcons.chatHelp),
                           title: const Text('FAQ'),
                         ),
                         const Divider(),
@@ -380,7 +373,6 @@ class _SearchWidgetState extends State<SearchWidget> {
 
     return WillPopScope(
       onWillPop: () async {
-        print('How');
         final shouldPop = !isFocused;
 
         WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();

@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/shared/data/handees/job_category.dart';
 import 'package:handees/shared/data/user/user_repository.dart';
 import 'package:handees/shared/services/auth_service.dart';
+import 'package:handees/shared/utils/utils.dart';
 
 enum ArtisanSwitchState { loading, success, error, none }
 
@@ -97,7 +98,7 @@ class ArtisanSwitchStateNotifier extends StateNotifier<ArtisanSwitchState> {
         state = ArtisanSwitchState.error;
       }
     } catch (e) {
-      print(e);
+      ePrint(e);
       state = ArtisanSwitchState.error;
     }
   }

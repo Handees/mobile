@@ -11,6 +11,7 @@ import 'package:handees/apps/customer_app/features/home/providers/home.customer.
 
 import 'package:handees/shared/routes/routers.dart';
 import 'package:handees/shared/services/auth_service.dart';
+import 'package:logger/logger.dart';
 
 import 'firebase_options.dart';
 import 'shared/theme/theme.dart';
@@ -27,6 +28,8 @@ class MyHttpOverrides extends HttpOverrides {
 }
 
 void main() async {
+  Logger.level = Level.debug;
+
   HttpOverrides.global = MyHttpOverrides();
 
   LicenseRegistry.addLicense(() async* {

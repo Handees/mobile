@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
     required this.hintText,
-    required this.onSaved,
+    this.onSaved,
     this.textInputType = TextInputType.text,
     this.validator,
     super.key,

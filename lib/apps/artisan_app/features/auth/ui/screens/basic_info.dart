@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:handees/apps/artisan_app/features/auth/providers/auth_provider.artisan.dart';
 import 'package:handees/shared/ui/widgets/custom_text_form_field.dart';
 import 'package:handees/shared/utils/utils.dart';
 
@@ -13,8 +12,6 @@ class BasicInfoScreen extends ConsumerWidget with InputValidationMixin {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final model = ref.watch(artisanAuthProvider.notifier);
-
     return Scaffold(
         appBar: AppBar(
           scrolledUnderElevation: 0.0,
@@ -56,25 +53,20 @@ class BasicInfoScreen extends ConsumerWidget with InputValidationMixin {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CustomTextFormField(
+                      const CustomTextFormField(
                         hintText: "First Name",
-                        onSaved: model.onFirstNameSaved,
-                        validator: model.nameValidator,
                       ),
                       const SizedBox(
                         height: 16.0,
                       ),
-                      CustomTextFormField(
+                      const CustomTextFormField(
                         hintText: "Last Name",
-                        onSaved: model.onLastNameSaved,
-                        validator: model.nameValidator,
                       ),
                       const SizedBox(
                         height: 16.0,
                       ),
-                      CustomTextFormField(
+                      const CustomTextFormField(
                         hintText: "Address",
-                        onSaved: model.onAddressSaved,
                       ),
                       const SizedBox(height: 16.0),
                       Text(
@@ -82,10 +74,8 @@ class BasicInfoScreen extends ConsumerWidget with InputValidationMixin {
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                       const SizedBox(height: 16.0),
-                      CustomTextFormField(
+                      const CustomTextFormField(
                         hintText: "Phone Number",
-                        onSaved: model.onPhoneSaved,
-                        validator: model.phoneValidator,
                       ),
                       const SizedBox(height: 32.0),
                       SizedBox(

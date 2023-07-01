@@ -46,7 +46,7 @@ class LocationStateNotifier extends StateNotifier<LocationData>
       try {
         _backgroundModeEnabled = await location.enableBackgroundMode();
       } catch (e) {
-        print(e.toString());
+        ePrint(e.toString());
       }
     }
 

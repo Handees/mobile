@@ -54,6 +54,8 @@ dependencies:
   holding_gesture: ^1.1.0
   flutter_native_splash: ^2.3.0
   location: ^4.2.0
+  logger: ^1.4.0
+  stack_trace: ^1.11.0
 
 dev_dependencies:
   flutter_test:

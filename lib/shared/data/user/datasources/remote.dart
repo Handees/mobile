@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:handees/shared/data/user/models/api_user.model.dart';
 import 'package:handees/shared/res/uri.dart';
+import 'package:handees/shared/utils/utils.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -12,8 +13,8 @@ class UserRemoteDataSource {
       'access-token': token,
     });
 
-    print('fetchUserData response ${response.body}');
-    print('fetchUserData code ${response.statusCode}');
+    dPrint('fetchUserData response ${response.body}');
+    dPrint('fetchUserData code ${response.statusCode}');
 
     switch (response.statusCode) {
       case 200:
@@ -44,9 +45,9 @@ class UserRemoteDataSource {
           "job_category": jobCategory,
           "job_title": jobTitle,
         }));
-    print(AppUris.addNewArtisanUri);
-    print(token);
-    print({
+    dPrint(AppUris.addNewArtisanUri);
+    dPrint(token);
+    dPrint({
       "user_profile_id": uid,
       "hourly_rate": hourlyRate,
       "job_category": jobCategory,
@@ -56,12 +57,12 @@ class UserRemoteDataSource {
     try {
       response = await future;
     } catch (e) {
-      print(e);
+      dPrint(e);
       return false;
     }
 
-    print('submitArtisanData response ${response.body}');
-    print('submitArtisanData code ${response.statusCode}');
+    dPrint('submitArtisanData response ${response.body}');
+    dPrint('submitArtisanData code ${response.statusCode}');
 
     if (response.statusCode >= 200 && response.statusCode < 400) {
       return true;
@@ -94,9 +95,9 @@ class UserRemoteDataSource {
     );
 
     final response = await future;
-    print("Submit user data response ${response.body}");
+    dPrint("Submit user data response ${response.body}");
 
-    print("Submit user data response code ${response.statusCode}");
+    dPrint("Submit user data response code ${response.statusCode}");
 
     //TODO: Error handling
     if (response.statusCode >= 200 && response.statusCode < 400) {
@@ -130,9 +131,9 @@ class UserRemoteDataSource {
     );
 
     final response = await future;
-    print("Patch user data response ${response.body}");
+    dPrint("Patch user data response ${response.body}");
 
-    print("Patch user data response code ${response.statusCode}");
+    dPrint("Patch user data response code ${response.statusCode}");
 
     //TODO: Error handling
     if (response.statusCode >= 200 && response.statusCode < 400) {
@@ -149,9 +150,9 @@ class UserRemoteDataSource {
     });
 
     final response = await future;
-    print("Get artisan data response ${response.body}");
+    dPrint("Get artisan data response ${response.body}");
 
-    print("Get artisan data response code ${response.statusCode}");
+    dPrint("Get artisan data response code ${response.statusCode}");
 
     //TODO: Error handling
     if (response.statusCode > 200 && response.statusCode < 400) {

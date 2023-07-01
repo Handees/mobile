@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class IDTypeCard extends StatelessWidget {
-  IDTypeCard(this.idType, this.isSelected, {super.key});
+  const IDTypeCard(this.idType, this.isSelected, {super.key});
 
-  String idType;
-  bool isSelected;
+  final String idType;
+  final bool isSelected;
 
   @override
   Widget build(BuildContext context) {

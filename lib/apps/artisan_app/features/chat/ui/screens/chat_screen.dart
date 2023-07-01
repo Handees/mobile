@@ -4,6 +4,7 @@ import 'package:handees/apps/artisan_app/features/chat/providers/messages_provid
 
 import 'package:handees/shared/data/chats/model/message_model.dart';
 import 'package:handees/shared/res/shapes.dart';
+import 'package:handees/shared/utils/utils.dart';
 
 class ArtisanChatScreen extends ConsumerStatefulWidget {
   const ArtisanChatScreen({Key? key}) : super(key: key);
@@ -39,11 +40,9 @@ class _ArtisanChatScreenState extends ConsumerState<ArtisanChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final model = ref.watch(artisanMessagesProvider.notifier);
-
     final messages = ref.watch(artisanMessagesProvider);
 
-    print(messages);
+    dPrint(messages);
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -95,7 +94,7 @@ class _ArtisanChatScreenState extends ConsumerState<ArtisanChatScreen> {
                 padding: const EdgeInsets.only(
                   left: 16.0,
                   right: 16.0,
-                  bottom: 100.0, //TODO: no light?
+                  bottom: 100.0,
                 ),
                 sliver: SliverList(
                   delegate: SliverChildBuilderDelegate(

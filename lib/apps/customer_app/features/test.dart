@@ -10,6 +10,7 @@ import 'package:handees/shared/res/uri.dart';
 import 'package:handees/shared/services/auth_service.dart';
 import 'package:handees/shared/services/places_service.dart';
 import 'package:handees/shared/ui/widgets/handee_snackbar.dart';
+import 'package:handees/shared/utils/utils.dart';
 import 'package:http/http.dart' as http;
 import 'package:location/location.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
@@ -66,10 +67,8 @@ class _TestState extends State<Test> {
 
     // rootSocket.connect();
     rootSocket.onAny((event, data) {
-      print('Root update any: Event($event) $data');
+      dPrint('Root update any: Event($event) $data');
     });
-
-    print('try connect');
 
     chatSocket.connect();
 
@@ -81,7 +80,7 @@ class _TestState extends State<Test> {
     // });
     // socket.on('event', (data) => print('Event $data'));
     // customerSocket.onDisconnect((_) => print('client disconnected'));
-    chatSocket.onDisconnect((_) => print('Chat disconnected'));
+    chatSocket.onDisconnect((_) => debugPrint('Chat disconnected'));
 
     // customerSocket.on('msg', (data) {
     //   print('Customer update: $data');
@@ -90,11 +89,11 @@ class _TestState extends State<Test> {
     // });
 
     chatSocket.on('msg', (data) {
-      print('Chat update: $data');
+      dPrint('Chat update: $data');
     });
 
     chatSocket.onAny((event, data) {
-      print('Chat update any: Event($event) $data');
+      dPrint('Chat update any: Event($event) $data');
     });
 
     super.initState();
@@ -132,7 +131,6 @@ class _TestState extends State<Test> {
                 });
 
                 customerSocket.emit('reject_job_details');
-
                 print("Sending");
               },
               child: Ink(

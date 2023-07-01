@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:handees/shared/utils/utils.dart';
 
 import 'package:pin_code_fields/pin_code_fields.dart';
 
@@ -25,7 +26,7 @@ class VerifyScreen extends StatelessWidget {
         animation: model,
         builder: (context, _) {
           if (model.verificationCodeError) {
-            print('Shake');
+            dPrint('Shake');
             errorController.add(ErrorAnimationType.shake);
           }
           return Scaffold(

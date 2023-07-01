@@ -21,7 +21,7 @@ enum JobCategory {
     name: "Hair Styling",
     id: "hair styling",
     dbId: 3,
-    icon: HandeeIcons.hair_brush,
+    icon: HandeeIcons.hairBrush,
     foregroundColor: Color.fromRGBO(55, 61, 121, 1),
   ),
   clothing(
@@ -80,7 +80,7 @@ enum JobCategory {
     icon: HandeeIcons.housekeeping,
     foregroundColor: Color.fromRGBO(255, 161, 154, 1),
   );
-
+  
   const JobCategory({
     required this.name,
     required this.id,
