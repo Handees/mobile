@@ -4,6 +4,7 @@ import 'package:handees/shared/res/icons.dart';
 import 'package:handees/shared/routes/pages.dart';
 import 'package:handees/shared/routes/routes.dart';
 import 'package:handees/shared/services/auth_service.dart';
+import 'package:handees/shared/services/user_data_service.dart';
 import 'package:handees/shared/theme/theme.dart';
 
 import '../../viewmodels/signup_viewmodel.dart';
@@ -16,7 +17,8 @@ class SignupScreen extends StatelessWidget {
 
   final _formGlobalKey = GlobalKey<FormState>();
 
-  final viewModel = SignupViewmodel(AuthService.instance);
+  final viewModel =
+      SignupViewmodel(AuthService.instance, UserDataService.instance);
 
   final _obscureTextNotifier = ValueNotifier(true);
 
