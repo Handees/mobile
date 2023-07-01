@@ -64,7 +64,7 @@ class BookingService {
   }) {
     print('Sbmitting');
     _sockets.customerSocket.emit('confirm_job_details', {
-      'bookingId': bookingId,
+      'booking_id': bookingId,
       'is_contract': isContract,
       'settlement': {
         'type': settlementType,

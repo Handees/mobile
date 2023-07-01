@@ -111,17 +111,17 @@ class _TestState extends State<Test> {
           children: [
             InkWell(
               onTap: () {
-                BookingService.instance.confirmJobDetails(
-                  bookingId: '960103e8a91e4b8ca28b93fac0767936',
-                  isContract: false,
-                  settlementType: "NEGOTIATION",
-                  settlementAmount: 550.0,
-                  duration: 4,
-                  durationUnit: "days",
-                );
+                // BookingService.instance.confirmJobDetails(
+                //   bookingId: '960103e8a91e4b8ca28b93fac0767936',
+                //   isContract: false,
+                //   settlementType: "NEGOTIATION",
+                //   settlementAmount: 550.0,
+                //   duration: 4,
+                //   durationUnit: "days",
+                // );
 
                 customerSocket.emit('confirm_job_details', {
-                  'bookingId': bookingId,
+                  'booking_id': 'b62e7fb7318a4b08a5289e00679d0974',
                   'is_contract': false,
                   'settlement': {
                     'type': 'NEGOTIATION',
@@ -130,6 +130,10 @@ class _TestState extends State<Test> {
                   'duration': 4,
                   'duration_unit': 'days',
                 });
+
+                customerSocket.emit('reject_job_details');
+
+                print("Sending");
               },
               child: Ink(
                 height: 80,
