@@ -8,6 +8,7 @@ import 'package:handees/apps/artisan_app/features/auth/ui/screens/payment_detail
 import 'package:handees/apps/artisan_app/features/auth/ui/screens/valid_id.dart';
 import 'package:handees/apps/artisan_app/features/chat/ui/screens/chat_screen.dart';
 import 'package:handees/apps/artisan_app/features/home/ui/home.artisan.dart';
+import 'package:handees/apps/artisan_app/features/home/ui/screens/home_nav/earnings_screen.dart';
 import 'package:handees/apps/customer_app/features/artisan_switch/ui/screens/artisan_switch.screen.dart';
 import 'package:handees/apps/customer_app/features/profile/ui/edit_address.dart';
 import 'package:handees/apps/customer_app/features/profile/ui/edit_email.dart';
@@ -186,6 +187,9 @@ final _artisanAppRouter = NavRouter(
         break;
       case ArtisanAppRoutes.chat:
         page = const ArtisanChatScreen();
+        break;
+      case ArtisanAppRoutes.earnings:
+        page = const ArtisanEarningsScreen();
         break;
       default:
         throw Exception('Unknown route: ${settings.name}');
