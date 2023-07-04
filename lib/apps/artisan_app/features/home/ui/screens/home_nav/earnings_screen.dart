@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:handees/apps/artisan_app/features/home/ui/screens/home_nav/current_week_tab_screen.dart';
 import 'package:handees/apps/artisan_app/features/home/ui/screens/home_nav/widgets/wallet_balance_card.dart';
 
 class ArtisanEarningsScreen extends StatelessWidget {
@@ -40,11 +41,11 @@ class TabFilters extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Align(
-          child: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 24),
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 24),
+      child: Column(
+        children: [
+          Align(
             child: TabBar(
               physics: const BouncingScrollPhysics(),
               splashFactory: NoSplash.splashFactory,
@@ -54,23 +55,27 @@ class TabFilters extends StatelessWidget {
                 color: Colors.black,
               ),
               unselectedLabelColor: Colors.grey,
-              labelPadding: const EdgeInsets.only(bottom: 0),
+              labelPadding: const EdgeInsets.only(),
               indicatorColor: Colors.black,
               indicatorWeight: 2.5,
               dividerColor: const Color(0xFFD2D2D2),
               tabs: filters.map((tab) => Tab(text: tab)).toList(),
             ),
           ),
-        ),
-        Expanded(
-          child: TabBarView(
-            children: filters.map((tab) {
-              //TODO: Replace the below widget with the actual content for each tab.
-              return Center(child: Text(tab));
-            }).toList(),
+          const SizedBox(height: 30),
+          const Expanded(
+            child: TabBarView(
+              children: [
+                CurrentWeekScreen(),
+                // TODO: Add other screens
+                // Test
+                CurrentWeekScreen(),
+                CurrentWeekScreen(),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
