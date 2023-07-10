@@ -29,20 +29,21 @@ class _HomeNavScreenState extends ConsumerState<HomeNavScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 48),
-                  InkWell(
-                    onTap: () {
-                      showDialog(
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 35),
+                    child: InkWell(
+                      onTap: () {
+                        showDialog(
                           useRootNavigator: false,
                           barrierDismissible: false,
                           context: context,
                           builder: (BuildContext context) {
                             return const AcceptHandeeDialog();
-                          });
-                    },
-                    child: ProfileHeader(isProfileComplete),
+                        });
+                      },
+                      child: ProfileHeader(isProfileComplete),
+                    )
                   ),
-                  const SizedBox(height: 48),
                   isProfileComplete
                       ? const OnlineToggleCard()
                       : const CompleteProfileCard(),
