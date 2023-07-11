@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:handees/apps/artisan_app/features/home/ui/screens/home_nav/current_week_tab_screen.dart';
-import 'package:handees/apps/artisan_app/features/home/ui/screens/home_nav/widgets/wallet_balance_card.dart';
+import 'package:handees/apps/artisan_app/features/withdrawal/ui/screens/current_week_tab_screen.dart';
+import 'package:handees/apps/artisan_app/features/withdrawal/ui/widgets/wallet_balance_card.dart';
 
 class ArtisanEarningsScreen extends StatelessWidget {
   const ArtisanEarningsScreen({super.key});
