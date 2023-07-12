@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
+import './widgets/profile_options.dart';
+import 'consts.dart';
 
 class ProfileNavScreen extends StatelessWidget {
   const ProfileNavScreen({super.key});
@@ -6,62 +9,112 @@ class ProfileNavScreen extends StatelessWidget {
   final isPhotoAvailable = false;
   final double horizontalPadding = 16.0;
 
-  final String ronaldoImageUrl =
-      "https://upload.wikimedia.org/wikipedia/commons/8/8c/Cristiano_Ronaldo_2018.jpg";
-
   @override
   Widget build(BuildContext context) {
+    // return SafeArea(
+    //   child: Column(
+    //     children: [
+    //       Expanded(
+    //         child: ListView(
+    //           children: [Text("hi")],
+    //         )
+    //       )
+    //     ]
+    //   )
+    // );
     return SafeArea(
-      child: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
-              child: Column(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 40.0
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const SizedBox(
-                    height: 16.0,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 160),
+                    child: Text(
+                      "Profile",
+                      style: Theme.of(context).textTheme.titleMedium,
+                    )
                   ),
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        "Profile",
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                      const Icon(Icons.more_vert)
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 16.0,
-                  ),
-                  Stack(
-                    children: <Widget>[
-                      CircleAvatar(
-                        backgroundImage: NetworkImage(ronaldoImageUrl),
-                        radius: 50,
-                      ),
-                      const SizedBox(
-                        width: 100,
-                        height: 100,
-                        child: CircularProgressIndicator(
-                          color: Color(0xffa8dadc),
-                          value: 0.78,
-                          strokeWidth: 5,
-                        ),
-                      )
-                    ],
-                  )
+                  const Icon(Icons.more_vert)
                 ],
               ),
             ),
-          ),
-        ],
-      ),
+            Stack(
+              children: <Widget>[
+                const Positioned(
+                  top: 8,
+                  left: 8,
+                  child: CircleAvatar(
+                    backgroundImage: NetworkImage(testProfileImage),
+                    radius: 42,
+                  )
+                ),
+                Transform.flip(
+                  flipX: true,
+                  child: const SizedBox(
+                    width: 100,
+                    height: 100,
+                    child: CircularProgressIndicator(
+                      color: Color(0xffA8DADC),
+                      value: .85,
+                      strokeWidth: 7
+                    ),
+                  )
+                )
+              ],
+            ),
+            // ignore: prefer_const_constructors
+            Padding(
+              // ignore: prefer_const_constructors
+              padding: EdgeInsets.fromLTRB(
+                170, 15, 100, 15
+                ),
+              // ignore: prefer_const_constructors
+              child: InkWell(
+                onTap: () {},
+                child: const Row(
+                  children: [
+                    Text(
+                      "4.8",
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: "Lato"
+                      )
+                    ),
+                    Icon(
+                      Icons.star,
+                      color: Color(0xFFF1C644),
+                      size: 18.0,
+                    )
+                  ],
+                )
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 100
+              ),
+              child: Text(
+                "John Doe",
+                style: TextStyle(
+                  fontFamily: "Cabin",
+                  fontSize: 22.0,
+                  fontWeight: FontWeight.w600
+                ),
+              ),
+            ),
+            ProfileOptions()
+          ]
+        )
+      )
     );
   }
 }
