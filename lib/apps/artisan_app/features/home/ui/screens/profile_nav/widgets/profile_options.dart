@@ -1,19 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'dart:developer';
 import '../consts.dart';
 
 
-class ProfileOptions extends StatefulWidget
+class ProfileOptions extends StatelessWidget
 {
-  // const ProfileOptions({super.key});
-
-  @override
-  ProfileOptionsState createState() => ProfileOptionsState();
-}
-
-class ProfileOptionsState extends State<ProfileOptions>
-{
+  const ProfileOptions({super.key});
 
   Widget _buildRow(String optionName, String defaultValue)
   {
@@ -24,7 +16,6 @@ class ProfileOptionsState extends State<ProfileOptions>
             TextSpan(
               text: "$defaultValue \n",
               style: const TextStyle(
-                fontFamily: "Cabin",
                 fontSize: 16,
                 fontWeight: FontWeight.w600
               )
@@ -32,7 +23,6 @@ class ProfileOptionsState extends State<ProfileOptions>
             TextSpan(
               text: optionName,
               style: const TextStyle(
-                fontFamily: "Cabin",
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
                 color: Color(0xFF949494)
@@ -56,7 +46,7 @@ class ProfileOptionsState extends State<ProfileOptions>
         padding: const EdgeInsets.fromLTRB(
           0.0, 40, 0.0, 10.0
         ),
-        itemBuilder: (BuildContext context, index) {
+        itemBuilder: (BuildContext context, int index) {
           String key = profileOptionsList.keys.elementAt(index);
           String val = profileOptionsList[key];
           return _buildRow(key, val);
@@ -69,9 +59,6 @@ class ProfileOptionsState extends State<ProfileOptions>
   }
 
   @override
-  Widget build(BuildContext context)
-  {
-    return _buildList();
-  }
+  Widget build(BuildContext context) => _buildList();
 }
 

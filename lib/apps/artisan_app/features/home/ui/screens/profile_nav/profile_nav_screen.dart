@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:math';
 import './widgets/profile_options.dart';
 import 'consts.dart';
 
@@ -11,17 +10,6 @@ class ProfileNavScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return SafeArea(
-    //   child: Column(
-    //     children: [
-    //       Expanded(
-    //         child: ListView(
-    //           children: [Text("hi")],
-    //         )
-    //       )
-    //     ]
-    //   )
-    // );
     return SafeArea(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
@@ -70,13 +58,10 @@ class ProfileNavScreen extends StatelessWidget {
                 )
               ],
             ),
-            // ignore: prefer_const_constructors
             Padding(
-              // ignore: prefer_const_constructors
-              padding: EdgeInsets.fromLTRB(
+              padding: const EdgeInsets.fromLTRB(
                 170, 15, 100, 15
                 ),
-              // ignore: prefer_const_constructors
               child: InkWell(
                 onTap: () {},
                 child: const Row(
@@ -111,7 +96,7 @@ class ProfileNavScreen extends StatelessWidget {
                 ),
               ),
             ),
-            ProfileOptions()
+            const ProfileOptions()
           ]
         )
       )
