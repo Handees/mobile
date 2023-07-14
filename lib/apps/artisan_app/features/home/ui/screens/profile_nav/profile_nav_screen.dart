@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './widgets/profile_options.dart';
+import './widgets/profile_nav_toolbar.dart';
 import 'consts.dart';
 
 class ProfileNavScreen extends StatelessWidget {
@@ -30,7 +31,24 @@ class ProfileNavScreen extends StatelessWidget {
                       style: Theme.of(context).textTheme.titleMedium,
                     )
                   ),
-                  const Icon(Icons.more_vert)
+                  GestureDetector(
+                    onTap: () {
+                      showMenu(
+                        context: context,
+                        position: const RelativeRect.fromLTRB(
+                          100, 0, 20, 0
+                        ),
+                        items: ProfileToolBar().buildList().map(
+                          (row) => PopupMenuItem(child: row)
+                        ).toList(),
+                        surfaceTintColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0)
+                        )
+                      );
+                    },
+                    child: const Icon(Icons.more_vert)
+                  )
                 ],
               ),
             ),
