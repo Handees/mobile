@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import './widgets/profile_options.dart';
 import './widgets/profile_nav_toolbar.dart';
+import '../profileEdit_options_nav/profile.edit.options.dart';
+import './utils.dart';
 import 'consts.dart';
 
 class ProfileNavScreen extends StatelessWidget {
@@ -31,23 +33,23 @@ class ProfileNavScreen extends StatelessWidget {
                       style: Theme.of(context).textTheme.titleMedium,
                     )
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      showMenu(
-                        context: context,
-                        position: const RelativeRect.fromLTRB(
-                          100, 0, 20, 0
-                        ),
-                        items: ProfileToolBar().buildList().map(
-                          (row) => PopupMenuItem(child: row)
-                        ).toList(),
-                        surfaceTintColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0)
-                        )
+                  PopupMenuButton(
+                    onSelected: (ProfileToolBarItem val){
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => val.onClickAction)
                       );
                     },
-                    child: const Icon(Icons.more_vert)
+                    itemBuilder: (BuildContext context) => ProfileToolBar().buildList().map(
+                      (item) => PopupMenuItem<ProfileToolBarItem>(
+                          value:item,
+                          child: item,
+                        )
+                    ).toList(),
+                    surfaceTintColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0)
+                    ),
                   )
                 ],
               ),
@@ -120,4 +122,6 @@ class ProfileNavScreen extends StatelessWidget {
       )
     );
   }
+
+
 }
