@@ -20,7 +20,7 @@ final Map<dynamic, dynamic> profileToolBarList = {
     "action": const EditProfileOptions()
   },
   Icons.code: {
-    "option": "Edit Profile",
+    "option": "Handees",
     "action": const EditProfileOptions()
   }
 };
