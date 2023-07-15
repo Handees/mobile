@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import './widgets/profile_options.dart';
 import './widgets/profile_nav_toolbar.dart';
-import '../profileEdit_options_nav/profile.edit.options.dart';
-import './utils.dart';
 import 'consts.dart';
 
 class ProfileNavScreen extends StatelessWidget {
