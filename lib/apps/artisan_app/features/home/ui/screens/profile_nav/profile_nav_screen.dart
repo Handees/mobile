@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:handees/shared/routes/routes.dart';
 import './widgets/profile_options.dart';
 import './widgets/profile_nav_toolbar.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'consts.dart';
 
 class ProfileNavScreen extends StatelessWidget {
@@ -33,10 +35,7 @@ class ProfileNavScreen extends StatelessWidget {
                   ),
                   PopupMenuButton(
                     onSelected: (ProfileToolBarItem val){
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => val.onClickAction)
-                      );
+                      Navigator.of(context).pushNamed(ArtisanAppRoutes.editProfile);
                     },
                     itemBuilder: (BuildContext context) => ProfileToolBar().buildList().map(
                       (item) => PopupMenuItem<ProfileToolBarItem>(
@@ -58,7 +57,7 @@ class ProfileNavScreen extends StatelessWidget {
                   top: 8,
                   left: 8,
                   child: CircleAvatar(
-                    backgroundImage: NetworkImage(testProfileImage),
+                    backgroundImage: CachedNetworkImageProvider(testProfileImage),
                     radius: 42,
                   )
                 ),
@@ -88,8 +87,7 @@ class ProfileNavScreen extends StatelessWidget {
                       "4.8",
                       style: TextStyle(
                         fontSize: 16.0,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: "Lato"
+                        fontWeight: FontWeight.w600
                       )
                     ),
                     Icon(
@@ -108,7 +106,6 @@ class ProfileNavScreen extends StatelessWidget {
               child: Text(
                 "John Doe",
                 style: TextStyle(
-                  fontFamily: "Cabin",
                   fontSize: 22.0,
                   fontWeight: FontWeight.w600
                 ),

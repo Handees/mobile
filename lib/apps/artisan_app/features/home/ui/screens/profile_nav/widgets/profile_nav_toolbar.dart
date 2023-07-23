@@ -88,30 +88,3 @@ class ProfileToolBar
     return list;
   }
 }
-
-
-// GestureDetector(
-//   onTap: () {
-//     showMenu(
-//       context: context,
-//       position: const RelativeRect.fromLTRB(
-//         100, 0, 20, 0
-//       ),
-//       items: ProfileToolBar().buildList().map(
-//         (row) => PopupMenuItem(
-//           child: row,
-//           onTap: () {
-//             Navigator.of(context).push(
-//               MaterialPageRoute(builder: (context) => const ArtisanHomeScreen())
-//             );
-//           }
-//         )
-//       ).toList(),
-//       surfaceTintColor: Colors.white,
-//       shape: RoundedRectangleBorder(
-//         borderRadius: BorderRadius.circular(10.0)
-//       )
-//     );
-//   },
-//   child: const Icon(Icons.more_vert)
-// )
