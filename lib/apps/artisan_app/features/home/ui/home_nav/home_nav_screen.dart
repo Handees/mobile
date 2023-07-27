@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:handees/apps/artisan_app/features/home/ui/screens/home_nav/widgets/accept_handee_dialog.dart';
-import 'package:handees/apps/artisan_app/features/home/ui/screens/home_nav/widgets/complete_profile_card.dart';
-import 'package:handees/apps/artisan_app/features/home/ui/screens/home_nav/widgets/online_toggle_card.dart';
-import 'package:handees/apps/artisan_app/features/home/ui/screens/home_nav/widgets/profile_header.dart';
-import 'package:handees/apps/artisan_app/features/home/ui/screens/home_nav/widgets/user_stats_container.dart';
+import 'widgets/accept_handee_dialog.dart';
+import 'widgets/complete_profile_card.dart';
+import 'widgets/online_toggle_card.dart';
+import 'widgets/profile_header.dart';
+import 'widgets/user_stats_container.dart';
 
 class HomeNavScreen extends ConsumerStatefulWidget {
   const HomeNavScreen({super.key});

@@ -16,7 +16,7 @@ import 'package:handees/shared/routes/pages.dart';
 import 'package:handees/shared/services/auth_service.dart';
 import 'package:handees/shared/services/user_data_service.dart';
 import 'package:handees/shared/ui/widgets/navigator.dart';
-import '../../apps/artisan_app/features/home/ui/screens/profileEdit_options_nav/profile.edit.options.dart';
+import 'package:handees/apps/artisan_app/features/profile/ui/profileEdit_options_nav/profile.edit.options.dart';
 
 import 'package:handees/shared/theme/theme.dart';
 import 'package:handees/shared/utils/utils.dart';
