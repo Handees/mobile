@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../widgets/double_text_tile.dart';
-import 'consts.dart';
+import 'package:handees/apps/artisan_app/widgets/double_text_tile.dart';
+import '../../consts.dart';
 
 
 class EditProfileOptions extends StatelessWidget

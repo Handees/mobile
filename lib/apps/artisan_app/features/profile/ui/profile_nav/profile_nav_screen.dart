@@ -3,7 +3,7 @@ import 'package:handees/shared/routes/routes.dart';
 import './widgets/profile_options.dart';
 import './widgets/profile_nav_toolbar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'consts.dart';
+import '../../consts.dart';
 
 class ProfileNavScreen extends StatelessWidget {
   const ProfileNavScreen({super.key});

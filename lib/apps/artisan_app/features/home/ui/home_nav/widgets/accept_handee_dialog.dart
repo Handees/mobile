@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:handees/apps/artisan_app/features/home/ui/screens/home_nav/widgets/icon_avatar.dart';
+import 'icon_avatar.dart';
 import 'package:handees/shared/routes/routes.dart';
 
 class AcceptHandeeDialog extends StatelessWidget {

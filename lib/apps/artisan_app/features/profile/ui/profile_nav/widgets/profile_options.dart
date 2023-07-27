@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../consts.dart';
+import '../../../consts.dart';
 
 
 class ProfileOptions extends StatelessWidget
