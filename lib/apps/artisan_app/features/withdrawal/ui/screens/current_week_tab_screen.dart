@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:handees/apps/artisan_app/features/withdrawal/ui/widgets/bank_account_bottom_sheet.dart';
 
 class CurrentWeekScreen extends StatelessWidget {
   const CurrentWeekScreen({super.key});
@@ -57,11 +58,18 @@ class CurrentWeekScreen extends StatelessWidget {
           width: double.infinity,
           height: 64,
           child: FilledButton(
-            onPressed: () {},
+            onPressed: () {
+              showModalBottomSheet(
+                  isScrollControlled: true,
+                  context: context,
+                  builder: (sheetCtx) {
+                    return const BankAcctBottomSheet();
+                  });
+            },
             child: const Text(
               'Withdraw Funds',
               style: TextStyle(
-                fontWeight: FontWeight.w700,
+                fontSize: 15,
               ),
             ),
           ),
