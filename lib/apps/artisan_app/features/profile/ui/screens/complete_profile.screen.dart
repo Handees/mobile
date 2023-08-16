@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:handees/apps/artisan_app/features/auth/ui/widgets/complete_profile_link_card.dart';
-import 'package:handees/apps/artisan_app/features/auth/ui/complete_profile_link_model.dart';
+import 'package:handees/apps/artisan_app/features/profile/ui/widgets/complete_profile_link_card.dart';
+import 'package:handees/apps/artisan_app/features/profile/ui/complete_profile_link_model.dart';
 import 'package:handees/shared/routes/routes.dart';
 
 class ArtisanCompleteProfileScreen extends StatelessWidget {

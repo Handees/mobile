@@ -40,7 +40,6 @@ class UserRemoteDataSource {
           'access-token': token,
         },
         body: jsonEncode({
-          "user_profile_id": uid,
           "hourly_rate": hourlyRate,
           "job_category": jobCategory,
           "job_title": jobTitle,
@@ -48,7 +47,6 @@ class UserRemoteDataSource {
     dPrint(AppUris.addNewArtisanUri);
     dPrint(token);
     dPrint({
-      "user_profile_id": uid,
       "hourly_rate": hourlyRate,
       "job_category": jobCategory,
       "job_title": jobTitle,
@@ -57,7 +55,7 @@ class UserRemoteDataSource {
     try {
       response = await future;
     } catch (e) {
-      dPrint(e);
+      ePrint(e);
       return false;
     }
 

@@ -55,7 +55,6 @@ class LocationStateNotifier extends StateNotifier<LocationData>
       interval: 5000,
       distanceFilter: 5,
     );
-
     if (!_handlerRegistered) {
       location.onLocationChanged.listen((LocationData currLocation) {
         updateLocation(currLocation);
