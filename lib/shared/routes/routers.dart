@@ -20,6 +20,7 @@ import 'package:handees/shared/routes/pages.dart';
 import 'package:handees/shared/services/auth_service.dart';
 import 'package:handees/shared/services/user_data_service.dart';
 import 'package:handees/shared/ui/widgets/navigator.dart';
+import 'package:handees/apps/artisan_app/features/profile/ui/profileEdit_options_nav/profile.edit.options.dart';
 
 import 'package:handees/shared/theme/theme.dart';
 import 'package:handees/shared/utils/utils.dart';
@@ -195,13 +196,16 @@ final _artisanAppRouter = NavRouter(
         page = const MapToCustomerScreen();
         break;
       case ArtisanAppRoutes.confirmHandee:
-        page = ConfirmHandeeScreen();
+        page = const ConfirmHandeeScreen();
         break;
       case ArtisanAppRoutes.handeeInProgress:
         page = const HandeeInProgressScreen();
         break;
       case ArtisanAppRoutes.handeeConcluded:
         page = const HandeeConcludedScreen();
+        break;
+      case ArtisanAppRoutes.editProfile:
+        page = const EditProfileOptions();
         break;
       default:
         throw Exception('Unknown route: ${settings.name}');

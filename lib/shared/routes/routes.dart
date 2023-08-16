@@ -27,6 +27,7 @@ abstract class ArtisanAppRoutes {
   static const String handeeConcluded = '/artisan/handee-concluded';
 
   static const String home = '/artisan/home';
+  static const String editProfile = '/artisan/edit-profile';
 }
 
 abstract class CustomerAppRoutes {
