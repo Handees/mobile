@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:handees/apps/artisan_app/features/handee/ui/widgets/confirm_amount_dialog.dart';
-import 'package:handees/apps/artisan_app/features/home/ui/screens/home_nav/widgets/icon_avatar.dart';
+import 'package:handees/apps/artisan_app/features/home/ui/home_nav/widgets/icon_avatar.dart';
 import 'package:handees/shared/utils/utils.dart';
 
 class HandeeInProgressScreen extends StatelessWidget {

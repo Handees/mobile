@@ -8,7 +8,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:handees/apps/artisan_app/features/handee/utils/helpers.dart';
 import 'package:handees/apps/artisan_app/features/home/providers/current-offer.provider.dart';
 import 'package:handees/apps/artisan_app/features/home/providers/home.artisan.provider.dart';
-import 'package:handees/apps/artisan_app/features/home/ui/screens/home_nav/widgets/icon_avatar.dart';
+import 'package:handees/apps/artisan_app/features/home/ui/home_nav/widgets/icon_avatar.dart';
 import 'package:handees/shared/res/constants.dart';
 import 'package:handees/shared/routes/routes.dart';
 import 'package:handees/shared/utils/utils.dart';
@@ -83,6 +83,13 @@ class _MapToCustomerScreenState extends ConsumerState<MapToCustomerScreen> {
   @override
   Widget build(BuildContext context) {
     LocationData location = ref.watch(locationProvider);
+    if (location.latitude == null || location.longitude == null) {
+      return const Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
 
     ref.listen(locationProvider, (LocationData? prev, LocationData next) async {
       GoogleMapController controller = await _controller.future;
@@ -119,63 +126,59 @@ class _MapToCustomerScreenState extends ConsumerState<MapToCustomerScreen> {
     };
 
     return Scaffold(
-      body: location.latitude == null || location.longitude == null
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
-          : SizedBox(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              child: Stack(children: [
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.8,
-                  width: MediaQuery.of(context).size.width,
-                  child: GoogleMap(
-                    onMapCreated: (GoogleMapController controller) async {
-                      _controller.complete(controller);
+      body: SizedBox(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        child: Stack(children: [
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.8,
+            width: MediaQuery.of(context).size.width,
+            child: GoogleMap(
+              onMapCreated: (GoogleMapController controller) async {
+                _controller.complete(controller);
 
-                      // TODO: Waiting for the setState by 1 second is a hack. The problem seems to be that the function below is called when the map is not ready. Waiting 1 second does the trick but ideally, we should figure out when the map is loaded through some function or something.
+                // TODO: Waiting for the setState by 1 second is a hack. The problem seems to be that the function below is called when the map is not ready. Waiting 1 second does the trick but ideally, we should figure out when the map is loaded through some function or something.
 
-                      Future.delayed(
-                        const Duration(seconds: 1),
-                        () => setState(() {
-                          controller.animateCamera(CameraUpdate.newLatLngBounds(
-                            Helpers.bounds(markers),
-                            20,
-                          ));
-                        }),
-                      );
-                    },
-                    initialCameraPosition: CameraPosition(
-                      target: LatLng(location.latitude!, location.longitude!),
-                      zoom: 18,
-                      tilt: 0,
-                      bearing: 0,
-                    ),
-                    markers: markers,
-                    polylines: {
-                      Polyline(
-                        polylineId: const PolylineId('route'),
-                        points: polylineCoords,
-                        color: Theme.of(context).primaryColor,
-                        width: 6,
-                      )
-                    },
-                  ),
-                ),
-                Positioned(
-                  bottom: 0,
-                  left: 0,
-                  child: OfferInfo(hasArtisanArrived, () async {
-                    GoogleMapController controller = await _controller.future;
-                    setState(() {
-                      controller.animateCamera(CameraUpdate.newLatLng(
-                          LatLng(location.latitude!, location.longitude!)));
-                    });
+                Future.delayed(
+                  const Duration(seconds: 1),
+                  () => setState(() {
+                    controller.animateCamera(CameraUpdate.newLatLngBounds(
+                      Helpers.bounds(markers),
+                      20,
+                    ));
                   }),
-                ),
-              ]),
+                );
+              },
+              initialCameraPosition: CameraPosition(
+                target: LatLng(location.latitude!, location.longitude!),
+                zoom: 18,
+                tilt: 0,
+                bearing: 0,
+              ),
+              markers: markers,
+              polylines: {
+                Polyline(
+                  polylineId: const PolylineId('route'),
+                  points: polylineCoords,
+                  color: Theme.of(context).primaryColor,
+                  width: 6,
+                )
+              },
             ),
+          ),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            child: OfferInfo(hasArtisanArrived, () async {
+              GoogleMapController controller = await _controller.future;
+              setState(() {
+                controller.animateCamera(CameraUpdate.newLatLng(
+                    LatLng(location.latitude!, location.longitude!)));
+              });
+            }),
+          ),
+        ]),
+      ),
     );
   }
 }
@@ -359,7 +362,7 @@ class OfferInfo extends ConsumerWidget {
               height: 64,
               child: FilledButton(
                 onPressed: () => Navigator.of(context)
-                    .pushNamed(ArtisanAppRoutes.confirmHandee),
+                    .pushReplacementNamed(ArtisanAppRoutes.confirmHandee),
                 child: const Text(
                   'ARRIVED',
                   style: TextStyle(

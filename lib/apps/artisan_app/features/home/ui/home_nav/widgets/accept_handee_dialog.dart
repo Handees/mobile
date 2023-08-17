@@ -145,7 +145,7 @@ class AcceptHandeeDialog extends ConsumerWidget {
                       .acceptOffer(offer.bookingId);
                   Navigator.of(context).pop();
                   Navigator.of(externalContext)
-                      .popAndPushNamed(ArtisanAppRoutes.transitToArtisan);
+                      .pushNamed(ArtisanAppRoutes.transitToArtisan);
                 },
                 child: Row(
                   children: [

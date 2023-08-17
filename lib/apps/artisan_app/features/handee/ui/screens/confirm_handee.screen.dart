@@ -5,7 +5,6 @@ import 'package:handees/apps/artisan_app/features/handee/ui/widgets/handee_detai
 import 'package:handees/apps/artisan_app/features/home/providers/current-offer.provider.dart';
 import 'package:handees/apps/artisan_app/services/sockets/artisan_socket.dart';
 import 'package:handees/shared/data/handees/handee_options.dart';
-import 'package:handees/shared/routes/routes.dart';
 import 'package:handees/shared/utils/utils.dart';
 
 class ConfirmHandeeScreen extends ConsumerStatefulWidget {
@@ -128,9 +127,8 @@ class _ConfirmHandeeScreenState extends ConsumerState<ConfirmHandeeScreen> {
                                 .read(artisanSocketProvider.notifier)
                                 .cancelOffer(
                                     ref.read(currentOfferProvider).bookingId);
+
                             Navigator.of(context).pop();
-                            Navigator.of(context)
-                                .popAndPushNamed(ArtisanAppRoutes.home);
                           },
                           style: const ButtonStyle(
                             backgroundColor: MaterialStatePropertyAll(
