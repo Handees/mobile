@@ -3,6 +3,7 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:handees/apps/artisan_app/features/home/ui/home_nav/widgets/accept_handee_dialog.dart';
 import 'package:handees/apps/artisan_app/features/home/ui/home_nav/widgets/complete_profile_card.dart';
 import 'package:handees/apps/artisan_app/features/home/ui/home_nav/widgets/online_toggle_card.dart';
 import 'package:handees/apps/artisan_app/features/home/ui/home_nav/widgets/profile_header.dart';
@@ -11,7 +12,6 @@ import 'package:handees/apps/artisan_app/services/sockets/artisan_socket.dart';
 import 'package:handees/apps/artisan_app/services/sockets/artisan_socket_events.dart';
 import 'package:handees/shared/data/handees/offer.dart';
 import 'package:handees/shared/utils/utils.dart';
-import 'widgets/accept_handee_dialog.dart';
 
 class HomeNavScreen extends ConsumerStatefulWidget {
   const HomeNavScreen({super.key});
@@ -84,10 +84,9 @@ class _HomeNavScreenState extends ConsumerState<HomeNavScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 48.0),
-                    child: ProfileHeader(isProfileComplete),
-                  ),
+                  const SizedBox(height: 48),
+                  ProfileHeader(isProfileComplete),
+                  const SizedBox(height: 48),
                   isProfileComplete
                       ? const OnlineToggleCard()
                       : const CompleteProfileCard(),

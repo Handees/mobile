@@ -15,7 +15,7 @@ class IconAvatar extends StatelessWidget {
         )),
         color: Theme.of(context).colorScheme.tertiary,
       ),
-      child: const Icon(Icons.account_circle),
+      child: Image.asset("assets/icon/user.png", width: 40),
     );
   }
 }
