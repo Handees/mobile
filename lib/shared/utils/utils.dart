@@ -1,3 +1,7 @@
+import 'package:flutter/material.dart';
+import 'package:handees/shared/utils/logger.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 mixin InputValidationMixin {
   bool isEmailValid(String email) {
     var pattern = r'^\S+@\S+\.\S+$';
@@ -23,15 +27,25 @@ mixin InputValidationMixin {
   }
 }
 
-// void showSnackBar(BuildContext context, String message) {
-//   ScaffoldMessenger.of(context).clearSnackBars();
-//   ScaffoldMessenger.of(context).showSnackBar(
-//     SnackBar(
-//       content: Text(message),
-//       behavior: SnackBarBehavior.floating,
-//       // shape: RoundedRectangleBorder(
-//       //   borderRadius: BorderRadius.circular(10),
-//       // ),
-//     ),
-//   );
-// }
+Color getHexColor(String hexColor) {
+  if (hexColor.length != 6) {
+    throw 'hexColor must be of length 6';
+  }
+
+  int val = 0xff000000 + int.parse(hexColor, radix: 16);
+  return Color(val);
+}
+
+void dPrint(dynamic message) {
+  MyLogger.instance.logger.d(message);
+}
+
+void ePrint(dynamic message) {
+  MyLogger.instance.logger.e(message);
+}
+
+Future<void> openUrl(Uri url) async {
+  if (!await launchUrl(url)) {
+    throw Exception('Could not launch $url');
+  }
+}

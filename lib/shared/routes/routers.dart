@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:handees/apps/artisan_app/features/auth/ui/screens/complete_profile.dart';
-import 'package:handees/apps/artisan_app/features/auth/ui/screens/basic_info.dart';
-import 'package:handees/apps/artisan_app/features/auth/ui/screens/document_upload.dart';
-import 'package:handees/apps/artisan_app/features/auth/ui/screens/handee_details.dart';
-import 'package:handees/apps/artisan_app/features/auth/ui/screens/passport_photograph.dart';
-import 'package:handees/apps/artisan_app/features/auth/ui/screens/payment_details.dart';
-import 'package:handees/apps/artisan_app/features/auth/ui/screens/valid_id.dart';
+import 'package:handees/apps/artisan_app/features/handee/ui/screens/confirm_handee.screen.dart';
+import 'package:handees/apps/artisan_app/features/handee/ui/screens/handee_concluded.screen.dart';
+import 'package:handees/apps/artisan_app/features/handee/ui/screens/handee_in_progress.screen.dart';
+import 'package:handees/apps/artisan_app/features/handee/ui/screens/map_to_customer.screen.dart';
+import 'package:handees/apps/artisan_app/features/profile/ui/screens/complete_profile.screen.dart';
+import 'package:handees/apps/artisan_app/features/profile/ui/screens/basic_info.screen.dart';
+import 'package:handees/apps/artisan_app/features/profile/ui/screens/document_upload.screen.dart';
+import 'package:handees/apps/artisan_app/features/profile/ui/screens/handee_details.screen.dart';
+import 'package:handees/apps/artisan_app/features/profile/ui/screens/passport_photograph.screen.dart';
+import 'package:handees/apps/artisan_app/features/profile/ui/screens/payment_details.screen.dart';
+import 'package:handees/apps/artisan_app/features/profile/ui/screens/valid_id.screen.dart';
 import 'package:handees/apps/artisan_app/features/chat/ui/screens/chat_screen.dart';
 import 'package:handees/apps/artisan_app/features/home/ui/home.artisan.dart';
 import 'package:handees/apps/artisan_app/features/withdrawal/ui/screens/earnings_screen.dart';
@@ -17,15 +21,17 @@ import 'package:handees/shared/routes/pages.dart';
 import 'package:handees/shared/services/auth_service.dart';
 import 'package:handees/shared/services/user_data_service.dart';
 import 'package:handees/shared/ui/widgets/navigator.dart';
+import 'package:handees/apps/artisan_app/features/profile/ui/profileEdit_options_nav/profile.edit.options.dart';
 
 import 'package:handees/shared/theme/theme.dart';
+import 'package:handees/shared/utils/utils.dart';
 
 import 'routes.dart';
 
 final mainRouter = NavRouter(
   onGenerateRoute: (RouteSettings settings) {
     NavRouter? router;
-    print(settings.name);
+    dPrint(settings.name);
     switch (settings.name) {
       case '/':
         {
@@ -39,7 +45,6 @@ final mainRouter = NavRouter(
 
       case AuthRoutes.root:
         router = _authRouter;
-
         break;
       case CustomerAppRoutes.root:
         router = _customerAppRouter;
@@ -190,12 +195,26 @@ final _artisanAppRouter = NavRouter(
         break;
       case ArtisanAppRoutes.earnings:
         page = const ArtisanEarningsScreen();
-
+        break;
+      case ArtisanAppRoutes.transitToArtisan:
+        page = const MapToCustomerScreen();
+        break;
+      case ArtisanAppRoutes.confirmHandee:
+        page = const ConfirmHandeeScreen();
+        break;
+      case ArtisanAppRoutes.handeeInProgress:
+        page = const HandeeInProgressScreen();
+        break;
+      case ArtisanAppRoutes.handeeConcluded:
+        page = const HandeeConcludedScreen();
+        break;
+      case ArtisanAppRoutes.editProfile:
+        page = const EditProfileOptions();
         break;
       default:
         throw Exception('Unknown route: ${settings.name}');
     }
-
+    //page = const MapToCustomerScreen();
     return MaterialPageRoute(
       builder: (context) => page!,
     );

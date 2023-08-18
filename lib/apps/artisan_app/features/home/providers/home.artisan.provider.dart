@@ -46,7 +46,7 @@ class LocationStateNotifier extends StateNotifier<LocationData>
       try {
         _backgroundModeEnabled = await location.enableBackgroundMode();
       } catch (e) {
-        print(e.toString());
+        ePrint(e.toString());
       }
     }
 
@@ -55,7 +55,6 @@ class LocationStateNotifier extends StateNotifier<LocationData>
       interval: 5000,
       distanceFilter: 5,
     );
-
     if (!_handlerRegistered) {
       location.onLocationChanged.listen((LocationData currLocation) {
         updateLocation(currLocation);

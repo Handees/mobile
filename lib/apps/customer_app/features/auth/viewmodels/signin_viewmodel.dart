@@ -5,13 +5,11 @@ import 'package:handees/shared/services/auth_service.dart';
 import 'package:handees/shared/services/user_data_service.dart';
 import 'package:handees/shared/utils/utils.dart';
 
-// TODO: The WidgetRef ref inside of this class is an anti-pattern. It should be passed in from a Provider function i.e
-// TODO: we need to convert this class to a provider but I left it like so cause you requested it.
-
 class SigninViewmodel extends ChangeNotifier with InputValidationMixin {
-  SigninViewmodel(this._authService);
+  SigninViewmodel(this._authService, this._userDataService);
 
   final AuthService _authService;
+  final UserDataService _userDataService;
 
   String _email = '';
   String _password = '';
@@ -61,7 +59,7 @@ class SigninViewmodel extends ChangeNotifier with InputValidationMixin {
         if (depth == 0) return;
 
         // User is not on DB so register them
-        final isUserSubmitted = await UserDataService.instance.submitUser();
+        final isUserSubmitted = await _userDataService.submitUser();
 
         // if user was still not submitted successfully
         if (!isUserSubmitted) return;

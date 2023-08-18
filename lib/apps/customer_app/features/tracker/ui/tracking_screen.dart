@@ -43,9 +43,6 @@ class _TrackingScreenState extends State<TrackingScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        // systemOverlayStyle: SystemUiOverlayStyle(
-        //   systemNavigationBarIconBrightness: Brightness.dark,
-        // ),
       ),
       extendBodyBehindAppBar: true,
       bottomSheet: Material(
@@ -53,18 +50,6 @@ class _TrackingScreenState extends State<TrackingScreen> {
         shadowColor: Colors.black,
         child: bottomSheet,
       ),
-      // body: trackingState == TrackingState.loading
-      //     ? const Center(
-      //         child: Padding(
-      //           padding: EdgeInsets.only(bottom: 48.0),
-      //           child: CircleFadeOutLoader(),
-      //         ),
-      //       )
-      //     : const GoogleMap(
-      //         initialCameraPosition: CameraPosition(
-      //           target: LatLng(12, 15),
-      //         ),
-      //       ),
     );
   }
 }

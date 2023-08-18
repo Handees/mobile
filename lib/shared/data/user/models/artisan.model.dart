@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:handees/shared/data/handees/job_category.dart';
 
 class ArtisanModel {
@@ -30,7 +29,7 @@ class ArtisanModel {
         hourlyRate = json["hourly_rate"],
         isVerified = json["is_verified"],
         //jobCategory = jobCategoriesMap[json["job_category_id"]],
-        jobCategory = jobCategories
+        jobCategory = JobCategory.values
             .firstWhere((category) => category.id == json["job_category"]),
         jobTitle = json["job_title"] ?? "",
         jobsCompleted = json["jobs_completed"],

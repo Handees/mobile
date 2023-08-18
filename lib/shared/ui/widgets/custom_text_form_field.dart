@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
     required this.hintText,
-    required this.onSaved,
+    this.onSaved,
     this.textInputType = TextInputType.text,
     this.validator,
+    this.backgroundColor = const Color(0xffffffff),
     super.key,
   });
 
@@ -13,6 +14,7 @@ class CustomTextFormField extends StatelessWidget {
   final TextInputType textInputType;
   final void Function(String?)? onSaved;
   final String? Function(String?)? validator;
+  final Color backgroundColor;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class CustomTextFormField extends StatelessWidget {
         hintStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
               color: const Color(0xff949494),
             ),
-        fillColor: const Color(0xffffffff),
+        fillColor: backgroundColor,
         enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(
             color: Color(0xffe5e5e5),

@@ -11,6 +11,7 @@ import 'package:handees/apps/customer_app/features/home/providers/home.customer.
 
 import 'package:handees/shared/routes/routers.dart';
 import 'package:handees/shared/services/auth_service.dart';
+import 'package:logger/logger.dart';
 
 import 'firebase_options.dart';
 import 'shared/theme/theme.dart';
@@ -27,13 +28,17 @@ class MyHttpOverrides extends HttpOverrides {
 }
 
 void main() async {
+  Logger.level = Level.debug;
+
   HttpOverrides.global = MyHttpOverrides();
 
   LicenseRegistry.addLicense(() async* {
     final license = await rootBundle.loadString('assets/google_fonts/OFL.txt');
     yield LicenseEntryWithLineBreaks(['google_fonts'], license);
   });
-  GoogleFonts.config.allowRuntimeFetching = false;
+
+  //TODO: Ask omas why this is false
+  GoogleFonts.config.allowRuntimeFetching = true;
 
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent, // status bar color
@@ -79,6 +84,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+        const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.dark));
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Handees',
