@@ -2,15 +2,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/apps/artisan_app/features/home/providers/current-offer.provider.dart';
 import 'package:handees/shared/data/handees/handee_approval.dart';
 import 'package:handees/shared/data/handees/handee_options.dart';
-import 'package:handees/shared/utils/utils.dart';
 
 final handeeApprovalDetailsProvider =
     StateNotifierProvider<HandeeApprovalDetailsStateNotifier, HandeeApproval>(
         (ref) => HandeeApprovalDetailsStateNotifier(
             ref.read(currentOfferProvider).bookingId));
 
-class HandeeApprovalDetailsStateNotifier extends StateNotifier<HandeeApproval>
-    with InputValidationMixin {
+class HandeeApprovalDetailsStateNotifier extends StateNotifier<HandeeApproval> {
   final String bookingId;
   HandeeApprovalDetailsStateNotifier(this.bookingId)
       : super(HandeeApproval.empty(bookingId: bookingId));

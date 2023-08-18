@@ -9,8 +9,7 @@ final locationProvider =
     StateNotifierProvider<LocationStateNotifier, LocationData>(
         (ref) => LocationStateNotifier(ref));
 
-class LocationStateNotifier extends StateNotifier<LocationData>
-    with InputValidationMixin {
+class LocationStateNotifier extends StateNotifier<LocationData> {
   final location = Location();
   bool _serviceEnabled = false;
   bool _backgroundModeEnabled = false;

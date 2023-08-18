@@ -15,8 +15,7 @@ final artisanSocketProvider =
     StateNotifierProvider<ArtisanSocketNotifier, io.Socket>(
         (ref) => ArtisanSocketNotifier(ref));
 
-class ArtisanSocketNotifier extends StateNotifier<io.Socket>
-    with InputValidationMixin {
+class ArtisanSocketNotifier extends StateNotifier<io.Socket> {
   StateNotifierProviderRef<ArtisanSocketNotifier, io.Socket> ref;
 
   ArtisanSocketNotifier(this.ref)

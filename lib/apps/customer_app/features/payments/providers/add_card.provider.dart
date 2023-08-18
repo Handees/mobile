@@ -2,15 +2,13 @@ import 'package:flutter_paystack/flutter_paystack.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/shared/services/auth_service.dart';
 import 'package:handees/apps/customer_app/services/payment_service.customer.dart';
-import 'package:handees/shared/utils/utils.dart';
 
 final addCardProvider =
     StateNotifierProvider<AddCardStateNotifier, bool>((ref) {
   return AddCardStateNotifier(PaymentService.instance, AuthService.instance);
 });
 
-class AddCardStateNotifier extends StateNotifier<bool>
-    with InputValidationMixin {
+class AddCardStateNotifier extends StateNotifier<bool> {
   final PaymentService _paymentService;
   final AuthService _authService;
   AddCardStateNotifier(this._paymentService, this._authService) : super(true);
