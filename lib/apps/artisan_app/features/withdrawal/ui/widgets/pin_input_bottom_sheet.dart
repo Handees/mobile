@@ -1,7 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:handees/apps/artisan_app/features/withdrawal/ui/widgets/custom_keyboard.dart';
+import 'package:flutter_svprogresshud/flutter_svprogresshud.dart';
+// import 'package:handees/shared/routes/routes.dart';
 import 'package:pinput/pinput.dart';
+
+import 'package:handees/apps/artisan_app/features/withdrawal/ui/widgets/custom_keyboard.dart';
+import 'package:handees/apps/artisan_app/features/withdrawal/ui/widgets/withdrawal_success_bottom_sheet.dart';
 
 class PinInputBottomSheet extends StatefulWidget {
   const PinInputBottomSheet({super.key});
@@ -17,6 +23,54 @@ class _PinInputBottomSheetState extends State<PinInputBottomSheet> {
   void dispose() {
     pinInputController.dispose();
     super.dispose();
+  }
+
+  Timer? _dismissAfter5sTimer;
+  Timer? _progressTimer;
+
+  @override
+  void initState() {
+    SVProgressHUD.dismiss();
+    _updateHUDConfig();
+    super.initState();
+  }
+
+  void _stopAllTimer() {
+    if (_dismissAfter5sTimer != null && _dismissAfter5sTimer!.isActive) {
+      _dismissAfter5sTimer!.cancel();
+    }
+    if (_progressTimer != null && _progressTimer!.isActive) {
+      _progressTimer?.cancel();
+    }
+  }
+
+  void _updateHUDConfig() {
+    SVProgressHUD.setDefaultStyle(SVProgressHUDStyle.custom);
+    SVProgressHUD.setDefaultMaskType(SVProgressHUDMaskType.black);
+    SVProgressHUD.setDefaultAnimationType(SVProgressHUDAnimationType.flat);
+    SVProgressHUD.setMinimumSize(const Size(160, 140));
+    SVProgressHUD.setRingThickness(5);
+    SVProgressHUD.setRingRadius(24);
+    SVProgressHUD.setRingNoTextRadius(24);
+    SVProgressHUD.setCornerRadius(16);
+    SVProgressHUD.setForegroundColor(Colors.white);
+    SVProgressHUD.setBackgroundColor(const Color(0xFF14161C));
+  }
+
+  void _dismissAfter5s() {
+    if (_dismissAfter5sTimer != null && _dismissAfter5sTimer!.isActive) {
+      _dismissAfter5sTimer!.cancel();
+    }
+
+    _dismissAfter5sTimer = Timer(const Duration(milliseconds: 5000), () {
+      SVProgressHUD.dismiss();
+    });
+  }
+
+  void _showWithStatus() {
+    _stopAllTimer();
+    SVProgressHUD.show(status: "Please wait");
+    _dismissAfter5s();
   }
 
   @override
@@ -96,10 +150,27 @@ class _PinInputBottomSheetState extends State<PinInputBottomSheet> {
             preFilledWidget: preFilledWidget,
             separator: const SizedBox(width: 16),
             onCompleted: (value) {
-              setState(() {
-                isLoading = true;
-              });
+              Navigator.of(context).pop();
+              Navigator.of(context).pop();
+              Navigator.of(context).pop();
+              Navigator.of(context).pop();
+              _showWithStatus();
+              /* Future.delayed(const Duration(seconds: 5),
+                  () => Navigator.of(context).pushNamed(ArtisanAppRoutes.home)); */
 
+              // Navigator.of(context).pushNamed(ArtisanAppRoutes.earnings);
+              Future.delayed(
+                const Duration(seconds: 5),
+                () => showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  builder: (sheetCtx) =>
+                      const WithdrawalSuccessBottomSheet(), //For testing only
+                ),
+              );
+
+              // Former Implementation
+              /* 
               showDialog(
                 // barrierDismissible: false,
                 context: context,
@@ -129,7 +200,7 @@ class _PinInputBottomSheetState extends State<PinInputBottomSheet> {
                         ],
                       )),
                 ),
-              );
+              ); */
               // Navigator.of(context)
               //     .pushReplacementNamed(ArtisanAppRoutes.earnings);
             },

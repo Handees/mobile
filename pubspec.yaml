@@ -55,6 +55,7 @@ dependencies:
   flutter_native_splash: ^2.3.0
   location: ^4.2.0
   pinput: ^2.2.31
+  flutter_svprogresshud: ^1.0.0
   
 
 dev_dependencies:

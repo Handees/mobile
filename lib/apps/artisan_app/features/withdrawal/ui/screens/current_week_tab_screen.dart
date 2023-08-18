@@ -7,71 +7,77 @@ class CurrentWeekScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          'TOTAL EARNINGS',
-          style: TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.w500,
-            color: Theme.of(context).disabledColor,
-          ),
-        ),
-        const SizedBox(height: 14),
-        const Text(
-          "₦40,000",
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        const SizedBox(height: 8),
-        Text.rich(
-          TextSpan(
-            text: "0.2% ",
-            style: const TextStyle(
-              fontSize: 11,
-              fontWeight: FontWeight.w400,
-              color: Color(0xff039c53),
-            ),
+    return CustomScrollView(
+      slivers: [
+        SliverToBoxAdapter(
+          child: Column(
             children: [
-              WidgetSpan(
-                child: SvgPicture.asset(
-                  "assets/svg/graph_icon.svg",
-                ),
-              ),
-              TextSpan(
-                text: " vs last week",
+              Text(
+                'TOTAL EARNINGS',
                 style: TextStyle(
-                  fontSize: 11,
-                  fontWeight: FontWeight.w400,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
                   color: Theme.of(context).disabledColor,
                 ),
               ),
-            ],
-          ),
-        ),
-        Container(
-          height: 300,
-        ),
-        SizedBox(
-          width: double.infinity,
-          height: 64,
-          child: FilledButton(
-            onPressed: () {
-              showModalBottomSheet(
-                  isScrollControlled: true,
-                  context: context,
-                  builder: (sheetCtx) {
-                    return const BankAcctBottomSheet();
-                  });
-            },
-            child: const Text(
-              'Withdraw Funds',
-              style: TextStyle(
-                fontSize: 15,
+              const SizedBox(height: 14),
+              const Text(
+                "₦40,000",
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
-            ),
+              const SizedBox(height: 8),
+              Text.rich(
+                TextSpan(
+                  text: "0.2% ",
+                  style: const TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w400,
+                    color: Color(0xff039c53),
+                  ),
+                  children: [
+                    WidgetSpan(
+                      child: SvgPicture.asset(
+                        "assets/svg/graph_icon.svg",
+                      ),
+                    ),
+                    TextSpan(
+                      text: " vs last week",
+                      style: TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w400,
+                        color: Theme.of(context).disabledColor,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                height: 300,
+              ),
+              SizedBox(
+                width: double.infinity,
+                height: 64,
+                child: FilledButton(
+                  onPressed: () {
+                    showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (sheetCtx) {
+                          return const BankAcctBottomSheet();
+                        });
+                  },
+                  child: const Text(
+                    'Withdraw Funds',
+                    style: TextStyle(
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ],

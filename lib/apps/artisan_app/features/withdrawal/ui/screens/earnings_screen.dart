@@ -47,6 +47,7 @@ class TabFilters extends StatelessWidget {
         children: [
           Align(
             child: TabBar(
+              tabAlignment: TabAlignment.fill,
               physics: const BouncingScrollPhysics(),
               splashFactory: NoSplash.splashFactory,
               labelStyle: const TextStyle(
