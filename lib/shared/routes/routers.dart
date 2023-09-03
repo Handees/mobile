@@ -12,6 +12,7 @@ import 'package:handees/apps/artisan_app/features/profile/ui/screens/payment_det
 import 'package:handees/apps/artisan_app/features/profile/ui/screens/valid_id.screen.dart';
 import 'package:handees/apps/artisan_app/features/chat/ui/screens/chat_screen.dart';
 import 'package:handees/apps/artisan_app/features/home/ui/home.artisan.dart';
+import 'package:handees/apps/artisan_app/features/withdrawal/ui/screens/earnings_screen.dart';
 import 'package:handees/apps/customer_app/features/artisan_switch/ui/screens/artisan_switch.screen.dart';
 import 'package:handees/apps/customer_app/features/profile/ui/edit_address.dart';
 import 'package:handees/apps/customer_app/features/profile/ui/edit_email.dart';
@@ -191,6 +192,9 @@ final _artisanAppRouter = NavRouter(
         break;
       case ArtisanAppRoutes.chat:
         page = const ArtisanChatScreen();
+        break;
+      case ArtisanAppRoutes.earnings:
+        page = const ArtisanEarningsScreen();
         break;
       case ArtisanAppRoutes.transitToArtisan:
         page = const MapToCustomerScreen();

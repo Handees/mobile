@@ -26,6 +26,8 @@ abstract class ArtisanAppRoutes {
   static const String handeeInProgress = '/artisan/handee-in-progress';
   static const String handeeConcluded = '/artisan/handee-concluded';
 
+  static const String earnings = '/artisan/home/earnings';
+
   static const String home = '/artisan/home';
   static const String editProfile = '/artisan/edit-profile';
 }

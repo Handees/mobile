@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:handees/shared/routes/routes.dart';
 import 'user_stats_card.dart';
 
 class UserStatsContainer extends StatelessWidget {
@@ -7,11 +8,17 @@ class UserStatsContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       children: <Widget>[
-        UserStatsCard("EARNINGS", Color(0xff4579bd), Color(0xffdae5eb)),
-        SizedBox(height: 16.0),
-        Row(
+        UserStatsCard(
+          "EARNINGS",
+          const Color(0xff4579bd),
+          const Color(0xffdae5eb),
+          onTap: () =>
+              Navigator.of(context).pushNamed(ArtisanAppRoutes.earnings),
+        ),
+        const SizedBox(height: 16.0),
+        const Row(
           children: <Widget>[
             Flexible(
               child: UserStatsCard(
