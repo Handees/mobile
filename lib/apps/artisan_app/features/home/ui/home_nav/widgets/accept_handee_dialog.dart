@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/apps/artisan_app/features/home/providers/current-offer.provider.dart';
-import 'package:handees/apps/artisan_app/features/home/providers/home.artisan.provider.dart';
+import 'package:handees/apps/artisan_app/features/home/providers/artisan-location.provider.dart';
 import 'package:handees/apps/artisan_app/services/sockets/artisan_socket.dart';
 import 'package:handees/apps/artisan_app/shared_widgets/i_dialog.dart';
 import 'package:handees/shared/data/handees/offer.dart';
@@ -76,7 +76,7 @@ class AcceptHandeeDialog extends ConsumerWidget {
                 const IconAvatar(),
                 const SizedBox(width: 16.0),
                 Text(
-                  offer.user.name,
+                  offer.user.getName(),
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(width: 16.0),

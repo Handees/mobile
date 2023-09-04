@@ -27,7 +27,9 @@ class ArtisanModel {
       : artisanId = json["artisan_id"],
         //artisanCreatedAt = DateTime.parse(json["created_at"]),
         hourlyRate = json["hourly_rate"],
-        isVerified = json["is_verified"],
+        //TODO: Correct the line below
+        isVerified = true,
+        //json["is_verified"],
         //jobCategory = jobCategoriesMap[json["job_category_id"]],
         jobCategory = JobCategory.values
             .firstWhere((category) => category.id == json["job_category"]),

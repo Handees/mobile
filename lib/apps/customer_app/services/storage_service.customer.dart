@@ -20,19 +20,44 @@ class StorageService {
 
   final FirebaseStorage firebaseStorage;
 
-  Future<String> uploadImage(
+  Future<String?> uploadImage(
       {required String imageType,
       required String filename,
       required File file}) async {
     final storageRef = firebaseStorage.ref();
     final imageRef = storageRef.child("$imageType/$filename");
 
+    bool isUploadSuccessful = false;
+
     try {
-      await imageRef.putFile(file);
-      return await imageRef.getDownloadURL();
+      final uploadTask = imageRef.putFile(file);
+      uploadTask.snapshotEvents.listen((TaskSnapshot taskSnapshot) async {
+        switch (taskSnapshot.state) {
+          case TaskState.running:
+            final progress =
+                100 * (taskSnapshot.bytesTransferred / taskSnapshot.totalBytes);
+            break;
+          case TaskState.paused:
+            print("Upload is paused.");
+            break;
+          case TaskState.canceled:
+            print("Upload was canceled");
+            break;
+          case TaskState.error:
+            //TODO: Handle unsuccessful uploads
+            break;
+          case TaskState.success:
+            isUploadSuccessful = true;
+            break;
+        }
+      });
+      if (isUploadSuccessful) {
+        return await imageRef.getDownloadURL();
+      }
     } on FirebaseException {
       return "";
     }
+    return null;
   }
 }
 

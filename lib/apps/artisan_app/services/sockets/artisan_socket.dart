@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:handees/apps/artisan_app/features/home/providers/home.artisan.provider.dart';
+import 'package:handees/apps/artisan_app/features/home/providers/artisan-location.provider.dart';
 import 'package:handees/apps/artisan_app/services/sockets/artisan_socket_events.dart';
 import 'package:handees/shared/data/handees/handee_approval.dart';
 import 'package:handees/shared/res/uri.dart';

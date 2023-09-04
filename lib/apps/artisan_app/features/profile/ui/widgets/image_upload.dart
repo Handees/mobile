@@ -30,7 +30,7 @@ class _ImageUploadState extends ConsumerState<ImageUpload> {
               XFile? image =
                   await _picker.pickImage(source: ImageSource.gallery);
               if (image != null) {
-                String url = await uploadImage(
+                String? url = await uploadImage(
                     file: File(image.path),
                     filename: image.name,
                     imageType: ImageType.validId);

@@ -7,7 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:handees/apps/artisan_app/features/handee/utils/helpers.dart';
 import 'package:handees/apps/artisan_app/features/home/providers/current-offer.provider.dart';
-import 'package:handees/apps/artisan_app/features/home/providers/home.artisan.provider.dart';
+import 'package:handees/apps/artisan_app/features/home/providers/artisan-location.provider.dart';
 import 'package:handees/apps/artisan_app/features/home/ui/home_nav/widgets/icon_avatar.dart';
 import 'package:handees/shared/res/constants.dart';
 import 'package:handees/shared/routes/routes.dart';
@@ -83,6 +83,7 @@ class _MapToCustomerScreenState extends ConsumerState<MapToCustomerScreen> {
   @override
   Widget build(BuildContext context) {
     LocationData location = ref.watch(locationProvider);
+    dPrint(location.latitude);
     if (location.latitude == null || location.longitude == null) {
       return const Scaffold(
         body: Center(
@@ -214,7 +215,7 @@ class OfferInfo extends ConsumerWidget {
               const IconAvatar(),
               const SizedBox(width: 16.0),
               Text(
-                offer.user.name,
+                offer.user.getName(),
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               const SizedBox(width: 16.0),

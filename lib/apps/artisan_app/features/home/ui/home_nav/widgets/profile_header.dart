@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/apps/artisan_app/features/home/ui/home_nav/widgets/accept_handee_dialog.dart';
+import 'package:handees/apps/customer_app/features/home/providers/home.customer.provider.dart';
 import 'package:handees/apps/customer_app/features/home/ui/widgets/swap_button.dart';
 import 'package:handees/shared/data/handees/offer.dart';
 import 'package:handees/shared/routes/routes.dart';
 import 'package:handees/shared/services/auth_service.dart';
 import 'package:handees/shared/ui/widgets/custom_bottom_sheet.dart';
 
-class ProfileHeader extends StatelessWidget {
+class ProfileHeader extends ConsumerWidget {
   ProfileHeader(this.isProfileComplete, {super.key});
 
   final bool isProfileComplete;
 
-  final user = AuthService.instance.user;
+  final firebaseUser = AuthService.instance.user;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(userProvider);
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -40,7 +43,7 @@ class ProfileHeader extends StatelessWidget {
             padding: const EdgeInsets.all(4),
             child: CircleAvatar(
               radius: 24,
-              backgroundImage: NetworkImage(user.photoURL ??
+              backgroundImage: NetworkImage(firebaseUser.photoURL ??
                   "https://fcb-abj-pre.s3.amazonaws.com/img/jugadors/MESSI.jpg"),
             ),
           ),
@@ -54,7 +57,7 @@ class ProfileHeader extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             Text(
-              user.displayName!,
+              user.getName(),
               style: Theme.of(context).textTheme.titleMedium,
             ),
           ],
@@ -69,7 +72,7 @@ class ProfileHeader extends StatelessWidget {
                 padding: EdgeInsets.only(
                   bottom: MediaQuery.of(sheetCtx).viewInsets.bottom,
                 ),
-                child: CustomBottomSheet(
+                child: CTABottomSheet(
                   title: 'Switch Apps',
                   text:
                       "Are you sure you would like to switch to the customer app?",

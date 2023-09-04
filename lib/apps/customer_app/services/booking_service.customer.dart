@@ -1,18 +1,16 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:handees/apps/customer_app/services/sockets/sockets.dart';
 import 'package:handees/shared/data/handees/job_category.dart';
 import 'package:handees/shared/res/constants.dart';
 
 import 'package:http/http.dart' as http;
-import 'package:socket_io_client/socket_io_client.dart' as io;
 
 class BookingService {
   static final instance = BookingService._(AppSockets.instance);
 
-  BookingService._(this._sockets) {}
+  BookingService._(this._sockets);
 
   final AppSockets _sockets;
 
