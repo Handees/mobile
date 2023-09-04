@@ -4,6 +4,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/apps/customer_app/services/storage_service.customer.dart';
+import 'package:handees/shared/ui/widgets/custom_bottom_sheet.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ImageUpload extends ConsumerStatefulWidget {
@@ -42,7 +43,12 @@ class _ImageUploadState extends ConsumerState<ImageUpload> {
         children: [
           InkWell(
             onTap: () async {
-              XFile? image = await _picker.pickImage(source: ImageSou);
+              showModalBottomSheet(
+                  context: context, builder: (BuildContext context) {
+                    return CustomBottomSheet(title: 'Select Image Source', text: '', ctaText: ctaText, onPressCta: onPressCta)
+                  });
+              XFile? image =
+                  await _picker.pickImage(source: ImageSource.gallery);
               if (image != null) {
                 imageUploadStream = ref
                     .watch(storageServiceProvider)

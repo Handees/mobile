@@ -7,9 +7,8 @@ class CompleteProfileCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Navigator.of(context).pushNamed(ArtisanAppRoutes.completeProfile);
-      },
+      onTap: () =>
+          Navigator.of(context).pushNamed(ArtisanAppRoutes.completeProfile),
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(

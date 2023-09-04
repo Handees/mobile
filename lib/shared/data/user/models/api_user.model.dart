@@ -13,6 +13,7 @@ class ApiUserModel {
   final DateTime signupDate;
   final String telephone;
   final String userId;
+  final String address;
 
   ApiUserModel.fromJson(Map<String, dynamic> json)
       : artisanProfile = json['artisan_profile'] != null
@@ -26,7 +27,8 @@ class ApiUserModel {
         lastName = json['last_name'] ?? 'Paul',
         signupDate = DateTime.parse(json['sign_up_date']),
         telephone = json['telephone'] ?? '',
-        userId = json['user_id'];
+        userId = json['user_id'],
+        address = json['address'] ?? '';
 
   ApiUserModel.empty()
       : artisanProfile = null,
@@ -34,11 +36,12 @@ class ApiUserModel {
         email = "",
         isArtisan = false,
         isEmailVerified = false,
-        firstName = '',
+        firstName = "",
         lastName = '',
         signupDate = DateTime.now(),
         telephone = "",
-        userId = "";
+        userId = "",
+        address = '';
 
   String getName() {
     return '$firstName $lastName';

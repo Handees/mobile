@@ -78,7 +78,7 @@ class HomeScreen extends ConsumerWidget {
                                                 .viewInsets
                                                 .bottom,
                                           ),
-                                          child: CustomBottomSheet(
+                                          child: CTABottomSheet(
                                             title: 'Switch Apps',
                                             text:
                                                 "Are you sure you would like to switch to the artisan app?",
