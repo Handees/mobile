@@ -51,7 +51,7 @@ class SigninViewmodel extends ChangeNotifier with InputValidationMixin {
 
       final user = ref!.read(userProvider);
 
-      if (user.name.isNotEmpty) {
+      if (user.firstName.isNotEmpty) {
         callback();
       } else {
         // the depth is the number of times we want to retry submitting the user

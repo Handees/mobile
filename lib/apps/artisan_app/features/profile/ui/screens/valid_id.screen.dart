@@ -13,9 +13,8 @@ class _ValidIDScreenState extends State<ValidIDScreen> {
   final double horizontalPadding = 16.0;
 
   final List<String> _idTypes = [
-    "National ID",
+    "National Identification Number",
     "Drivers' License",
-    "Voters' Card",
     "International Passport"
   ];
 

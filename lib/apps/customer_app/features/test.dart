@@ -1,18 +1,10 @@
-import 'dart:convert';
-import 'dart:io';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:handees/apps/customer_app/services/booking_service.customer.dart';
 import 'package:handees/shared/data/handees/job_category.dart';
 import 'package:handees/shared/res/constants.dart';
 import 'package:handees/shared/res/uri.dart';
 import 'package:handees/shared/services/auth_service.dart';
-import 'package:handees/shared/services/places_service.dart';
-import 'package:handees/shared/ui/widgets/handee_snackbar.dart';
 import 'package:handees/shared/utils/utils.dart';
-import 'package:http/http.dart' as http;
-import 'package:location/location.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
 class Test extends StatefulWidget {
@@ -57,12 +49,12 @@ class _TestState extends State<Test> {
 
   @override
   void initState() {
-    print("Uri is ${AppUris.customerSocketUri.toString()}");
+    dPrint("Uri is ${AppUris.customerSocketUri.toString()}");
 
     customerSocket.connect();
 
     customerSocket.onAny((event, data) {
-      print('Customer update hany: Event($event) $data');
+      dPrint('Customer update hany: Event($event) $data');
     });
 
     // rootSocket.connect();
@@ -131,7 +123,7 @@ class _TestState extends State<Test> {
                 });
 
                 customerSocket.emit('reject_job_details');
-                print("Sending");
+                dPrint("Sending");
               },
               child: Ink(
                 height: 80,
@@ -144,7 +136,7 @@ class _TestState extends State<Test> {
                 BookingService.instance.bookService(
                   token: AuthService.instance.token,
                   onBooked: (bookingId) {
-                    print(bookingId);
+                    dPrint(bookingId);
 
                     BookingService.instance.confirmJobDetails(
                       bookingId: bookingId,
@@ -156,7 +148,7 @@ class _TestState extends State<Test> {
                     );
 
                     chatSocket.emit('join_chat', {'booking_id': bookingId});
-                    print('joined_chat');
+                    dPrint('joined_chat');
                   },
                   category: JobCategory.carpentry,
                   lat: 6.517871336509268,

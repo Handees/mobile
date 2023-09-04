@@ -214,7 +214,7 @@ class OfferInfo extends ConsumerWidget {
               const IconAvatar(),
               const SizedBox(width: 16.0),
               Text(
-                offer.user.name,
+                offer.user.getName(),
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               const SizedBox(width: 16.0),

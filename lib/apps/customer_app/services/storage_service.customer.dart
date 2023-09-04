@@ -20,18 +20,18 @@ class StorageService {
 
   final FirebaseStorage firebaseStorage;
 
-  Future<String> uploadImage(
+  Stream<TaskSnapshot?> getImageUploadStream(
       {required String imageType,
       required String filename,
-      required File file}) async {
+      required File file}) {
     final storageRef = firebaseStorage.ref();
     final imageRef = storageRef.child("$imageType/$filename");
 
     try {
-      await imageRef.putFile(file);
-      return await imageRef.getDownloadURL();
+      final uploadTask = imageRef.putFile(file);
+      return uploadTask.snapshotEvents;
     } on FirebaseException {
-      return "";
+      throw 'Upload Failed with Firebase Error';
     }
   }
 }

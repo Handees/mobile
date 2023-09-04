@@ -21,7 +21,7 @@ class HomeNavScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeNavScreenState extends ConsumerState<HomeNavScreen> {
-  final isProfileComplete = true;
+  final isProfileComplete = false;
   final double horizontalPadding = 16.0;
   bool isDialogOpen = false;
   final Queue<Offer> newOfferQueue = Queue();

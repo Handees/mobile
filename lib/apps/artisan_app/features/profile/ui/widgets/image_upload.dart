@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/apps/customer_app/services/storage_service.customer.dart';
@@ -16,10 +17,24 @@ class _ImageUploadState extends ConsumerState<ImageUpload> {
   final ImagePicker _picker = ImagePicker();
 
   File? _selectedImage;
+  String uploadedImageUrl = '';
+
+  void displaySnackbar(BuildContext context, String text) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          text,
+          style: const TextStyle(color: Colors.black),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    final uploadImage = ref.watch(storageServiceProvider).uploadImage;
+    final getImageUploadStream =
+        ref.watch(storageServiceProvider).getImageUploadStream;
+    Stream<TaskSnapshot?>? imageUploadStream;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -27,16 +42,14 @@ class _ImageUploadState extends ConsumerState<ImageUpload> {
         children: [
           InkWell(
             onTap: () async {
-              XFile? image =
-                  await _picker.pickImage(source: ImageSource.gallery);
+              XFile? image = await _picker.pickImage(source: ImageSou);
               if (image != null) {
-                String url = await uploadImage(
-                    file: File(image.path),
-                    filename: image.name,
-                    imageType: ImageType.validId);
-                debugPrint(url);
-                debugPrint(image.path);
-                debugPrint(image.name);
+                imageUploadStream = ref
+                    .watch(storageServiceProvider)
+                    .getImageUploadStream(
+                        file: File(image.path),
+                        filename: image.name,
+                        imageType: ImageType.validId);
 
                 setState(() {
                   _selectedImage = File(image.path);
@@ -48,9 +61,9 @@ class _ImageUploadState extends ConsumerState<ImageUpload> {
               width: double.infinity,
               height: 180,
               decoration: BoxDecoration(
-                image: _selectedImage != null
+                image: uploadedImageUrl.isNotEmpty
                     ? DecorationImage(
-                        image: FileImage(_selectedImage!),
+                        image: NetworkImage(uploadedImageUrl),
                         fit: BoxFit.cover,
                       )
                     : null,
@@ -61,7 +74,7 @@ class _ImageUploadState extends ConsumerState<ImageUpload> {
                   Radius.circular(10),
                 ),
               ),
-              child: _selectedImage != null
+              child: uploadedImageUrl.isNotEmpty
                   ? null
                   : const Center(
                       child: Column(
@@ -85,55 +98,106 @@ class _ImageUploadState extends ConsumerState<ImageUpload> {
             ),
           ),
           const SizedBox(height: 8.0),
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "0 of 1 uploaded",
-                style: TextStyle(
-                  color: Color(0xff949494),
-                ),
-              ),
-              Text(
-                "Cancel",
-                style: TextStyle(
-                  color: Color(0xff949494),
-                ),
-              )
-            ],
-          ),
+          // const Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //   children: [
+          //     Text(
+          //       "0 of 1 uploaded",
+          //       style: TextStyle(
+          //         color: Color(0xff949494),
+          //       ),
+          //     ),
+          //     Text(
+          //       "Cancel",
+          //       style: TextStyle(
+          //         color: Color(0xff949494),
+          //       ),
+          //     )
+          //   ],
+          // ),
           const SizedBox(height: 16.0),
-          Container(
-            decoration: BoxDecoration(
-              color: const Color(0xffa8dadc),
-              borderRadius: BorderRadius.circular(10),
+          if (imageUploadStream != null)
+            StreamBuilder<TaskSnapshot?>(
+                stream: imageUploadStream,
+                builder: (BuildContext context,
+                    AsyncSnapshot<TaskSnapshot?> asyncSnapshot) {
+                  final taskSnapshot = asyncSnapshot.data;
+                  if (taskSnapshot == null) {
+                    return _selectedImage != null
+                        ? ProgressBar(imagePath: _selectedImage!.path)
+                        : Container();
+                  }
+                  double progress = 0;
+                  switch (taskSnapshot.state) {
+                    case TaskState.running:
+                      progress = 100 *
+                          (taskSnapshot.bytesTransferred /
+                              taskSnapshot.totalBytes);
+                      break;
+                    case TaskState.paused:
+                      displaySnackbar(context, "Upload is paused.");
+                      break;
+                    case TaskState.canceled:
+                      displaySnackbar(context, "Upload was canceled");
+                      break;
+                    case TaskState.error:
+                      displaySnackbar(context,
+                          "An error occurred and the upload has stopped");
+                      break;
+                    case TaskState.success:
+                      taskSnapshot.ref.getDownloadURL().then((imageUrl) {
+                        setState(() {
+                          uploadedImageUrl = imageUrl;
+                        });
+                      });
+                  }
+
+                  return ProgressBar(
+                    imagePath: _selectedImage!.path,
+                    progress: progress,
+                  );
+                }),
+        ],
+      ),
+    );
+  }
+}
+
+class ProgressBar extends StatelessWidget {
+  final String imagePath;
+  final double progress;
+  const ProgressBar({required this.imagePath, this.progress = 0, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: const Color(0xffa8dadc),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          children: [
+            const Icon(
+              Icons.picture_as_pdf,
+              color: Color(0xffffffff),
             ),
-            child: const Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.picture_as_pdf,
-                    color: Color(0xffffffff),
-                  ),
-                  SizedBox(width: 8.0),
-                  Expanded(
-                    child: Text(
-                      "lorem ipsum.pdf",
-                      style: TextStyle(
-                        color: Color(0xffffffff),
-                      ),
-                    ),
-                  ),
-                  Icon(
-                    Icons.cancel_outlined,
-                    color: Color(0xffffffff),
-                  ),
-                ],
+            const SizedBox(width: 8.0),
+            Expanded(
+              child: Text(
+                imagePath,
+                style: const TextStyle(
+                  color: Color(0xffffffff),
+                ),
               ),
             ),
-          )
-        ],
+            const Icon(
+              Icons.cancel_outlined,
+              color: Color(0xffffffff),
+            ),
+          ],
+        ),
       ),
     );
   }

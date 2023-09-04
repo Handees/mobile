@@ -62,7 +62,7 @@ class HomeScreen extends ConsumerWidget {
                                   ),
                                   const SizedBox(width: 16.0),
                                   Text(
-                                    user.name,
+                                    user.getName(),
                                     style:
                                         Theme.of(context).textTheme.titleMedium,
                                   ),
@@ -192,7 +192,7 @@ class HomeScreen extends ConsumerWidget {
                         children: [
                           const SizedBox(height: 8),
                           Text(
-                            'Hello ${user.name}',
+                            'Hello ${user.getName()}',
                             style: Theme.of(context)
                                 .textTheme
                                 .titleLarge

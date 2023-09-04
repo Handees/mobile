@@ -10,11 +10,6 @@ class ArtisanCompleteProfileScreen extends StatelessWidget {
 
   final List<CompleteProfileLink> _completeProfileLinks = [
     CompleteProfileLink(
-      title: "Basic Information",
-      subtitle: "Name and Contact information",
-      routerLink: ArtisanAppRoutes.basicInfo,
-    ),
-    CompleteProfileLink(
       title: "Document Upload",
       subtitle: "Upload valid means of identification",
       routerLink: ArtisanAppRoutes.documentUpload,
