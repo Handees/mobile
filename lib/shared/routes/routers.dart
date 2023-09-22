@@ -5,11 +5,11 @@ import 'package:handees/apps/artisan_app/features/handee/ui/screens/handee_in_pr
 import 'package:handees/apps/artisan_app/features/handee/ui/screens/map_to_customer.screen.dart';
 import 'package:handees/apps/artisan_app/features/profile/ui/screens/complete_profile.screen.dart';
 import 'package:handees/apps/artisan_app/features/profile/ui/screens/basic_info.screen.dart';
-import 'package:handees/apps/artisan_app/features/profile/ui/screens/document_upload.screen.dart';
+import 'package:handees/apps/artisan_app/features/kyc/ui/screens/document_upload.screen.dart';
 import 'package:handees/apps/artisan_app/features/profile/ui/screens/handee_details.screen.dart';
-import 'package:handees/apps/artisan_app/features/profile/ui/screens/passport_photograph.screen.dart';
+import 'package:handees/apps/artisan_app/features/kyc/ui/screens/passport_photograph.screen.dart';
 import 'package:handees/apps/artisan_app/features/profile/ui/screens/payment_details.screen.dart';
-import 'package:handees/apps/artisan_app/features/profile/ui/screens/valid_id.screen.dart';
+import 'package:handees/apps/artisan_app/features/kyc/ui/screens/valid_id.screen.dart';
 import 'package:handees/apps/artisan_app/features/chat/ui/screens/chat_screen.dart';
 import 'package:handees/apps/artisan_app/features/home/ui/home.artisan.dart';
 import 'package:handees/apps/artisan_app/features/withdrawal/ui/screens/earnings_screen.dart';
@@ -176,7 +176,7 @@ final _artisanAppRouter = NavRouter(
         page = BasicInfoScreen();
         break;
       case ArtisanAppRoutes.documentUpload:
-        page = DocumentUploadScreen();
+        page = const DocumentUploadScreen();
         break;
       case ArtisanAppRoutes.handeeDetails:
         page = const HandeeDetailsScreen();

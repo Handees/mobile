@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:handees/apps/artisan_app/features/home/providers/home.artisan.provider.dart';
+import 'package:handees/apps/artisan_app/features/home/providers/artisan-location.provider.dart';
 import 'package:handees/apps/artisan_app/services/sockets/artisan_socket.dart';
 import 'package:handees/shared/ui/widgets/custom_bottom_sheet.dart';
 
@@ -72,7 +72,7 @@ class _OnlineToggleCardState extends ConsumerState<OnlineToggleCard>
                             padding: EdgeInsets.only(
                               bottom: MediaQuery.of(sheetCtx).viewInsets.bottom,
                             ),
-                            child: CustomBottomSheet(
+                            child: CTABottomSheet(
                               title: 'Go Offline',
                               text: "Are you sure you want to go offline?",
                               ctaText: "Go Offline",

@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:handees/apps/customer_app/features/home/providers/user.provider.dart';
 import 'package:handees/shared/data/handees/job_category.dart';
 import 'package:handees/shared/data/user/user_repository.dart';
 import 'package:handees/shared/services/auth_service.dart';
@@ -93,6 +94,7 @@ class ArtisanSwitchStateNotifier extends StateNotifier<ArtisanSwitchState> {
 
       if (response) {
         state = ArtisanSwitchState.success;
+        await _ref.read(userProvider.notifier).getUserObject();
         onSuccess();
       } else {
         state = ArtisanSwitchState.error;

@@ -9,8 +9,7 @@ final locationProvider =
     StateNotifierProvider<LocationStateNotifier, LocationData>(
         (ref) => LocationStateNotifier(ref));
 
-class LocationStateNotifier extends StateNotifier<LocationData>
-    with InputValidationMixin {
+class LocationStateNotifier extends StateNotifier<LocationData> {
   final location = Location();
   bool _serviceEnabled = false;
   bool _backgroundModeEnabled = false;
@@ -26,6 +25,7 @@ class LocationStateNotifier extends StateNotifier<LocationData>
       _serviceEnabled = await location.requestService();
       if (!_serviceEnabled) {
         // TODO: Show snackbar to tell user that they didn't enable location
+        dPrint('Location Service not enabled');
         return;
       }
     }
@@ -37,6 +37,7 @@ class LocationStateNotifier extends StateNotifier<LocationData>
       _permissionGranted = await location.requestPermission();
       if (_permissionGranted != PermissionStatus.granted) {
         // TODO: Show snackbar to tell user that they didn't grant permissions
+        dPrint('Location permissions not granted');
         return;
       }
     }
@@ -46,6 +47,7 @@ class LocationStateNotifier extends StateNotifier<LocationData>
       try {
         _backgroundModeEnabled = await location.enableBackgroundMode();
       } catch (e) {
+        dPrint('Background Location Service not enabled');
         ePrint(e.toString());
       }
     }

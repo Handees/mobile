@@ -19,7 +19,7 @@ class HandeeApproval {
         workDurationType = '',
         settlement = Settlement.empty(),
         duration = 0,
-        durationUnit = '';
+        durationUnit = DurationUnits.days;
 
   HandeeApproval copywith(
       {String? bookingId,

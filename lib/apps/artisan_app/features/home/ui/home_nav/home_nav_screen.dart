@@ -9,6 +9,7 @@ import 'package:handees/apps/artisan_app/features/home/ui/home_nav/widgets/profi
 import 'package:handees/apps/artisan_app/features/home/ui/home_nav/widgets/user_stats_container.dart';
 import 'package:handees/apps/artisan_app/services/sockets/artisan_socket.dart';
 import 'package:handees/apps/artisan_app/services/sockets/artisan_socket_events.dart';
+import 'package:handees/apps/customer_app/features/home/providers/user.provider.dart';
 import 'package:handees/shared/data/handees/offer.dart';
 import 'package:handees/shared/utils/utils.dart';
 import 'widgets/accept_handee_dialog.dart';
@@ -21,7 +22,7 @@ class HomeNavScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeNavScreenState extends ConsumerState<HomeNavScreen> {
-  final isProfileComplete = true;
+  final isProfileComplete = false;
   final double horizontalPadding = 16.0;
   bool isDialogOpen = false;
   final Queue<Offer> newOfferQueue = Queue();
@@ -75,6 +76,12 @@ class _HomeNavScreenState extends ConsumerState<HomeNavScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final user = ref.watch(userProvider);
+
+    if (user.artisanProfile == null) {
+      throw 'You got to the artisan home screen but there is no artisan on this user';
+    }
+
     return SafeArea(
       child: CustomScrollView(
         slivers: [
@@ -88,7 +95,7 @@ class _HomeNavScreenState extends ConsumerState<HomeNavScreen> {
                     padding: const EdgeInsets.symmetric(vertical: 48.0),
                     child: ProfileHeader(isProfileComplete),
                   ),
-                  isProfileComplete
+                  user.artisanProfile!.isVerified
                       ? const OnlineToggleCard()
                       : const CompleteProfileCard(),
                   const SizedBox(height: 48),

@@ -30,6 +30,10 @@ abstract class AppUris {
     AppConstants.url,
     '/api/user/artisan/',
   );
+  static final submitKycUri = Uri.http(
+    AppConstants.url,
+    '/api/user/artisan/kyc',
+  );
 
   static final bookServiceUri = Uri.http(
     AppConstants.url,
