@@ -48,14 +48,7 @@ class _ConfirmHandeeScreenState extends ConsumerState<ConfirmHandeeScreen> {
         .validateHandeeApproval();
 
     if (result.isNotEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            result,
-            style: const TextStyle(color: Colors.black),
-          ),
-        ),
-      );
+      displaySnackbar(context, result);
     } else {
       setState(() {
         isLoading = true;
@@ -74,14 +67,8 @@ class _ConfirmHandeeScreenState extends ConsumerState<ConfirmHandeeScreen> {
           ArtisanSocketListenEvents.jobDetailsRejected, () {
         setState(() {
           isLoading = false;
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text(
-                'The handee was not verified by the customer',
-                style: TextStyle(color: Colors.black),
-              ),
-            ),
-          );
+          displaySnackbar(
+              context, 'The handee was not verified by the customer');
         });
       });
     }

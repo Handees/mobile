@@ -11,7 +11,7 @@ import 'package:handees/shared/routes/routes.dart';
 import 'package:handees/shared/services/auth_service.dart';
 import 'package:handees/shared/ui/widgets/custom_bottom_sheet.dart';
 
-import '../../providers/home.customer.provider.dart';
+import '../../providers/user.provider.dart';
 import '../widgets/location_picker.dart';
 import '../widgets/pick_service_bottom_sheet.dart';
 import '../widgets/service_card.dart';

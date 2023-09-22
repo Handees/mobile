@@ -9,6 +9,7 @@ class CustomTextFormField extends StatelessWidget {
     this.backgroundColor = const Color(0xffffffff),
     this.defaultValue,
     this.onFieldSubmitted,
+    this.readOnly,
     super.key,
   });
 
@@ -19,6 +20,7 @@ class CustomTextFormField extends StatelessWidget {
   final String? Function(String?)? validator;
   final Color backgroundColor;
   final String? defaultValue;
+  final bool? readOnly;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,7 @@ class CustomTextFormField extends StatelessWidget {
       onFieldSubmitted: onFieldSubmitted,
       keyboardType: textInputType,
       initialValue: defaultValue,
+      readOnly: readOnly ?? false,
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: Theme.of(context).textTheme.labelLarge!.copyWith(

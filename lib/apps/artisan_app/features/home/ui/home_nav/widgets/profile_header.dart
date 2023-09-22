@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/apps/artisan_app/features/home/ui/home_nav/widgets/accept_handee_dialog.dart';
-import 'package:handees/apps/customer_app/features/home/providers/home.customer.provider.dart';
+import 'package:handees/apps/customer_app/features/home/providers/user.provider.dart';
 import 'package:handees/apps/customer_app/features/home/ui/widgets/swap_button.dart';
 import 'package:handees/shared/data/handees/offer.dart';
 import 'package:handees/shared/routes/routes.dart';

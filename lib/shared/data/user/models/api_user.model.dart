@@ -15,6 +15,19 @@ class ApiUserModel {
   final String userId;
   final String address;
 
+  const ApiUserModel(
+      {required this.createdAt,
+      required this.email,
+      required this.isArtisan,
+      required this.isEmailVerified,
+      required this.firstName,
+      required this.lastName,
+      required this.signupDate,
+      required this.telephone,
+      required this.userId,
+      required this.address,
+      this.artisanProfile});
+
   ApiUserModel.fromJson(Map<String, dynamic> json)
       : artisanProfile = json['artisan_profile'] != null
             ? ArtisanModel.fromJson(json['artisan_profile'])
@@ -42,6 +55,33 @@ class ApiUserModel {
         telephone = "",
         userId = "",
         address = '';
+
+  ApiUserModel copyWith(
+      {ArtisanModel? artisanProfile,
+      DateTime? createdAt,
+      String? email,
+      bool? isArtisan,
+      bool? isEmailVerified,
+      String? firstName,
+      String? lastName,
+      DateTime? signupDate,
+      String? telephone,
+      String? userId,
+      String? address}) {
+    return ApiUserModel(
+      artisanProfile: artisanProfile ?? this.artisanProfile,
+      createdAt: createdAt ?? this.createdAt,
+      address: address ?? this.address,
+      email: email ?? this.email,
+      firstName: firstName ?? this.firstName,
+      isArtisan: isArtisan ?? this.isArtisan,
+      isEmailVerified: isEmailVerified ?? this.isEmailVerified,
+      lastName: lastName ?? this.lastName,
+      signupDate: signupDate ?? this.signupDate,
+      telephone: telephone ?? this.telephone,
+      userId: userId ?? this.userId,
+    );
+  }
 
   String getName() {
     return '$firstName $lastName';

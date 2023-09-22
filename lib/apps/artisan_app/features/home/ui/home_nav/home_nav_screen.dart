@@ -9,7 +9,7 @@ import 'package:handees/apps/artisan_app/features/home/ui/home_nav/widgets/profi
 import 'package:handees/apps/artisan_app/features/home/ui/home_nav/widgets/user_stats_container.dart';
 import 'package:handees/apps/artisan_app/services/sockets/artisan_socket.dart';
 import 'package:handees/apps/artisan_app/services/sockets/artisan_socket_events.dart';
-import 'package:handees/apps/customer_app/features/home/providers/home.customer.provider.dart';
+import 'package:handees/apps/customer_app/features/home/providers/user.provider.dart';
 import 'package:handees/shared/data/handees/offer.dart';
 import 'package:handees/shared/utils/utils.dart';
 import 'widgets/accept_handee_dialog.dart';

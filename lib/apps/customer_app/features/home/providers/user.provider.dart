@@ -15,4 +15,14 @@ class UserStateNotifier extends StateNotifier<ApiUserModel> {
       state = user;
     }
   }
+
+  void updateKycStatus(String kycStatus) {
+    if (state.artisanProfile != null) {
+      state = state.copyWith(
+        artisanProfile: state.artisanProfile!.copyWith(
+          kycStatus: kycStatus,
+        ),
+      );
+    }
+  }
 }
