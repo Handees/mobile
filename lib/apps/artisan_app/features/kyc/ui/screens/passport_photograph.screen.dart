@@ -1,28 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:handees/apps/artisan_app/features/profile/ui/widgets/id_type_card.dart';
-import 'package:handees/apps/artisan_app/features/profile/ui/widgets/image_upload.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:handees/apps/artisan_app/features/image_upload/providers/image_upload.provider.dart';
+import 'package:handees/apps/artisan_app/features/image_upload/widgets/image_upload.dart';
+import 'package:handees/apps/customer_app/features/home/providers/user.provider.dart';
+import 'package:handees/shared/utils/utils.dart';
 
-class ValidIDScreen extends StatefulWidget {
-  const ValidIDScreen({super.key});
+final passportUrlProvider = StateProvider((ref) => '');
+
+class PasspportPhotographScreen extends ConsumerStatefulWidget {
+  const PasspportPhotographScreen({super.key});
 
   @override
-  State<ValidIDScreen> createState() => _ValidIDScreenState();
+  ConsumerState<PasspportPhotographScreen> createState() =>
+      _PasspportPhotographScreenState();
 }
 
-class _ValidIDScreenState extends State<ValidIDScreen> {
+class _PasspportPhotographScreenState
+    extends ConsumerState<PasspportPhotographScreen> {
   final double horizontalPadding = 16.0;
 
-  final List<String> _idTypes = [
-    "National ID",
-    "Drivers' License",
-    "Voters' Card",
-    "International Passport"
-  ];
+  @override
+  void initState() {
+    super.initState();
+  }
 
-  int _selectedIndex = 0;
+  @override
+  void dispose() {
+    ref.invalidate(passportUrlProvider);
+    ref.invalidate(imageUploadProvider);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final passportUrl = ref.watch(passportUrlProvider);
+    final userId = ref.watch(userProvider).userId;
+
+    dPrint(passportUrl);
     return Scaffold(
       appBar: AppBar(),
       body: CustomScrollView(
@@ -34,7 +48,7 @@ class _ValidIDScreenState extends State<ValidIDScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Valid ID",
+                    "Passport Photograph",
                     style: Theme.of(context)
                         .textTheme
                         .titleLarge!
@@ -44,7 +58,7 @@ class _ValidIDScreenState extends State<ValidIDScreen> {
                     height: 8.0,
                   ),
                   Text(
-                    "Please kindly upload any of the valid means of identification specified below",
+                    "Please kindly upload your profile picture",
                     style: Theme.of(context)
                         .textTheme
                         .bodyMedium!
@@ -58,33 +72,6 @@ class _ValidIDScreenState extends State<ValidIDScreen> {
             ),
           ),
           SliverToBoxAdapter(
-            child: Padding(
-              padding: EdgeInsets.only(left: horizontalPadding),
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width - horizontalPadding,
-                height: 40,
-                child: ListView.separated(
-                  itemCount: _idTypes.length,
-                  scrollDirection: Axis.horizontal,
-                  separatorBuilder: (ctx, idx) => const SizedBox(width: 8.0),
-                  itemBuilder: (BuildContext ctx, int index) {
-                    return InkWell(
-                      onTap: (() {
-                        setState(() {
-                          _selectedIndex = index;
-                        });
-                      }),
-                      child: IDTypeCard(
-                        _idTypes[index],
-                        index == _selectedIndex,
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ),
-          ),
-          SliverToBoxAdapter(
             child: SizedBox(
               height: 520,
               child: Column(
@@ -92,7 +79,14 @@ class _ValidIDScreenState extends State<ValidIDScreen> {
                   const SizedBox(
                     height: 32.0,
                   ),
-                  const ImageUpload(),
+                  ImageUpload(
+                    fileType: 'Passport Photograph',
+                    uploadedImageUrl: passportUrl,
+                    updateImageUrl: (String imageUrl) {
+                      ref.read(passportUrlProvider.notifier).state = imageUrl;
+                    },
+                    storagePath: "passport-photograph/$userId",
+                  ),
                   const Spacer(),
                   Container(
                     padding:
@@ -101,7 +95,7 @@ class _ValidIDScreenState extends State<ValidIDScreen> {
                     height: 64,
                     child: FilledButton(
                       onPressed: () {},
-                      child: const Text('Done'),
+                      child: const Text('Submit'),
                     ),
                   ),
                   const SizedBox(height: 16.0),

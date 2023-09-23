@@ -4,6 +4,7 @@ import 'package:handees/apps/artisan_app/features/handee/providers/handee-detail
 import 'package:handees/apps/artisan_app/features/handee/ui/widgets/handee_detail_selection.dart';
 import 'package:handees/apps/artisan_app/features/home/providers/current-offer.provider.dart';
 import 'package:handees/apps/artisan_app/services/sockets/artisan_socket.dart';
+import 'package:handees/apps/artisan_app/services/sockets/artisan_socket_events.dart';
 import 'package:handees/shared/data/handees/handee_options.dart';
 import 'package:handees/shared/utils/utils.dart';
 
@@ -46,17 +47,8 @@ class _ConfirmHandeeScreenState extends ConsumerState<ConfirmHandeeScreen> {
         .read(handeeApprovalDetailsProvider.notifier)
         .validateHandeeApproval();
 
-    dPrint('hello');
-
     if (result.isNotEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            result,
-            style: const TextStyle(color: Colors.black),
-          ),
-        ),
-      );
+      displaySnackbar(context, result);
     } else {
       setState(() {
         isLoading = true;
@@ -64,17 +56,31 @@ class _ConfirmHandeeScreenState extends ConsumerState<ConfirmHandeeScreen> {
       ref.read(artisanSocketProvider.notifier).requestCustomerApproval(
             ref.read(handeeApprovalDetailsProvider),
           );
+      ref.read(artisanSocketProvider.notifier).registerEventHandler(
+          ArtisanSocketListenEvents.jobDetailsConfirmed, () {
+        setState(() {
+          isVerified = true;
+          isLoading = false;
+        });
+      });
+      ref.read(artisanSocketProvider.notifier).registerEventHandler(
+          ArtisanSocketListenEvents.jobDetailsRejected, () {
+        setState(() {
+          isLoading = false;
+          displaySnackbar(
+              context, 'The handee was not verified by the customer');
+        });
+      });
     }
   }
 
   bool isLoading = false;
+  bool isVerified = -1 < 0;
 
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     EdgeInsets safeAreaInsets = MediaQuery.of(context).padding;
-
-    bool isVerified = screenHeight < 0;
 
     return Scaffold(
       appBar: AppBar(
@@ -127,6 +133,8 @@ class _ConfirmHandeeScreenState extends ConsumerState<ConfirmHandeeScreen> {
                                 .read(artisanSocketProvider.notifier)
                                 .cancelOffer(
                                     ref.read(currentOfferProvider).bookingId);
+
+                            ref.invalidate(handeeApprovalDetailsProvider);
 
                             Navigator.of(context).pop();
                           },

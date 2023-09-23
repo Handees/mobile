@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:handees/apps/artisan_app/features/profile/ui/widgets/complete_profile_link_card.dart';
-import 'package:handees/apps/artisan_app/features/profile/ui/complete_profile_link_model.dart';
+import 'package:handees/apps/artisan_app/features/profile/ui/data/complete_profile_link_model.dart';
 import 'package:handees/shared/routes/routes.dart';
 
 class ArtisanCompleteProfileScreen extends StatelessWidget {
@@ -9,11 +9,6 @@ class ArtisanCompleteProfileScreen extends StatelessWidget {
   final double horizontalPadding = 16.0;
 
   final List<CompleteProfileLink> _completeProfileLinks = [
-    CompleteProfileLink(
-      title: "Basic Information",
-      subtitle: "Name and Contact information",
-      routerLink: ArtisanAppRoutes.basicInfo,
-    ),
     CompleteProfileLink(
       title: "Document Upload",
       subtitle: "Upload valid means of identification",

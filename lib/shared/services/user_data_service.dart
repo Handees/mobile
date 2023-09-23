@@ -35,7 +35,7 @@ class UserDataService {
       final user = AuthService.instance.user;
       final isUserSubmitted = await userRepository.submitUserData(
           name: user.displayName!,
-          phone: user.phoneNumber!,
+          phone: user.phoneNumber ?? '+2341234567',
           email: user.email!,
           uid: user.uid,
           token: AuthService.instance.token);

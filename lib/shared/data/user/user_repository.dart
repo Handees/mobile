@@ -33,6 +33,16 @@ class UserRepository {
     );
   }
 
+  Future<bool> submitKycData({
+    required Map<String, dynamic> body,
+    required String token,
+  }) {
+    return _remote.submitKycData(
+      body: body,
+      token: token,
+    );
+  }
+
   Future<bool> submitArtisanData({
     required String uid,
     required int hourlyRate,

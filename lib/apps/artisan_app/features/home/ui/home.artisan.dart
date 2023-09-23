@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:handees/apps/artisan_app/features/handee/ui/handee_nav/handee_screen.dart';
 import 'package:handees/apps/artisan_app/features/profile/ui/profile_nav/profile_nav_screen.dart';
 import 'widgets/bottom_nav_bar.dart';
 import 'package:handees/apps/artisan_app/features/home/ui/home_nav/home_nav_screen.dart';
@@ -17,10 +18,7 @@ class _ArtisanHomeScreenState extends State<ArtisanHomeScreen> {
 
   static const List<Widget> _widgetOptions = <Widget>[
     HomeNavScreen(),
-    Text(
-      'Index 1: Handees',
-      style: optionStyle,
-    ),
+    HandeeNavScreen(),
     ProfileNavScreen(),
     Text(
       'Index 3: Settings',

@@ -7,20 +7,29 @@ class CustomTextFormField extends StatelessWidget {
     this.textInputType = TextInputType.text,
     this.validator,
     this.backgroundColor = const Color(0xffffffff),
+    this.defaultValue,
+    this.onFieldSubmitted,
+    this.readOnly,
     super.key,
   });
 
   final String hintText;
   final TextInputType textInputType;
   final void Function(String?)? onSaved;
+  final void Function(String?)? onFieldSubmitted;
   final String? Function(String?)? validator;
   final Color backgroundColor;
+  final String? defaultValue;
+  final bool? readOnly;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       textCapitalization: TextCapitalization.words,
+      onFieldSubmitted: onFieldSubmitted,
       keyboardType: textInputType,
+      initialValue: defaultValue,
+      readOnly: readOnly ?? false,
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
