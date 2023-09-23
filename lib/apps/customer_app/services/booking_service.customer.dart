@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/shared/data/handees/job_category.dart';
 import 'package:handees/shared/res/constants.dart';
 import 'package:handees/shared/utils/utils.dart';
@@ -9,6 +10,9 @@ import 'package:http/http.dart' as http;
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
 import 'sockets/customer_socket.dart';
+
+final bookingServiceProvider =
+    Provider((ref) => BookingService._(ref.watch(customerSocketProvider)));
 
 class BookingService {
   BookingService._(this._customerSocket);

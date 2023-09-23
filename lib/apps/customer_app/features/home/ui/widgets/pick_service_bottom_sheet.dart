@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:handees/apps/customer_app/features/test.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:handees/apps/customer_app/features/home/providers/booking.provider.dart';
 
 import 'package:handees/shared/data/handees/job_category.dart';
 import 'package:handees/shared/routes/routes.dart';
@@ -7,7 +8,7 @@ import 'package:handees/shared/utils/utils.dart';
 
 import 'service_card.dart';
 
-class PickServiceBottomSheet extends StatelessWidget {
+class PickServiceBottomSheet extends ConsumerWidget {
   const PickServiceBottomSheet(
     this.category, {
     Key? key,
@@ -16,7 +17,7 @@ class PickServiceBottomSheet extends StatelessWidget {
   final JobCategory category;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: 8,
@@ -64,15 +65,10 @@ class PickServiceBottomSheet extends StatelessWidget {
                 dPrint(res);
 
                 if (res != null) {
-                  // B
-
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) {
-                      return Test();
-                    },
-                  ));
-
                   // Navigator.of(context).pushNamed(CustomerAppRoutes.tracking);
+                  ref
+                      .read(bookingProvider.notifier)
+                      .bookService(category: category);
                 }
               },
               child: const Text('Proceed'),

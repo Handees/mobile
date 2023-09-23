@@ -2,9 +2,12 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/shared/res/uri.dart';
 import 'package:handees/shared/utils/utils.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
+
+final customerSocketProvider = Provider((ref) => CustomerSocket._());
 
 class CustomerSocket {
   CustomerSocket._() {
