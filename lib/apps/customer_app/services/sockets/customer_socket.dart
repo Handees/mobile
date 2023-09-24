@@ -13,7 +13,7 @@ class CustomerSocket {
   CustomerSocket._() {
     socket.onConnect((_) => debugPrint('customer connected'));
 
-    socket.onDisconnect((_) => debugPrint('client disconnected'));
+    socket.onDisconnect((_) => debugPrint('customer disconnected'));
 
     socket.onAny((event, data) {
       dPrint('Customer update any: Event($event) $data');

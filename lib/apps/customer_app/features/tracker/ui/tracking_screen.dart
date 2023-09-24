@@ -1,40 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:handees/apps/customer_app/features/home/providers/booking.provider.dart';
 
 import 'package:handees/shared/res/shapes.dart';
 import 'package:handees/shared/routes/routes.dart';
+import 'package:handees/shared/ui/widgets/circle_fadeout_loader.dart';
 
 import 'in_progress_bottom_sheet.dart';
 import 'loading_bottom_sheet.dart';
 
-enum TrackingState { loading, inProgress, arrived, done }
-
-class TrackingScreen extends StatefulWidget {
+class TrackingScreen extends ConsumerWidget {
   const TrackingScreen({Key? key}) : super(key: key);
 
   @override
-  State<TrackingScreen> createState() => _TrackingScreenState();
-}
-
-class _TrackingScreenState extends State<TrackingScreen> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     late final Widget bottomSheet;
-    const trackingState = TrackingState.inProgress;
+    final trackingState = ref.watch(bookingProvider);
 
     switch (trackingState) {
-      case TrackingState.loading:
+      case BookingState.loading:
         bottomSheet = const LoadingBottomSheet();
         break;
-      case TrackingState.inProgress:
+      case BookingState.inProgress:
         bottomSheet = const InProgressBottomSheet();
         break;
-      case TrackingState.arrived:
+      case BookingState.arrived:
         bottomSheet = const ArrivedBottomSheet();
         break;
       default:
@@ -45,6 +35,9 @@ class _TrackingScreenState extends State<TrackingScreen> {
         backgroundColor: Colors.transparent,
       ),
       extendBodyBehindAppBar: true,
+      body: Center(
+        child: CircleFadeOutLoader(),
+      ),
       bottomSheet: Material(
         elevation: 24,
         shadowColor: Colors.black,

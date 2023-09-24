@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:handees/apps/customer_app/features/home/providers/booking.provider.dart';
 
 import 'package:handees/shared/data/handees/job_category.dart';
-import 'package:handees/shared/routes/routes.dart';
-import 'package:handees/shared/utils/utils.dart';
 
 import 'service_card.dart';
 
-class PickServiceBottomSheet extends ConsumerWidget {
-  const PickServiceBottomSheet(
-    this.category, {
+class PickServiceBottomSheet extends StatelessWidget {
+  const PickServiceBottomSheet({
     Key? key,
+    required this.category,
+    required this.onClick,
   }) : super(key: key);
 
   final JobCategory category;
+  final VoidCallback onClick;
 
   @override
-  Widget build(BuildContext context, ref) {
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: 8,
@@ -59,18 +57,7 @@ class PickServiceBottomSheet extends ConsumerWidget {
           SizedBox(
             width: double.infinity,
             child: FilledButton(
-              onPressed: () async {
-                final res = await Navigator.of(context)
-                    .pushNamed(CustomerAppRoutes.pickService);
-                dPrint(res);
-
-                if (res != null) {
-                  // Navigator.of(context).pushNamed(CustomerAppRoutes.tracking);
-                  ref
-                      .read(bookingProvider.notifier)
-                      .bookService(category: category);
-                }
-              },
+              onPressed: onClick,
               child: const Text('Proceed'),
             ),
           ),
