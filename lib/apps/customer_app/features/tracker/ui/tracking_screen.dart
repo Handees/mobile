@@ -16,10 +16,13 @@ class TrackingScreen extends ConsumerWidget {
   Widget build(BuildContext context, ref) {
     late final Widget bottomSheet;
     final trackingState = ref.watch(bookingProvider);
+    final model = ref.watch(bookingProvider.notifier);
 
     switch (trackingState) {
       case BookingState.loading:
-        bottomSheet = const LoadingBottomSheet();
+        bottomSheet = LoadingBottomSheet(
+          category: model.category,
+        );
         break;
       case BookingState.inProgress:
         bottomSheet = const InProgressBottomSheet();

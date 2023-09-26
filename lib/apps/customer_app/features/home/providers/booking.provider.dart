@@ -18,6 +18,9 @@ class BookingNotifier extends StateNotifier<BookingState> {
   final Location _location;
   final CustomerSocket _socket;
 
+  late JobCategory _category;
+  JobCategory get category => _category;
+
   BookingNotifier(
       this._auth, this._bookingService, this._location, this._socket)
       : super(BookingState.idle) {
@@ -36,7 +39,6 @@ class BookingNotifier extends StateNotifier<BookingState> {
   void init() async {
     bool _serviceEnabled;
     PermissionStatus _permissionGranted;
-    LocationData _locationData;
 
     _serviceEnabled = await _location.serviceEnabled();
     if (!_serviceEnabled) {
@@ -59,6 +61,7 @@ class BookingNotifier extends StateNotifier<BookingState> {
     required JobCategory category,
   }) async {
     state = BookingState.loading;
+    _category = category;
 
     final token = await _auth.currentUser!.getIdToken();
     final location = await _location.getLocation();

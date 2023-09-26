@@ -1,8 +1,13 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:handees/shared/data/handees/job_category.dart';
 import 'package:handees/shared/res/shapes.dart';
 
 class LoadingBottomSheet extends StatelessWidget {
-  const LoadingBottomSheet({Key? key}) : super(key: key);
+  const LoadingBottomSheet({Key? key, required this.category})
+      : super(key: key);
+
+  final JobCategory category;
 
   @override
   Widget build(BuildContext context) {
@@ -30,15 +35,15 @@ class LoadingBottomSheet extends StatelessWidget {
               children: [
                 Container(
                   decoration: ShapeDecoration(
-                    color: Colors.orange.withOpacity(0.2),
+                    color: category.foregroundColor.withOpacity(0.2),
                     shape: Shapes.mediumShape,
                   ),
                   height: 72,
                   width: 72,
-                  child: const Center(
+                  child: Center(
                     child: CircleAvatar(
-                      backgroundColor: Colors.orange,
-                      child: Icon(Icons.abc),
+                      backgroundColor: category.foregroundColor,
+                      child: Icon(category.icon),
                     ),
                   ),
                 ),
@@ -53,7 +58,7 @@ class LoadingBottomSheet extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'Hair Stylist',
+                      category.name,
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ],

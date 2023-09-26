@@ -4,33 +4,40 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/shared/res/uri.dart';
+import 'package:handees/shared/services/auth_service.dart';
 import 'package:handees/shared/utils/utils.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
-final customerSocketProvider = Provider((ref) => CustomerSocket._());
+final customerSocketProvider =
+    Provider((ref) => CustomerSocket._(AuthService.instance));
 
 class CustomerSocket {
-  CustomerSocket._() {
-    socket.onConnect((_) => debugPrint('customer connected'));
+  CustomerSocket._(this._authService) {
+    _socket.onConnect((_) => debugPrint('customer connected'));
 
-    socket.onDisconnect((_) => debugPrint('customer disconnected'));
+    _socket.onDisconnect((_) => debugPrint('customer disconnected'));
 
-    socket.onAny((event, data) {
+    _socket.onAny((event, data) {
       dPrint('Customer update any: Event($event) $data');
     });
   }
   // static final CustomerSockets _instance = CustomerSockets._();
   // static CustomerSockets get instance => _instance;
+  final AuthService _authService;
 
-  final io.Socket socket = io.io(AppUris.customerSocketUri.toString(),
-      io.OptionBuilder().setTransports(['websocket']).build());
+  late io.Socket _socket = io.io(
+    AppUris.customerSocketUri.toString(),
+    io.OptionBuilder()
+        .setAuth({'access_token': _authService.token}).setTransports(
+            ['websocket']).build(),
+  );
 
-  void connect() => socket.connect();
+  void connect() => _socket.connect();
 
-  void disconnect() => socket.disconnect();
+  void disconnect() => _socket.disconnect();
 
   void cancelOffer(String bookingId) {
-    socket.emit("cancel_offer", {"booking_id": bookingId});
+    _socket.emit("cancel_offer", {"booking_id": bookingId});
   }
 
   void confirmJobDetails({
@@ -41,7 +48,7 @@ class CustomerSocket {
     required int duration,
     required String durationUnit,
   }) {
-    socket.emit('confirm_job_details', {
+    _socket.emit('confirm_job_details', {
       'booking_id': bookingId,
       'is_contract': isContract,
       'settlement': {
@@ -54,30 +61,30 @@ class CustomerSocket {
   }
 
   void rejectJobDetails(String bookingId) {
-    socket.emit("reject_job_details", {"booking_id": bookingId});
+    _socket.emit("reject_job_details", {"booking_id": bookingId});
   }
 
   void onBookingOfferAccepted(void Function(dynamic) handler) {
-    socket.on("booking_offer_accepted", handler);
+    _socket.on("booking_offer_accepted", handler);
   }
 
   void onOfferCancelled(void Function(dynamic) handler) {
-    socket.on("offer_cancelled", handler);
+    _socket.on("offer_cancelled", handler);
   }
 
   void onApproveBookingDetails(void Function(dynamic) handler) {
-    socket.on('approve_booking_details', handler);
+    _socket.on('approve_booking_details', handler);
   }
 
   void onArtisanArrived(void Function(dynamic) handler) {
-    socket.on('artisan_arrived', handler);
+    _socket.on('artisan_arrived', handler);
   }
 
   void onJobAlreadyConfirmed(void Function(dynamic) handler) {
-    socket.on('job_details_already_confirmed', handler);
+    _socket.on('job_details_already_confirmed', handler);
   }
 
   void onError(void Function(dynamic) handler) {
-    socket.on('error', handler);
+    _socket.on('error', handler);
   }
 }
