@@ -115,7 +115,9 @@ class UserRemoteDataSource {
       },
       body: jsonEncode(
         {
-          'name': name,
+          'first_name': name,
+          'last_name':
+              'LastName', //TODO: we aren't getting full name from the user but its compulsory
           'telephone': phone,
           'email': email,
           'user_id': uid,

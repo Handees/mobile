@@ -1,26 +1,29 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:handees/apps/customer_app/services/sockets/sockets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/shared/data/handees/job_category.dart';
 import 'package:handees/shared/res/constants.dart';
 import 'package:handees/shared/utils/utils.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:socket_io_client/socket_io_client.dart' as io;
+
+import 'sockets/customer_socket.dart';
+
+final bookingServiceProvider =
+    Provider((ref) => BookingService._(ref.watch(customerSocketProvider)));
 
 class BookingService {
-  static final instance = BookingService._(AppSockets.instance);
+  BookingService._(this._customerSocket);
 
-  BookingService._(this._sockets);
+  final CustomerSocket _customerSocket;
 
-  final AppSockets _sockets;
-
-  void bookService({
+  Future<String> bookService({
     required String token,
     required double lat,
     required double lon,
     required JobCategory category,
-    required void Function(String bookingId) onBooked,
   }) async {
     final future = http.post(
       Uri.http(
@@ -42,15 +45,16 @@ class BookingService {
     );
 
     final response = await future;
-    dPrint(response.body);
+    print(response.body);
 
     final json = jsonDecode(response.body);
     final bookingId = json['data']['booking_id'];
-    onBooked(bookingId);
+
+    return bookingId;
   }
 
   void cancelOffer(String bookingId) {
-    _sockets.customerSocket.emit('cancel_offer', {'booking_id': bookingId});
+    _customerSocket.cancelOffer(bookingId);
   }
 
   void confirmJobDetails({
@@ -62,20 +66,18 @@ class BookingService {
     required String durationUnit,
   }) {
     dPrint('Sbmitting');
-    _sockets.customerSocket.emit('confirm_job_details', {
-      'booking_id': bookingId,
-      'is_contract': isContract,
-      'settlement': {
-        'type': settlementType,
-        'amount': settlementAmount,
-      },
-      'duration': duration,
-      'duration_unit': durationUnit,
-    });
+    _customerSocket.confirmJobDetails(
+      bookingId: bookingId,
+      isContract: isContract,
+      settlementType: settlementType,
+      settlementAmount: settlementAmount,
+      duration: duration,
+      durationUnit: durationUnit,
+    );
   }
 
-  void rejectJobDetails() {
-    _sockets.customerSocket.emit('reject_job_details');
+  void rejectJobDetails(String bookingId) {
+    _customerSocket.rejectJobDetails(bookingId);
   }
 
   //TODO shouldn't be dynamic

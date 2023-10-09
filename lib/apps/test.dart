@@ -1,10 +1,18 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:handees/apps/customer_app/services/booking_service.customer.dart';
 import 'package:handees/shared/data/handees/job_category.dart';
 import 'package:handees/shared/res/constants.dart';
 import 'package:handees/shared/res/uri.dart';
 import 'package:handees/shared/services/auth_service.dart';
+import 'package:handees/shared/services/places_service.dart';
+import 'package:handees/shared/ui/widgets/handee_snackbar.dart';
 import 'package:handees/shared/utils/utils.dart';
+import 'package:http/http.dart' as http;
+import 'package:location/location.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
 class Test extends StatefulWidget {
@@ -49,12 +57,12 @@ class _TestState extends State<Test> {
 
   @override
   void initState() {
-    dPrint("Uri is ${AppUris.customerSocketUri.toString()}");
+    print("Uri is ${AppUris.customerSocketUri.toString()}");
 
     customerSocket.connect();
 
     customerSocket.onAny((event, data) {
-      dPrint('Customer update hany: Event($event) $data');
+      print('Customer update hany: Event($event) $data');
     });
 
     // rootSocket.connect();
@@ -123,7 +131,7 @@ class _TestState extends State<Test> {
                 });
 
                 customerSocket.emit('reject_job_details');
-                dPrint("Sending");
+                print("Sending");
               },
               child: Ink(
                 height: 80,
@@ -133,27 +141,27 @@ class _TestState extends State<Test> {
             ),
             InkWell(
               onTap: () async {
-                BookingService.instance.bookService(
-                  token: AuthService.instance.token,
-                  onBooked: (bookingId) {
-                    dPrint(bookingId);
+                // BookingService.instance.bookService(
+                //   token: AuthService.instance.token,
+                //   onBooked: (bookingId) {
+                //     print(bookingId);
 
-                    BookingService.instance.confirmJobDetails(
-                      bookingId: bookingId,
-                      isContract: true,
-                      settlementType: "negotiation",
-                      settlementAmount: 0.0,
-                      duration: 2,
-                      durationUnit: "days",
-                    );
+                //     BookingService.instance.confirmJobDetails(
+                //       bookingId: bookingId,
+                //       isContract: true,
+                //       settlementType: "negotiation",
+                //       settlementAmount: 0.0,
+                //       duration: 2,
+                //       durationUnit: "days",
+                //     );
 
-                    chatSocket.emit('join_chat', {'booking_id': bookingId});
-                    dPrint('joined_chat');
-                  },
-                  category: JobCategory.carpentry,
-                  lat: 6.517871336509268,
-                  lon: 3.399740067230001,
-                );
+                //     chatSocket.emit('join_chat', {'booking_id': bookingId});
+                //     print('joined_chat');
+                //   },
+                //   category: JobCategory.carpentry,
+                //   lat: 6.517871336509268,
+                //   lon: 3.399740067230001,
+                // );
               },
               child: Ink(
                 height: 80,

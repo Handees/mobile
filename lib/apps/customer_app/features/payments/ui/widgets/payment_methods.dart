@@ -23,23 +23,23 @@ class _PaymentMethodsState extends State<PaymentMethods> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ListTile(
-          dense: true,
-          title: const Text('Cash / Bank Transfer'),
-          leading: const Icon(
-            HandeeIcons.money,
-            size: 16.0,
-          ),
-          trailing: Radio<String>(
-            value: 'cash',
-            groupValue: _value,
-            onChanged: (value) {
-              setState(() {
-                _value = value!;
-              });
-            },
-          ),
-        ),
+        //   ListTile(
+        //     dense: true,
+        //     title: const Text('Cash / Bank Transfer'),
+        //     leading: const Icon(
+        //       HandeeIcons.money,
+        //       size: 16.0,
+        //     ),
+        //     trailing: Radio<String>(
+        //       value: 'cash',
+        //       groupValue: _value,
+        //       onChanged: (value) {
+        //         setState(() {
+        //           _value = value!;
+        //         });
+        //       },
+        //     ),
+        //   ),
         for (String card in widget.paymentCards)
           ListTile(
             dense: true,
