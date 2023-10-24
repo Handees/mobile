@@ -265,16 +265,15 @@ class HomeScreen extends ConsumerWidget {
                                       onClick: () {
                                         Navigator.of(context)
                                             .pushNamed(
-                                                CustomerAppRoutes.pickService)
-                                            .then((res) {
-                                          if (res != null) {
-                                            ref
-                                                .read(bookingProvider.notifier)
-                                                .bookService(
-                                                    category:
-                                                        categories[index]);
-                                            Navigator.of(context).pushNamed(
-                                                CustomerAppRoutes.tracking);
+                                              CustomerAppRoutes.pickService
+                                            ).then((res) {
+                                            if (res != null) {
+                                              ref.read(bookingProvider.notifier).bookService(
+                                                category: categories[index]
+                                              );
+                                              Navigator.of(context).pushNamed(
+                                                CustomerAppRoutes.tracking
+                                              );
                                           }
                                         });
                                       },

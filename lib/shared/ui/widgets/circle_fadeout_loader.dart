@@ -79,7 +79,7 @@ class _CircleFadeOutLoaderState extends State<CircleFadeOutLoader>
             shape: const CircleBorder(),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: FlutterLogo(
+              child: FlutterLogo( // TODO: Change to Handees Logo
                 size: widget.size / 4,
               ),
             ),

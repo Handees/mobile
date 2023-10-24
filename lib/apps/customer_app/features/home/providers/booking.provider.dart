@@ -3,14 +3,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/apps/customer_app/services/booking_service.customer.dart';
 import 'package:handees/apps/customer_app/services/sockets/customer_socket.dart';
 import 'package:handees/shared/data/handees/job_category.dart';
+import 'package:handees/shared/utils/utils.dart';
 import 'package:location/location.dart';
 
 final bookingProvider = StateNotifierProvider<BookingNotifier, BookingState>(
-    (ref) => BookingNotifier(
-        FirebaseAuth.instance,
-        ref.watch(bookingServiceProvider),
-        Location.instance,
-        ref.watch(customerSocketProvider)));
+  (ref) => BookingNotifier(
+    FirebaseAuth.instance,
+    ref.watch(bookingServiceProvider),
+    Location.instance,
+    ref.watch(customerSocketProvider)
+  )
+);
 
 class BookingNotifier extends StateNotifier<BookingState> {
   final BookingService _bookingService;
@@ -22,12 +25,19 @@ class BookingNotifier extends StateNotifier<BookingState> {
   JobCategory get category => _category;
 
   BookingNotifier(
-      this._auth, this._bookingService, this._location, this._socket)
-      : super(BookingState.idle) {
+    this._auth,
+    this._bookingService,
+    this._location,
+    this._socket
+  ) : super(BookingState.idle) {
     _socket.connect();
     _socket.onBookingOfferAccepted((event) {
       state = BookingState.inProgress;
     });
+    _socket.onArtisanArrived((event) {
+      state = BookingState.arrived;
+    });
+    // _socket.onApproveBookingDetails((p0) { })
   }
 
   @override
@@ -68,8 +78,10 @@ class BookingNotifier extends StateNotifier<BookingState> {
 
     return await _bookingService.bookService(
       token: token,
-      lat: location.latitude!,
-      lon: location.longitude!,
+      // lat: location.latitude!,
+      // lon: location.longitude!,
+      lat: 6.518139822341671,
+      lon: 3.3995335371527604,
       category: category,
     );
   }
