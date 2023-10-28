@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/apps/customer_app/features/home/providers/booking.provider.dart';
@@ -8,6 +10,8 @@ import 'package:handees/shared/ui/widgets/circle_fadeout_loader.dart';
 
 import 'in_progress_bottom_sheet.dart';
 import 'loading_bottom_sheet.dart';
+import '../providers/trackingProvider.dart';
+
 
 class TrackingScreen extends ConsumerWidget {
   const TrackingScreen({Key? key}) : super(key: key);
@@ -15,20 +19,50 @@ class TrackingScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     late final Widget bottomSheet;
+    late final Widget backgroundScreen;
     final trackingState = ref.watch(bookingProvider);
     final model = ref.watch(bookingProvider.notifier);
+    final background = ref.watch(blurBackgroundProvider);
+    const mapWidget = Text("Map", style: TextStyle(fontSize: 80));
 
     switch (trackingState) {
       case BookingState.loading:
         bottomSheet = LoadingBottomSheet(
           category: model.category,
         );
+        backgroundScreen = const Center(
+          child: CircleFadeOutLoader(),
+        );
         break;
       case BookingState.inProgress:
         bottomSheet = const InProgressBottomSheet();
+        switch (background) 
+        {
+          case BottomSheetState.inView:
+            backgroundScreen = ImageFiltered(
+              imageFilter: ImageFilter.blur(sigmaX: 3.0, sigmaY: 3.0),
+              child: const Center(child: mapWidget)
+            );
+            break;
+          case BottomSheetState.minimized:
+            backgroundScreen = const Center(child: mapWidget);
+            break;
+        }
         break;
       case BookingState.arrived:
         bottomSheet = const ArrivedBottomSheet();
+        switch (background) 
+        {
+          case BottomSheetState.inView:
+            backgroundScreen = ImageFiltered(
+              imageFilter: ImageFilter.blur(sigmaX: 3.0, sigmaY: 3.0),
+              child: const Center(child:mapWidget)
+            );
+            break;
+          case BottomSheetState.minimized:
+            backgroundScreen = const Center(child: mapWidget);
+            break;
+        }
         break;
       default:
     }
@@ -38,9 +72,7 @@ class TrackingScreen extends ConsumerWidget {
         backgroundColor: Colors.transparent,
       ),
       extendBodyBehindAppBar: true,
-      body: Center(
-        child: CircleFadeOutLoader(),
-      ),
+      body: backgroundScreen,
       bottomSheet: Material(
         elevation: 24,
         shadowColor: Colors.black,
