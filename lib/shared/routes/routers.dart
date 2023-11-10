@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:handees/apps/artisan_app/features/handee/ui/screens/confirm_handee.screen.dart';
+import 'package:handees/apps/artisan_app/features/handee/ui/screens/contract_handee_in_progress.screen.dart';
 import 'package:handees/apps/artisan_app/features/handee/ui/screens/handee_concluded.screen.dart';
 import 'package:handees/apps/artisan_app/features/handee/ui/screens/handee_in_progress.screen.dart';
 import 'package:handees/apps/artisan_app/features/handee/ui/screens/map_to_customer.screen.dart';
@@ -210,6 +211,9 @@ final _artisanAppRouter = NavRouter(
         break;
       case ArtisanAppRoutes.editProfile:
         page = const EditProfileOptions();
+        break;
+      case ArtisanAppRoutes.contractHandeeInProgress:
+        page = const ContractHandeeInProgress();
         break;
       default:
         throw Exception('Unknown route: ${settings.name}');

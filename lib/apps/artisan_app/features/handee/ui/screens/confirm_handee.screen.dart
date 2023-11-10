@@ -6,6 +6,7 @@ import 'package:handees/apps/artisan_app/features/home/providers/current-offer.p
 import 'package:handees/apps/artisan_app/services/sockets/artisan_socket.dart';
 import 'package:handees/apps/artisan_app/services/sockets/artisan_socket_events.dart';
 import 'package:handees/shared/data/handees/handee_options.dart';
+import 'package:handees/shared/routes/routes.dart';
 import 'package:handees/shared/utils/utils.dart';
 
 class ConfirmHandeeScreen extends ConsumerStatefulWidget {
@@ -162,7 +163,11 @@ class _ConfirmHandeeScreenState extends ConsumerState<ConfirmHandeeScreen> {
                         height: 64,
                         child: isVerified
                             ? FilledButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.of(context).pushNamed(
+                                      ArtisanAppRoutes
+                                          .contractHandeeInProgress);
+                                },
                                 child: Text(
                                   'Begin Handee',
                                   style: Theme.of(context)
