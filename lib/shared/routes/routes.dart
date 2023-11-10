@@ -24,6 +24,8 @@ abstract class ArtisanAppRoutes {
   static const String transitToArtisan = '/artisan/transit-to-artisan';
   static const String confirmHandee = '/artisan/confirm-handee';
   static const String handeeInProgress = '/artisan/handee-in-progress';
+  static const String contractHandeeInProgress =
+      '/artisan/contract-handee-in-progress';
   static const String handeeConcluded = '/artisan/handee-concluded';
 
   static const String home = '/artisan/home';

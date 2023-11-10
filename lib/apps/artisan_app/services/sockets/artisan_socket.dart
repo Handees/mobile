@@ -29,6 +29,9 @@ class ArtisanSocketNotifier extends StateNotifier<io.Socket> {
         )) {
     state.onAny((event, data) {
       dPrint('Artisan update any: Event($event) $data');
+      if (event == "connect_error") {
+        connectArtisan();
+      }
     });
     state.onDisconnect((_) => dPrint("Socket Disconnected"));
     state.onConnect((_) async {
@@ -52,7 +55,7 @@ class ArtisanSocketNotifier extends StateNotifier<io.Socket> {
       {
         "lat": 6.517871336509268,
         "lon": 3.399740067230001,
-        "artisan_id": AuthService.instance.user.uid,
+        // "artisan_id": AuthService.instance.user.uid,
         "job_category": "carpentry",
       },
     );
@@ -64,7 +67,7 @@ class ArtisanSocketNotifier extends StateNotifier<io.Socket> {
     //     "lat": location.latitude,
     //     "lon": location.longitude,
     //     "artisan_id": AuthService.instance.user.uid,
-    //     "job_category": "carpentary",
+    //     "job_category": "carpentry",
     //   },
     // );
   }

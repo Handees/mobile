@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/apps/customer_app/features/artisan_switch/providers/artisan_switch.provider.dart';
+import 'package:handees/apps/customer_app/features/home/providers/home.customer.provider.dart';
 import 'package:handees/shared/data/handees/job_category.dart';
 import 'package:handees/shared/routes/routes.dart';
 import 'package:handees/shared/ui/widgets/custom_text_form_field.dart';
@@ -23,6 +24,8 @@ class _ArtisanSwitchScreenState extends ConsumerState<ArtisanSwitchScreen> {
     final artisanSwitchState = ref.watch(artisanSwitchStateProvider);
     final artisanSwitchStateNotifier =
         ref.watch(artisanSwitchStateProvider.notifier);
+
+    final userStateNotifier = ref.watch(userProvider.notifier);
 
     return Scaffold(
       appBar: AppBar(),
@@ -114,10 +117,12 @@ class _ArtisanSwitchScreenState extends ConsumerState<ArtisanSwitchScreen> {
                                 }
                                 _formGlobalKey.currentState!.save();
                                 artisanSwitchStateNotifier.createArtisanProfile(
-                                    onSuccess: () {
-                                  Navigator.of(context, rootNavigator: true)
-                                      .pushReplacementNamed(
-                                          ArtisanAppRoutes.home);
+                                    onSuccess: () async {
+                                  userStateNotifier.getUserObject().then(
+                                      (value) => Navigator.of(context,
+                                              rootNavigator: true)
+                                          .pushReplacementNamed(
+                                              ArtisanAppRoutes.home));
                                 });
                               },
                         child: artisanSwitchState == ArtisanSwitchState.loading

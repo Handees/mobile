@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:handees/shared/utils/utils.dart';
 
 class AuthService {
   static final instance = AuthService._(FirebaseAuth.instance);
@@ -27,6 +28,7 @@ class AuthService {
     if (idToken != null) {
       _token = idToken;
     }
+    dPrint(_token);
   }
 
   bool doesTokenExist() {
