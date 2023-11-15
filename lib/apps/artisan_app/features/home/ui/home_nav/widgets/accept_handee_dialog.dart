@@ -63,7 +63,10 @@ class AcceptHandeeDialog extends ConsumerWidget {
                 ),
                 const Spacer(),
                 IconButton(
-                  onPressed: onClose,
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    onClose();
+                  },
                   icon: const Icon(
                     Icons.close,
                     color: Color(0xffe63946),
@@ -158,7 +161,10 @@ class AcceptHandeeDialog extends ConsumerWidget {
                         tween: timerValueTween,
                         duration: const Duration(seconds: handeeAcceptanceTime),
                         builder: (_, double value, __) {
-                          if (value == 0) onClose();
+                          if (value == 0) {
+                            Navigator.of(context).pop();
+                            onClose();
+                          }
                           return CircularProgressIndicator(
                             color: Colors.white,
                             value: value,

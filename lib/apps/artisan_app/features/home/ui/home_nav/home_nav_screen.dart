@@ -55,7 +55,6 @@ class _HomeNavScreenState extends ConsumerState<HomeNavScreen> {
             externalContext: context,
             offer: newOffer,
             onClose: () {
-              Navigator.of(context).pop();
               // Check for the next data in the queue
               if (newOfferQueue.isNotEmpty) {
                 // Show the next dialog after a delay to avoid overlapping
