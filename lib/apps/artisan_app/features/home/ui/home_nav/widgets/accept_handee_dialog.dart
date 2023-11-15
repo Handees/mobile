@@ -5,10 +5,12 @@ import 'package:handees/apps/artisan_app/features/home/providers/artisan-locatio
 import 'package:handees/apps/artisan_app/services/sockets/artisan_socket.dart';
 import 'package:handees/apps/artisan_app/shared_widgets/i_dialog.dart';
 import 'package:handees/shared/data/handees/offer.dart';
+import 'package:handees/shared/utils/utils.dart';
 import 'icon_avatar.dart';
 import 'package:handees/shared/routes/routes.dart';
 import 'package:latlong2/latlong.dart' as latlong;
 import 'package:location/location.dart';
+import '../providers/new_offer_provider.dart';
 
 class AcceptHandeeDialog extends ConsumerWidget {
   final BuildContext externalContext;
@@ -146,9 +148,22 @@ class AcceptHandeeDialog extends ConsumerWidget {
                   ref
                       .read(artisanSocketProvider.notifier)
                       .acceptOffer(offer.bookingId);
+                  
+                  // pop the dialog box
                   Navigator.of(context).pop();
+
+                  // change main screen
                   Navigator.of(externalContext)
                       .pushNamed(ArtisanAppRoutes.transitToArtisan);
+
+                  // attach artisan to the booking
+                  ref.read(bookingStateProvider.notifier).attachToBooking();
+
+                  BookingState deb = ref.read(
+                    bookingStateProvider
+                  );
+                  dPrint(deb);
+                  dPrint("CHecking stuff out...");
                 },
                 child: Row(
                   children: [
@@ -180,6 +195,53 @@ class AcceptHandeeDialog extends ConsumerWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class TestWidgetDial extends StatelessWidget
+{
+  final BuildContext externalContext;
+  const TestWidgetDial(
+    {
+      required this.externalContext,
+      super.key,
+    }
+  );
+
+  @override
+  Widget build(BuildContext context)
+  {
+    double meter = 5;
+    return IDialog(
+      child: DialogContainer(
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Text(
+                  "3 mins",
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                const SizedBox(width: 16.0),
+                Container(
+                  height: 5,
+                  width: 5,
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                const SizedBox(width: 16.0),
+                Text(
+                  "$meter m",
+                  style: Theme.of(context).textTheme.titleMedium,
+                )
+              ]
+            )
+          ],
+        ),
+      )
     );
   }
 }

@@ -10,9 +10,12 @@ import 'package:handees/apps/artisan_app/features/home/ui/home_nav/widgets/user_
 import 'package:handees/apps/artisan_app/services/sockets/artisan_socket.dart';
 import 'package:handees/apps/artisan_app/services/sockets/artisan_socket_events.dart';
 import 'package:handees/apps/customer_app/features/home/providers/user.provider.dart';
+import 'package:handees/apps/test.dart';
 import 'package:handees/shared/data/handees/offer.dart';
 import 'package:handees/shared/utils/utils.dart';
 import 'widgets/accept_handee_dialog.dart';
+import 'providers/new_offer_provider.dart';
+
 
 class HomeNavScreen extends ConsumerStatefulWidget {
   const HomeNavScreen({super.key});
@@ -24,7 +27,7 @@ class HomeNavScreen extends ConsumerStatefulWidget {
 class _HomeNavScreenState extends ConsumerState<HomeNavScreen> {
   final isProfileComplete = false;
   final double horizontalPadding = 16.0;
-  bool isDialogOpen = false;
+  bool isDialogOpen = true;
   final Queue<Offer> newOfferQueue = Queue();
 
   @override
@@ -45,8 +48,11 @@ class _HomeNavScreenState extends ConsumerState<HomeNavScreen> {
 
   void showNewOffer() async {
     // If there's data in the queue and no dialog is currently shown, show the next dialog
-    if (newOfferQueue.isNotEmpty && !isDialogOpen) {
-      isDialogOpen = true;
+    final bookingState = ref.read(bookingStateProvider);
+    final bkstateNotifier = ref.read(bookingStateProvider.notifier);
+
+    if (newOfferQueue.isNotEmpty && bookingState==BookingState.detached) {
+      bkstateNotifier.attachToBooking();
       Offer newOffer = newOfferQueue.removeFirst();
       showDialog(
         context: context,
@@ -56,19 +62,10 @@ class _HomeNavScreenState extends ConsumerState<HomeNavScreen> {
             offer: newOffer,
             onClose: () {
               // Check for the next data in the queue
-              if (newOfferQueue.isNotEmpty) {
-                // Show the next dialog after a delay to avoid overlapping
-                Timer(const Duration(seconds: 1), () {
-                  isDialogOpen = false;
-                  showNewOffer();
-                });
-              } else {
-                // No more data in the queue, allow showing new dialogs
-                isDialogOpen = false;
-              }
+              bkstateNotifier.detachFromBooking();
             },
           );
-        },
+        }
       );
     }
   }
