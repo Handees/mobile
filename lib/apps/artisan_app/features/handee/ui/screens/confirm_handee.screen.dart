@@ -108,7 +108,7 @@ class _ConfirmHandeeScreenState extends ConsumerState<ConfirmHandeeScreen> {
                 options: workDurations,
               ),
               const SizedBox(
-                height: 10,
+                height: 20,
               ),
               HandeeDetailSelection(
                 type: HandeeOptionTypes.paymentOption,
@@ -119,9 +119,18 @@ class _ConfirmHandeeScreenState extends ConsumerState<ConfirmHandeeScreen> {
                 ),
                 options: paymentOptions,
               ),
-              const Spacer(),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(
+                    0, 0, 0, 40
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -204,6 +213,10 @@ class _ConfirmHandeeScreenState extends ConsumerState<ConfirmHandeeScreen> {
                     ),
                   ],
                 ),
+              )
+                    ]
+                  ),
+                )
               ),
               const SizedBox(
                 height: 20,

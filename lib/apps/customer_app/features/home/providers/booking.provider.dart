@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/apps/customer_app/services/booking_service.customer.dart';
 import 'package:handees/apps/customer_app/services/sockets/customer_socket.dart';
 import 'package:handees/shared/data/handees/job_category.dart';
-import 'package:handees/shared/utils/utils.dart';
 import 'package:location/location.dart';
 
 final bookingProvider = StateNotifierProvider<BookingNotifier, BookingState>(
