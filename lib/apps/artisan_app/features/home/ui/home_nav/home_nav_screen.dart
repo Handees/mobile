@@ -46,10 +46,15 @@ class _HomeNavScreenState extends ConsumerState<HomeNavScreen> {
     super.initState();
   }
 
-  void showNewOffer() async {
+  void showNewOffer() {
     // If there's data in the queue and no dialog is currently shown, show the next dialog
     final bookingState = ref.read(bookingStateProvider);
     final bkstateNotifier = ref.read(bookingStateProvider.notifier);
+
+    Future<void> close() async
+    {
+      bkstateNotifier.detachFromBooking();
+    }
 
     if (newOfferQueue.isNotEmpty && bookingState==BookingState.detached) {
       bkstateNotifier.attachToBooking();
@@ -60,10 +65,7 @@ class _HomeNavScreenState extends ConsumerState<HomeNavScreen> {
           return AcceptHandeeDialog(
             externalContext: context,
             offer: newOffer,
-            onClose: () {
-              // Check for the next data in the queue
-              bkstateNotifier.detachFromBooking();
-            },
+            onClose: close
           );
         }
       );
@@ -73,6 +75,12 @@ class _HomeNavScreenState extends ConsumerState<HomeNavScreen> {
   @override
   Widget build(BuildContext context) {
     final user = ref.watch(userProvider);
+    // final bookingState = ref.read(bookingStateProvider);
+
+    // if (bookingState == BookingState.detached)
+    // {
+    //   Offer newOffer = newOfferQueue.removeFirst(); 
+    // }
 
     if (user.artisanProfile == null) {
       throw 'You got to the artisan home screen but there is no artisan on this user';
