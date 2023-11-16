@@ -31,6 +31,9 @@ class AcceptHandeeDialog extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final LocationData location = ref.watch(locationProvider);
     double meter = 0;
+    
+    final bkstateNotifier = ref.read(bookingStateProvider.notifier);
+
 
     if (location.latitude != null && location.longitude != null) {
       meter = distance(
@@ -158,12 +161,6 @@ class AcceptHandeeDialog extends ConsumerWidget {
 
                   // attach artisan to the booking
                   ref.read(bookingStateProvider.notifier).attachToBooking();
-
-                  BookingState deb = ref.read(
-                    bookingStateProvider
-                  );
-                  dPrint(deb);
-                  dPrint("CHecking stuff out...");
                 },
                 child: Row(
                   children: [
@@ -178,7 +175,6 @@ class AcceptHandeeDialog extends ConsumerWidget {
                         builder: (_, double value, __) {
                           if (value == 0) {
                             Navigator.of(context).pop();
-                            onClose();
                           }
                           return CircularProgressIndicator(
                             color: Colors.white,
@@ -186,6 +182,7 @@ class AcceptHandeeDialog extends ConsumerWidget {
                             strokeWidth: 3,
                           );
                         },
+                        onEnd: () => onClose(),
                       ),
                     ),
                   ],
