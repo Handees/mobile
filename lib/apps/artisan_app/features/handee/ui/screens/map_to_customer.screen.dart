@@ -9,6 +9,7 @@ import 'package:handees/apps/artisan_app/features/handee/utils/helpers.dart';
 import 'package:handees/apps/artisan_app/features/home/providers/current-offer.provider.dart';
 import 'package:handees/apps/artisan_app/features/home/providers/artisan-location.provider.dart';
 import 'package:handees/apps/artisan_app/features/home/ui/home_nav/widgets/icon_avatar.dart';
+import 'package:handees/apps/artisan_app/services/sockets/artisan_socket.dart';
 import 'package:handees/shared/res/constants.dart';
 import 'package:handees/shared/routes/routes.dart';
 import 'package:handees/shared/utils/utils.dart';
@@ -362,8 +363,13 @@ class OfferInfo extends ConsumerWidget {
               width: double.infinity,
               height: 64,
               child: FilledButton(
-                onPressed: () => Navigator.of(context)
-                    .pushReplacementNamed(ArtisanAppRoutes.confirmHandee),
+                onPressed: () {
+                  ref.read(artisanSocketProvider.notifier).
+                  emitArtisanArrival(offer.bookingId);
+                  Navigator.of(context)
+                    .pushReplacementNamed(ArtisanAppRoutes.confirmHandee
+                  );
+                },
                 child: const Text(
                   'ARRIVED',
                   style: TextStyle(

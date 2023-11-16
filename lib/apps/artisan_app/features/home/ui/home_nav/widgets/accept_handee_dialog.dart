@@ -5,7 +5,6 @@ import 'package:handees/apps/artisan_app/features/home/providers/artisan-locatio
 import 'package:handees/apps/artisan_app/services/sockets/artisan_socket.dart';
 import 'package:handees/apps/artisan_app/shared_widgets/i_dialog.dart';
 import 'package:handees/shared/data/handees/offer.dart';
-import 'package:handees/shared/utils/utils.dart';
 import 'icon_avatar.dart';
 import 'package:handees/shared/routes/routes.dart';
 import 'package:latlong2/latlong.dart' as latlong;
@@ -31,9 +30,6 @@ class AcceptHandeeDialog extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final LocationData location = ref.watch(locationProvider);
     double meter = 0;
-    
-    final bkstateNotifier = ref.read(bookingStateProvider.notifier);
-
 
     if (location.latitude != null && location.longitude != null) {
       meter = distance(

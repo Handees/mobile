@@ -152,7 +152,8 @@ class HandeeDetailSelection extends ConsumerWidget {
           child: Column(
             children: options
                 .map<Widget>(
-                  (option) => DurationOption(
+                  (option) => Padding(padding: const EdgeInsets.symmetric(vertical: 11),
+                  child:DurationOption(
                     isSelected: handeeOption == option.title,
                     title: option.title,
                     description: option.description,
@@ -169,7 +170,7 @@ class HandeeDetailSelection extends ConsumerWidget {
                               : null;
                       launchBottomSheet(option.title, context);
                     },
-                  ),
+                  )),
                 )
                 .toList(),
           ),
