@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class CircleFadeOutLoader extends StatefulWidget {
   const CircleFadeOutLoader({
@@ -6,11 +7,13 @@ class CircleFadeOutLoader extends StatefulWidget {
     this.color,
     this.count = 2,
     this.size = 200,
+    this.duration = 1500,
   }) : super(key: key);
 
   final Color? color;
   final int count;
   final double size;
+  final int duration;
 
   @override
   State<CircleFadeOutLoader> createState() => _CircleFadeOutLoaderState();
@@ -29,7 +32,7 @@ class _CircleFadeOutLoaderState extends State<CircleFadeOutLoader>
       controllers.add(
         AnimationController(
           vsync: this,
-          duration: const Duration(milliseconds: 1500),
+          duration: Duration(milliseconds: widget.duration),
           lowerBound: 0,
           upperBound: widget.size,
           value: widget.size * (i / count),
@@ -64,25 +67,17 @@ class _CircleFadeOutLoaderState extends State<CircleFadeOutLoader>
                 shape: BoxShape.circle,
                 color: color.withOpacity(
                     (widget.size - controller.value) / widget.size),
-                // border: Border.all(
-                //   color: color.withOpacity(
-                //       (widget.size - controller.value) / widget.size),
-                // ),
               ),
               width: controller.value,
               height: controller.value,
             ),
           Material(
             elevation: 2.0,
-            shadowColor: Theme.of(context).colorScheme.shadow,
-            color: color,
+            color: Colors.white,
             shape: const CircleBorder(),
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: FlutterLogo( // TODO: Change to Handees Logo
-                size: widget.size / 4,
-              ),
-            ),
+                padding: const EdgeInsets.all(32.0),
+                child: SvgPicture.asset('assets/svg/logo-filled.svg')),
           ),
         ],
       ),

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:handees/apps/artisan_app/features/home/providers/artisan-location.provider.dart';
 import 'package:handees/apps/artisan_app/services/sockets/artisan_socket.dart';
+import 'package:handees/shared/ui/widgets/circle_fadeout_loader.dart';
 import 'package:handees/shared/ui/widgets/custom_bottom_sheet.dart';
 
 class OnlineToggleCard extends ConsumerStatefulWidget {
@@ -16,6 +17,7 @@ class _OnlineToggleCardState extends ConsumerState<OnlineToggleCard>
     with SingleTickerProviderStateMixin {
   late Animation<double> animation;
   late AnimationController controller;
+  String buttonText = 'GO ONLINE';
 
   @override
   void initState() {
@@ -44,10 +46,22 @@ class _OnlineToggleCardState extends ConsumerState<OnlineToggleCard>
 
     return Column(
       children: [
-        SvgPicture.asset(
-          "assets/svg/handee_artisan_home_bg.svg",
-          semanticsLabel: 'Handees Logo',
-        ),
+        isArtisanOnline
+            ? const CircleFadeOutLoader(
+                count: 3,
+                size: 300,
+                duration: 3000,
+              )
+            : SizedBox(
+                height: 300,
+                child: Center(
+                  child: SvgPicture.asset(
+                    "assets/svg/logo.svg",
+                    height: 120,
+                    semanticsLabel: 'Handees Logo',
+                  ),
+                ),
+              ),
         const SizedBox(height: 16.0),
         Container(
           width: double.infinity,
@@ -97,10 +111,16 @@ class _OnlineToggleCardState extends ConsumerState<OnlineToggleCard>
               : GestureDetector(
                   onTapDown: (details) {
                     controller.forward();
+                    setState(() {
+                      buttonText = 'PRESS AND HOLD...';
+                    });
                   },
                   onTapCancel: () {
                     if (animation.value != 1) {
                       controller.reverse();
+                      setState(() {
+                        buttonText = 'GO ONLINE';
+                      });
                     } else {
                       ref.read(artisanOnlineProvider.notifier).state = true;
                       ref.read(artisanSocketProvider.notifier).connectArtisan();
@@ -112,7 +132,7 @@ class _OnlineToggleCardState extends ConsumerState<OnlineToggleCard>
                       backgroundColor:
                           MaterialStateProperty.all(Colors.transparent),
                     ),
-                    child: const Text('GO ONLINE'),
+                    child: Text(buttonText),
                   ),
                 ),
         )

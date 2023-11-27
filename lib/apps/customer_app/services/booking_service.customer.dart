@@ -45,7 +45,7 @@ class BookingService {
     );
 
     final response = await future;
-    print(response.body);
+    dPrint(response.body);
 
     final json = jsonDecode(response.body);
     final bookingId = json['data']['booking_id'];

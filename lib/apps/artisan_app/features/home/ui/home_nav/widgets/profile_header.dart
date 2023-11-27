@@ -27,9 +27,7 @@ class ProfileHeader extends ConsumerWidget {
             builder: (ctx) => AcceptHandeeDialog(
               externalContext: context,
               offer: Offer.empty(),
-              onClose: () {
-                Navigator.of(ctx).pop();
-              },
+              onClose: () {},
             ),
           ),
           child: Container(
