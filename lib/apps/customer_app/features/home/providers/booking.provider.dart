@@ -6,13 +6,11 @@ import 'package:handees/shared/data/handees/job_category.dart';
 import 'package:location/location.dart';
 
 final bookingProvider = StateNotifierProvider<BookingNotifier, BookingState>(
-  (ref) => BookingNotifier(
-    FirebaseAuth.instance,
-    ref.watch(bookingServiceProvider),
-    Location.instance,
-    ref.watch(customerSocketProvider)
-  )
-);
+    (ref) => BookingNotifier(
+        FirebaseAuth.instance,
+        ref.watch(bookingServiceProvider),
+        Location.instance,
+        ref.watch(customerSocketProvider)));
 
 class BookingNotifier extends StateNotifier<BookingState> {
   final BookingService _bookingService;
@@ -24,11 +22,8 @@ class BookingNotifier extends StateNotifier<BookingState> {
   JobCategory get category => _category;
 
   BookingNotifier(
-    this._auth,
-    this._bookingService,
-    this._location,
-    this._socket
-  ) : super(BookingState.idle) {
+      this._auth, this._bookingService, this._location, this._socket)
+      : super(BookingState.idle) {
     _socket.connect();
     _socket.onBookingOfferAccepted((event) {
       state = BookingState.inProgress;
@@ -46,21 +41,21 @@ class BookingNotifier extends StateNotifier<BookingState> {
   }
 
   void init() async {
-    bool _serviceEnabled;
-    PermissionStatus _permissionGranted;
+    bool serviceEnabled;
+    PermissionStatus permissionGranted;
 
-    _serviceEnabled = await _location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await _location.requestService();
-      if (!_serviceEnabled) {
+    serviceEnabled = await _location.serviceEnabled();
+    if (!serviceEnabled) {
+      serviceEnabled = await _location.requestService();
+      if (!serviceEnabled) {
         return;
       }
     }
 
-    _permissionGranted = await _location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await _location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
+    permissionGranted = await _location.hasPermission();
+    if (permissionGranted == PermissionStatus.denied) {
+      permissionGranted = await _location.requestPermission();
+      if (permissionGranted != PermissionStatus.granted) {
         return;
       }
     }
@@ -79,8 +74,8 @@ class BookingNotifier extends StateNotifier<BookingState> {
       token: token,
       // lat: location.latitude!,
       // lon: location.longitude!,
-      lat: 6.518139822341671,
-      lon: 3.3995335371527604,
+      lat: 6.548281268456966,
+      lon: 3.332248000980724,
       category: category,
     );
   }

@@ -1,4 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+class Svg extends StatelessWidget {
+  final String url;
+  const Svg(this.url, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 4),
+      child: SvgPicture.asset(url, width: 24, height: 24),
+    );
+  }
+}
 
 class BottomTabNavBar extends StatelessWidget {
   const BottomTabNavBar(this._selectedIndex, this._onItemTapped, {super.key});
@@ -10,22 +24,30 @@ class BottomTabNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
-      items: const [
+      items: [
         BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: "Home",
+          icon: _selectedIndex == 0
+              ? const Svg('assets/svg/home-filled-nav.svg')
+              : const Svg('assets/svg/home-nav.svg'),
+          label: "HOME",
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.construction),
-          label: "Handees",
+          icon: _selectedIndex == 1
+              ? const Svg('assets/svg/service-filled-nav.svg')
+              : const Svg('assets/svg/service-nav.svg'),
+          label: "SERVICES",
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.account_circle),
-          label: "Profile",
+          icon: _selectedIndex == 2
+              ? const Svg('assets/svg/profile-filled-nav.svg')
+              : const Svg('assets/svg/profile-nav.svg'),
+          label: "PROFILE",
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.settings),
-          label: "Settings",
+          icon: _selectedIndex == 3
+              ? const Svg('assets/svg/setting-filled-nav.svg')
+              : const Svg('assets/svg/setting-nav.svg'),
+          label: "SETTINGS",
         ),
       ],
       showUnselectedLabels: true,

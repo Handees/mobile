@@ -16,11 +16,10 @@ class PickServiceDialog extends StatelessWidget {
             delegate: SliverChildListDelegate.fixed(
               [
                 _PaymentMethodsWidget(),
-                Divider(
-                  height: 32.0,
-                  thickness: 8.0,
-                ),
-                _WorkDurationWidget(),
+                // Divider(
+                //   height: 32.0,
+                //   thickness: 8.0,
+                // ),
               ],
             ),
           ),

@@ -1,7 +1,3 @@
-import 'dart:async';
-import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/shared/res/uri.dart';
 import 'package:handees/shared/services/auth_service.dart';
@@ -13,9 +9,9 @@ final customerSocketProvider =
 
 class CustomerSocket {
   CustomerSocket._(this._authService) {
-    _socket.onConnect((_) => debugPrint('customer connected'));
+    _socket.onConnect((_) => dPrint('customer connected'));
 
-    _socket.onDisconnect((_) => debugPrint('customer disconnected'));
+    _socket.onDisconnect((_) => dPrint('customer disconnected'));
 
     _socket.onAny((event, data) {
       dPrint('Customer update any: Event($event) $data');

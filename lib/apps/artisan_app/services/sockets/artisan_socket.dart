@@ -4,7 +4,9 @@ import 'dart:io';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:handees/apps/artisan_app/features/home/providers/artisan-location.provider.dart';
 import 'package:handees/apps/artisan_app/services/sockets/artisan_socket_events.dart';
+import 'package:handees/apps/customer_app/features/home/providers/user.provider.dart';
 import 'package:handees/shared/data/handees/handee_approval.dart';
+import 'package:handees/shared/data/handees/job_category.dart';
 import 'package:handees/shared/res/uri.dart';
 import 'package:handees/shared/services/auth_service.dart';
 import 'package:handees/shared/utils/utils.dart';
@@ -40,23 +42,27 @@ class ArtisanSocketNotifier extends StateNotifier<io.Socket> {
       // When socket first connects, immediately send the user's current location
 
       final location = ref.read(locationProvider);
-      updateArtisanLocation(location);
+      updateArtisanLocation(
+          location, ref.read(userProvider).artisanProfile!.jobCategory);
     });
   }
 
   void connectArtisan() => state.connect();
   void disconnectArtisan() => state.disconnect();
 
-  void updateArtisanLocation(LocationData location) {
+  void updateArtisanLocation(LocationData location, JobCategory? jobCategory) {
+    if (jobCategory == null) {
+      throw 'updateArtisanLocation called on for an artisan that has no jobCategory';
+    }
+
     dPrint(
         "lat:${location.latitude} , lon:${location.longitude} emitted through sockets");
     state.emit(
       ArtisanSocketEmitEvents.locationUpdate,
       {
-        "lat": 6.517871336509268,
-        "lon": 3.399740067230001,
-        // "artisan_id": AuthService.instance.user.uid,
-        "job_category": "carpentry",
+        "lat": 6.548281268456966,
+        "lon": 3.332248000980724,
+        "job_category": jobCategory.id,
       },
     );
 

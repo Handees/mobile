@@ -77,6 +77,7 @@ class _MapToCustomerScreenState extends ConsumerState<MapToCustomerScreen> {
     setCustomMarkerIcon();
     final location = ref.read(locationProvider);
     if (location.latitude != null && location.longitude != null) {
+      dPrint('yehhhh');
       getPolyPoints(LatLng(location.latitude!, location.longitude!));
     }
   }
@@ -126,6 +127,8 @@ class _MapToCustomerScreenState extends ConsumerState<MapToCustomerScreen> {
         icon: destinationIcon,
       )
     };
+
+    dPrint(polylineCoords);
 
     return Scaffold(
       body: SizedBox(
@@ -196,8 +199,7 @@ class OfferInfo extends ConsumerWidget {
 
     return Container(
       width: MediaQuery.of(context).size.width,
-      height:
-          MediaQuery.of(context).size.height * (hasArtisanArrived ? 0.5 : 0.4),
+      height: (hasArtisanArrived ? 360 : 280),
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(
             topLeft: Radius.circular(24), topRight: Radius.circular(24)),
@@ -364,11 +366,11 @@ class OfferInfo extends ConsumerWidget {
               height: 64,
               child: FilledButton(
                 onPressed: () {
-                  ref.read(artisanSocketProvider.notifier).
-                  emitArtisanArrival(offer.bookingId);
+                  ref
+                      .read(artisanSocketProvider.notifier)
+                      .emitArtisanArrival(offer.bookingId);
                   Navigator.of(context)
-                    .pushReplacementNamed(ArtisanAppRoutes.confirmHandee
-                  );
+                      .pushReplacementNamed(ArtisanAppRoutes.confirmHandee);
                 },
                 child: const Text(
                   'ARRIVED',

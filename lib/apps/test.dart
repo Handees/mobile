@@ -57,12 +57,12 @@ class _TestState extends State<Test> {
 
   @override
   void initState() {
-    print("Uri is ${AppUris.customerSocketUri.toString()}");
+    dPrint("Uri is ${AppUris.customerSocketUri.toString()}");
 
     customerSocket.connect();
 
     customerSocket.onAny((event, data) {
-      print('Customer update hany: Event($event) $data');
+      dPrint('Customer update hany: Event($event) $data');
     });
 
     // rootSocket.connect();
@@ -73,7 +73,7 @@ class _TestState extends State<Test> {
     chatSocket.connect();
 
     // customerSocket.onConnect((_) {
-    //   print('customer connected');
+    //   dPrint('customer connected');
     // });
     // chatSocket.onConnect((_) {
     //   print('Chat connected');
@@ -131,7 +131,7 @@ class _TestState extends State<Test> {
                 });
 
                 customerSocket.emit('reject_job_details');
-                print("Sending");
+                dPrint("Sending");
               },
               child: Ink(
                 height: 80,

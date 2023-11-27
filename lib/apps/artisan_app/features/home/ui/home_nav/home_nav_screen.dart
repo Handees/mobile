@@ -10,12 +10,10 @@ import 'package:handees/apps/artisan_app/features/home/ui/home_nav/widgets/user_
 import 'package:handees/apps/artisan_app/services/sockets/artisan_socket.dart';
 import 'package:handees/apps/artisan_app/services/sockets/artisan_socket_events.dart';
 import 'package:handees/apps/customer_app/features/home/providers/user.provider.dart';
-import 'package:handees/apps/test.dart';
 import 'package:handees/shared/data/handees/offer.dart';
 import 'package:handees/shared/utils/utils.dart';
 import 'widgets/accept_handee_dialog.dart';
 import 'providers/new_offer_provider.dart';
-
 
 class HomeNavScreen extends ConsumerStatefulWidget {
   const HomeNavScreen({super.key});
@@ -51,24 +49,19 @@ class _HomeNavScreenState extends ConsumerState<HomeNavScreen> {
     final bookingState = ref.read(bookingStateProvider);
     final bkstateNotifier = ref.read(bookingStateProvider.notifier);
 
-    Future<void> close() async
-    {
+    Future<void> close() async {
       bkstateNotifier.detachFromBooking();
     }
 
-    if (newOfferQueue.isNotEmpty && bookingState==BookingState.detached) {
+    if (newOfferQueue.isNotEmpty && bookingState == BookingState.detached) {
       bkstateNotifier.attachToBooking();
       Offer newOffer = newOfferQueue.removeFirst();
       showDialog(
-        context: context,
-        builder: (ctx) {
-          return AcceptHandeeDialog(
-            externalContext: context,
-            offer: newOffer,
-            onClose: close
-          );
-        }
-      );
+          context: context,
+          builder: (ctx) {
+            return AcceptHandeeDialog(
+                externalContext: context, offer: newOffer, onClose: close);
+          });
     }
   }
 
@@ -79,7 +72,7 @@ class _HomeNavScreenState extends ConsumerState<HomeNavScreen> {
 
     // if (bookingState == BookingState.detached)
     // {
-    //   Offer newOffer = newOfferQueue.removeFirst(); 
+    //   Offer newOffer = newOfferQueue.removeFirst();
     // }
 
     if (user.artisanProfile == null) {
@@ -99,11 +92,10 @@ class _HomeNavScreenState extends ConsumerState<HomeNavScreen> {
                     padding: const EdgeInsets.symmetric(vertical: 48.0),
                     child: ProfileHeader(isProfileComplete),
                   ),
-                  user.artisanProfile!.isVerified
-                      ? const OnlineToggleCard()
-                      : const CompleteProfileCard(),
+                  true ? const OnlineToggleCard() : const CompleteProfileCard(),
                   const SizedBox(height: 48),
                   const UserStatsContainer(),
+                  const SizedBox(height: 20),
                 ],
               ),
             ),
