@@ -18,6 +18,7 @@ import 'package:handees/apps/customer_app/features/artisan_switch/ui/screens/art
 import 'package:handees/apps/customer_app/features/profile/ui/edit_address.dart';
 import 'package:handees/apps/customer_app/features/profile/ui/edit_email.dart';
 import 'package:handees/apps/customer_app/features/profile/ui/edit_profile.dart';
+import 'package:handees/apps/customer_app/features/review/ui/screens/review.screen.dart';
 import 'package:handees/shared/routes/pages.dart';
 import 'package:handees/shared/services/auth_service.dart';
 import 'package:handees/shared/services/user_data_service.dart';
@@ -147,6 +148,13 @@ final _customerAppRouter = NavRouter(
           builder: ((context) => const PickServiceDialog()),
           fullscreenDialog: true,
         );
+        break;
+      case CustomerAppRoutes.review:
+        pageRoute = MaterialPageRoute(
+          builder: ((context) => const ReviewsScreen()),
+          fullscreenDialog: true,
+        );
+
         break;
       default:
         throw Exception('Unknown route: ${settings.name}');
