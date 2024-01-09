@@ -122,33 +122,22 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: 220,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Container(
-                        width: 366.0,
-                        height: 72.0,
-                        margin: const EdgeInsets.all(20.0),
-                        decoration: const BoxDecoration(
-                            color: Color(0xFF14161C),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(20))),
-                        child: TextButton(
-                            onPressed: () {},
-                            child: const Text(
-                              "Done",
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: 18.0),
-                            )),
-                      )
-                    ],
-                  ),
-                )
               ],
             ),
+          ),
+          floatingActionButton: Container(
+            width: 366.0,
+            height: 72.0,
+            margin: const EdgeInsets.all(20.0),
+            decoration: const BoxDecoration(
+                color: Color(0xFF14161C),
+                borderRadius: BorderRadius.all(Radius.circular(20))),
+            child: TextButton(
+                onPressed: () {},
+                child: const Text(
+                  "Done",
+                  style: TextStyle(color: Colors.white, fontSize: 18.0),
+                )),
           ),
         ),
       ),
