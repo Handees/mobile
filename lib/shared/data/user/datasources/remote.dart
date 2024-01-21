@@ -40,7 +40,6 @@ class UserRemoteDataSource {
           'access-token': token,
         },
         body: jsonEncode({
-          "user_profile_id": uid,
           "hourly_rate": hourlyRate,
           "job_category": jobCategory,
           "job_title": jobTitle,
@@ -48,7 +47,6 @@ class UserRemoteDataSource {
     dPrint(AppUris.addNewArtisanUri);
     dPrint(token);
     dPrint({
-      "user_profile_id": uid,
       "hourly_rate": hourlyRate,
       "job_category": jobCategory,
       "job_title": jobTitle,
@@ -57,12 +55,43 @@ class UserRemoteDataSource {
     try {
       response = await future;
     } catch (e) {
-      dPrint(e);
+      ePrint(e);
       return false;
     }
 
     dPrint('submitArtisanData response ${response.body}');
     dPrint('submitArtisanData code ${response.statusCode}');
+
+    if (response.statusCode >= 200 && response.statusCode < 400) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> submitKycData({
+    required Map<String, dynamic> body,
+    required String token,
+  }) async {
+    final future = http.post(
+      AppUris.submitKycUri,
+      headers: {
+        HttpHeaders.contentTypeHeader: 'application/json',
+        'access-token': token,
+      },
+      body: jsonEncode(body),
+    );
+    dPrint(jsonEncode(body));
+    late final http.Response response;
+    try {
+      response = await future;
+    } catch (e) {
+      ePrint(e);
+      return false;
+    }
+
+    dPrint('submitKycData response ${response.body}');
+    dPrint('submitKycData code ${response.statusCode}');
 
     if (response.statusCode >= 200 && response.statusCode < 400) {
       return true;
@@ -86,7 +115,9 @@ class UserRemoteDataSource {
       },
       body: jsonEncode(
         {
-          'name': name,
+          'first_name': name,
+          'last_name':
+              'LastName', //TODO: we aren't getting full name from the user but its compulsory
           'telephone': phone,
           'email': email,
           'user_id': uid,

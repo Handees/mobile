@@ -1,12 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:handees/apps/customer_app/features/home/providers/home.customer.provider.dart';
+import 'package:handees/apps/customer_app/features/home/providers/user.provider.dart';
 import 'package:handees/shared/services/auth_service.dart';
 import 'package:handees/shared/services/user_data_service.dart';
 import 'package:handees/shared/utils/utils.dart';
-
-// TODO: The WidgetRef ref inside of this class is an anti-pattern. It should be passed in from a Provider function i.e
-// TODO: we need to convert this class to a provider but I left it like so cause you requested it.
 
 class SigninViewmodel extends ChangeNotifier with InputValidationMixin {
   SigninViewmodel(this._authService, this._userDataService);
@@ -54,7 +51,7 @@ class SigninViewmodel extends ChangeNotifier with InputValidationMixin {
 
       final user = ref!.read(userProvider);
 
-      if (user.name.isNotEmpty) {
+      if (user.firstName.isNotEmpty) {
         callback();
       } else {
         // the depth is the number of times we want to retry submitting the user

@@ -10,8 +10,11 @@ import 'package:handees/shared/res/icons.dart';
 import 'package:handees/shared/routes/routes.dart';
 import 'package:handees/shared/services/auth_service.dart';
 import 'package:handees/shared/ui/widgets/custom_bottom_sheet.dart';
+import 'package:handees/shared/ui/widgets/loading_overlay.dart';
+import 'package:handees/shared/utils/utils.dart';
 
-import '../../providers/home.customer.provider.dart';
+import '../../providers/booking.provider.dart';
+import '../../providers/user.provider.dart';
 import '../widgets/location_picker.dart';
 import '../widgets/pick_service_bottom_sheet.dart';
 import '../widgets/service_card.dart';
@@ -62,7 +65,7 @@ class HomeScreen extends ConsumerWidget {
                                   ),
                                   const SizedBox(width: 16.0),
                                   Text(
-                                    user.name,
+                                    user.getName(),
                                     style:
                                         Theme.of(context).textTheme.titleMedium,
                                   ),
@@ -78,7 +81,7 @@ class HomeScreen extends ConsumerWidget {
                                                 .viewInsets
                                                 .bottom,
                                           ),
-                                          child: CustomBottomSheet(
+                                          child: CTABottomSheet(
                                             title: 'Switch Apps',
                                             text:
                                                 "Are you sure you would like to switch to the artisan app?",
@@ -192,7 +195,7 @@ class HomeScreen extends ConsumerWidget {
                         children: [
                           const SizedBox(height: 8),
                           Text(
-                            'Hello ${user.name}',
+                            'Hello ${user.getName()}',
                             style: Theme.of(context)
                                 .textTheme
                                 .titleLarge
@@ -258,7 +261,22 @@ class HomeScreen extends ConsumerWidget {
                                           .bottom,
                                     ),
                                     child: PickServiceBottomSheet(
-                                      categories[index],
+                                      category: categories[index],
+                                      onClick: () {
+                                        Navigator.of(context)
+                                            .pushNamed(
+                                              CustomerAppRoutes.pickService
+                                            ).then((res) {
+                                            if (res != null) {
+                                              ref.read(bookingProvider.notifier).bookService(
+                                                category: categories[index]
+                                              );
+                                              Navigator.of(context).pushNamed(
+                                                CustomerAppRoutes.tracking
+                                              );
+                                          }
+                                        });
+                                      },
                                     ),
                                   );
                                 },

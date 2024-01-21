@@ -16,11 +16,10 @@ class PickServiceDialog extends StatelessWidget {
             delegate: SliverChildListDelegate.fixed(
               [
                 _PaymentMethodsWidget(),
-                Divider(
-                  height: 32.0,
-                  thickness: 8.0,
-                ),
-                _WorkDurationWidget(),
+                // Divider(
+                //   height: 32.0,
+                //   thickness: 8.0,
+                // ),
               ],
             ),
           ),
@@ -34,7 +33,7 @@ class PickServiceDialog extends StatelessWidget {
                     horizontal: 16.0, vertical: 24.0),
                 child: FilledButton(
                   onPressed: () {
-                    Navigator.of(context).pop('test');
+                    Navigator.of(context).pop(true);
                   },
                   child: const Text('Proceed'),
                 ),

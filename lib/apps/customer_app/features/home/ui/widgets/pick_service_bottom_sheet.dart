@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:handees/apps/customer_app/features/test.dart';
 
 import 'package:handees/shared/data/handees/job_category.dart';
-import 'package:handees/shared/routes/routes.dart';
-import 'package:handees/shared/utils/utils.dart';
 
 import 'service_card.dart';
 
 class PickServiceBottomSheet extends StatelessWidget {
-  const PickServiceBottomSheet(
-    this.category, {
+  const PickServiceBottomSheet({
     Key? key,
+    required this.category,
+    required this.onClick,
   }) : super(key: key);
 
   final JobCategory category;
+  final VoidCallback onClick;
 
   @override
   Widget build(BuildContext context) {
@@ -58,23 +57,7 @@ class PickServiceBottomSheet extends StatelessWidget {
           SizedBox(
             width: double.infinity,
             child: FilledButton(
-              onPressed: () async {
-                final res = await Navigator.of(context)
-                    .pushNamed(CustomerAppRoutes.pickService);
-                dPrint(res);
-
-                if (res != null) {
-                  // B
-
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) {
-                      return Test();
-                    },
-                  ));
-
-                  // Navigator.of(context).pushNamed(CustomerAppRoutes.tracking);
-                }
-              },
+              onPressed: onClick,
               child: const Text('Proceed'),
             ),
           ),

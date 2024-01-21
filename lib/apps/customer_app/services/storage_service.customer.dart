@@ -7,12 +7,6 @@ final storageServiceProvider = Provider<StorageService>((ref) {
   return StorageService._(FirebaseStorage.instance);
 });
 
-abstract class ImageType {
-  static const String passportPhotograph = '/images/passport-photograph';
-  static const String validId = '/images/valid-id';
-  static const String profilePicture = '/images/profile-picture';
-}
-
 class StorageService {
   StorageService._(this.firebaseStorage);
 
@@ -20,18 +14,16 @@ class StorageService {
 
   final FirebaseStorage firebaseStorage;
 
-  Future<String> uploadImage(
-      {required String imageType,
-      required String filename,
-      required File file}) async {
+  Stream<TaskSnapshot?> getImageUploadStream(
+      {required String filePath, required File file}) {
     final storageRef = firebaseStorage.ref();
-    final imageRef = storageRef.child("$imageType/$filename");
+    final imageRef = storageRef.child(filePath);
 
     try {
-      await imageRef.putFile(file);
-      return await imageRef.getDownloadURL();
+      final uploadTask = imageRef.putFile(file);
+      return uploadTask.snapshotEvents;
     } on FirebaseException {
-      return "";
+      throw 'Upload Failed with Firebase Error';
     }
   }
 }

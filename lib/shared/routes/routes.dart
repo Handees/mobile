@@ -21,8 +21,17 @@ abstract class ArtisanAppRoutes {
   static const String paymentDetails =
       '/artisan/complete-profile/payment-details';
   static const String chat = '/artisan/home/chat';
+  static const String transitToArtisan = '/artisan/transit-to-artisan';
+  static const String confirmHandee = '/artisan/confirm-handee';
+  static const String handeeInProgress = '/artisan/handee-in-progress';
+  static const String contractHandeeInProgress =
+      '/artisan/contract-handee-in-progress';
+  static const String handeeConcluded = '/artisan/handee-concluded';
+
+  static const String earnings = '/artisan/home/earnings';
 
   static const String home = '/artisan/home';
+  static const String editProfile = '/artisan/edit-profile';
 }
 
 abstract class CustomerAppRoutes {

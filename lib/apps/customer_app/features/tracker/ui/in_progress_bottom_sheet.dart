@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:handees/shared/res/shapes.dart';
 import 'package:handees/shared/routes/routes.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../providers/trackingProvider.dart';
 
-class InProgressBottomSheet extends StatefulWidget {
+class InProgressBottomSheet extends ConsumerStatefulWidget {
   const InProgressBottomSheet({Key? key}) : super(key: key);
 
   @override
-  State<InProgressBottomSheet> createState() => _InProgressBottomSheetState();
+  ConsumerState<InProgressBottomSheet> createState() => _InProgressBottomSheetState();
 }
 
-class _InProgressBottomSheetState extends State<InProgressBottomSheet>
+class _InProgressBottomSheetState extends ConsumerState<InProgressBottomSheet>
     with TickerProviderStateMixin {
   bool get _expanded => _controller.status != AnimationStatus.completed;
   final _curve = Curves.linear;
@@ -43,12 +45,15 @@ class _InProgressBottomSheetState extends State<InProgressBottomSheet>
     _controller.forward();
     _secondaryController.forward();
     _halfController.forward();
+
+    ref.read(blurBackgroundProvider.notifier).openSheet();
   }
 
   void _controllersReverse() {
     _controller.reverse();
     _secondaryController.reverse();
     _halfController.reverse();
+    ref.read(blurBackgroundProvider.notifier).closeSheet();
   }
 
   void _controllersUpdate(double value) {

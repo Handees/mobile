@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:handees/apps/customer_app/features/home/providers/home.customer.provider.dart';
+import 'package:handees/apps/customer_app/features/home/providers/user.provider.dart';
 
 import 'package:handees/shared/routes/routers.dart';
 import 'package:handees/shared/services/auth_service.dart';
@@ -36,7 +36,9 @@ void main() async {
     final license = await rootBundle.loadString('assets/google_fonts/OFL.txt');
     yield LicenseEntryWithLineBreaks(['google_fonts'], license);
   });
-  GoogleFonts.config.allowRuntimeFetching = false;
+
+  //TODO: Ask omas why this is false
+  GoogleFonts.config.allowRuntimeFetching = true;
 
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent, // status bar color
@@ -82,6 +84,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+        const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.dark));
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Handees',
