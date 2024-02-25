@@ -12,7 +12,7 @@ final locationProvider =
         (ref) => LocationStateNotifier(ref));
 
 class LocationStateNotifier extends StateNotifier<LocationData> {
-  final location = Location();
+  final location = Location.instance;
   bool _serviceEnabled = false;
   bool _backgroundModeEnabled = false;
   bool _handlerRegistered = false;

@@ -1,78 +1,120 @@
-import 'dart:ui';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:handees/apps/artisan_app/features/handee/utils/helpers.dart';
 import 'package:handees/apps/customer_app/features/home/providers/booking.provider.dart';
+import 'package:handees/apps/customer_app/features/tracker/providers/customer_location.provider.dart';
 
 import 'package:handees/shared/res/shapes.dart';
 import 'package:handees/shared/routes/routes.dart';
 import 'package:handees/shared/ui/widgets/circle_fadeout_loader.dart';
+import 'package:handees/shared/utils/utils.dart';
 
 import 'in_progress_bottom_sheet.dart';
 import 'loading_bottom_sheet.dart';
-import '../providers/trackingProvider.dart';
 
-
-class TrackingScreen extends ConsumerWidget {
+class TrackingScreen extends ConsumerStatefulWidget {
   const TrackingScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ref) {
+  ConsumerState<TrackingScreen> createState() => _TrackingScreenState();
+}
+
+class _TrackingScreenState extends ConsumerState<TrackingScreen> {
+  BitmapDescriptor destinationIcon = BitmapDescriptor.defaultMarker;
+  BitmapDescriptor artisanIcon = BitmapDescriptor.defaultMarker;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  void setCustomMarkerIcon() async {
+    Uint8List markerIcon =
+        await Helpers.getBytesFromAsset("assets/icon/artisan_marker.png", 150);
+    artisanIcon = BitmapDescriptor.fromBytes(markerIcon);
+
+    markerIcon =
+        await Helpers.getBytesFromAsset("assets/icon/position_marker.png", 55);
+    destinationIcon = BitmapDescriptor.fromBytes(markerIcon);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     late final Widget bottomSheet;
-    late final Widget backgroundScreen;
     final trackingState = ref.watch(bookingProvider);
     final model = ref.watch(bookingProvider.notifier);
-    final background = ref.watch(blurBackgroundProvider);
-    const mapWidget = Text("Map", style: TextStyle(fontSize: 80));
+    final location = ref.watch(customerLocationProvider);
 
     switch (trackingState) {
       case BookingState.loading:
         bottomSheet = LoadingBottomSheet(
           category: model.category,
         );
-        backgroundScreen = const Center(
-          child: CircleFadeOutLoader(),
-        );
+
         break;
       case BookingState.inProgress:
         bottomSheet = const InProgressBottomSheet();
-        switch (background) 
-        {
-          case BottomSheetState.inView:
-            backgroundScreen = ImageFiltered(
-              imageFilter: ImageFilter.blur(sigmaX: 3.0, sigmaY: 3.0),
-              child: const Center(child: mapWidget)
-            );
-            break;
-          case BottomSheetState.minimized:
-            backgroundScreen = const Center(child: mapWidget);
-            break;
-        }
+
         break;
       case BookingState.arrived:
         bottomSheet = const ArrivedBottomSheet();
-        switch (background) 
-        {
-          case BottomSheetState.inView:
-            backgroundScreen = ImageFiltered(
-              imageFilter: ImageFilter.blur(sigmaX: 3.0, sigmaY: 3.0),
-              child: const Center(child:mapWidget)
-            );
-            break;
-          case BottomSheetState.minimized:
-            backgroundScreen = const Center(child: mapWidget);
-            break;
-        }
         break;
       default:
     }
+
+    dPrint(location.latitude);
+    if (location.latitude == null) {
+      return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+        ),
+        extendBodyBehindAppBar: true,
+        body: const Center(child: CircleFadeOutLoader()),
+        bottomSheet: Material(
+          elevation: 24,
+          shadowColor: Colors.black,
+          child: bottomSheet,
+        ),
+      );
+    }
+
+    Set<Marker> markers = {
+      Marker(
+        markerId: const MarkerId('Current Location'),
+        icon: artisanIcon,
+        position: const LatLng(6.5482, 3.3320),
+      ),
+      Marker(
+        markerId: const MarkerId('Chicken Rep'),
+        position: LatLng(location.latitude!, location.longitude!),
+        icon: destinationIcon,
+      )
+    };
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
       ),
       extendBodyBehindAppBar: true,
-      body: backgroundScreen,
+      body: trackingState == BookingState.loading
+          ? const Center(
+              child: CircleFadeOutLoader(),
+            )
+          : Center(
+              child: GoogleMap(
+                initialCameraPosition: CameraPosition(
+                  target: LatLng(location.latitude!, location.longitude!),
+                  zoom: 18,
+                  tilt: 0,
+                  bearing: 0,
+                ),
+                markers: markers,
+              ),
+            ),
       bottomSheet: Material(
         elevation: 24,
         shadowColor: Colors.black,

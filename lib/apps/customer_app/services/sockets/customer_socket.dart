@@ -21,7 +21,7 @@ class CustomerSocket {
   // static CustomerSockets get instance => _instance;
   final AuthService _authService;
 
-  late io.Socket _socket = io.io(
+  late final io.Socket _socket = io.io(
     AppUris.customerSocketUri.toString(),
     io.OptionBuilder()
         .setAuth({'access_token': _authService.token}).setTransports(

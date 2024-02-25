@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:handees/apps/customer_app/features/home/ui/widgets/search.dart';
 
 import 'package:handees/apps/customer_app/features/home/ui/widgets/swap_button.dart';
-import 'package:handees/apps/customer_app/features/tracker/ui/tracking_screen.dart';
+import 'package:handees/apps/customer_app/features/home/ui/widgets/ongoing_service.dart';
 import 'package:handees/shared/data/handees/job_category.dart';
 import 'package:handees/shared/res/shapes.dart';
 import 'package:handees/shared/res/icons.dart';
 import 'package:handees/shared/routes/routes.dart';
 import 'package:handees/shared/services/auth_service.dart';
 import 'package:handees/shared/ui/widgets/custom_bottom_sheet.dart';
-import 'package:handees/shared/ui/widgets/loading_overlay.dart';
-import 'package:handees/shared/utils/utils.dart';
 
 import '../../providers/booking.provider.dart';
 import '../../providers/user.provider.dart';
@@ -265,15 +264,16 @@ class HomeScreen extends ConsumerWidget {
                                       onClick: () {
                                         Navigator.of(context)
                                             .pushNamed(
-                                              CustomerAppRoutes.pickService
-                                            ).then((res) {
-                                            if (res != null) {
-                                              ref.read(bookingProvider.notifier).bookService(
-                                                category: categories[index]
-                                              );
-                                              Navigator.of(context).pushNamed(
-                                                CustomerAppRoutes.tracking
-                                              );
+                                                CustomerAppRoutes.pickService)
+                                            .then((res) {
+                                          if (res != null) {
+                                            ref
+                                                .read(bookingProvider.notifier)
+                                                .bookService(
+                                                    category:
+                                                        categories[index]);
+                                            Navigator.of(context).pushNamed(
+                                                CustomerAppRoutes.tracking);
                                           }
                                         });
                                       },
@@ -309,175 +309,6 @@ class HomeScreen extends ConsumerWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class OngoingServiceHeader extends StatelessWidget {
-  const OngoingServiceHeader({
-    Key? key,
-    required this.horizontalPadding,
-  }) : super(key: key);
-
-  final double horizontalPadding;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: horizontalPadding,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Ongoing Handee',
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-              Text(
-                '00 : 03 : 43',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-            ],
-          ),
-        ),
-        const Spacer(flex: 1),
-        Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: horizontalPadding,
-          ),
-          child: const ProgressCard(),
-        ),
-        const Spacer(flex: 3),
-        const Divider(
-          thickness: 8.0,
-          height: 0.0,
-        ),
-      ],
-    );
-  }
-}
-
-class SearchWidget extends StatefulWidget {
-  const SearchWidget({Key? key}) : super(key: key);
-
-  @override
-  State<SearchWidget> createState() => _SearchWidgetState();
-}
-
-class _SearchWidgetState extends State<SearchWidget> {
-  final focusNode = FocusNode();
-  final textController = TextEditingController();
-  bool isFocused = false;
-
-  @override
-  void dispose() {
-    focusNode.dispose();
-    textController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    const padding = EdgeInsets.symmetric(
-      vertical: 8.0,
-      horizontal: 32.0,
-    );
-
-    return WillPopScope(
-      onWillPop: () async {
-        final shouldPop = !isFocused;
-
-        WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
-        setState(() {
-          isFocused = false;
-        });
-
-        return shouldPop;
-      },
-      child: Material(
-        elevation: 4.0,
-        shadowColor: Theme.of(context).colorScheme.shadow,
-        color: Theme.of(context).colorScheme.primaryContainer,
-        shape: Shapes.bigShape,
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(minHeight: 64.0),
-          child: isFocused
-              ? Padding(
-                  padding: padding,
-                  child: TextField(
-                    focusNode: focusNode,
-                    controller: textController,
-                    onEditingComplete: () {
-                      setState(() {
-                        isFocused = false;
-                        focusNode.unfocus();
-                      });
-                    },
-                    cursorColor:
-                        Theme.of(context).colorScheme.onPrimaryContainer,
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color:
-                            Theme.of(context).colorScheme.onPrimaryContainer),
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      filled: false,
-                      suffixIcon: IconButton(
-                        onPressed: () {
-                          textController.clear();
-                        },
-                        icon: Icon(
-                          Icons.close,
-                          color:
-                              Theme.of(context).colorScheme.onPrimaryContainer,
-                        ),
-                      ),
-                    ),
-                  ),
-                )
-              : InkWell(
-                  onTap: () {
-                    setState(() {
-                      isFocused = true;
-                      focusNode.requestFocus();
-                    });
-                  },
-                  customBorder: Shapes.bigShape,
-                  child: Padding(
-                    padding: padding,
-                    child: Row(
-                      children: [
-                        const Spacer(flex: 5),
-                        Expanded(
-                          flex: 9,
-                          child: Text(
-                            'Need a hand?',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium
-                                ?.copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onPrimaryContainer,
-                                ),
-                          ),
-                        ),
-                        const Spacer(flex: 2),
-                        Icon(
-                          Icons.search,
-                          color:
-                              Theme.of(context).colorScheme.onPrimaryContainer,
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-        ),
       ),
     );
   }

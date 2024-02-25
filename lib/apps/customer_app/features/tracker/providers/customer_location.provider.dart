@@ -8,7 +8,7 @@ final customerLocationProvider =
         (ref) => CustomerLocationStateNotifier(ref));
 
 class CustomerLocationStateNotifier extends StateNotifier<LocationData> {
-  final location = Location();
+  final location = Location.instance;
   bool _serviceEnabled = false;
   bool _backgroundModeEnabled = false;
   bool _handlerRegistered = false;
@@ -64,9 +64,11 @@ class CustomerLocationStateNotifier extends StateNotifier<LocationData> {
       interval: 5000,
       distanceFilter: 5,
     );
-    updateLocation(await location.getLocation());
+    final currLocation = await location.getLocation();
+    state = currLocation;
     if (!_handlerRegistered) {
       location.onLocationChanged.listen((LocationData currLocation) {
+        dPrint(currLocation);
         updateLocation(currLocation);
       });
       _handlerRegistered = true;
